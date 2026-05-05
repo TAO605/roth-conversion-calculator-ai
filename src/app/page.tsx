@@ -147,64 +147,15 @@ export default function HomePage() {
               <Link className="hover:text-systemBlue" href="/methodology">
                 Methodology
               </Link>
-              <Link className="hover:text-systemBlue" href="/tax-brackets/2026">
-                Tax Brackets
-              </Link>
-              <Link className="hover:text-systemBlue" href="/states">
-                States
-              </Link>
-              <Link className="hover:text-systemBlue" href="/blog">
-                Guides
-              </Link>
+              <a className="hover:text-systemBlue" href="#ai-explainer">
+                AI explainer
+              </a>
+              <a className="hover:text-systemBlue" href="#method-and-sources">
+                Sources
+              </a>
               <a className="hover:text-systemBlue" href="#faq">
                 FAQ
               </a>
-              <details className="group relative min-w-0 shrink-0">
-                <summary className="cursor-pointer list-none rounded-full bg-neutral-100 px-3 py-1 font-medium text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200">
-                  More planning guides
-                </summary>
-                <div className="left-4 right-4 z-20 mt-3 hidden w-auto grid-cols-2 gap-2 rounded-[18px] border border-neutral-200 bg-white/95 p-4 text-sm shadow-xl backdrop-blur-xl group-open:fixed group-open:grid dark:border-white/10 dark:bg-neutral-950/95 sm:left-auto sm:right-0 sm:w-[min(88vw,560px)] sm:grid-cols-3 sm:group-open:absolute">
-                  <Link className="hover:text-systemBlue" href="/calculators">Calculators</Link>
-                  <Link className="hover:text-systemBlue" href="/examples">Examples</Link>
-                  <Link className="hover:text-systemBlue" href="/glossary">Glossary</Link>
-                  <Link className="hover:text-systemBlue" href="/age-scenarios">Age scenarios</Link>
-                  <Link className="hover:text-systemBlue" href="/basis">Basis</Link>
-                  <Link className="hover:text-systemBlue" href="/multi-year-planning">Multi-year</Link>
-                  <Link className="hover:text-systemBlue" href="/filing-status">Filing status</Link>
-                  <Link className="hover:text-systemBlue" href="/tax-payment-methods">Tax payment</Link>
-                  <Link className="hover:text-systemBlue" href="/tax-interactions">Tax interactions</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-irmaa-guide">IRMAA</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-social-security-tax-guide">Social Security</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-aca-premium-tax-credit-guide">ACA PTC</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-niit-guide">NIIT</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-rmd-guide">RMD</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-5-year-rules">5-year rules</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-capital-gains-guide">Capital gains</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-estimated-tax-guide">Estimated tax</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-recharacterization-guide">Recharacterization</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-qcd-guide">QCD</Link>
-                  <Link className="hover:text-systemBlue" href="/cpa-review-checklist">CPA checklist</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-planning-checklist">Planning checklist</Link>
-                  <Link className="hover:text-systemBlue" href="/calculator-assumptions-guide">Assumptions</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-mistakes">Mistakes</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-tax-forms">Forms</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-timeline">Timeline</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-custodian-process">Custodian process</Link>
-                  <Link className="hover:text-systemBlue" href="/roth-conversion-cpa-questions">CPA questions</Link>
-                  <Link className="hover:text-systemBlue" href="/launch-readiness">Launch readiness</Link>
-                  <Link className="hover:text-systemBlue" href="/production-launch">Production launch</Link>
-                  <Link className="hover:text-systemBlue" href="/seo-monitoring">SEO monitoring</Link>
-                  <Link className="hover:text-systemBlue" href="/performance-audit">Performance audit</Link>
-                  <Link className="hover:text-systemBlue" href="/accessibility-audit">Accessibility audit</Link>
-                  <Link className="hover:text-systemBlue" href="/tax-data-update">Tax data update</Link>
-                  <Link className="hover:text-systemBlue" href="/ai-compliance-audit">AI compliance audit</Link>
-                  <Link className="hover:text-systemBlue" href="/content-operations">Content operations</Link>
-                  <Link className="hover:text-systemBlue" href="/feedback-roadmap">Feedback roadmap</Link>
-                  <Link className="hover:text-systemBlue" href="/privacy-data-flow">Privacy data flow</Link>
-                  <Link className="hover:text-systemBlue" href="/site-index">Site index</Link>
-                  <Link className="hover:text-systemBlue" href="/about">About</Link>
-                </div>
-              </details>
             </div>
             {isFeatureEnabled("theme-toggle") ? <ThemeToggle /> : null}
           </div>
@@ -217,84 +168,24 @@ export default function HomePage() {
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
               Estimate federal tax, state tax, potential early distribution penalties, break-even years, and Roth vs
-              traditional IRA after-tax value. Calculations run locally in your browser.
+              traditional IRA after-tax value. Then use the AI explainer to understand the estimate in plain English.
             </p>
+            <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
+              <a className="rounded-full bg-systemBlue px-5 py-3 text-white shadow-sm transition hover:bg-blue-600" href="#calculator">
+                Start calculating
+              </a>
+              <a className="rounded-full bg-white/70 px-5 py-3 text-neutral-800 shadow-sm transition hover:bg-white dark:bg-white/10 dark:text-neutral-100 dark:hover:bg-white/15" href="#ai-explainer">
+                Ask AI after results
+              </a>
+            </div>
           </div>
           <div className="rounded-[18px] bg-white/65 p-4 text-sm leading-6 text-neutral-600 shadow-sm dark:bg-white/10 dark:text-neutral-300">
-            Tax year: <strong>2026</strong>. Federal brackets are based on IRS tax inflation adjustments. State tax,
-            future returns, and retirement tax rates are user assumptions.
+            <strong>Built for quick decisions, not clutter.</strong> Enter a few assumptions, review the tax estimate,
+            then check the method and IRS sources below. All calculations run locally in your browser.
           </div>
         </div>
         {isFeatureEnabled("tax-data-freshness") ? <TaxDataFreshnessCard compact /> : null}
       </header>
-
-      <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-2" aria-label="Trust and calculation methodology">
-        <Card>
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">E-E-A-T reference base</p>
-          <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">Official sources reviewed</h2>
-          <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
-            This calculator is maintained as an educational estimate for tax year 2026. The federal bracket data and
-            IRA rule explanations are mapped to official IRS materials, with the page reviewed for clarity and
-            limitations before publication.
-          </p>
-          <div className="mt-4 grid gap-2 text-sm">
-            <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IRS tax inflation adjustments for tax year 2026
-            </a>
-            <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/publications/p590a"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IRS Publication 590-A
-            </a>
-            <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/publications/p590b"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IRS Publication 590-B
-            </a>
-            <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/forms-pubs/about-form-8606"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IRS Form 8606 basis reporting
-            </a>
-          </div>
-        </Card>
-
-        <Card>
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Calculator transparency</p>
-          <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">Transparent calculation method</h2>
-          <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
-            The calculator shows the assumptions behind the estimate so users can review the math with a CPA or tax
-            professional instead of treating the output as personal advice.
-          </p>
-          <div className="mt-4 grid gap-3 text-sm leading-6 text-neutral-700 dark:text-neutral-200">
-            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
-              Taxable conversion = conversion amount minus pro-rata after-tax basis.
-            </p>
-            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
-              Current-year cost = estimated federal income tax plus user-entered state tax plus any modeled early
-              distribution penalty.
-            </p>
-            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
-              Future comparison = Roth tax-free projection versus traditional IRA projection after the selected
-              retirement marginal tax rate.
-            </p>
-          </div>
-        </Card>
-      </section>
 
       <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-[0.95fr_1.05fr]" id="calculator">
         <Card>
@@ -340,6 +231,11 @@ export default function HomePage() {
               </div>
             ) : null}
           </Card>
+          {isFeatureEnabled("ai-explainer") ? (
+            <div id="ai-explainer">
+              <AiExplainer input={input} result={result} />
+            </div>
+          ) : null}
           <Card>
             <h2 className="mb-4 text-2xl font-bold text-neutral-950 dark:text-white">Projection</h2>
             <ProjectionChart projection={result.projection} />
@@ -369,7 +265,73 @@ export default function HomePage() {
         </div>
       </section>
 
-      {isFeatureEnabled("ai-explainer") ? <AiExplainer input={input} result={result} /> : null}
+      <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-2" id="method-and-sources" aria-label="Trust and calculation methodology">
+        <Card>
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Calculator transparency</p>
+          <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">Transparent calculation method</h2>
+          <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+            The estimate is intentionally plain: it shows the core math, the assumptions you entered, and the limits a
+            CPA or tax professional should review before any real decision.
+          </p>
+          <div className="mt-4 grid gap-3 text-sm leading-6 text-neutral-700 dark:text-neutral-200">
+            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
+              Taxable conversion = conversion amount minus pro-rata after-tax basis.
+            </p>
+            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
+              Current-year cost = estimated federal income tax plus user-entered state tax plus any modeled early
+              distribution penalty.
+            </p>
+            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
+              Future comparison = Roth tax-free projection versus traditional IRA projection after the selected
+              retirement marginal tax rate.
+            </p>
+          </div>
+        </Card>
+
+        <Card>
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">E-E-A-T reference base</p>
+          <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">Official sources reviewed</h2>
+          <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+            This page is maintained for tax year 2026, reviewed May 2026, and grounded in official IRS materials. The
+            content is educational and does not replace individualized tax advice.
+          </p>
+          <div className="mt-4 grid gap-2 text-sm">
+            <a
+              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
+              href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026"
+              rel="noreferrer"
+              target="_blank"
+            >
+              IRS tax inflation adjustments for tax year 2026
+            </a>
+            <a
+              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
+              href="https://www.irs.gov/publications/p590a"
+              rel="noreferrer"
+              target="_blank"
+            >
+              IRS Publication 590-A
+            </a>
+            <a
+              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
+              href="https://www.irs.gov/publications/p590b"
+              rel="noreferrer"
+              target="_blank"
+            >
+              IRS Publication 590-B
+            </a>
+            <a
+              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
+              href="https://www.irs.gov/forms-pubs/about-form-8606"
+              rel="noreferrer"
+              target="_blank"
+            >
+              IRS Form 8606 basis reporting
+            </a>
+          </div>
+        </Card>
+      </section>
+
       <FaqSection />
 
       <footer className="w-full min-w-0 border-t border-neutral-200 py-6 text-xs leading-5 text-neutral-500 dark:border-white/10 dark:text-neutral-400">
@@ -426,6 +388,42 @@ export default function HomePage() {
             Release Notes
           </Link>
         </div>
+        <details className="mb-4 rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+          <summary className="cursor-pointer text-sm font-semibold text-neutral-800 dark:text-neutral-100">
+            More planning guides
+          </summary>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            <Link className="hover:text-systemBlue" href="/roth-conversion-irmaa-guide">IRMAA guide</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-social-security-tax-guide">Social Security tax</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-aca-premium-tax-credit-guide">ACA premium tax credit</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-niit-guide">NIIT guide</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-rmd-guide">RMD guide</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-5-year-rules">5-year rules</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-capital-gains-guide">Capital gains</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-estimated-tax-guide">Estimated tax</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-recharacterization-guide">Recharacterization</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-qcd-guide">QCD guide</Link>
+            <Link className="hover:text-systemBlue" href="/calculator-assumptions-guide">Calculator assumptions</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-planning-checklist">Planning checklist</Link>
+            <Link className="hover:text-systemBlue" href="/cpa-review-checklist">CPA review checklist</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-tax-forms">Tax forms</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-timeline">Timeline</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-mistakes">Common mistakes</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-custodian-process">Custodian process</Link>
+            <Link className="hover:text-systemBlue" href="/roth-conversion-cpa-questions">CPA questions</Link>
+            <Link className="hover:text-systemBlue" href="/site-index">Full site index</Link>
+            <Link className="hover:text-systemBlue" href="/launch-readiness">Launch readiness</Link>
+            <Link className="hover:text-systemBlue" href="/production-launch">Production launch</Link>
+            <Link className="hover:text-systemBlue" href="/seo-monitoring">SEO monitoring</Link>
+            <Link className="hover:text-systemBlue" href="/performance-audit">Performance audit</Link>
+            <Link className="hover:text-systemBlue" href="/accessibility-audit">Accessibility audit</Link>
+            <Link className="hover:text-systemBlue" href="/tax-data-update">Tax data update</Link>
+            <Link className="hover:text-systemBlue" href="/ai-compliance-audit">AI compliance audit</Link>
+            <Link className="hover:text-systemBlue" href="/content-operations">Content operations</Link>
+            <Link className="hover:text-systemBlue" href="/feedback-roadmap">Feedback roadmap</Link>
+            <Link className="hover:text-systemBlue" href="/privacy-data-flow">Privacy data flow</Link>
+          </div>
+        </details>
         <p>{REQUIRED_DISCLAIMER}</p>
       </footer>
     </main>

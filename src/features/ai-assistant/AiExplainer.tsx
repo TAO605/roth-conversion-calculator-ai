@@ -39,12 +39,22 @@ export function AiExplainer({ input, result }: { input: RothConversionInput; res
 
   return (
     <Card className="grid gap-4">
-      <div className="flex items-center gap-2">
-        <MessageCircle className="text-systemBlue" size={20} />
-        <h2 className="text-xl font-bold">AI Roth Conversion Explainer</h2>
+      <div className="flex items-start gap-3">
+        <span className="mt-1 inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-500/10 text-systemBlue">
+          <MessageCircle size={19} />
+        </span>
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Educational AI helper</p>
+          <h2 className="mt-1 text-xl font-bold text-neutral-950 dark:text-white">Ask AI to explain this estimate</h2>
+          <p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+            Use it for plain-English explanations of the numbers on this page. It will not tell you whether you should
+            convert or how much to convert.
+          </p>
+        </div>
       </div>
       <textarea
-        className="min-h-24 rounded-[14px] border border-neutral-200 bg-white/80 p-3 text-sm outline-none focus:border-systemBlue focus:ring-4 focus:ring-blue-500/15 dark:border-white/15 dark:bg-white/10"
+        aria-label="Ask the AI explainer a Roth conversion education question"
+        className="min-h-20 rounded-[14px] border border-neutral-200 bg-white/80 p-3 text-sm outline-none focus:border-systemBlue focus:ring-4 focus:ring-blue-500/15 dark:border-white/15 dark:bg-white/10"
         value={question}
         onChange={(event) => setQuestion(event.target.value)}
       />

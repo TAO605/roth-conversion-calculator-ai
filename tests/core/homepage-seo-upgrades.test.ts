@@ -36,6 +36,13 @@ describe("homepage SEO and UX upgrades", () => {
   it("keeps the homepage navigation focused while preserving crawlable secondary links", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
 
+    const navSource = source.slice(source.indexOf("<nav"), source.indexOf("</nav>"));
+
+    expect(navSource).toContain("Calculator");
+    expect(navSource).toContain("AI explainer");
+    expect(navSource).toContain("Sources");
+    expect(navSource).not.toContain("IRMAA");
+    expect(navSource).not.toContain("Production launch");
     expect(source).toContain("More planning guides");
     expect(source).toContain("<details");
     expect(source).toContain("/roth-conversion-irmaa-guide");
