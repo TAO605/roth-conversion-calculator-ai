@@ -115,13 +115,13 @@ describe("feature registry", () => {
   it("gates optional homepage modules through the feature registry", () => {
     const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
 
-    expect(homePage).toContain('isFeatureEnabled("copy-summary")');
-    expect(homePage).toContain('isFeatureEnabled("scenario-history")');
     expect(homePage).toContain('isFeatureEnabled("ai-explainer")');
     expect(homePage).toContain('isFeatureEnabled("tax-data-freshness")');
     expect(homePage).toContain('isFeatureEnabled("theme-toggle")');
-    expect(homePage).toContain('isFeatureEnabled("conversion-sensitivity")');
-    expect(homePage).toContain('isFeatureEnabled("bracket-capacity")');
-    expect(homePage).toContain('isFeatureEnabled("multi-year-schedule")');
+    expect(homePage).toContain('isFeatureEnabled("privacy-safe-analytics")');
+    expect(homePage).toContain('isFeatureEnabled("homepage-howto-structured-data")');
+    expect(homePage).not.toContain('isFeatureEnabled("copy-summary")');
+    expect(homePage).not.toContain('isFeatureEnabled("scenario-history")');
+    expect(homePage).not.toContain('isFeatureEnabled("conversion-sensitivity")');
   });
 });

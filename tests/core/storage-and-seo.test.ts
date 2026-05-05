@@ -125,7 +125,7 @@ describe("seo json-ld", () => {
     expect(metadata.openGraph?.url).toBe(siteConfig.siteUrl);
     expect(metadata.twitter).toMatchObject({
       card: "summary_large_image",
-      title: "Roth Conversion Calculator 2026",
+      title: "AI Roth Conversion Calculator 2026",
     });
     expect(robotsConfig.sitemap).toContain(`${siteConfig.siteUrl}/sitemap.xml`);
     expect(robotsConfig.sitemap).toContain(`${siteConfig.siteUrl}/feed.xml`);

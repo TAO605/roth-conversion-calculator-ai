@@ -2,5 +2,5 @@ const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.roth-convers
 
 export const siteConfig = {
   siteUrl: rawSiteUrl.replace(/\/$/, ""),
-  siteName: "Roth Conversion Calculator",
+  siteName: "AI Roth Conversion Calculator",
 };

@@ -15,11 +15,8 @@ import { CalculatorInput } from "@/features/calculator-input/CalculatorInput";
 import { ResultSummary } from "@/features/result-summary/ResultSummary";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
 import { CalculationBreakdown } from "@/features/calculation-breakdown/CalculationBreakdown";
-import { TaxBracketImpact } from "@/features/bracket-impact/TaxBracketImpact";
 import { FaqSection, faqItems } from "@/features/faq/FaqSection";
 import { ShareResultButton } from "@/features/share-link/ShareResultButton";
-import { CopyResultButton } from "@/features/result-copy/CopyResultButton";
-import { ScenarioHistoryPanel } from "@/features/scenario-history/ScenarioHistoryPanel";
 import { ThemeToggle } from "@/features/theme-toggle/ThemeToggle";
 import { TaxDataFreshnessCard } from "@/features/tax-data-freshness/TaxDataFreshnessCard";
 import { CalculatorAnalyticsBeacon } from "@/features/analytics/CalculatorAnalyticsBeacon";
@@ -67,30 +64,6 @@ const PdfReportButton = dynamic<{ input: RothConversionInput; result: RothConver
 
 const AiExplainer = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
   () => import("@/features/ai-assistant/AiExplainer").then((module) => module.AiExplainer),
-  { loading: LazyPanelFallback },
-);
-
-const ConversionSensitivityTable = dynamic<{ input: RothConversionInput }>(
-  () =>
-    import("@/features/conversion-sensitivity/ConversionSensitivityTable").then(
-      (module) => module.ConversionSensitivityTable,
-    ),
-  { loading: LazyPanelFallback },
-);
-
-const FederalBracketCapacityTable = dynamic<{ input: RothConversionInput }>(
-  () =>
-    import("@/features/bracket-capacity/FederalBracketCapacityTable").then(
-      (module) => module.FederalBracketCapacityTable,
-    ),
-  { loading: LazyPanelFallback },
-);
-
-const MultiYearScheduleTable = dynamic<{ input: RothConversionInput }>(
-  () =>
-    import("@/features/multi-year-schedule/MultiYearScheduleTable").then(
-      (module) => module.MultiYearScheduleTable,
-    ),
   { loading: LazyPanelFallback },
 );
 
@@ -144,31 +117,25 @@ export default function HomePage() {
               <a className="hover:text-systemBlue" href="#calculator">
                 Calculator
               </a>
-              <Link className="hover:text-systemBlue" href="/methodology">
-                Methodology
-              </Link>
               <a className="hover:text-systemBlue" href="#ai-explainer">
-                AI explainer
+                AI helper
               </a>
               <a className="hover:text-systemBlue" href="#method-and-sources">
                 Sources
-              </a>
-              <a className="hover:text-systemBlue" href="#faq">
-                FAQ
               </a>
             </div>
             {isFeatureEnabled("theme-toggle") ? <ThemeToggle /> : null}
           </div>
         </nav>
-        <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">2026 educational estimate</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">AI-powered 2026 estimate</p>
         <div className="grid gap-4 lg:grid-cols-[1fr_0.72fr] lg:items-end">
           <div>
             <h1 className="max-w-4xl text-4xl font-bold tracking-normal text-neutral-950 dark:text-white sm:text-5xl">
-              Roth Conversion Calculator
+              AI Roth Conversion Calculator
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
-              Estimate federal tax, state tax, potential early distribution penalties, break-even years, and Roth vs
-              traditional IRA after-tax value. Then use the AI explainer to understand the estimate in plain English.
+              Estimate Roth conversion taxes, break-even years, and after-tax value. AI then explains the result,
+              the inputs, and the limits in plain English without giving personal tax advice.
             </p>
             <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
               <a className="rounded-full bg-systemBlue px-5 py-3 text-white shadow-sm transition hover:bg-blue-600" href="#calculator">
@@ -180,11 +147,24 @@ export default function HomePage() {
             </div>
           </div>
           <div className="rounded-[18px] bg-white/65 p-4 text-sm leading-6 text-neutral-600 shadow-sm dark:bg-white/10 dark:text-neutral-300">
-            <strong>Built for quick decisions, not clutter.</strong> Enter a few assumptions, review the tax estimate,
-            then check the method and IRS sources below. All calculations run locally in your browser.
+            <strong>One focused workflow.</strong> Calculate the tax estimate, ask AI what the numbers mean, then
+            review the method and IRS sources. Your financial inputs stay in this browser.
           </div>
         </div>
-        {isFeatureEnabled("tax-data-freshness") ? <TaxDataFreshnessCard compact /> : null}
+        <section className="grid gap-3 text-sm text-neutral-600 dark:text-neutral-300 sm:grid-cols-3" aria-label="AI calculator workflow">
+          <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+            <strong className="block text-neutral-950 dark:text-white">1. Calculate</strong>
+            Enter conversion amount, income, basis, state tax, age, and expected return.
+          </div>
+          <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+            <strong className="block text-neutral-950 dark:text-white">2. Ask AI</strong>
+            Get a plain-English explanation of break-even years, penalties, basis, and assumptions.
+          </div>
+          <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+            <strong className="block text-neutral-950 dark:text-white">3. Review</strong>
+            Check the transparent method, official sources, and compliance limits before acting.
+          </div>
+        </section>
       </header>
 
       <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-[0.95fr_1.05fr]" id="calculator">
@@ -208,7 +188,6 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                {isFeatureEnabled("copy-summary") ? <CopyResultButton input={input} result={result} /> : null}
                 <ShareResultButton input={input} />
                 <PdfReportButton input={input} result={result} />
                 <button
@@ -225,11 +204,6 @@ export default function HomePage() {
               </div>
             </div>
             <ResultSummary result={result} />
-            {isFeatureEnabled("scenario-history") ? (
-              <div className="mt-5">
-                <ScenarioHistoryPanel input={input} onRestore={setInput} />
-              </div>
-            ) : null}
           </Card>
           {isFeatureEnabled("ai-explainer") ? (
             <div id="ai-explainer">
@@ -240,32 +214,20 @@ export default function HomePage() {
             <h2 className="mb-4 text-2xl font-bold text-neutral-950 dark:text-white">Projection</h2>
             <ProjectionChart projection={result.projection} />
           </Card>
-          <Card>
-            <CalculationBreakdown input={input} result={result} />
-          </Card>
-          <Card>
-            <TaxBracketImpact result={result} />
-          </Card>
-          {isFeatureEnabled("conversion-sensitivity") ? (
-            <Card>
-              <ConversionSensitivityTable input={input} />
-            </Card>
-          ) : null}
-          {isFeatureEnabled("bracket-capacity") ? (
-            <Card>
-              <FederalBracketCapacityTable input={input} />
-            </Card>
-          ) : null}
-          {isFeatureEnabled("multi-year-schedule") ? (
-            <Card>
-              <MultiYearScheduleTable input={input} />
-            </Card>
-          ) : null}
+          <details className="rounded-[20px] border border-white/60 bg-white/65 p-5 shadow-sm dark:border-white/10 dark:bg-white/10">
+            <summary className="cursor-pointer text-base font-semibold text-neutral-950 dark:text-white">
+              Advanced calculation details
+            </summary>
+            <div className="mt-5">
+              <CalculationBreakdown input={input} result={result} />
+            </div>
+          </details>
           <TaxImpactWarnings />
         </div>
       </section>
 
       <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-2" id="method-and-sources" aria-label="Trust and calculation methodology">
+        {isFeatureEnabled("tax-data-freshness") ? <TaxDataFreshnessCard compact /> : null}
         <Card>
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Calculator transparency</p>
           <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">Transparent calculation method</h2>
