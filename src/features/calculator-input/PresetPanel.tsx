@@ -34,10 +34,10 @@ export function PresetPanel({ value, onChange }: PresetPanelProps) {
           </Button>
         ))}
       </div>
-      <label className="grid gap-2" htmlFor="state-tax-shortcut">
+      <label className="grid min-w-0 gap-2" htmlFor="state-tax-shortcut">
         <span className="text-sm font-semibold text-neutral-950 dark:text-white">State shortcut</span>
         <select
-          className="min-h-12 rounded-[12px] border border-neutral-200 bg-white/85 px-3 text-base text-neutral-950 outline-none transition focus:border-systemBlue focus:ring-4 focus:ring-blue-500/15 dark:border-white/15 dark:bg-white/10 dark:text-white"
+          className="min-h-12 w-full min-w-0 rounded-[12px] border border-neutral-200 bg-white/85 px-3 text-base text-neutral-950 outline-none transition focus:border-systemBlue focus:ring-4 focus:ring-blue-500/15 dark:border-white/15 dark:bg-white/10 dark:text-white"
           id="state-tax-shortcut"
           onChange={(event) => {
             const preset = statePresets.find((item) => item.slug === event.target.value);

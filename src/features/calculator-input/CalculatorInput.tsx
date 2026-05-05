@@ -14,6 +14,16 @@ function numberValue(value: string): number {
   return Number.isFinite(Number(value)) ? Number(value) : 0;
 }
 
+function percentDisplayValue(value: number): string {
+  const percent = value * 100;
+
+  if (!Number.isFinite(percent)) {
+    return "0";
+  }
+
+  return Number(percent.toFixed(4)).toString();
+}
+
 export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
   const errors = validateCalculatorInput(value);
 
@@ -74,7 +84,7 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
         label="State marginal tax rate"
         type="number"
         inputMode="decimal"
-        value={value.stateMarginalTaxRate * 100}
+        value={percentDisplayValue(value.stateMarginalTaxRate)}
         error={errors.stateMarginalTaxRate}
         description="Enter 0 for no-income-tax states."
         onChange={(event) => update("stateMarginalTaxRate", numberValue(event.target.value) / 100)}
@@ -98,14 +108,14 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
         label="Expected annual return"
         type="number"
         inputMode="decimal"
-        value={value.expectedAnnualReturn * 100}
+        value={percentDisplayValue(value.expectedAnnualReturn)}
         onChange={(event) => update("expectedAnnualReturn", numberValue(event.target.value) / 100)}
       />
       <TextField
         label="Retirement marginal tax rate"
         type="number"
         inputMode="decimal"
-        value={value.retirementMarginalTaxRate * 100}
+        value={percentDisplayValue(value.retirementMarginalTaxRate)}
         onChange={(event) => update("retirementMarginalTaxRate", numberValue(event.target.value) / 100)}
       />
       <SelectField
