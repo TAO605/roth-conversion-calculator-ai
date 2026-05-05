@@ -22,8 +22,8 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
-      <div className="md:col-span-2">
+    <div className="grid grid-cols-1 gap-4" data-testid="calculator-input-grid">
+      <div>
         <PresetPanel onChange={onChange} value={value} />
       </div>
       <TextField
@@ -126,7 +126,7 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
         error={errors.withheldForTaxes}
         onChange={(event) => update("withheldForTaxes", numberValue(event.target.value))}
       />
-      <label className="flex items-center justify-between rounded-[14px] bg-white/60 px-4 py-3 dark:bg-white/10 md:col-span-2">
+      <label className="flex items-center justify-between rounded-[14px] bg-white/60 px-4 py-3 dark:bg-white/10">
         <span>
           <span className="block text-sm font-semibold">Penalty exception applies</span>
           <span className="text-xs text-neutral-500 dark:text-neutral-400">Use only if you know an IRS exception applies.</span>

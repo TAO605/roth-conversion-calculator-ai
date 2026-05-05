@@ -13,7 +13,7 @@ export function ProjectionChart({ projection }: ProjectionChartProps) {
     <div>
       <div className="flex h-56 items-end gap-2 rounded-[16px] bg-white/60 p-4 dark:bg-white/10" aria-hidden="true">
         {sampled.map((point) => (
-          <div className="flex flex-1 items-end gap-1" key={point.year}>
+          <div className="flex h-full flex-1 items-end gap-1" data-testid="projection-bar-group" key={point.year}>
             <div
               className="w-full rounded-t bg-systemBlue"
               style={{ height: `${Math.max(4, (point.rothValue / maxValue) * 100)}%` }}
