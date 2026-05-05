@@ -1,0 +1,2 @@
+export const REQUIRED_DISCLAIMER =
+  "This Roth Conversion Calculator is for educational and illustrative purposes only. It does NOT constitute tax, financial, legal, or investment advice. The calculation results are based on the information you provide and the latest IRS tax rules, which are subject to change. We do not guarantee the accuracy of the results. Please consult a licensed Certified Public Accountant (CPA), financial advisor, or tax professional before making any financial decisions.";

@@ -1,0 +1,63 @@
+"use client";
+
+import { Button } from "@/common/ui/button";
+import type { RothConversionInput } from "@/core/calculator/types";
+import { applyScenarioPreset, getScenarioPresets, getStateTaxPresets } from "@/core/calculator/presets";
+
+interface PresetPanelProps {
+  value: RothConversionInput;
+  onChange: (value: RothConversionInput) => void;
+}
+
+export function PresetPanel({ value, onChange }: PresetPanelProps) {
+  const scenarioPresets = getScenarioPresets();
+  const statePresets = getStateTaxPresets();
+
+  return (
+    <div className="grid gap-4 rounded-[18px] bg-white/60 p-4 dark:bg-white/10">
+      <div>
+        <h3 className="text-sm font-semibold text-neutral-950 dark:text-white">Sample scenarios</h3>
+        <p className="mt-1 text-xs leading-5 text-neutral-500 dark:text-neutral-400">
+          Educational examples only. They are not recommendations.
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {scenarioPresets.map((preset) => (
+          <Button
+            key={preset.id}
+            onClick={() => onChange(applyScenarioPreset(value, preset.id))}
+            title={`${preset.description} ${preset.disclaimer}`}
+            type="button"
+            variant="secondary"
+          >
+            {preset.label}
+          </Button>
+        ))}
+      </div>
+      <label className="grid gap-2" htmlFor="state-tax-shortcut">
+        <span className="text-sm font-semibold text-neutral-950 dark:text-white">State shortcut</span>
+        <select
+          className="min-h-12 rounded-[12px] border border-neutral-200 bg-white/85 px-3 text-base text-neutral-950 outline-none transition focus:border-systemBlue focus:ring-4 focus:ring-blue-500/15 dark:border-white/15 dark:bg-white/10 dark:text-white"
+          id="state-tax-shortcut"
+          onChange={(event) => {
+            const preset = statePresets.find((item) => item.slug === event.target.value);
+            if (preset) {
+              onChange({ ...value, stateMarginalTaxRate: preset.rate });
+            }
+          }}
+          value=""
+        >
+          <option value="">Choose a state example</option>
+          {statePresets.map((preset) => (
+            <option key={preset.slug} value={preset.slug}>
+              {preset.label} - {(preset.rate * 100).toFixed(2)}%
+            </option>
+          ))}
+        </select>
+        <span className="text-xs leading-5 text-neutral-500 dark:text-neutral-400">
+          State shortcuts are examples. Verify your actual marginal rate.
+        </span>
+      </label>
+    </div>
+  );
+}

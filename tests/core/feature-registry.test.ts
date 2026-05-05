@@ -1,0 +1,127 @@
+import { describe, expect, it } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
+import {
+  featureRegistry,
+  getEnabledFeatureIds,
+  getFeatureById,
+  isFeatureEnabled,
+  withFeatureOverride,
+} from "@/core/features/feature-registry";
+
+describe("feature registry", () => {
+  it("tracks modular features with unique ids and rollback paths", () => {
+    const ids = featureRegistry.map((feature) => feature.id);
+
+    expect(featureRegistry.length).toBeGreaterThanOrEqual(6);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(featureRegistry.every((feature) => feature.version.match(/^1\.0\.\d+$/))).toBe(true);
+    expect(featureRegistry.every((feature) => feature.rollbackPath.length > 0)).toBe(true);
+  });
+
+  it("keeps core calculator locked while allowing feature modules to be toggled", () => {
+    const core = getFeatureById("core-calculator");
+    const copySummary = getFeatureById("copy-summary");
+
+    expect(core).toMatchObject({
+      locked: true,
+      enabled: true,
+      grayRate: 100,
+    });
+    expect(copySummary).toMatchObject({
+      locked: false,
+      enabled: true,
+    });
+  });
+
+  it("returns only enabled feature ids", () => {
+    expect(getEnabledFeatureIds()).toContain("scenario-history");
+    expect(getEnabledFeatureIds()).toContain("tax-data-freshness");
+    expect(getEnabledFeatureIds()).toContain("ai-compliance-gateway");
+    expect(getEnabledFeatureIds()).toContain("seo-structured-content");
+    expect(getEnabledFeatureIds()).toContain("production-readiness");
+    expect(getEnabledFeatureIds()).toContain("privacy-safe-analytics");
+    expect(getEnabledFeatureIds()).toContain("blog-internal-linking");
+    expect(getEnabledFeatureIds()).toContain("search-console-verification");
+    expect(getEnabledFeatureIds()).toContain("rss-feed");
+    expect(getEnabledFeatureIds()).toContain("homepage-lazy-loading");
+    expect(getEnabledFeatureIds()).toContain("glossary-hub");
+    expect(getEnabledFeatureIds()).toContain("health-check-endpoint");
+    expect(getEnabledFeatureIds()).toContain("federal-tax-brackets-page");
+    expect(getEnabledFeatureIds()).toContain("filing-status-seo-pages");
+    expect(getEnabledFeatureIds()).toContain("filing-status-hub");
+    expect(getEnabledFeatureIds()).toContain("age-scenario-seo-pages");
+    expect(getEnabledFeatureIds()).toContain("example-scenario-seo-pages");
+    expect(getEnabledFeatureIds()).toContain("homepage-howto-structured-data");
+    expect(getEnabledFeatureIds()).toContain("pwa-install-icons");
+    expect(getEnabledFeatureIds()).toContain("keyword-landing-pages");
+    expect(getEnabledFeatureIds()).toContain("social-preview-metadata");
+    expect(getEnabledFeatureIds()).toContain("tax-bracket-rate-pages");
+    expect(getEnabledFeatureIds()).toContain("sitemap-priority-hints");
+    expect(getEnabledFeatureIds()).toContain("tax-payment-method-pages");
+    expect(getEnabledFeatureIds()).toContain("basis-planning-pages");
+    expect(getEnabledFeatureIds()).toContain("llms-text-index");
+    expect(getEnabledFeatureIds()).toContain("social-preview-image");
+    expect(getEnabledFeatureIds()).toContain("multi-year-planning-pages");
+    expect(getEnabledFeatureIds()).toContain("tax-interaction-pages");
+    expect(getEnabledFeatureIds()).toContain("launch-readiness-checklist");
+    expect(getEnabledFeatureIds()).toContain("site-index");
+    expect(getEnabledFeatureIds()).toContain("production-launch-guide");
+    expect(getEnabledFeatureIds()).toContain("seo-monitoring-playbook");
+    expect(getEnabledFeatureIds()).toContain("performance-audit-playbook");
+    expect(getEnabledFeatureIds()).toContain("accessibility-audit-playbook");
+    expect(getEnabledFeatureIds()).toContain("tax-data-update-playbook");
+    expect(getEnabledFeatureIds()).toContain("ai-compliance-audit-playbook");
+    expect(getEnabledFeatureIds()).toContain("content-operations-playbook");
+    expect(getEnabledFeatureIds()).toContain("cpa-review-checklist");
+    expect(getEnabledFeatureIds()).toContain("feedback-roadmap-playbook");
+    expect(getEnabledFeatureIds()).toContain("privacy-data-flow-playbook");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-planning-checklist");
+    expect(getEnabledFeatureIds()).toContain("calculator-assumptions-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-mistakes-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-tax-forms-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-timeline-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-custodian-process-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-cpa-questions-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-five-year-rules-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-rmd-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-social-security-tax-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-irmaa-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-aca-premium-tax-credit-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-niit-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-capital-gains-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-estimated-tax-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-recharacterization-guide");
+    expect(getEnabledFeatureIds()).toContain("roth-conversion-qcd-guide");
+  });
+
+  it("evaluates feature flags without allowing the locked core to be disabled", () => {
+    expect(isFeatureEnabled("copy-summary")).toBe(true);
+    expect(isFeatureEnabled("unknown-feature")).toBe(false);
+
+    withFeatureOverride("copy-summary", { enabled: false }, () => {
+      expect(isFeatureEnabled("copy-summary")).toBe(false);
+    });
+
+    withFeatureOverride("scenario-history", { grayRate: 0 }, () => {
+      expect(isFeatureEnabled("scenario-history")).toBe(false);
+    });
+
+    withFeatureOverride("core-calculator", { enabled: false, grayRate: 0 }, () => {
+      expect(isFeatureEnabled("core-calculator")).toBe(true);
+    });
+  });
+
+  it("gates optional homepage modules through the feature registry", () => {
+    const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+
+    expect(homePage).toContain('isFeatureEnabled("copy-summary")');
+    expect(homePage).toContain('isFeatureEnabled("scenario-history")');
+    expect(homePage).toContain('isFeatureEnabled("ai-explainer")');
+    expect(homePage).toContain('isFeatureEnabled("tax-data-freshness")');
+    expect(homePage).toContain('isFeatureEnabled("theme-toggle")');
+    expect(homePage).toContain('isFeatureEnabled("conversion-sensitivity")');
+    expect(homePage).toContain('isFeatureEnabled("bracket-capacity")');
+    expect(homePage).toContain('isFeatureEnabled("multi-year-schedule")');
+  });
+});

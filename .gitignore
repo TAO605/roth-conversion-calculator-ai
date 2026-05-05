@@ -1,0 +1,30 @@
+node_modules/
+.next/
+out/
+dist/
+coverage/
+test-results/
+playwright-report/
+*.log
+.env
+.env.local
+.env.*.local
+next-env.d.ts
+.vercel/
+
+# Local agent/tooling caches
+.codex-skills/
+.design-md/
+OpenSpace-main/
+awesome-design-md-src/
+tmp_*/
+
+# Local Python/bootstrap artifacts
+.python*/
+get-pip.py
+python-*.exe
+python-*.zip
+python-install.log
+
+# Downloaded archives
+*.zip

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="RothCalc Apple icon">
+  <rect width="180" height="180" rx="40" fill="#f7f8fb"/>
+  <rect x="17" y="17" width="146" height="146" rx="34" fill="#ffffff"/>
+  <path d="M52 122V56h34c16 0 27 10 27 24 0 10-5 18-14 22l17 20H99l-15-18H68v18H52Zm16-32h17c7 0 11-4 11-10s-4-10-11-10H68v20Z" fill="#007AFF"/>
+  <path d="M126 56h10v66h-10V56Z" fill="#34C759"/>
+  <path d="M42 136h96" stroke="#111827" stroke-width="7" stroke-linecap="round" opacity=".14"/>
+</svg>
