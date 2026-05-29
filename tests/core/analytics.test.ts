@@ -30,7 +30,7 @@ const input: RothConversionInput = {
 
 describe("GA4 analytics", () => {
   it("only accepts valid GA4 measurement IDs", () => {
-    expect(getGaMeasurementId({})).toBe("G-43JB1BYSQD");
+    expect(getGaMeasurementId({})).toBe("G-2YJ3V38RGJ");
     expect(getGaMeasurementId({ NEXT_PUBLIC_GA_MEASUREMENT_ID: "G-ABC123XYZ9" })).toBe("G-ABC123XYZ9");
     expect(getGaMeasurementId({ NEXT_PUBLIC_GA_MEASUREMENT_ID: "UA-OLD-ID" })).toBeNull();
     expect(getGaMeasurementId({ NEXT_PUBLIC_GA_MEASUREMENT_ID: "" })).toBeNull();

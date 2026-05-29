@@ -15,7 +15,7 @@ export interface AnalyticsEvent {
 type EnvLike = Record<string, string | undefined>;
 
 const gaIdPattern = /^G-[A-Z0-9]{6,}$/;
-const defaultGaMeasurementId = "G-43JB1BYSQD";
+const defaultGaMeasurementId = "G-2YJ3V38RGJ";
 
 function bucketCurrency(value: number): string {
   if (value < 25000) {

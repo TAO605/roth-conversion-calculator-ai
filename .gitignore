@@ -9,6 +9,7 @@ playwright-report/
 .env
 .env.local
 .env.*.local
+.env.vercel.*
 next-env.d.ts
 .vercel/
 
@@ -28,3 +29,5 @@ python-install.log
 
 # Downloaded archives
 *.zip
+
+.vercel

@@ -25,7 +25,7 @@ describe("production domain configuration", () => {
     const content = fs.readFileSync(envExamplePath, "utf8");
 
     expect(content).toContain("NEXT_PUBLIC_SITE_URL=https://www.roth-conversion-calculator-ai.shop");
-    expect(content).toContain("NEXT_PUBLIC_GA_MEASUREMENT_ID=G-43JB1BYSQD");
+    expect(content).toContain("NEXT_PUBLIC_GA_MEASUREMENT_ID=G-2YJ3V38RGJ");
     expect(content).toContain("NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=HRbRO-Uc1Qg324AW4DLI681t-BqvwgwJxfTt3w9VXqk");
     expect(content).not.toMatch(/password|密码|secret|token=/i);
   });
