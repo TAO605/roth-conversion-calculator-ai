@@ -31,8 +31,8 @@ export const FEDERAL_TAX_BRACKETS_2026: Record<FilingStatus, TaxBracket[]> = {
   ],
   head_of_household: [
     { min: 0, max: 17700, rate: 0.1 },
-    { min: 17700, max: 67250, rate: 0.12 },
-    { min: 67250, max: 105700, rate: 0.22 },
+    { min: 17700, max: 67450, rate: 0.12 },
+    { min: 67450, max: 105700, rate: 0.22 },
     { min: 105700, max: 201750, rate: 0.24 },
     { min: 201750, max: 256200, rate: 0.32 },
     { min: 256200, max: 640600, rate: 0.35 },

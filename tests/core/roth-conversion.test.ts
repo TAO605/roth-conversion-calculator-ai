@@ -44,6 +44,17 @@ describe("federal tax calculation", () => {
       }),
     ).toBe(0);
   });
+
+  it("uses the source-checked 2026 head-of-household bracket boundary", () => {
+    expect(
+      calculateFederalTaxDelta({
+        filingStatus: "head_of_household",
+        currentTaxableIncome: 67450,
+        additionalTaxableIncome: 100,
+        taxYear: 2026,
+      }),
+    ).toBe(22);
+  });
 });
 
 describe("roth conversion calculation", () => {
