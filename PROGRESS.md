@@ -28,3 +28,4 @@
 - Round 7 deployed: GitHub main is `a08aeec10b2854fcc63c65e7eee9890f0bd3b25d`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; live homepage, health endpoint, and sitemap checks returned 200.
 - Round 8 complete: converted Tax Impact Warnings from a static list into input-prioritized review items for IRMAA, ACA, Social Security, NIIT, RMD, and state-specific review without calculating unsupported external amounts.
 - Round 8 validation: targeted warning/result/YMYL tests passed, full `npm test` passed with 84 files / 222 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed prioritized warning visibility and no horizontal overflow.
+- Round 8 deployed: GitHub main is `169ac7c56d1bbf2368756b1a0c7fa6df848fe3b7`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; live homepage and sitemap checks returned 200.
