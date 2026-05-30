@@ -40,3 +40,4 @@
 - Round 11 deployed: GitHub main is `cfa7a1df2d8bbf45f93fa70f586fe010a37f1b3f`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; live homepage and sitemap checks returned 200.
 - Round 12 complete: added a repeatable `npm run seo:smoke` command for homepage, robots, sitemap, llms.txt, canonical, required trust copy, canonical host, and high-risk YMYL phrase checks.
 - Round 12 validation: targeted SEO/YMYL tests passed, `npm run seo:smoke` passed against production, full `npm test` passed with 87 files / 228 tests, and `npm run build` passed with homepage First Load JS around 135 kB.
+- Round 12 deployed: GitHub main is `c8a78cbe41c021109c0ba3b7f484913a69350cf2`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; post-deploy `npm run seo:smoke` passed.
