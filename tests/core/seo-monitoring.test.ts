@@ -3,7 +3,12 @@ import fs from "node:fs";
 import path from "node:path";
 import sitemap from "@/app/sitemap";
 import { blogPosts } from "@/content/blog";
-import { buildSeoMonitoringGroups, getSeoMonitoringSummary } from "@/content/seo-monitoring";
+import {
+  buildSearchConsoleSubmissionLoop,
+  buildSeoMonitoringGroups,
+  getSearchConsoleSources,
+  getSeoMonitoringSummary,
+} from "@/content/seo-monitoring";
 import { buildSiteIndexGroups } from "@/content/site-index";
 import { buildLlmsText } from "@/core/seo/llms";
 
@@ -27,6 +32,39 @@ describe("SEO monitoring playbook", () => {
     );
   });
 
+  it("builds a Search Console submission and indexing loop from official surfaces", () => {
+    const steps = buildSearchConsoleSubmissionLoop();
+    const labels = steps.map((step) => step.label);
+    const sources = getSearchConsoleSources();
+
+    expect(labels).toEqual(
+      expect.arrayContaining([
+        "Run production SEO smoke before submitting",
+        "Submit or resubmit sitemap.xml",
+        "Inspect priority URLs",
+        "Request indexing only after material changes",
+        "Review Page indexing report",
+        "Record and route exceptions",
+      ]),
+    );
+    expect(steps.map((step) => step.tool)).toEqual(
+      expect.arrayContaining([
+        "npm run seo:smoke",
+        "Google Search Console Sitemaps report",
+        "Google Search Console URL Inspection",
+        "Google Search Console Page indexing report",
+      ]),
+    );
+    expect(sources.map((source) => source.url)).toEqual(
+      expect.arrayContaining([
+        "https://support.google.com/webmasters/answer/7451001",
+        "https://support.google.com/webmasters/answer/9012289",
+        "https://support.google.com/webmasters/answer/7440203",
+        "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
+      ]),
+    );
+  });
+
   it("exposes SEO monitoring through sitemap, homepage, site index, and LLM discovery", () => {
     const urls = sitemap().map((entry) => entry.url);
     const pageFile = fs.readFileSync(path.join(process.cwd(), "src/app/seo-monitoring/page.tsx"), "utf8");
@@ -37,6 +75,8 @@ describe("SEO monitoring playbook", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/seo-monitoring");
     expect(pageFile).toContain("SEO Monitoring Playbook");
     expect(pageFile).toContain("buildSeoMonitoringGroups");
+    expect(pageFile).toContain("buildSearchConsoleSubmissionLoop");
+    expect(pageFile).toContain("Search Console submission loop");
     expect(homePage).toContain('href="/seo-monitoring"');
     expect(siteIndexUrls).toContain("/seo-monitoring");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/seo-monitoring");

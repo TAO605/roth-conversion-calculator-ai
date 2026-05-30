@@ -341,3 +341,29 @@ Targeted workflow and SEO smoke tests passed locally before deployment.
 **Future trigger words:**
 
 GitHub Actions SEO, automated smoke check, scheduled SEO monitor, post-deploy SEO automation.
+
+## 2026-05-30 - Search Console Work Needs An Evidence Loop
+
+**Symptom:**
+
+The project had a repeatable SEO smoke command, but Search Console operations were still described broadly rather than as a submission and indexing loop.
+
+**Root cause:**
+
+Sitemap submission, URL Inspection, request indexing, and Page indexing reports are related steps, but treating them separately makes it harder to record evidence or route exceptions into engineering fixes.
+
+**Fix:**
+
+Added a Search Console submission loop to `/seo-monitoring` and official Google source links for Sitemaps, URL Inspection, Page indexing, and sitemap guidance.
+
+**Guard:**
+
+`tests/core/seo-monitoring.test.ts` verifies the loop labels, tools, source URLs, and page exposure.
+
+**Validation:**
+
+Targeted SEO monitoring, SEO smoke, and YMYL tests passed before full-suite validation.
+
+**Future trigger words:**
+
+Search Console, sitemap submission, URL Inspection, Page indexing, request indexing, indexing exception.

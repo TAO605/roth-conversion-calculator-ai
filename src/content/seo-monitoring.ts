@@ -8,6 +8,18 @@ export interface SeoMonitoringCheck {
   escalation: string;
 }
 
+export interface SearchConsoleSubmissionStep {
+  label: string;
+  tool: string;
+  action: string;
+  evidence: string;
+}
+
+export interface SearchConsoleSource {
+  label: string;
+  url: string;
+}
+
 export interface SeoMonitoringGroup {
   id: SeoMonitoringCadence;
   title: string;
@@ -152,6 +164,74 @@ export function buildSeoMonitoringGroups(): SeoMonitoringGroup[] {
           "If the same class of incident repeats, convert the finding into a regression test or launch checklist item.",
         ),
       ],
+    },
+  ];
+}
+
+export function buildSearchConsoleSubmissionLoop(): SearchConsoleSubmissionStep[] {
+  return [
+    {
+      label: "Run production SEO smoke before submitting",
+      tool: "npm run seo:smoke",
+      action:
+        "Confirm homepage, canonical, robots.txt, sitemap.xml, llms.txt, trust copy, and high-risk YMYL phrase checks pass before touching Search Console.",
+      evidence: "Passing command output",
+    },
+    {
+      label: "Submit or resubmit sitemap.xml",
+      tool: "Google Search Console Sitemaps report",
+      action:
+        "Submit https://www.roth-conversion-calculator-ai.shop/sitemap.xml and confirm Search Console can fetch it without parsing errors.",
+      evidence: "Submitted sitemap row and last-read status",
+    },
+    {
+      label: "Inspect priority URLs",
+      tool: "Google Search Console URL Inspection",
+      action:
+        "Inspect homepage, /methodology, /tax-data-update, /tax-brackets/2026, /roth-conversion-irmaa-guide, and /seo-monitoring after major releases.",
+      evidence: "Inspection result, Google-selected canonical, and crawl/index state",
+    },
+    {
+      label: "Request indexing only after material changes",
+      tool: "Google Search Console URL Inspection",
+      action:
+        "Use request indexing for newly published or materially updated priority URLs after the live page, canonical, and sitemap are correct.",
+      evidence: "Requested indexing confirmation or reason not requested",
+    },
+    {
+      label: "Review Page indexing report",
+      tool: "Google Search Console Page indexing report",
+      action:
+        "Compare indexed, not indexed, discovered, crawled, duplicate, and alternate canonical statuses against sitemap and internal-link expectations.",
+      evidence: "Affected URL examples and status trend",
+    },
+    {
+      label: "Record and route exceptions",
+      tool: "PROGRESS.md and release notes",
+      action:
+        "Record affected URLs, status, likely cause, corrective action, and follow-up date; convert repeated issues into tests or smoke checks.",
+      evidence: "Progress entry, issue note, or regression guard",
+    },
+  ];
+}
+
+export function getSearchConsoleSources(): SearchConsoleSource[] {
+  return [
+    {
+      label: "Google Search Console Sitemaps report",
+      url: "https://support.google.com/webmasters/answer/7451001",
+    },
+    {
+      label: "Google Search Console URL Inspection tool",
+      url: "https://support.google.com/webmasters/answer/9012289",
+    },
+    {
+      label: "Google Search Console Page indexing report",
+      url: "https://support.google.com/webmasters/answer/7440203",
+    },
+    {
+      label: "Google Search Central sitemap guidance",
+      url: "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
     },
   ];
 }

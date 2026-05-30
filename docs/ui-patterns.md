@@ -80,3 +80,10 @@
 - Add a short post-push delay when production deployment is handled by an external platform.
 - Keep the workflow read-only and secret-free when checking public URLs.
 - Test workflow text so future edits do not accidentally remove triggers or the production URL.
+
+## Search Console Submission Loop
+
+- Treat Search Console as a follow-up verification surface after local/production smoke checks pass.
+- Keep sitemap submission, URL Inspection, request indexing, Page indexing review, and exception routing in one ordered loop.
+- Link to official Google documentation from the operations page.
+- Record evidence and repeated exceptions in project memory or tests instead of relying on screenshots alone.

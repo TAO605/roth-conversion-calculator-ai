@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { buildSeoMonitoringGroups, getSeoMonitoringSummary } from "@/content/seo-monitoring";
+import {
+  buildSearchConsoleSubmissionLoop,
+  buildSeoMonitoringGroups,
+  getSearchConsoleSources,
+  getSeoMonitoringSummary,
+} from "@/content/seo-monitoring";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { breadcrumbJsonLd } from "@/core/seo/json-ld";
 
@@ -12,6 +17,8 @@ export const metadata = {
 
 export default function SeoMonitoringPage() {
   const groups = buildSeoMonitoringGroups();
+  const searchConsoleSteps = buildSearchConsoleSubmissionLoop();
+  const searchConsoleSources = getSearchConsoleSources();
   const summary = getSeoMonitoringSummary(groups);
 
   return (
@@ -57,6 +64,60 @@ export default function SeoMonitoringPage() {
           </span>
         </div>
       </header>
+
+      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
+              Search Console submission loop
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">
+              Sitemap, URL Inspection, and Page Indexing Checks
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              Use this loop after major releases, tax-data updates, or new SEO page clusters. It starts with the local
+              smoke command, then moves into Google Search Console only after canonical and crawl signals are clean.
+            </p>
+          </div>
+          <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+            {searchConsoleSteps.length} steps
+          </span>
+        </div>
+        <div className="mt-5 grid gap-3">
+          {searchConsoleSteps.map((step, index) => (
+            <article
+              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              key={step.label}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="font-semibold text-neutral-950 dark:text-white">
+                  {index + 1}. {step.label}
+                </h3>
+                <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-systemBlue">
+                  {step.tool}
+                </span>
+              </div>
+              <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{step.action}</p>
+              <p className="rounded-[14px] bg-neutral-100 p-3 text-sm leading-6 text-neutral-700 dark:bg-white/10 dark:text-neutral-200">
+                Evidence: {step.evidence}
+              </p>
+            </article>
+          ))}
+        </div>
+        <div className="mt-5 grid gap-2 text-sm">
+          {searchConsoleSources.map((source) => (
+            <a
+              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
+              href={source.url}
+              key={source.url}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {source.label}
+            </a>
+          ))}
+        </div>
+      </section>
 
       <section className="grid gap-5">
         {groups.map((group) => (

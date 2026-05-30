@@ -130,3 +130,14 @@ Decision:
 - Wait 90 seconds after push-triggered runs to reduce race conditions with Vercel production aliasing.
 - Use Node 22 and `npm ci` for repeatable execution.
 - Keep the workflow secret-free and read-only.
+
+## 2026-05-30 - Search Console Monitoring Starts With Smoke Evidence
+
+The SEO monitoring page now includes a Search Console submission loop.
+
+Decision:
+
+- Run `npm run seo:smoke` before sitemap or URL Inspection actions.
+- Submit `sitemap.xml` through the Sitemaps report and record last-read/fetch evidence.
+- Use URL Inspection for priority URLs and request indexing only after material changes.
+- Review Page indexing statuses against canonical, robots, sitemap, internal-link, and release evidence before changing product code.

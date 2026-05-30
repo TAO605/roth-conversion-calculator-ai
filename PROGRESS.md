@@ -44,3 +44,5 @@
 - Round 13 complete: added a GitHub Actions workflow to run production `npm run seo:smoke` after pushes to main, on manual dispatch, and on a daily schedule.
 - Round 13 validation: targeted SEO workflow/script/YMYL tests passed, `npm run seo:smoke` passed against production, full `npm test` passed with 88 files / 229 tests, and `npm run build` passed with homepage First Load JS around 135 kB.
 - Round 13 automated: GitHub main is `bda73172fdf8643ca2a9aaafc3009aa4ed770e3e`; the new `SEO Smoke` workflow was recognized by GitHub Actions and the push-triggered run `26677226207` completed successfully.
+- Round 14 complete: enhanced `/seo-monitoring` with a Search Console submission loop covering smoke verification, sitemap submission, URL Inspection, request indexing boundaries, Page indexing review, and exception routing.
+- Round 14 validation: targeted SEO monitoring/SEO smoke/YMYL tests passed, `npm run seo:smoke` passed against production, full `npm test` passed with 88 files / 230 tests, and `npm run build` passed.
