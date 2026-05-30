@@ -14,8 +14,9 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain('cron: "17 9 * * *"');
     expect(workflow).toContain("SEO_SMOKE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("GSC_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
+    expect(workflow).toContain("FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true");
     expect(workflow).toContain("uses: actions/setup-node@v4");
-    expect(workflow).toContain("node-version: 22");
+    expect(workflow).toContain("node-version: 24");
     expect(workflow).toContain("npm ci");
     expect(workflow).toContain("sleep 90");
     expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");

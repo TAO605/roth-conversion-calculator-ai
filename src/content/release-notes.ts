@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.74",
+    date: "2026-05-30",
+    type: "patch",
+    title: "Node 24 SEO workflow readiness",
+    summary:
+      "Moved the production SEO Smoke workflow to Node 24 and opted GitHub JavaScript actions into the Node 24 runtime so scheduled SEO evidence checks stay stable before GitHub's Node 20 action runtime removal window.",
+    affectedArea: "GitHub Actions SEO automation, scheduled production evidence checks, artifact upload, and CI runtime compatibility",
+    rollbackPath:
+      "Restore the workflow node-version and remove FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 from .github/workflows/seo-smoke.yml.",
+  },
+  {
     version: "1.0.73",
     date: "2026-05-30",
     type: "patch",
