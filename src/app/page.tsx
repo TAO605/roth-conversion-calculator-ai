@@ -204,6 +204,9 @@ export default function HomePage() {
               </div>
             </div>
             <ResultSummary result={result} />
+            <div className="mt-4">
+              <TaxImpactWarnings />
+            </div>
           </Card>
           {isFeatureEnabled("ai-explainer") ? (
             <div id="ai-explainer">
@@ -222,7 +225,6 @@ export default function HomePage() {
               <CalculationBreakdown input={input} result={result} />
             </div>
           </details>
-          <TaxImpactWarnings />
         </div>
       </section>
 

@@ -14,3 +14,10 @@
 - [ ] Advanced assumptions are collapsed by default.
 - [ ] All original calculation inputs remain available.
 - [ ] Mobile layout has no horizontal overflow.
+
+## Tax Impact Warnings
+
+- [ ] Warning panel appears immediately after the result summary.
+- [ ] Warning panel appears before AI, projection, and advanced calculation details.
+- [ ] Warning copy describes professional-review boundaries without estimating unsupported costs.
+- [ ] Warning panel has no horizontal overflow on mobile.

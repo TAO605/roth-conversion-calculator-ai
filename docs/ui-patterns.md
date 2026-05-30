@@ -12,3 +12,9 @@
 - Put the most common planning fields in a `Quick Estimate` block: conversion amount, current taxable income, filing status, state marginal tax rate, retirement age, expected annual return, and traditional IRA balance.
 - Keep less frequent or higher-complexity assumptions in a collapsed `Advanced assumptions` section: after-tax basis, current age, retirement marginal tax rate, tax payment method, IRA withholding, penalty exception, and sample presets.
 - Do not remove advanced fields; hide complexity progressively so the calculator remains complete and auditable.
+
+## Result-Adjacent Tax Impact Warnings
+
+- Place hidden-cost warnings directly after the primary result summary, before AI, projection, or advanced details.
+- Frame IRMAA, ACA premium tax credits, Social Security benefit taxation, NIIT, AMT, RMDs, and state-specific rules as professional-review items unless a full rules engine exists.
+- Use review-oriented language instead of alarm language; the purpose is to prevent blind spots, not to make a recommendation.

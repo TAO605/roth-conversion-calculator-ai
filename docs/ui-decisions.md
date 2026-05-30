@@ -20,3 +20,14 @@ Decision:
 - Keep the quick block focused on the high-frequency fields that drive the initial estimate.
 - Keep basis, current age, retirement tax rate, tax payment method, withholding, penalty exception, and presets in collapsed advanced assumptions.
 - Preserve all original inputs so existing calculations, tests, and CPA-review use cases remain intact.
+
+## 2026-05-30 - Hidden Tax Interactions Belong Next To Results
+
+V1.3 emphasized IRMAA and ACA as hidden costs users often miss. The production UI now surfaces the warning panel immediately after the result summary rather than below AI, projection, and advanced details.
+
+Decision:
+
+- Show `Tax Impact Warnings` inside the Results card.
+- Keep it after the primary result metrics so the main result still lands first.
+- Keep it before AI, projection, and advanced calculation details so hidden interactions are not buried.
+- Frame unsupported interactions as professional-review items, not calculated dollar amounts.

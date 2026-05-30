@@ -81,3 +81,29 @@ Targeted input/homepage/YMYL tests, full `npm test`, `npm run build`, and deskto
 **Future trigger words:**
 
 Quick Estimate, input density, advanced assumptions, mobile calculator first screen, V1.3 input split.
+
+## 2026-05-30 - Place Unsupported Tax Interactions Beside Results
+
+**Symptom:**
+
+Hidden-cost warnings for IRMAA, ACA credits, NIIT, AMT, RMDs, and state-specific rules existed, but they appeared after AI, projection, and advanced details.
+
+**Root cause:**
+
+The warning module was technically present but placed too late in the result flow, so users could read the main estimate without seeing important scope limits.
+
+**Fix:**
+
+Moved `Tax Impact Warnings` into the Results card directly after the primary result summary and before AI/projection/advanced details.
+
+**Guard:**
+
+`tests/core/tax-impact-warning-placement.test.ts` verifies the panel content, placement after `ResultSummary`, and single-instance rendering.
+
+**Validation:**
+
+Targeted warning/result/YMYL tests, full `npm test`, `npm run build`, and desktop/mobile Playwright screenshot smoke passed.
+
+**Future trigger words:**
+
+Tax Impact Warnings placement, IRMAA warning buried, ACA hidden cost, result scope limits, unsupported tax interactions.
