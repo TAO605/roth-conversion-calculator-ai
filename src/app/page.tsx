@@ -27,6 +27,7 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { isFeatureEnabled } from "@/core/features/feature-registry";
 import { calculatorHowToJsonLd, faqJsonLd, organizationJsonLd, webApplicationJsonLd } from "@/core/seo/json-ld";
+import { TAX_DATA_FRESHNESS } from "@/core/tax-data/freshness";
 
 const initialInput: RothConversionInput = {
   conversionAmount: 50000,
@@ -262,13 +263,13 @@ export default function HomePage() {
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">E-E-A-T reference base</p>
           <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">Official sources reviewed</h2>
           <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
-            This page is maintained for tax year 2026, reviewed May 2026, and grounded in official IRS materials. The
+            This page is maintained for tax year 2026, updated {TAX_DATA_FRESHNESS.lastUpdated}, and grounded in official IRS materials. The
             content is educational and does not replace individualized tax advice.
           </p>
           <div className="mt-4 grid gap-2 text-sm">
             <a
               className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026"
+              href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill/"
               rel="noreferrer"
               target="_blank"
             >

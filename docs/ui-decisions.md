@@ -52,3 +52,14 @@ Decision:
 - Show tax year, educational estimate, based-on-inputs, and not-tax-advice badges.
 - Keep badges compact and visually secondary to the primary result cards.
 - Avoid accuracy guarantee language in the badge set.
+
+## 2026-05-30 - Tax Data Trust Requires Source Links And Review Status
+
+The tax-data freshness card now exposes the active tax year, last updated date, official IRS source links, update window, and professional-review status.
+
+Decision:
+
+- Use official IRS links for 2026 tax inflation adjustments, Publication 590-A, and Publication 590-B.
+- Say `Tax professional review pending` unless there is real review evidence.
+- Add the same metadata to the public health payload so deployment checks can verify the data-trust state.
+- Keep the wording educational and avoid implying guaranteed accuracy.

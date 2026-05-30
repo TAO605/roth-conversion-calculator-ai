@@ -17,6 +17,8 @@ describe("health payload", () => {
       version: "1.2.3",
       taxYear: 2026,
     });
+    expect(payload.taxData.lastUpdated).toBe("May 30, 2026");
+    expect(payload.taxData.professionalReviewStatus).toContain("pending");
     expect(payload.content.blogPosts).toBeGreaterThanOrEqual(12);
     expect(payload.content.glossaryTerms).toBeGreaterThanOrEqual(12);
     expect(payload.features.enabled).toBeGreaterThan(10);

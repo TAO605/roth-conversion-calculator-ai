@@ -6,3 +6,4 @@
 - [done] Bring Tax Impact Warnings closer to the calculator result area
 - [done] Add safe tax payment method comparison
 - [done] Add result scope badges for educational/YMYL boundaries
+- [done] Add tax data trust metadata with IRS source links and professional-review status

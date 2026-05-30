@@ -23,3 +23,5 @@
 - Round 5 validation: targeted tests passed, full `npm test` passed with 83 files / 218 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed comparison visibility, placement after warnings, and no horizontal overflow.
 - Round 6 complete: added result scope badges before the primary result numbers: `2026 tax year`, `Educational estimate`, `Based on your inputs`, and `Not tax advice`.
 - Round 6 validation: targeted tests passed, full `npm test` passed with 84 files / 220 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed scope visibility, placement before results, and no horizontal overflow.
+- Round 7 complete: strengthened tax-data trust signals with explicit last-updated metadata, IRS source links, public professional-review status, and health-payload traceability.
+- Round 7 validation: targeted tax-data/health/homepage/YMYL tests passed, full `npm test` passed with 84 files / 221 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed trust copy visibility and no horizontal overflow.

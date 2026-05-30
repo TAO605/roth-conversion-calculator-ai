@@ -19,7 +19,9 @@ export function buildHealthPayload({ packageVersion, now = new Date() }: BuildHe
     checkedAt: now.toISOString(),
     taxYear: TAX_DATA_FRESHNESS.taxYear,
     taxData: {
+      lastUpdated: TAX_DATA_FRESHNESS.lastUpdated,
       reviewedMonth: TAX_DATA_FRESHNESS.reviewedMonth,
+      professionalReviewStatus: TAX_DATA_FRESHNESS.professionalReviewStatus,
       updateWindow: TAX_DATA_FRESHNESS.updateWindow,
     },
     content: {

@@ -30,3 +30,10 @@
 - Show compact scope badges before the result numbers: tax year, educational estimate, based on user inputs, and not tax advice.
 - Keep the badges visually light so they reinforce trust without competing with primary results.
 - Do not use badges to claim accuracy guarantees.
+
+## Tax Data Trust Card
+
+- Show tax-data freshness as operational trust metadata: active tax year, last updated date, source basis, update window, and known exclusions.
+- Link directly to official IRS source pages when tax-year data or IRA rules are referenced.
+- State professional-review status plainly. If no qualified tax professional review evidence is recorded, say review is pending instead of implying CPA/EA approval.
+- Keep trust copy close to methodology and homepage calculator context so users can audit assumptions without leaving the workflow.

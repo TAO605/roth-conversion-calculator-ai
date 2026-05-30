@@ -159,3 +159,29 @@ Targeted scope/result/YMYL tests, full `npm test`, `npm run build`, and desktop/
 **Future trigger words:**
 
 result scope, educational estimate badge, not tax advice, YMYL boundary, before result numbers.
+
+## 2026-05-30 - Tax Data Trust Needs Verifiable Source Metadata
+
+**Symptom:**
+
+The site showed tax-data freshness but did not expose a precise last-updated date, direct IRS source URLs, or the current professional-review status in the reusable metadata.
+
+**Root cause:**
+
+YMYL trust copy can become vague when source links and review status live only in prose instead of a shared data module and tests.
+
+**Fix:**
+
+Extended `TAX_DATA_FRESHNESS` with last-updated metadata, official IRS source URLs, and an explicit pending professional-review status; rendered that data in the freshness card and public health payload.
+
+**Guard:**
+
+`tests/core/tax-data-freshness.test.ts` verifies source URLs and review status. `tests/core/health.test.ts` verifies public operational traceability.
+
+**Validation:**
+
+Targeted tax-data, health, homepage SEO, and YMYL tests passed before full-suite validation.
+
+**Future trigger words:**
+
+tax data freshness, IRS source links, CPA review, professional review status, annual tax update, YMYL trust metadata.
