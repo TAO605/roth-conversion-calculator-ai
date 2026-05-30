@@ -22,7 +22,6 @@ import { FaqSection, faqItems } from "@/features/faq/FaqSection";
 import { ShareResultButton } from "@/features/share-link/ShareResultButton";
 import { ThemeToggle } from "@/features/theme-toggle/ThemeToggle";
 import { TaxDataFreshnessCard } from "@/features/tax-data-freshness/TaxDataFreshnessCard";
-import { CalculatorAnalyticsBeacon } from "@/features/analytics/CalculatorAnalyticsBeacon";
 import { calculateRothConversion } from "@/core/calculator/roth-conversion";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
@@ -48,17 +47,17 @@ const initialInput: RothConversionInput = {
   taxYear: 2026,
 };
 
-function LazyPanelFallback() {
+function LazyPanelFallback({ className = "min-h-24", label = "Loading module..." }: { className?: string; label?: string }) {
   return (
-    <div className="min-h-24 animate-pulse rounded-[16px] bg-white/60 p-4 text-sm text-neutral-500 dark:bg-white/10 dark:text-neutral-400">
-      Loading module...
+    <div className={`${className} animate-pulse rounded-[16px] bg-white/60 p-4 text-sm text-neutral-500 dark:bg-white/10 dark:text-neutral-400`}>
+      {label}
     </div>
   );
 }
 
 const ProjectionChart = dynamic<{ projection: RothConversionResult["projection"] }>(
   () => import("@/features/charts/ProjectionChart").then((module) => module.ProjectionChart),
-  { loading: LazyPanelFallback },
+  { loading: () => <LazyPanelFallback className="min-h-[17rem]" label="Loading projection..." /> },
 );
 
 const PdfReportButton = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
@@ -76,7 +75,12 @@ const CopyProfessionalHandoffButton = dynamic<{ input: RothConversionInput; resu
 
 const AiExplainer = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
   () => import("@/features/ai-assistant/AiExplainer").then((module) => module.AiExplainer),
-  { loading: LazyPanelFallback },
+  { loading: () => <LazyPanelFallback className="min-h-[24rem]" label="Loading AI helper..." /> },
+);
+
+const CalculatorAnalyticsBeacon = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
+  () => import("@/features/analytics/CalculatorAnalyticsBeacon").then((module) => module.CalculatorAnalyticsBeacon),
+  { loading: () => null, ssr: false },
 );
 
 export default function HomePage() {

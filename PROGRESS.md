@@ -35,3 +35,5 @@
 - Round 10 complete: made the expanded result action set responsive with a mobile single-column layout, tablet two-column layout, desktop wrapping row, and icon-backed reset action.
 - Round 10 validation: targeted result-action/professional-handoff/homepage-performance/YMYL tests passed, full `npm test` passed with 86 files / 226 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed all four result actions are visible with no horizontal overflow.
 - Round 10 deployed: GitHub main is `a34f29b1747cc859569019dda1b99b910bbcb634`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; live homepage and sitemap checks returned 200.
+- Round 11 complete: reduced homepage first-load work by lazy-loading the analytics beacon and making below-the-fold chart/AI lazy fallbacks size-stable for CLS control.
+- Round 11 validation: targeted homepage-performance/result-action/YMYL tests passed, full `npm test` passed with 86 files / 227 tests, `npm run build` passed with homepage First Load JS around 135 kB, and Playwright desktop/mobile smoke confirmed no horizontal overflow and local CLS sample of 0.

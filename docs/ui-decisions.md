@@ -97,3 +97,14 @@ Decision:
 - Use two columns on small/tablet viewports.
 - Return to a compact flex row on wide desktop.
 - Add a reset icon so the destructive utility action is visually recognizable.
+
+## 2026-05-30 - Analytics And Below-Fold Modules Stay Lazy
+
+The homepage now lazy-loads the analytics beacon and uses size-stable fallbacks for heavy below-the-fold modules.
+
+Decision:
+
+- Keep `ProjectionChart`, `AiExplainer`, `PdfReportButton`, `CopyProfessionalHandoffButton`, and `CalculatorAnalyticsBeacon` dynamically loaded.
+- Disable SSR for the analytics beacon because it only sends browser-side events.
+- Reserve `17rem` for projection loading and `24rem` for AI helper loading to reduce layout shift while chunks load.
+- Test these boundaries in `tests/core/homepage-performance.test.ts`.

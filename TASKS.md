@@ -10,3 +10,4 @@
 - [done] Prioritize hidden tax interaction warnings from user inputs without estimating unsupported amounts
 - [done] Add copyable CPA review packet for professional handoff
 - [done] Make result actions responsive and mobile-friendly
+- [done] Reduce homepage first-load work with non-critical analytics lazy loading and stable lazy fallbacks

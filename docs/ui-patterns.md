@@ -59,3 +59,10 @@
 - Tablet: two columns so paired actions scan cleanly.
 - Desktop: horizontal wrapping row aligned with the result heading.
 - Keep destructive actions visually distinct and icon-backed.
+
+## Homepage Performance Boundaries
+
+- Keep non-critical modules out of the initial homepage bundle with `next/dynamic`.
+- Analytics beacons should load after the app shell, not as static homepage imports.
+- Lazy fallbacks for below-the-fold panels should reserve a stable height close to the final component height.
+- Do not trade away the calculator's first-screen usability for decorative motion or extra tracking code.

@@ -263,3 +263,29 @@ Targeted result-action, professional-handoff, homepage-performance, and YMYL tes
 **Future trigger words:**
 
 result buttons crowded, mobile action layout, Copy CPA packet button, result action group, reset button icon.
+
+## 2026-05-30 - Non-Critical Homepage Work Belongs Behind Dynamic Imports
+
+**Symptom:**
+
+The homepage kept adding useful modules, increasing the risk that non-render-critical work would enter the initial bundle.
+
+**Root cause:**
+
+Analytics and below-the-fold helpers are easy to import statically because they are small in isolation, but their cumulative effect matters for Core Web Vitals.
+
+**Fix:**
+
+Moved `CalculatorAnalyticsBeacon` behind `next/dynamic` with `ssr: false` and gave projection/AI lazy fallbacks stable heights.
+
+**Guard:**
+
+`tests/core/homepage-performance.test.ts` verifies dynamic imports for non-critical modules and size-stable fallbacks.
+
+**Validation:**
+
+Targeted homepage-performance, result-action, and YMYL tests passed before full-suite validation.
+
+**Future trigger words:**
+
+homepage performance, Core Web Vitals, first load JS, analytics beacon, lazy fallback, CLS.
