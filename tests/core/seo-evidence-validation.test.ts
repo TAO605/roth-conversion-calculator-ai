@@ -30,6 +30,8 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("GITHUB_SHA");
     expect(manifestScript).toContain("hasUtf16Bom");
     expect(manifestScript).toContain("utf16le");
+    expect(manifestScript).toContain("selfDescribing");
+    expect(manifestScript).toContain("seo-evidence-manifest.json");
     expect(manifestScript).toContain("production-seo-evidence");
     expect(manifestScript).toContain("retentionDays: 30");
   });

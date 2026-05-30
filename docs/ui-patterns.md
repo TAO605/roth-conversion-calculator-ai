@@ -124,4 +124,5 @@
 - Keep validator defaults aligned with workflow output filenames: `seo-smoke-result.json` and `gsc-evidence-result.json`.
 - Retain `seo-evidence-validation-result.json` in the artifact so downloaded evidence packages include the validator's machine-readable summary.
 - Retain `seo-evidence-manifest.json` so each evidence package identifies its workflow run, commit SHA, event type, included files, file sizes, production host, and retention window.
+- In the manifest, list the manifest itself as a self-describing generated file rather than trying to compute a brittle self-referential byte count.
 - Use the validator locally when downloading an artifact for Search Console retry evidence or incident review.

@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.82",
+    date: "2026-05-30",
+    type: "patch",
+    title: "Self-describing SEO evidence manifest",
+    summary:
+      "Updated the SEO evidence manifest so the artifact inventory lists all retained files, including the manifest itself as a self-describing generated file, while preserving byte counts for the three source evidence JSON files.",
+    affectedArea: "SEO evidence artifact traceability, GitHub Actions proof-package auditability, Search Console retry records, and incident review records",
+    rollbackPath:
+      "Remove seo-evidence-manifest.json from the manifest file list in scripts/generate-seo-evidence-manifest.mjs if the manifest should only inventory source evidence files.",
+  },
+  {
     version: "1.0.81",
     date: "2026-05-30",
     type: "patch",

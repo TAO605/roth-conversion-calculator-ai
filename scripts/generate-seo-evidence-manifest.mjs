@@ -4,9 +4,19 @@ const DEFAULT_FILES = [
   "seo-smoke-result.json",
   "gsc-evidence-result.json",
   "seo-evidence-validation-result.json",
+  "seo-evidence-manifest.json",
 ];
 
 function fileRecord(filePath) {
+  if (filePath === "seo-evidence-manifest.json") {
+    return {
+      bytes: null,
+      generatedBy: "scripts/generate-seo-evidence-manifest.mjs",
+      name: filePath,
+      selfDescribing: true,
+    };
+  }
+
   const stats = fs.statSync(filePath);
 
   return {
