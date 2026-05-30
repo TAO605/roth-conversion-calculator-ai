@@ -4,3 +4,4 @@
 - [done] Apply safe V1.3 result wording to the homepage result summary
 - [done] Add a focused `Quick Estimate` layout experiment
 - [done] Bring Tax Impact Warnings closer to the calculator result area
+- [done] Add safe tax payment method comparison

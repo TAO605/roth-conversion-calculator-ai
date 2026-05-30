@@ -31,3 +31,14 @@ Decision:
 - Keep it after the primary result metrics so the main result still lands first.
 - Keep it before AI, projection, and advanced calculation details so hidden interactions are not buried.
 - Frame unsupported interactions as professional-review items, not calculated dollar amounts.
+
+## 2026-05-30 - Tax Payment Comparison Is Scenario Modeling
+
+V1.3 requested a tax payment method comparison. The production implementation avoids recommendation language and treats the comparison as a simplified model.
+
+Decision:
+
+- Compare outside funds and IRA withholding inside the Results card.
+- Use estimated federal plus state tax as the modeled tax amount for the withholding scenario.
+- Show projected Roth value impact and possible early-distribution penalty separately.
+- Do not label either option as the best choice or a recommendation.

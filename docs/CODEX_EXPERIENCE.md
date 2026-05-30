@@ -107,3 +107,29 @@ Targeted warning/result/YMYL tests, full `npm test`, `npm run build`, and deskto
 **Future trigger words:**
 
 Tax Impact Warnings placement, IRMAA warning buried, ACA hidden cost, result scope limits, unsupported tax interactions.
+
+## 2026-05-30 - Payment Method Comparisons Need Neutral Scenario Language
+
+**Symptom:**
+
+V1.3 asked to compare paying Roth conversion tax with IRA funds versus outside funds, but the original wording leaned toward a direct recommendation.
+
+**Root cause:**
+
+Tax payment method choice depends on personal liquidity, age, penalty rules, tax planning, and professional review, so a calculator should compare modeled effects without instructing the user.
+
+**Fix:**
+
+Added `Tax Payment Method Comparison` with outside-funds and IRA-withholding scenarios, projected Roth value impact, and separate possible penalty wording.
+
+**Guard:**
+
+`tests/core/tax-payment-comparison.test.ts` checks the model, rendered comparison, and absence of recommendation phrases.
+
+**Validation:**
+
+Targeted comparison/YMYL/calculator tests, full `npm test`, `npm run build`, and desktop/mobile Playwright screenshot smoke passed.
+
+**Future trigger words:**
+
+tax payment method comparison, outside funds, IRA withholding, strong recommendation, best payment method, Roth tax payment advice.

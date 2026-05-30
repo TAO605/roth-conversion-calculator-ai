@@ -14,6 +14,7 @@ import {
 import { CalculatorInput } from "@/features/calculator-input/CalculatorInput";
 import { ResultSummary } from "@/features/result-summary/ResultSummary";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
+import { TaxPaymentComparison } from "@/features/tax-payment-comparison/TaxPaymentComparison";
 import { CalculationBreakdown } from "@/features/calculation-breakdown/CalculationBreakdown";
 import { FaqSection, faqItems } from "@/features/faq/FaqSection";
 import { ShareResultButton } from "@/features/share-link/ShareResultButton";
@@ -206,6 +207,9 @@ export default function HomePage() {
             <ResultSummary result={result} />
             <div className="mt-4">
               <TaxImpactWarnings />
+            </div>
+            <div className="mt-4">
+              <TaxPaymentComparison input={input} result={result} />
             </div>
           </Card>
           {isFeatureEnabled("ai-explainer") ? (

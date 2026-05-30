@@ -18,3 +18,9 @@
 - Place hidden-cost warnings directly after the primary result summary, before AI, projection, or advanced details.
 - Frame IRMAA, ACA premium tax credits, Social Security benefit taxation, NIIT, AMT, RMDs, and state-specific rules as professional-review items unless a full rules engine exists.
 - Use review-oriented language instead of alarm language; the purpose is to prevent blind spots, not to make a recommendation.
+
+## Tax Payment Method Comparison
+
+- Compare `Pay with outside funds` and `Withhold from IRA distribution` as educational scenarios, not recommendations.
+- Use current estimated federal and state tax as the modeled tax amount, then show how IRA withholding may reduce Roth principal.
+- Mention possible early-distribution penalty when applicable, but keep the decision language neutral.

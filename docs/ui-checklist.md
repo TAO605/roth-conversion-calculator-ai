@@ -21,3 +21,10 @@
 - [ ] Warning panel appears before AI, projection, and advanced calculation details.
 - [ ] Warning copy describes professional-review boundaries without estimating unsupported costs.
 - [ ] Warning panel has no horizontal overflow on mobile.
+
+## Tax Payment Comparison
+
+- [ ] Comparison appears near the result summary.
+- [ ] Copy says it is educational and not a recommendation.
+- [ ] Outside funds and IRA withholding scenarios are both visible.
+- [ ] Copy avoids direct advice such as `you should`, `strongly recommend`, or `best move`.
