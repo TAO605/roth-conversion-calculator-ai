@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.76",
+    date: "2026-05-30",
+    type: "patch",
+    title: "Sitemap lastmod freshness",
+    summary:
+      "Changed static sitemap entries from a single default lastmod date to per-page freshness metadata so recently updated SEO operations, methodology, tax-data, and release-note pages send accurate change signals.",
+    affectedArea: "XML sitemap freshness, Search Console discovery signals, static SEO pages, and post-launch crawl evidence",
+    rollbackPath:
+      "Restore the previous static route array in src/app/sitemap.ts if per-page lastmod metadata needs to be rolled back.",
+  },
+  {
     version: "1.0.75",
     date: "2026-05-30",
     type: "patch",

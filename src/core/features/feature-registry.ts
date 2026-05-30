@@ -368,7 +368,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "sitemap-priority-hints",
     label: "Sitemap priority hints",
-    version: "1.0.32",
+    version: "1.0.76",
     layer: "content",
     enabled: true,
     locked: false,

@@ -22,3 +22,4 @@
 - [done] Add Search Console indexing retry protocol after transient Google backend errors
 - [done] Move SEO Smoke automation to Node 24 runtime readiness
 - [done] Upgrade SEO Smoke workflow to native Node 24 GitHub Actions
+- [done] Add per-page sitemap lastmod freshness for updated SEO operation pages

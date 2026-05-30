@@ -116,6 +116,19 @@ describe("seo json-ld", () => {
     });
   });
 
+  it("keeps recently updated static SEO operation pages fresh in sitemap lastmod", () => {
+    const entries = sitemap();
+    const releaseNotes = entries.find((entry) => entry.url === `${siteConfig.siteUrl}/release-notes`);
+    const seoMonitoring = entries.find((entry) => entry.url === `${siteConfig.siteUrl}/seo-monitoring`);
+    const methodology = entries.find((entry) => entry.url === `${siteConfig.siteUrl}/methodology`);
+    const taxDataUpdate = entries.find((entry) => entry.url === `${siteConfig.siteUrl}/tax-data-update`);
+
+    expect(releaseNotes?.lastModified?.toISOString().slice(0, 10)).toBe("2026-05-30");
+    expect(seoMonitoring?.lastModified?.toISOString().slice(0, 10)).toBe("2026-05-30");
+    expect(methodology?.lastModified?.toISOString().slice(0, 10)).toBe("2026-05-30");
+    expect(taxDataUpdate?.lastModified?.toISOString().slice(0, 10)).toBe("2026-05-30");
+  });
+
   it("uses one canonical site URL for metadata, robots, and sitemap", () => {
     const urls = sitemap().map((entry) => entry.url);
     const robotsConfig = robots();
