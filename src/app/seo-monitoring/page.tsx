@@ -5,6 +5,7 @@ import {
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
   buildSeoMonitoringGroups,
+  buildSitemapFreshnessEvidence,
   getSearchConsoleSources,
   getSeoMonitoringSummary,
 } from "@/content/seo-monitoring";
@@ -25,6 +26,7 @@ export default function SeoMonitoringPage() {
   const retryProtocol = buildSearchConsoleRetryProtocol();
   const searchConsoleSteps = buildSearchConsoleSubmissionLoop();
   const searchConsoleSources = getSearchConsoleSources();
+  const sitemapFreshness = buildSitemapFreshnessEvidence();
   const summary = getSeoMonitoringSummary(groups);
 
   return (
@@ -121,6 +123,53 @@ export default function SeoMonitoringPage() {
             >
               {source.label}
             </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
+              Sitemap freshness evidence
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">
+              Keep Priority Lastmod Signals Auditable
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              Priority pages need more than sitemap inclusion. The GSC evidence command now parses sitemap entries and
+              records whether freshness-critical URLs still expose current lastmod coverage before Search Console
+              retry work.
+            </p>
+          </div>
+          <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+            {sitemapFreshness.length} watched URLs
+          </span>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {sitemapFreshness.map((item) => (
+            <article
+              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              key={item.path}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="font-semibold text-neutral-950 dark:text-white">{item.label}</h3>
+                <span className="rounded-full bg-blue-500/10 px-3 py-1 font-mono text-xs font-semibold text-systemBlue">
+                  {item.path}
+                </span>
+              </div>
+              <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{item.validation}</p>
+              <dl className="grid gap-3 text-sm">
+                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                  <dt className="font-semibold text-neutral-950 dark:text-white">Minimum lastmod</dt>
+                  <dd className="mt-1 font-mono text-neutral-600 dark:text-neutral-300">{item.minimumLastmod}</dd>
+                </div>
+                <div className="rounded-[14px] bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
+                  <dt className="font-semibold">Evidence</dt>
+                  <dd className="mt-1 leading-6">{item.evidence}</dd>
+                </div>
+              </dl>
+            </article>
           ))}
         </div>
       </section>

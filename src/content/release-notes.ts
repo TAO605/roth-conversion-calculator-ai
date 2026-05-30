@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.78",
+    date: "2026-05-30",
+    type: "patch",
+    title: "Sitemap freshness operations playbook",
+    summary:
+      "Added a visible sitemap freshness evidence section to the SEO monitoring playbook so freshness-critical priority URLs, minimum lastmod dates, GSC evidence output, and CI artifact records are documented for Search Console operations.",
+    affectedArea: "SEO monitoring page, V1.3 engineering documentation, Search Console retry workflow, and sitemap freshness evidence",
+    rollbackPath:
+      "Remove buildSitemapFreshnessEvidence, the sitemap freshness evidence section on /seo-monitoring, and the V1.3 sitemap freshness addendum if this operations documentation needs to be rolled back.",
+  },
+  {
     version: "1.0.77",
     date: "2026-05-30",
     type: "patch",

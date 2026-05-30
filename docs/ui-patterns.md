@@ -109,3 +109,10 @@
 - Treat command failures as SEO source issues to fix before using Search Console request-indexing again.
 - Keep the command environment-variable driven so preview or production hosts can be checked with the same guard.
 - Run the evidence command in CI after the production smoke check so canonical drift is caught without waiting for manual Search Console work.
+
+## Sitemap Freshness Evidence
+
+- When a priority SEO operations page changes, document the minimum expected sitemap `lastmod` on `/seo-monitoring`.
+- Pair the visible operations playbook with the automated `npm run seo:gsc-evidence` parser so human review and CI enforce the same freshness-critical URL list.
+- Store freshness proof in the `production-seo-evidence` artifact; do not rely on screenshots or broad sitemap text matches alone.
+- If `lastmodFresh` fails, fix sitemap metadata and redeploy before using Search Console URL Inspection or request-indexing.

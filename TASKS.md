@@ -24,3 +24,4 @@
 - [done] Upgrade SEO Smoke workflow to native Node 24 GitHub Actions
 - [done] Add per-page sitemap lastmod freshness for updated SEO operation pages
 - [done] Add GSC evidence guard for priority sitemap lastmod freshness
+- [done] Document sitemap freshness evidence in SEO monitoring operations

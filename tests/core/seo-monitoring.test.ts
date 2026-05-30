@@ -9,6 +9,7 @@ import {
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
   buildSeoMonitoringGroups,
+  buildSitemapFreshnessEvidence,
   getSearchConsoleSources,
   getSeoMonitoringSummary,
 } from "@/content/seo-monitoring";
@@ -114,6 +115,23 @@ describe("SEO monitoring playbook", () => {
     expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
   });
 
+  it("documents sitemap freshness evidence for priority Search Console URLs", () => {
+    const evidence = buildSitemapFreshnessEvidence();
+    const paths = evidence.map((item) => item.path);
+    const combined = evidence
+      .map((item) => `${item.label} ${item.path} ${item.minimumLastmod} ${item.validation} ${item.evidence}`)
+      .join(" ");
+
+    expect(paths).toEqual(
+      expect.arrayContaining(["/", "/seo-monitoring", "/methodology", "/tax-data-update", "/tax-brackets/2026"]),
+    );
+    expect(evidence.every((item) => item.minimumLastmod === "2026-05-30")).toBe(true);
+    expect(combined).toContain("lastmodFresh: true");
+    expect(combined).toContain("production-seo-evidence");
+    expect(combined).toContain("Search Console retry");
+    expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
+  });
+
   it("turns Search Console queries into a safe content opportunity matrix", () => {
     const opportunities = buildSearchConsoleOpportunityMatrix();
     const clusters = opportunities.map((opportunity) => opportunity.cluster);
@@ -164,11 +182,14 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("buildSearchConsoleSubmissionLoop");
     expect(pageFile).toContain("buildSearchConsoleOpportunityMatrix");
     expect(pageFile).toContain("buildSearchConsoleRetryProtocol");
+    expect(pageFile).toContain("buildSitemapFreshnessEvidence");
     expect(pageFile).toContain("Search Console submission loop");
     expect(pageFile).toContain("Search Console exception queue");
     expect(pageFile).toContain("Indexing retry protocol");
+    expect(pageFile).toContain("Sitemap freshness evidence");
     expect(pageFile).toContain("Query opportunity matrix");
     expect(contentFile).toContain("seo:gsc-evidence");
+    expect(contentFile).toContain("lastmodFresh");
     expect(homePage).toContain('href="/seo-monitoring"');
     expect(siteIndexUrls).toContain("/seo-monitoring");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/seo-monitoring");

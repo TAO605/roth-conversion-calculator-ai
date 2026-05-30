@@ -50,6 +50,14 @@ export interface SearchConsoleRetryProtocol {
   record: string;
 }
 
+export interface SitemapFreshnessEvidence {
+  label: string;
+  path: string;
+  minimumLastmod: string;
+  validation: string;
+  evidence: string;
+}
+
 export interface SeoMonitoringGroup {
   id: SeoMonitoringCadence;
   title: string;
@@ -443,6 +451,46 @@ export function buildSearchConsoleRetryProtocol(): SearchConsoleRetryProtocol[] 
       stopCondition:
         "Do not rewrite YMYL calculator copy or tax logic unless query data, compliance review, and tests support a specific content need.",
       record: "Page indexing trend, affected URL examples, chosen corrective action, test coverage, and follow-up date.",
+    },
+  ];
+}
+
+export function buildSitemapFreshnessEvidence(): SitemapFreshnessEvidence[] {
+  return [
+    {
+      label: "Homepage calculator",
+      path: "/",
+      minimumLastmod: "2026-05-30",
+      validation: "Must remain fresh after result-positioning, trust-copy, or first-viewport calculator updates.",
+      evidence: "`npm run seo:gsc-evidence` returns lastmodFresh: true for the canonical homepage URL.",
+    },
+    {
+      label: "SEO monitoring playbook",
+      path: "/seo-monitoring",
+      minimumLastmod: "2026-05-30",
+      validation: "Must remain fresh after Search Console retry, exception, or evidence-loop changes.",
+      evidence: "CI artifact `production-seo-evidence` includes the parsed sitemap lastmod for /seo-monitoring.",
+    },
+    {
+      label: "Methodology page",
+      path: "/methodology",
+      minimumLastmod: "2026-05-30",
+      validation: "Must remain fresh after methodology, canonical, or tax-data source disclosure changes.",
+      evidence: "`npm run seo:gsc-evidence` verifies canonical, sitemap inclusion, noindex absence, and lastmodFresh.",
+    },
+    {
+      label: "Tax-data update playbook",
+      path: "/tax-data-update",
+      minimumLastmod: "2026-05-30",
+      validation: "Must remain fresh when tax-year update operations or IRS-source review workflows change.",
+      evidence: "The sitemap entry is parsed directly instead of relying on a broad text match.",
+    },
+    {
+      label: "2026 tax brackets",
+      path: "/tax-brackets/2026",
+      minimumLastmod: "2026-05-30",
+      validation: "Must remain fresh after bracket-data, bracket-room, or tax-year reference updates.",
+      evidence: "Search Console retry work must use the latest passing GSC evidence JSON before manual URL Inspection.",
     },
   ];
 }
