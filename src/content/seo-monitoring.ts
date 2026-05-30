@@ -58,6 +58,14 @@ export interface SitemapFreshnessEvidence {
   evidence: string;
 }
 
+export interface SeoEvidenceArtifactReview {
+  label: string;
+  artifactFile: string;
+  check: string;
+  passSignal: string;
+  useBefore: string;
+}
+
 export interface SeoMonitoringGroup {
   id: SeoMonitoringCadence;
   title: string;
@@ -491,6 +499,39 @@ export function buildSitemapFreshnessEvidence(): SitemapFreshnessEvidence[] {
       minimumLastmod: "2026-05-30",
       validation: "Must remain fresh after bracket-data, bracket-room, or tax-year reference updates.",
       evidence: "Search Console retry work must use the latest passing GSC evidence JSON before manual URL Inspection.",
+    },
+  ];
+}
+
+export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
+  return [
+    {
+      label: "Confirm production smoke status",
+      artifactFile: "seo-smoke-result.json",
+      check: "Open the downloaded production-seo-evidence artifact and confirm the smoke result has ok: true for the canonical production host.",
+      passSignal: "Homepage, robots.txt, sitemap.xml, llms.txt, canonical host, and trust-copy checks all pass.",
+      useBefore: "Use before any Search Console sitemap resubmission or URL Inspection retry.",
+    },
+    {
+      label: "Confirm priority URL crawl signals",
+      artifactFile: "gsc-evidence-result.json",
+      check: "Review the priority URL array for statusCode, canonicalUrl, inSitemap, noindex, sitemapLastmod, and lastmodFresh fields.",
+      passSignal: "Every priority URL returns HTTP 200, appears in sitemap.xml, has no noindex signal, and keeps lastmodFresh: true where required.",
+      useBefore: "Use before deciding whether an indexing delay is site-side or Search Console-side.",
+    },
+    {
+      label: "Confirm validator summary",
+      artifactFile: "seo-evidence-validation-result.json",
+      check: "Confirm the retained validator result reports ok: true after checking the smoke and GSC JSON files together.",
+      passSignal: "The validation summary records the expected host, checked file count, and no contract failures.",
+      useBefore: "Use before attaching the artifact to incident review or a GSC retry note.",
+    },
+    {
+      label: "Confirm manifest traceability",
+      artifactFile: "seo-evidence-manifest.json",
+      check: "Confirm the manifest records artifactName, gitHubRunId, gitHubSha, gitHubWorkflow, retentionDays, and the retained file list.",
+      passSignal: "The manifest includes seo-evidence-manifest.json with selfDescribing: true and records the same run SHA as the workflow.",
+      useBefore: "Use before treating the downloaded artifact as the durable proof package for that deployment.",
     },
   ];
 }

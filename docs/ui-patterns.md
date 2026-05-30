@@ -126,3 +126,4 @@
 - Retain `seo-evidence-manifest.json` so each evidence package identifies its workflow run, commit SHA, event type, included files, file sizes, production host, and retention window.
 - In the manifest, list the manifest itself as a self-describing generated file rather than trying to compute a brittle self-referential byte count.
 - Use the validator locally when downloading an artifact for Search Console retry evidence or incident review.
+- When an operations page references downloadable artifacts, render a short review checklist that maps each retained file to a pass signal and the operation it gates.

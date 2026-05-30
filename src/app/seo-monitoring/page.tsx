@@ -4,6 +4,7 @@ import {
   buildSearchConsoleOpportunityMatrix,
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
+  buildSeoEvidenceArtifactReview,
   buildSeoMonitoringGroups,
   buildSitemapFreshnessEvidence,
   getSearchConsoleSources,
@@ -26,6 +27,7 @@ export default function SeoMonitoringPage() {
   const retryProtocol = buildSearchConsoleRetryProtocol();
   const searchConsoleSteps = buildSearchConsoleSubmissionLoop();
   const searchConsoleSources = getSearchConsoleSources();
+  const artifactReview = buildSeoEvidenceArtifactReview();
   const sitemapFreshness = buildSitemapFreshnessEvidence();
   const summary = getSeoMonitoringSummary(groups);
 
@@ -123,6 +125,53 @@ export default function SeoMonitoringPage() {
             >
               {source.label}
             </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
+              SEO evidence artifact review
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">
+              Review the Downloaded Proof Package Before GSC Work
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              The SEO Smoke workflow keeps a 30-day production-seo-evidence artifact. Use this review checklist before
+              sitemap resubmission, URL Inspection retries, indexing incident notes, or production SEO regression
+              triage.
+            </p>
+          </div>
+          <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+            {artifactReview.length} files
+          </span>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {artifactReview.map((item) => (
+            <article
+              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              key={item.artifactFile}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="font-semibold text-neutral-950 dark:text-white">{item.label}</h3>
+                <span className="rounded-full bg-blue-500/10 px-3 py-1 font-mono text-xs font-semibold text-systemBlue">
+                  {item.artifactFile}
+                </span>
+              </div>
+              <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{item.check}</p>
+              <dl className="grid gap-3 text-sm">
+                <div className="rounded-[14px] bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
+                  <dt className="font-semibold">Pass signal</dt>
+                  <dd className="mt-1 leading-6">{item.passSignal}</dd>
+                </div>
+                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                  <dt className="font-semibold text-neutral-950 dark:text-white">Use before</dt>
+                  <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{item.useBefore}</dd>
+                </div>
+              </dl>
+            </article>
           ))}
         </div>
       </section>

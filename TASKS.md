@@ -29,3 +29,4 @@
 - [done] Retain SEO evidence validation summary in production artifact
 - [done] Add machine-readable SEO evidence artifact manifest
 - [done] Make SEO evidence manifest self-describing
+- [done] Add SEO evidence artifact review checklist to monitoring operations

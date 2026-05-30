@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.83",
+    date: "2026-05-30",
+    type: "patch",
+    title: "SEO evidence artifact review checklist",
+    summary:
+      "Added a visible artifact review checklist to the SEO monitoring playbook so downloaded production-seo-evidence packages are checked for smoke status, GSC priority URL evidence, validator summary, and manifest traceability before Search Console or incident work.",
+    affectedArea: "SEO monitoring page, Search Console retry operations, production evidence artifacts, and incident review workflow",
+    rollbackPath:
+      "Remove buildSeoEvidenceArtifactReview and the SEO evidence artifact review section from /seo-monitoring if downloaded artifact review should return to documentation-only handling.",
+  },
+  {
     version: "1.0.82",
     date: "2026-05-30",
     type: "patch",

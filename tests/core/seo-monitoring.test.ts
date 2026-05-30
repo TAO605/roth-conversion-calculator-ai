@@ -8,6 +8,7 @@ import {
   buildSearchConsoleOpportunityMatrix,
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
+  buildSeoEvidenceArtifactReview,
   buildSeoMonitoringGroups,
   buildSitemapFreshnessEvidence,
   getSearchConsoleSources,
@@ -132,6 +133,29 @@ describe("SEO monitoring playbook", () => {
     expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
   });
 
+  it("documents a downloaded SEO evidence artifact review checklist", () => {
+    const review = buildSeoEvidenceArtifactReview();
+    const files = review.map((item) => item.artifactFile);
+    const combined = review
+      .map((item) => `${item.label} ${item.artifactFile} ${item.check} ${item.passSignal} ${item.useBefore}`)
+      .join(" ");
+
+    expect(files).toEqual(
+      expect.arrayContaining([
+        "seo-smoke-result.json",
+        "gsc-evidence-result.json",
+        "seo-evidence-validation-result.json",
+        "seo-evidence-manifest.json",
+      ]),
+    );
+    expect(review.length).toBe(4);
+    expect(combined).toContain("production-seo-evidence");
+    expect(combined).toContain("selfDescribing: true");
+    expect(combined).toContain("Search Console-side");
+    expect(combined).toContain("URL Inspection");
+    expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
+  });
+
   it("turns Search Console queries into a safe content opportunity matrix", () => {
     const opportunities = buildSearchConsoleOpportunityMatrix();
     const clusters = opportunities.map((opportunity) => opportunity.cluster);
@@ -183,10 +207,12 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("buildSearchConsoleOpportunityMatrix");
     expect(pageFile).toContain("buildSearchConsoleRetryProtocol");
     expect(pageFile).toContain("buildSitemapFreshnessEvidence");
+    expect(pageFile).toContain("buildSeoEvidenceArtifactReview");
     expect(pageFile).toContain("Search Console submission loop");
     expect(pageFile).toContain("Search Console exception queue");
     expect(pageFile).toContain("Indexing retry protocol");
     expect(pageFile).toContain("Sitemap freshness evidence");
+    expect(pageFile).toContain("SEO evidence artifact review");
     expect(pageFile).toContain("Query opportunity matrix");
     expect(contentFile).toContain("seo:gsc-evidence");
     expect(contentFile).toContain("lastmodFresh");
