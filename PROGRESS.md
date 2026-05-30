@@ -25,3 +25,4 @@
 - Round 6 validation: targeted tests passed, full `npm test` passed with 84 files / 220 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed scope visibility, placement before results, and no horizontal overflow.
 - Round 7 complete: strengthened tax-data trust signals with explicit last-updated metadata, IRS source links, public professional-review status, and health-payload traceability.
 - Round 7 validation: targeted tax-data/health/homepage/YMYL tests passed, full `npm test` passed with 84 files / 221 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed trust copy visibility and no horizontal overflow.
+- Round 7 deployed: GitHub main is `a08aeec10b2854fcc63c65e7eee9890f0bd3b25d`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; live homepage, health endpoint, and sitemap checks returned 200.
