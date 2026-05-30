@@ -66,3 +66,10 @@
 - Analytics beacons should load after the app shell, not as static homepage imports.
 - Lazy fallbacks for below-the-fold panels should reserve a stable height close to the final component height.
 - Do not trade away the calculator's first-screen usability for decorative motion or extra tracking code.
+
+## SEO Smoke Verification
+
+- Keep production SEO smoke checks command-driven, not manual-only.
+- Verify homepage trust copy, canonical host, robots discovery, sitemap host consistency, llms.txt discovery, and banned YMYL wording.
+- Allow the same command to run against preview URLs through an environment variable.
+- Use smoke output as deployment evidence in `PROGRESS.md`.

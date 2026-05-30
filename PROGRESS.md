@@ -38,3 +38,5 @@
 - Round 11 complete: reduced homepage first-load work by lazy-loading the analytics beacon and making below-the-fold chart/AI lazy fallbacks size-stable for CLS control.
 - Round 11 validation: targeted homepage-performance/result-action/YMYL tests passed, full `npm test` passed with 86 files / 227 tests, `npm run build` passed with homepage First Load JS around 135 kB, and Playwright desktop/mobile smoke confirmed no horizontal overflow and local CLS sample of 0.
 - Round 11 deployed: GitHub main is `cfa7a1df2d8bbf45f93fa70f586fe010a37f1b3f`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; live homepage and sitemap checks returned 200.
+- Round 12 complete: added a repeatable `npm run seo:smoke` command for homepage, robots, sitemap, llms.txt, canonical, required trust copy, canonical host, and high-risk YMYL phrase checks.
+- Round 12 validation: targeted SEO/YMYL tests passed, `npm run seo:smoke` passed against production, full `npm test` passed with 87 files / 228 tests, and `npm run build` passed with homepage First Load JS around 135 kB.

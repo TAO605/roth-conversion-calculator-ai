@@ -108,3 +108,14 @@ Decision:
 - Disable SSR for the analytics beacon because it only sends browser-side events.
 - Reserve `17rem` for projection loading and `24rem` for AI helper loading to reduce layout shift while chunks load.
 - Test these boundaries in `tests/core/homepage-performance.test.ts`.
+
+## 2026-05-30 - Production SEO Checks Are Scripted
+
+Post-deploy SEO verification now uses `npm run seo:smoke`.
+
+Decision:
+
+- Keep the script dependency-free so it can run in the existing Node environment.
+- Default to the production `www` domain but allow `SEO_SMOKE_BASE_URL` for previews.
+- Check homepage, canonical, robots, sitemap, llms.txt, required trust copy, canonical host, and high-risk YMYL phrases.
+- Treat smoke failures as command failures so they can be added to automation later.

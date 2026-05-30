@@ -9,6 +9,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "seo:smoke": "node scripts/seo-smoke.mjs",
     "lint": "next lint"
   },
   "dependencies": {

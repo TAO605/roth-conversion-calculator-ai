@@ -289,3 +289,29 @@ Targeted homepage-performance, result-action, and YMYL tests passed before full-
 **Future trigger words:**
 
 homepage performance, Core Web Vitals, first load JS, analytics beacon, lazy fallback, CLS.
+
+## 2026-05-30 - SEO Smoke Checks Should Be Re-runnable
+
+**Symptom:**
+
+Deployment checks were being performed manually with ad hoc commands, which made it easy to miss canonical, robots, sitemap, llms.txt, or high-risk wording regressions.
+
+**Root cause:**
+
+The project had strong unit tests but lacked a single production smoke command for post-deploy SEO verification.
+
+**Fix:**
+
+Added `scripts/seo-smoke.mjs` and `npm run seo:smoke` to fetch production pages, validate status codes, homepage canonical, required trust copy, robots discovery links, sitemap canonical host, llms.txt entries, and banned YMYL phrases.
+
+**Guard:**
+
+`tests/core/seo-smoke-script.test.ts` verifies the command and key checks remain present.
+
+**Validation:**
+
+Targeted SEO/YMYL tests and `npm run seo:smoke` passed against production.
+
+**Future trigger words:**
+
+SEO smoke, production check, sitemap regression, robots regression, canonical mismatch, post-deploy verification.

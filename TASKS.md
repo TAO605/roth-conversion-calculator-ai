@@ -11,3 +11,4 @@
 - [done] Add copyable CPA review packet for professional handoff
 - [done] Make result actions responsive and mobile-friendly
 - [done] Reduce homepage first-load work with non-critical analytics lazy loading and stable lazy fallbacks
+- [done] Add repeatable production SEO smoke check command
