@@ -133,3 +133,29 @@ Targeted comparison/YMYL/calculator tests, full `npm test`, `npm run build`, and
 **Future trigger words:**
 
 tax payment method comparison, outside funds, IRA withholding, strong recommendation, best payment method, Roth tax payment advice.
+
+## 2026-05-30 - Put YMYL Scope Before Primary Numbers
+
+**Symptom:**
+
+The result area had disclaimers and cautious copy, but users could reach the primary dollar figures before seeing the estimate boundary.
+
+**Root cause:**
+
+Compliance language was present in surrounding copy, but not directly attached to the first result-reading moment.
+
+**Fix:**
+
+Added compact result scope badges before the primary estimates: tax year, educational estimate, based on inputs, and not tax advice.
+
+**Guard:**
+
+`tests/core/result-scope-badges.test.ts` verifies badge content and placement before `ResultSummary`.
+
+**Validation:**
+
+Targeted scope/result/YMYL tests, full `npm test`, `npm run build`, and desktop/mobile Playwright screenshot smoke passed.
+
+**Future trigger words:**
+
+result scope, educational estimate badge, not tax advice, YMYL boundary, before result numbers.

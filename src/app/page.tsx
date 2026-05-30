@@ -12,6 +12,7 @@ import {
   clearStoredCalculatorInput,
 } from "@/common/storage/calculator-persistence";
 import { CalculatorInput } from "@/features/calculator-input/CalculatorInput";
+import { ResultScopeBadges } from "@/features/result-scope/ResultScopeBadges";
 import { ResultSummary } from "@/features/result-summary/ResultSummary";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
 import { TaxPaymentComparison } from "@/features/tax-payment-comparison/TaxPaymentComparison";
@@ -204,6 +205,7 @@ export default function HomePage() {
                 </button>
               </div>
             </div>
+            <ResultScopeBadges taxYear={input.taxYear} />
             <ResultSummary result={result} />
             <div className="mt-4">
               <TaxImpactWarnings />

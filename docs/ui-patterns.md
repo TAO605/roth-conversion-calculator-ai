@@ -24,3 +24,9 @@
 - Compare `Pay with outside funds` and `Withhold from IRA distribution` as educational scenarios, not recommendations.
 - Use current estimated federal and state tax as the modeled tax amount, then show how IRA withholding may reduce Roth principal.
 - Mention possible early-distribution penalty when applicable, but keep the decision language neutral.
+
+## Result Scope Badges
+
+- Show compact scope badges before the result numbers: tax year, educational estimate, based on user inputs, and not tax advice.
+- Keep the badges visually light so they reinforce trust without competing with primary results.
+- Do not use badges to claim accuracy guarantees.

@@ -28,3 +28,9 @@
 - [ ] Copy says it is educational and not a recommendation.
 - [ ] Outside funds and IRA withholding scenarios are both visible.
 - [ ] Copy avoids direct advice such as `you should`, `strongly recommend`, or `best move`.
+
+## Result Scope
+
+- [ ] Scope badges appear before primary result numbers.
+- [ ] Scope badges include tax year, educational estimate, based on inputs, and not tax advice.
+- [ ] Scope badges do not claim guaranteed accuracy.

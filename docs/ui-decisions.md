@@ -42,3 +42,13 @@ Decision:
 - Use estimated federal plus state tax as the modeled tax amount for the withholding scenario.
 - Show projected Roth value impact and possible early-distribution penalty separately.
 - Do not label either option as the best choice or a recommendation.
+
+## 2026-05-30 - Result Boundaries Are Visible Before Numbers
+
+The result area now shows scope badges before the primary numbers so users see the educational and YMYL boundary before interpreting the estimate.
+
+Decision:
+
+- Show tax year, educational estimate, based-on-inputs, and not-tax-advice badges.
+- Keep badges compact and visually secondary to the primary result cards.
+- Avoid accuracy guarantee language in the badge set.
