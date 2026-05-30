@@ -41,6 +41,15 @@ export interface SearchConsoleException {
   evidenceToRecord: string;
 }
 
+export interface SearchConsoleRetryProtocol {
+  label: string;
+  trigger: string;
+  preflight: string;
+  action: string;
+  stopCondition: string;
+  record: string;
+}
+
 export interface SeoMonitoringGroup {
   id: SeoMonitoringCadence;
   title: string;
@@ -385,6 +394,55 @@ export function buildSearchConsoleExceptionQueue(): SearchConsoleException[] {
         "Run npm run seo:gsc-evidence, retry once during the next operations window, and if it fails again let sitemap discovery proceed while Page indexing trends are inspected.",
       retryWindow: "Wait at least several hours before retrying to avoid repeated request-indexing failures.",
       evidenceToRecord: "Inspected URL, live-test result, HTTP status, resource loading result, console messages, and request-indexing response.",
+    },
+  ];
+}
+
+export function buildSearchConsoleRetryProtocol(): SearchConsoleRetryProtocol[] {
+  return [
+    {
+      label: "Confirm the site before touching GSC",
+      trigger: "Before any manual URL Inspection retry or after a Search Console backend error.",
+      preflight:
+        "Run npm run seo:smoke and npm run seo:gsc-evidence; continue only when canonical, sitemap, noindex, and priority URL status checks pass.",
+      action:
+        "Treat passing evidence as the site-side source of truth and avoid changing calculator, metadata, or sitemap code just because Request indexing failed.",
+      stopCondition: "Stop immediately if either command fails and fix the site-side regression first.",
+      record: "Command output, affected URL, timestamp, and the failing field if a command fails.",
+    },
+    {
+      label: "Use the verified URL-prefix property",
+      trigger: "When inspecting www-host URLs while the domain property remains unverified.",
+      preflight:
+        "Open the verified https://www URL-prefix property and paste the full canonical URL into URL Inspection.",
+      action:
+        "Inspect the live page, note the indexed state, Google-selected canonical, and whether live testing reports the URL can be indexed.",
+      stopCondition:
+        "Do not switch to the sc-domain property until DNS verification is complete and visible in Search Console.",
+      record: "Property used, inspected URL, indexed state, live-test result, and canonical result.",
+    },
+    {
+      label: "Retry indexing once per operations window",
+      trigger: "A materially updated priority URL is still not indexed or shows Discovered - currently not indexed.",
+      preflight:
+        "Confirm the URL is in sitemap.xml, linked internally, returns HTTP 200, and has no noindex signal.",
+      action:
+        "Click Request indexing once. If Google returns a transient submission error, let sitemap discovery continue and schedule the next retry window.",
+      stopCondition:
+        "Stop after one failed Request indexing attempt in the same operations window to avoid repeating Google backend failures.",
+      record:
+        "Request indexing response, exact Google error text, retry date, and whether the failure is site-side or Search Console-side.",
+    },
+    {
+      label: "Escalate only when evidence changes",
+      trigger: "The same URL remains unindexed across repeated review windows.",
+      preflight:
+        "Compare Page indexing report status, sitemap last-read date, internal links, server status, and canonical signals.",
+      action:
+        "Escalate to content depth, internal-linking, or canonical investigation only when Search Console evidence points beyond a transient request-indexing error.",
+      stopCondition:
+        "Do not rewrite YMYL calculator copy or tax logic unless query data, compliance review, and tests support a specific content need.",
+      record: "Page indexing trend, affected URL examples, chosen corrective action, test coverage, and follow-up date.",
     },
   ];
 }

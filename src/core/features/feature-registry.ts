@@ -735,7 +735,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "seo-monitoring-playbook",
     label: "SEO monitoring playbook",
-    version: "1.0.72",
+    version: "1.0.73",
     layer: "content",
     enabled: true,
     locked: false,

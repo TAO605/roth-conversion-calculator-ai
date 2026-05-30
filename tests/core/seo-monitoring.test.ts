@@ -6,6 +6,7 @@ import { blogPosts } from "@/content/blog";
 import {
   buildSearchConsoleExceptionQueue,
   buildSearchConsoleOpportunityMatrix,
+  buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
   buildSeoMonitoringGroups,
   getSearchConsoleSources,
@@ -91,6 +92,28 @@ describe("SEO monitoring playbook", () => {
     expect(exceptions.every((exception) => exception.evidenceToRecord.length > 30)).toBe(true);
   });
 
+  it("defines a Search Console retry protocol that prevents repeated backend-error chasing", () => {
+    const protocol = buildSearchConsoleRetryProtocol();
+    const labels = protocol.map((step) => step.label);
+    const combined = protocol
+      .map((step) => `${step.trigger} ${step.preflight} ${step.action} ${step.stopCondition} ${step.record}`)
+      .join(" ");
+
+    expect(labels).toEqual(
+      expect.arrayContaining([
+        "Confirm the site before touching GSC",
+        "Use the verified URL-prefix property",
+        "Retry indexing once per operations window",
+        "Escalate only when evidence changes",
+      ]),
+    );
+    expect(combined).toContain("npm run seo:smoke");
+    expect(combined).toContain("npm run seo:gsc-evidence");
+    expect(combined).toContain("Stop after one failed Request indexing attempt");
+    expect(combined).toContain("Search Console-side");
+    expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
+  });
+
   it("turns Search Console queries into a safe content opportunity matrix", () => {
     const opportunities = buildSearchConsoleOpportunityMatrix();
     const clusters = opportunities.map((opportunity) => opportunity.cluster);
@@ -140,8 +163,10 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("buildSearchConsoleExceptionQueue");
     expect(pageFile).toContain("buildSearchConsoleSubmissionLoop");
     expect(pageFile).toContain("buildSearchConsoleOpportunityMatrix");
+    expect(pageFile).toContain("buildSearchConsoleRetryProtocol");
     expect(pageFile).toContain("Search Console submission loop");
     expect(pageFile).toContain("Search Console exception queue");
+    expect(pageFile).toContain("Indexing retry protocol");
     expect(pageFile).toContain("Query opportunity matrix");
     expect(contentFile).toContain("seo:gsc-evidence");
     expect(homePage).toContain('href="/seo-monitoring"');

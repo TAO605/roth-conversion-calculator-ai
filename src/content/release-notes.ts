@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.73",
+    date: "2026-05-30",
+    type: "patch",
+    title: "Search Console indexing retry protocol",
+    summary:
+      "Added a Search Console retry protocol that requires production SEO evidence before URL Inspection retries, limits repeated Request indexing attempts after Google backend errors, and records when failures are Search Console-side rather than site-side.",
+    affectedArea: "SEO monitoring playbook, Search Console retry operations, indexing evidence records, and post-launch incident routing",
+    rollbackPath:
+      "Remove the indexing retry protocol section and buildSearchConsoleRetryProtocol helper from the SEO monitoring playbook.",
+  },
+  {
     version: "1.0.72",
     date: "2026-05-30",
     type: "patch",
