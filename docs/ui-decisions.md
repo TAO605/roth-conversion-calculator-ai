@@ -74,3 +74,14 @@ Decision:
 - Use `buildTaxImpactReviewItems` to label IRMAA, ACA, Social Security, NIIT, RMD, and state items as standard or input-triggered review.
 - Use taxable income plus taxable conversion only as a proxy for NIIT MAGI-side review, not as a tax calculation.
 - Link to existing educational guides for deeper review.
+
+## 2026-05-30 - CPA Handoff Is A Copyable Packet
+
+The calculator now includes a `Copy CPA packet` action in the result controls.
+
+Decision:
+
+- Generate plain text from deterministic calculator inputs and outputs.
+- Include input-triggered review items from the tax impact prioritization module.
+- Include document prompts such as tax returns, Form 8606 records, IRA balances, withholding, Medicare, Marketplace, Social Security, investment income, and RMD context.
+- Keep the action as clipboard copy rather than collecting user email or advisor details.

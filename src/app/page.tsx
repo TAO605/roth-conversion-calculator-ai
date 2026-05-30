@@ -65,6 +65,14 @@ const PdfReportButton = dynamic<{ input: RothConversionInput; result: RothConver
   { loading: () => null },
 );
 
+const CopyProfessionalHandoffButton = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
+  () =>
+    import("@/features/professional-handoff/CopyProfessionalHandoffButton").then(
+      (module) => module.CopyProfessionalHandoffButton,
+    ),
+  { loading: () => null },
+);
+
 const AiExplainer = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
   () => import("@/features/ai-assistant/AiExplainer").then((module) => module.AiExplainer),
   { loading: LazyPanelFallback },
@@ -193,6 +201,7 @@ export default function HomePage() {
               <div className="flex flex-wrap gap-2">
                 <ShareResultButton input={input} />
                 <PdfReportButton input={input} result={result} />
+                <CopyProfessionalHandoffButton input={input} result={result} />
                 <button
                   className="min-h-11 rounded-[14px] px-4 py-2 text-sm font-semibold text-systemRed transition hover:bg-red-50 dark:hover:bg-white/10"
                   onClick={() => {

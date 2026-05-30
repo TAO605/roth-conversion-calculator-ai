@@ -1,0 +1,65 @@
+import { formatCurrency, formatPercent } from "@/common/format/currency";
+import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
+import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
+import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
+
+function formatBreakEven(result: RothConversionResult) {
+  return result.breakEvenYear === null ? "Not reached in projection period" : `${result.breakEvenYear} years`;
+}
+
+export function buildProfessionalHandoffText(input: RothConversionInput, result: RothConversionResult): string {
+  const reviewItems = buildTaxImpactReviewItems(input, result);
+  const triggeredItems = reviewItems.filter((item) => item.level === "input_triggered_review");
+  const standardItems = reviewItems.filter((item) => item.level === "standard_review");
+
+  return [
+    "Roth Conversion Professional Review Packet",
+    `Tax year: ${input.taxYear}`,
+    "Purpose: Educational estimate summary for discussion with a qualified tax professional.",
+    "",
+    "Calculator inputs to verify",
+    `Conversion amount: ${formatCurrency(input.conversionAmount)}`,
+    `Traditional IRA balance: ${formatCurrency(input.traditionalIraBalance)}`,
+    `After-tax basis entered: ${formatCurrency(input.basis)}`,
+    `Filing status: ${input.filingStatus}`,
+    `Current taxable income entered: ${formatCurrency(input.currentTaxableIncome)}`,
+    `State marginal tax assumption: ${formatPercent(input.stateMarginalTaxRate)}`,
+    `Age entered: ${input.age}`,
+    `Retirement age assumption: ${input.retirementAge}`,
+    `Tax payment method modeled: ${input.taxPaymentMethod}`,
+    `Expected annual return assumption: ${formatPercent(input.expectedAnnualReturn)}`,
+    `Retirement marginal tax assumption: ${formatPercent(input.retirementMarginalTaxRate)}`,
+    "",
+    "Modeled calculator output",
+    `Taxable conversion estimate: ${formatCurrency(result.taxableConversion)}`,
+    `Federal tax estimate: ${formatCurrency(result.federalTax)}`,
+    `State tax estimate: ${formatCurrency(result.stateTax)}`,
+    `Potential early distribution penalty: ${formatCurrency(result.earlyDistributionPenalty)}`,
+    `Total upfront cost estimate: ${formatCurrency(result.totalUpfrontCost)}`,
+    `Modeled break-even estimate: ${formatBreakEven(result)}`,
+    `Projected after-tax difference: ${formatCurrency(result.afterTaxDifference)}`,
+    `Federal bracket before conversion: ${formatPercent(result.bracketImpact.beforeRate)}`,
+    `Federal bracket after conversion: ${formatPercent(result.bracketImpact.afterRate)}`,
+    `Amount modeled in higher brackets: ${formatCurrency(result.bracketImpact.incomeTaxedInHigherBrackets)}`,
+    "",
+    "Input-triggered review items",
+    ...(triggeredItems.length
+      ? triggeredItems.map((item) => `- ${item.label}: ${item.reason}`)
+      : ["- None triggered by the current simplified inputs."]),
+    "",
+    "Additional review items",
+    ...standardItems.map((item) => `- ${item.label}: ${item.reason}`),
+    "",
+    "Documents and questions to bring",
+    "- Most recent federal and state tax returns.",
+    "- Form 8606 records for nondeductible IRA basis, if any.",
+    "- Traditional, SEP, SIMPLE, and Roth IRA year-end balances and custodian statements.",
+    "- Current-year income estimate, withholding records, and estimated tax payments.",
+    "- Medicare, Marketplace coverage, Social Security, investment income, and RMD context if any item above applies.",
+    "",
+    "Boundary note",
+    "This packet does not determine whether a Roth conversion is appropriate for a specific person. It summarizes calculator inputs, modeled outputs, and review topics.",
+    "",
+    REQUIRED_DISCLAIMER,
+  ].join("\n");
+}

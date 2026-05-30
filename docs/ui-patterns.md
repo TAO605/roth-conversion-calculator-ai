@@ -44,3 +44,10 @@
 - Use the calculator's taxable-income and age inputs only as prioritization signals. Do not calculate IRMAA premiums, ACA subsidy changes, Social Security taxable benefits, NIIT owed, RMDs, or state-specific deductions without dedicated inputs and rule engines.
 - Link each warning to a deeper guide so the result card stays concise while preserving crawlable education pages.
 - Preserve neutral language: the panel identifies review items, not decisions or recommendations.
+
+## Professional Handoff Packet
+
+- Put professional handoff actions next to result actions such as share and report download.
+- Generate a plain-text packet rather than a styled modal so users can paste it into email, notes, or advisor intake forms.
+- Include inputs, modeled outputs, triggered review items, records to bring, and the required disclaimer.
+- Avoid decision language. The packet supports a qualified professional conversation; it does not decide whether a conversion fits the user.

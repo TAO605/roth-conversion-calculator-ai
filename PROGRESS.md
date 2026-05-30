@@ -29,3 +29,5 @@
 - Round 8 complete: converted Tax Impact Warnings from a static list into input-prioritized review items for IRMAA, ACA, Social Security, NIIT, RMD, and state-specific review without calculating unsupported external amounts.
 - Round 8 validation: targeted warning/result/YMYL tests passed, full `npm test` passed with 84 files / 222 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed prioritized warning visibility and no horizontal overflow.
 - Round 8 deployed: GitHub main is `169ac7c56d1bbf2368756b1a0c7fa6df848fe3b7`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; live homepage and sitemap checks returned 200.
+- Round 9 complete: added a copyable CPA review packet that summarizes inputs, modeled outputs, input-triggered review items, source documents to bring, and compliance boundaries.
+- Round 9 validation: targeted professional-handoff/warning/YMYL tests passed, full `npm test` passed with 85 files / 225 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed the `Copy CPA packet` action is visible with no horizontal overflow.

@@ -211,3 +211,29 @@ Targeted warning/result/YMYL tests passed before full-suite validation.
 **Future trigger words:**
 
 IRMAA warning, ACA subsidy review, NIIT threshold, hidden tax interaction, input-triggered review, unsupported amount calculation.
+
+## 2026-05-30 - Professional Handoff Should Be Deterministic And Copyable
+
+**Symptom:**
+
+Users can see estimates and warnings, but they still need a structured way to carry the scenario to a CPA or qualified tax professional.
+
+**Root cause:**
+
+A financial calculator can produce useful context without being allowed to make the personal tax decision. The missing workflow was packaging that context safely.
+
+**Fix:**
+
+Added a `Copy CPA packet` action that builds a deterministic plain-text packet from inputs, modeled outputs, input-triggered review items, documents to bring, and the required disclaimer.
+
+**Guard:**
+
+`tests/core/professional-handoff.test.ts` verifies packet sections, clipboard behavior, homepage mounting, required disclaimer, and absence of high-risk recommendation or accuracy claims.
+
+**Validation:**
+
+Targeted professional-handoff, warning, and YMYL tests passed before full-suite validation.
+
+**Future trigger words:**
+
+CPA packet, professional handoff, advisor checklist, copy packet, tax review materials, CPA questions.
