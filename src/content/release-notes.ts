@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.71",
+    date: "2026-05-30",
+    type: "patch",
+    title: "Automated GSC evidence checks",
+    summary:
+      "Extended the production SEO Smoke GitHub Actions workflow to run the GSC priority URL evidence command after the regular smoke check, covering status, canonical, sitemap inclusion, and noindex signals on every main push and scheduled run.",
+    affectedArea: "GitHub Actions SEO automation, Search Console retry readiness, canonical regression detection, and production monitoring",
+    rollbackPath:
+      "Remove the GSC_EVIDENCE_BASE_URL environment variable and npm run seo:gsc-evidence step from .github/workflows/seo-smoke.yml.",
+  },
+  {
     version: "1.0.70",
     date: "2026-05-30",
     type: "patch",

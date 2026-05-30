@@ -108,3 +108,4 @@
 - Include the same priority URL set used in Search Console operations: homepage, `/seo-monitoring`, `/methodology`, `/tax-data-update`, `/tax-brackets/2026`, and `/roth-conversion-irmaa-guide`.
 - Treat command failures as SEO source issues to fix before using Search Console request-indexing again.
 - Keep the command environment-variable driven so preview or production hosts can be checked with the same guard.
+- Run the evidence command in CI after the production smoke check so canonical drift is caught without waiting for manual Search Console work.

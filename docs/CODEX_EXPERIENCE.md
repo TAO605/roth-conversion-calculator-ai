@@ -445,3 +445,29 @@ Run targeted GSC evidence tests, full tests, build, production smoke, then run `
 **Future trigger words:**
 
 canonical drift, GSC evidence, priority URL check, methodology canonical, request indexing readiness.
+
+## 2026-05-30 - GSC Evidence Should Run Automatically
+
+**Symptom:**
+
+`npm run seo:gsc-evidence` caught a canonical issue, but it still depended on a human or agent remembering to run it before Search Console retries.
+
+**Root cause:**
+
+Manual evidence commands close the immediate loop but do not provide ongoing regression detection for canonical, sitemap, or noindex drift on priority URLs.
+
+**Fix:**
+
+Added `npm run seo:gsc-evidence` to the existing GitHub Actions SEO Smoke workflow after `npm run seo:smoke`.
+
+**Guard:**
+
+`tests/core/seo-smoke-workflow.test.ts` verifies the workflow includes `GSC_EVIDENCE_BASE_URL` and the GSC evidence command.
+
+**Validation:**
+
+Targeted workflow/release/YMYL tests, full tests, build, production smoke, production GSC evidence, and the push-triggered GitHub Actions run must pass.
+
+**Future trigger words:**
+
+automated GSC evidence, canonical CI, priority URL CI, SEO Smoke workflow, Search Console retry readiness.

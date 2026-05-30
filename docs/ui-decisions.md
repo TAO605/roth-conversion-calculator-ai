@@ -174,3 +174,14 @@ Decision:
 - Use the command before URL Inspection retries so the agent has deterministic evidence outside the Google UI.
 - Fix `/methodology` to declare its own canonical because the evidence command found it inheriting the homepage canonical.
 - Keep production smoke and GSC evidence separate: smoke checks global SEO health; evidence checks the specific URLs used in GSC operations.
+
+## 2026-05-30 - GSC Evidence Runs In CI
+
+The production SEO workflow now runs both the general SEO smoke command and the priority URL evidence command.
+
+Decision:
+
+- Keep one GitHub Actions workflow for public production SEO monitoring.
+- Run `npm run seo:smoke` first for homepage, robots, sitemap, llms, trust copy, and banned wording.
+- Run `npm run seo:gsc-evidence` second for priority URL canonical, sitemap, and noindex checks.
+- Use `GSC_EVIDENCE_BASE_URL` alongside `SEO_SMOKE_BASE_URL` so the workflow remains host-configurable.
