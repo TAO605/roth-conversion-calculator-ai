@@ -33,121 +33,142 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
 
   return (
     <div className="grid grid-cols-1 gap-4" data-testid="calculator-input-grid">
-      <div>
-        <PresetPanel onChange={onChange} value={value} />
-      </div>
-      <TextField
-        label="Conversion amount"
-        type="number"
-        inputMode="decimal"
-        value={value.conversionAmount}
-        error={errors.conversionAmount}
-        description="Amount you plan to convert from a traditional IRA or 401(k) to Roth."
-        onChange={(event) => update("conversionAmount", numberValue(event.target.value))}
-      />
-      <TextField
-        label="Traditional IRA balance"
-        type="number"
-        inputMode="decimal"
-        value={value.traditionalIraBalance}
-        error={errors.traditionalIraBalance}
-        description="Used for pro-rata basis calculations."
-        onChange={(event) => update("traditionalIraBalance", numberValue(event.target.value))}
-      />
-      <TextField
-        label="After-tax basis"
-        type="number"
-        inputMode="decimal"
-        value={value.basis}
-        error={errors.basis}
-        description="Usually found on IRS Form 8606."
-        onChange={(event) => update("basis", numberValue(event.target.value))}
-      />
-      <SelectField
-        label="Filing status"
-        value={value.filingStatus}
-        onChange={(event) => update("filingStatus", event.target.value as FilingStatus)}
-      >
-        <option value="single">Single</option>
-        <option value="married_joint">Married filing jointly</option>
-        <option value="head_of_household">Head of household</option>
-        <option value="married_separate">Married filing separately</option>
-      </SelectField>
-      <TextField
-        label="Current taxable income"
-        type="number"
-        inputMode="decimal"
-        value={value.currentTaxableIncome}
-        onChange={(event) => update("currentTaxableIncome", numberValue(event.target.value))}
-      />
-      <TextField
-        label="State marginal tax rate"
-        type="number"
-        inputMode="decimal"
-        value={percentDisplayValue(value.stateMarginalTaxRate)}
-        error={errors.stateMarginalTaxRate}
-        description="Enter 0 for no-income-tax states."
-        onChange={(event) => update("stateMarginalTaxRate", numberValue(event.target.value) / 100)}
-      />
-      <TextField
-        label="Current age"
-        type="number"
-        inputMode="numeric"
-        value={value.age}
-        onChange={(event) => update("age", numberValue(event.target.value))}
-      />
-      <TextField
-        label="Retirement age"
-        type="number"
-        inputMode="numeric"
-        value={value.retirementAge}
-        error={errors.retirementAge}
-        onChange={(event) => update("retirementAge", numberValue(event.target.value))}
-      />
-      <TextField
-        label="Expected annual return"
-        type="number"
-        inputMode="decimal"
-        value={percentDisplayValue(value.expectedAnnualReturn)}
-        onChange={(event) => update("expectedAnnualReturn", numberValue(event.target.value) / 100)}
-      />
-      <TextField
-        label="Retirement marginal tax rate"
-        type="number"
-        inputMode="decimal"
-        value={percentDisplayValue(value.retirementMarginalTaxRate)}
-        onChange={(event) => update("retirementMarginalTaxRate", numberValue(event.target.value) / 100)}
-      />
-      <SelectField
-        label="How will you pay the conversion tax?"
-        value={value.taxPaymentMethod}
-        description="This matters for possible early distribution penalties."
-        onChange={(event) => update("taxPaymentMethod", event.target.value as TaxPaymentMethod)}
-      >
-        <option value="outside_funds">Outside funds</option>
-        <option value="withhold_from_ira">Withhold from IRA distribution</option>
-        <option value="not_sure">Not sure</option>
-      </SelectField>
-      <TextField
-        label="Estimated amount withheld from IRA"
-        type="number"
-        inputMode="decimal"
-        value={value.withheldForTaxes}
-        error={errors.withheldForTaxes}
-        onChange={(event) => update("withheldForTaxes", numberValue(event.target.value))}
-      />
-      <label className="flex items-center justify-between rounded-[14px] bg-white/60 px-4 py-3 dark:bg-white/10">
-        <span>
-          <span className="block text-sm font-semibold">Penalty exception applies</span>
-          <span className="text-xs text-neutral-500 dark:text-neutral-400">Use only if you know an IRS exception applies.</span>
-        </span>
-        <input
-          checked={value.penaltyException}
-          className="h-6 w-11 accent-systemBlue"
-          type="checkbox"
-          onChange={(event) => update("penaltyException", event.target.checked)}
-        />
-      </label>
+      <section className="grid gap-4 rounded-[18px] bg-blue-500/10 p-4 shadow-sm ring-1 ring-blue-500/10 dark:bg-white/10 dark:ring-white/10">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-systemBlue">
+            Quick Estimate
+          </p>
+          <h3 className="mt-1 text-lg font-semibold text-neutral-950 dark:text-white">Core inputs</h3>
+          <p className="mt-1 text-xs leading-5 text-neutral-600 dark:text-neutral-300">
+            Start with the fields that drive the first result. Advanced assumptions stay below.
+          </p>
+        </div>
+        <div className="grid gap-4" data-testid="quick-estimate-fields">
+          <TextField
+            label="Conversion amount"
+            type="number"
+            inputMode="decimal"
+            value={value.conversionAmount}
+            error={errors.conversionAmount}
+            description="Amount you plan to convert from a traditional IRA or 401(k) to Roth."
+            onChange={(event) => update("conversionAmount", numberValue(event.target.value))}
+          />
+          <TextField
+            label="Current taxable income"
+            type="number"
+            inputMode="decimal"
+            value={value.currentTaxableIncome}
+            onChange={(event) => update("currentTaxableIncome", numberValue(event.target.value))}
+          />
+          <SelectField
+            label="Filing status"
+            value={value.filingStatus}
+            onChange={(event) => update("filingStatus", event.target.value as FilingStatus)}
+          >
+            <option value="single">Single</option>
+            <option value="married_joint">Married filing jointly</option>
+            <option value="head_of_household">Head of household</option>
+            <option value="married_separate">Married filing separately</option>
+          </SelectField>
+          <TextField
+            label="State marginal tax rate"
+            type="number"
+            inputMode="decimal"
+            value={percentDisplayValue(value.stateMarginalTaxRate)}
+            error={errors.stateMarginalTaxRate}
+            description="Enter 0 for no-income-tax states."
+            onChange={(event) => update("stateMarginalTaxRate", numberValue(event.target.value) / 100)}
+          />
+          <TextField
+            label="Retirement age"
+            type="number"
+            inputMode="numeric"
+            value={value.retirementAge}
+            error={errors.retirementAge}
+            onChange={(event) => update("retirementAge", numberValue(event.target.value))}
+          />
+          <TextField
+            label="Expected annual return"
+            type="number"
+            inputMode="decimal"
+            value={percentDisplayValue(value.expectedAnnualReturn)}
+            onChange={(event) => update("expectedAnnualReturn", numberValue(event.target.value) / 100)}
+          />
+          <TextField
+            label="Traditional IRA balance"
+            type="number"
+            inputMode="decimal"
+            value={value.traditionalIraBalance}
+            error={errors.traditionalIraBalance}
+            description="Used with after-tax basis in advanced assumptions."
+            onChange={(event) => update("traditionalIraBalance", numberValue(event.target.value))}
+          />
+        </div>
+      </section>
+
+      <details className="rounded-[18px] bg-white/60 p-4 shadow-sm dark:bg-white/10" data-testid="advanced-inputs">
+        <summary className="cursor-pointer text-sm font-semibold text-neutral-950 dark:text-white">
+          Advanced assumptions
+        </summary>
+        <div className="mt-4 grid gap-4">
+          <TextField
+            label="After-tax basis"
+            type="number"
+            inputMode="decimal"
+            value={value.basis}
+            error={errors.basis}
+            description="Usually found on IRS Form 8606."
+            onChange={(event) => update("basis", numberValue(event.target.value))}
+          />
+          <TextField
+            label="Current age"
+            type="number"
+            inputMode="numeric"
+            value={value.age}
+            onChange={(event) => update("age", numberValue(event.target.value))}
+          />
+          <TextField
+            label="Retirement marginal tax rate"
+            type="number"
+            inputMode="decimal"
+            value={percentDisplayValue(value.retirementMarginalTaxRate)}
+            onChange={(event) => update("retirementMarginalTaxRate", numberValue(event.target.value) / 100)}
+          />
+          <SelectField
+            label="How will you pay the conversion tax?"
+            value={value.taxPaymentMethod}
+            description="This matters for possible early distribution penalties."
+            onChange={(event) => update("taxPaymentMethod", event.target.value as TaxPaymentMethod)}
+          >
+            <option value="outside_funds">Outside funds</option>
+            <option value="withhold_from_ira">Withhold from IRA distribution</option>
+            <option value="not_sure">Not sure</option>
+          </SelectField>
+          <TextField
+            label="Estimated amount withheld from IRA"
+            type="number"
+            inputMode="decimal"
+            value={value.withheldForTaxes}
+            error={errors.withheldForTaxes}
+            onChange={(event) => update("withheldForTaxes", numberValue(event.target.value))}
+          />
+          <label className="flex items-center justify-between rounded-[14px] bg-white/60 px-4 py-3 dark:bg-white/10">
+            <span>
+              <span className="block text-sm font-semibold">Penalty exception applies</span>
+              <span className="text-xs text-neutral-500 dark:text-neutral-400">
+                Use only if you know an IRS exception applies.
+              </span>
+            </span>
+            <input
+              checked={value.penaltyException}
+              className="h-6 w-11 accent-systemBlue"
+              type="checkbox"
+              onChange={(event) => update("penaltyException", event.target.checked)}
+            />
+          </label>
+          <PresetPanel onChange={onChange} value={value} />
+        </div>
+      </details>
     </div>
   );
 }

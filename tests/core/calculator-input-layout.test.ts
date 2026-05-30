@@ -31,4 +31,23 @@ describe("calculator input layout", () => {
     expect(grid.className).toContain("grid-cols-1");
     expect(grid.className).not.toContain("md:grid-cols-2");
   });
+
+  it("prioritizes quick estimate fields and keeps advanced assumptions collapsed", () => {
+    render(React.createElement(CalculatorInput, { value, onChange: vi.fn() }));
+
+    const quickFields = screen.getByTestId("quick-estimate-fields");
+    const advanced = screen.getByTestId("advanced-inputs") as HTMLDetailsElement;
+
+    expect(screen.getByText("Quick Estimate")).toBeTruthy();
+    expect(quickFields.textContent).toContain("Conversion amount");
+    expect(quickFields.textContent).toContain("Current taxable income");
+    expect(quickFields.textContent).toContain("Filing status");
+    expect(quickFields.textContent).toContain("State marginal tax rate");
+    expect(quickFields.textContent).toContain("Retirement age");
+    expect(quickFields.textContent).toContain("Expected annual return");
+    expect(quickFields.textContent).toContain("Traditional IRA balance");
+    expect(advanced.open).toBe(false);
+    expect(advanced.textContent).toContain("Advanced assumptions");
+    expect(advanced.textContent).toContain("After-tax basis");
+  });
 });

@@ -2,8 +2,8 @@
 
 ## Snapshot
 
-- Focus: V1.3 P1 result-summary wording completed after P0 compliance guard
-- Changed surface: result summary UI, result summary tests, UI/design memory, project workflow memory
+- Focus: V1.3 Quick Estimate input split completed after result-summary work
+- Changed surface: calculator input UI, input layout tests, UI/design memory, project workflow memory
 - Validation target: targeted Vitest tests, full Vitest suite, production build, desktop/mobile screenshot smoke
 
 ## Round Log
@@ -14,3 +14,5 @@
 - Round 2 complete: updated homepage result summary to prioritize safe V1.3 metrics: `Estimated upfront tax`, `Modeled bracket room`, and `Projected after-tax difference`.
 - Round 2 validation: targeted tests passed, full `npm test` passed with 81 files / 213 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke found all primary metrics with no horizontal overflow.
 - Round 2 deployed: GitHub main is `a319a6219a31e770aa31e06d7959479c21b42271`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; live homepage and sitemap checks returned 200.
+- Round 3 complete: split calculator inputs into visible `Quick Estimate` fields and collapsed `Advanced assumptions` without removing any original inputs.
+- Round 3 validation: targeted tests passed, full `npm test` passed with 81 files / 214 tests, `npm run build` passed, and Playwright desktop/mobile screenshot smoke confirmed Quick Estimate visibility, collapsed advanced assumptions, and no horizontal overflow.

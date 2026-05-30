@@ -55,3 +55,29 @@ Targeted result/YMYL tests, full `npm test`, `npm run build`, and desktop/mobile
 **Future trigger words:**
 
 result summary redesign, V1.3 metrics, optimal conversion amount, homepage calculator results, financial UI recommendation wording.
+
+## 2026-05-30 - Use Progressive Disclosure For Tax Calculator Inputs
+
+**Symptom:**
+
+The full calculator input list was complete but dense, making the first calculator interaction feel slower than V1.3's focused tool goal.
+
+**Root cause:**
+
+All inputs were displayed with equal weight, so advanced assumptions competed with the fields most users need for an initial estimate.
+
+**Fix:**
+
+Split inputs into a visible `Quick Estimate` block and a collapsed `Advanced assumptions` section while preserving every original field.
+
+**Guard:**
+
+`tests/core/calculator-input-layout.test.ts` verifies the quick fields are visible and advanced assumptions are collapsed by default.
+
+**Validation:**
+
+Targeted input/homepage/YMYL tests, full `npm test`, `npm run build`, and desktop/mobile Playwright screenshot smoke passed.
+
+**Future trigger words:**
+
+Quick Estimate, input density, advanced assumptions, mobile calculator first screen, V1.3 input split.
