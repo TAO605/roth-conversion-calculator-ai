@@ -185,3 +185,14 @@ Decision:
 - Run `npm run seo:smoke` first for homepage, robots, sitemap, llms, trust copy, and banned wording.
 - Run `npm run seo:gsc-evidence` second for priority URL canonical, sitemap, and noindex checks.
 - Use `GSC_EVIDENCE_BASE_URL` alongside `SEO_SMOKE_BASE_URL` so the workflow remains host-configurable.
+
+## 2026-05-30 - SEO Evidence Is Retained As Artifacts
+
+The production SEO workflow now uploads JSON proof files.
+
+Decision:
+
+- Run the SEO smoke and GSC evidence scripts directly with `node` inside CI so their JSON output can be captured cleanly.
+- Save `seo-smoke-result.json` and `gsc-evidence-result.json` with `tee`.
+- Upload both files as the `production-seo-evidence` artifact.
+- Retain artifacts for 30 days to support Search Console retries, incident review, and launch evidence.

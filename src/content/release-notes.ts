@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.72",
+    date: "2026-05-30",
+    type: "patch",
+    title: "Downloadable SEO evidence artifacts",
+    summary:
+      "Updated the production SEO Smoke workflow to save SEO smoke and GSC priority URL evidence JSON outputs as a downloadable GitHub Actions artifact for post-launch records and Search Console retry support.",
+    affectedArea: "GitHub Actions evidence retention, Search Console operations, SEO monitoring audit trail, and post-launch proof records",
+    rollbackPath:
+      "Remove the tee output files and actions/upload-artifact step from .github/workflows/seo-smoke.yml.",
+  },
+  {
     version: "1.0.71",
     date: "2026-05-30",
     type: "patch",

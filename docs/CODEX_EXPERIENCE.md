@@ -471,3 +471,29 @@ Targeted workflow/release/YMYL tests, full tests, build, production smoke, produ
 **Future trigger words:**
 
 automated GSC evidence, canonical CI, priority URL CI, SEO Smoke workflow, Search Console retry readiness.
+
+## 2026-05-30 - CI Evidence Should Be Downloadable
+
+**Symptom:**
+
+GitHub Actions proved SEO checks were green, but the evidence lived only in logs, making Search Console retry support and incident review harder to preserve.
+
+**Root cause:**
+
+Plain `npm run` CI steps print JSON mixed with command output and do not retain structured proof files by default.
+
+**Fix:**
+
+Updated the SEO Smoke workflow to run the scripts directly with `node`, pipe JSON to `seo-smoke-result.json` and `gsc-evidence-result.json`, and upload them as a `production-seo-evidence` artifact retained for 30 days.
+
+**Guard:**
+
+`tests/core/seo-smoke-workflow.test.ts` verifies the artifact upload step, output filenames, and retention period.
+
+**Validation:**
+
+Targeted workflow/release/YMYL tests, full tests, build, production smoke, production GSC evidence, and the push-triggered GitHub Actions run must pass.
+
+**Future trigger words:**
+
+SEO evidence artifact, downloadable GSC evidence, CI proof package, Search Console retry support, production-seo-evidence.

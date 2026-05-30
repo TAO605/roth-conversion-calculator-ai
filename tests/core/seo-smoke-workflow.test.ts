@@ -18,7 +18,12 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("node-version: 22");
     expect(workflow).toContain("npm ci");
     expect(workflow).toContain("sleep 90");
-    expect(workflow).toContain("npm run seo:smoke");
-    expect(workflow).toContain("npm run seo:gsc-evidence");
+    expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");
+    expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
+    expect(workflow).toContain("uses: actions/upload-artifact@v4");
+    expect(workflow).toContain("name: production-seo-evidence");
+    expect(workflow).toContain("seo-smoke-result.json");
+    expect(workflow).toContain("gsc-evidence-result.json");
+    expect(workflow).toContain("retention-days: 30");
   });
 });

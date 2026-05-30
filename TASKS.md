@@ -18,3 +18,4 @@
 - [done] Add Search Console exception queue for DNS and indexing retry evidence
 - [done] Add GSC priority URL evidence command and fix methodology canonical
 - [done] Automate GSC priority URL evidence checks in GitHub Actions
+- [done] Store downloadable SEO and GSC evidence artifacts in GitHub Actions

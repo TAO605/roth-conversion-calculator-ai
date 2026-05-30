@@ -42,7 +42,17 @@ jobs:
         run: sleep 90
 
       - name: Run SEO smoke check
-        run: npm run seo:smoke
+        run: node scripts/seo-smoke.mjs | tee seo-smoke-result.json
 
       - name: Run GSC priority URL evidence check
-        run: npm run seo:gsc-evidence
+        run: node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json
+
+      - name: Upload SEO evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: production-seo-evidence
+          path: |
+            seo-smoke-result.json
+            gsc-evidence-result.json
+          retention-days: 30
