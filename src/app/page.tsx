@@ -209,7 +209,7 @@ export default function HomePage() {
             <ResultScopeBadges taxYear={input.taxYear} />
             <ResultSummary result={result} />
             <div className="mt-4">
-              <TaxImpactWarnings />
+              <TaxImpactWarnings input={input} result={result} />
             </div>
             <div className="mt-4">
               <TaxPaymentComparison input={input} result={result} />

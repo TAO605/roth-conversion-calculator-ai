@@ -63,3 +63,14 @@ Decision:
 - Say `Tax professional review pending` unless there is real review evidence.
 - Add the same metadata to the public health payload so deployment checks can verify the data-trust state.
 - Keep the wording educational and avoid implying guaranteed accuracy.
+
+## 2026-05-30 - Hidden Tax Warnings Are Prioritized, Not Calculated
+
+The tax impact panel now uses user inputs to prioritize review items while keeping unsupported external tax effects out of the calculator math.
+
+Decision:
+
+- Pass calculator input and result into `TaxImpactWarnings`.
+- Use `buildTaxImpactReviewItems` to label IRMAA, ACA, Social Security, NIIT, RMD, and state items as standard or input-triggered review.
+- Use taxable income plus taxable conversion only as a proxy for NIIT MAGI-side review, not as a tax calculation.
+- Link to existing educational guides for deeper review.

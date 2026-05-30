@@ -22,7 +22,7 @@ describe("result scope badges", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
     const scopeIndex = source.indexOf("<ResultScopeBadges");
     const summaryIndex = source.indexOf("<ResultSummary result={result} />");
-    const warningIndex = source.indexOf("<TaxImpactWarnings />");
+    const warningIndex = source.indexOf("<TaxImpactWarnings input={input} result={result} />");
 
     expect(scopeIndex).toBeGreaterThan(-1);
     expect(scopeIndex).toBeLessThan(summaryIndex);

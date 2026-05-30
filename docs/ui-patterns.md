@@ -37,3 +37,10 @@
 - Link directly to official IRS source pages when tax-year data or IRA rules are referenced.
 - State professional-review status plainly. If no qualified tax professional review evidence is recorded, say review is pending instead of implying CPA/EA approval.
 - Keep trust copy close to methodology and homepage calculator context so users can audit assumptions without leaving the workflow.
+
+## Input-Prioritized Tax Impact Warnings
+
+- Keep hidden tax interactions result-adjacent, but rank them with `Input-triggered review` when current inputs suggest closer review.
+- Use the calculator's taxable-income and age inputs only as prioritization signals. Do not calculate IRMAA premiums, ACA subsidy changes, Social Security taxable benefits, NIIT owed, RMDs, or state-specific deductions without dedicated inputs and rule engines.
+- Link each warning to a deeper guide so the result card stays concise while preserving crawlable education pages.
+- Preserve neutral language: the panel identifies review items, not decisions or recommendations.

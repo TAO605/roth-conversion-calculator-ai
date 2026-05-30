@@ -185,3 +185,29 @@ Targeted tax-data, health, homepage SEO, and YMYL tests passed before full-suite
 **Future trigger words:**
 
 tax data freshness, IRS source links, CPA review, professional review status, annual tax update, YMYL trust metadata.
+
+## 2026-05-30 - Hidden Tax Interactions Need Prioritization Without Amount Claims
+
+**Symptom:**
+
+The result-adjacent tax warning panel listed important items, but every item had equal weight even when user inputs suggested some review areas were more relevant.
+
+**Root cause:**
+
+The calculator intentionally does not model IRMAA, ACA premium tax credits, Social Security taxable benefits, NIIT owed, RMDs, or state-specific rules, so a static warning list was safer but less helpful.
+
+**Fix:**
+
+Added `buildTaxImpactReviewItems` to prioritize review items from age, retirement age, state-tax input, and a taxable-income proxy while still avoiding unsupported amount calculations.
+
+**Guard:**
+
+`tests/core/tax-impact-warning-placement.test.ts` verifies input-triggered labeling, guide links, result-card placement, and absence of unsupported NIIT amount wording.
+
+**Validation:**
+
+Targeted warning/result/YMYL tests passed before full-suite validation.
+
+**Future trigger words:**
+
+IRMAA warning, ACA subsidy review, NIIT threshold, hidden tax interaction, input-triggered review, unsupported amount calculation.
