@@ -25,3 +25,4 @@
 - [done] Add per-page sitemap lastmod freshness for updated SEO operation pages
 - [done] Add GSC evidence guard for priority sitemap lastmod freshness
 - [done] Document sitemap freshness evidence in SEO monitoring operations
+- [done] Validate production SEO evidence artifacts before upload

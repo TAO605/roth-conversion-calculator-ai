@@ -116,3 +116,10 @@
 - Pair the visible operations playbook with the automated `npm run seo:gsc-evidence` parser so human review and CI enforce the same freshness-critical URL list.
 - Store freshness proof in the `production-seo-evidence` artifact; do not rely on screenshots or broad sitemap text matches alone.
 - If `lastmodFresh` fails, fix sitemap metadata and redeploy before using Search Console URL Inspection or request-indexing.
+
+## SEO Evidence Artifact Validation
+
+- Treat the uploaded `production-seo-evidence` artifact as a structured contract, not just saved console output.
+- Validate artifact JSON before upload so parse errors, missing priority URLs, stale `lastmodFresh`, noindex drift, or host mismatches fail CI while the run context is still visible.
+- Keep validator defaults aligned with workflow output filenames: `seo-smoke-result.json` and `gsc-evidence-result.json`.
+- Use the validator locally when downloading an artifact for Search Console retry evidence or incident review.

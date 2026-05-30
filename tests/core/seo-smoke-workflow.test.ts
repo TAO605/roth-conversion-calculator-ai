@@ -21,6 +21,8 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("sleep 90");
     expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");
     expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
+    expect(workflow).toContain("Validate SEO evidence artifact");
+    expect(workflow).toContain("npm run seo:evidence-validate");
     expect(workflow).toContain("uses: actions/upload-artifact@v7");
     expect(workflow).not.toContain("FORCE_JAVASCRIPT_ACTIONS_TO_NODE24");
     expect(workflow).not.toContain("actions/checkout@v4");

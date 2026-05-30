@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.79",
+    date: "2026-05-30",
+    type: "patch",
+    title: "SEO evidence artifact validation",
+    summary:
+      "Added a local and CI validator for production SEO evidence artifacts so uploaded smoke and GSC JSON files are checked for parseability, expected host, priority URL coverage, sitemap inclusion, noindex absence, and fresh lastmod evidence before retention.",
+    affectedArea: "GitHub Actions SEO evidence artifacts, Search Console proof packages, CI guardrails, and post-launch operations records",
+    rollbackPath:
+      "Remove scripts/validate-seo-evidence.mjs, the seo:evidence-validate package script, and the Validate SEO evidence artifact workflow step if artifact validation needs to be disabled.",
+  },
+  {
     version: "1.0.78",
     date: "2026-05-30",
     type: "patch",
