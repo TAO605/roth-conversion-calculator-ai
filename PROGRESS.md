@@ -46,3 +46,4 @@
 - Round 13 automated: GitHub main is `bda73172fdf8643ca2a9aaafc3009aa4ed770e3e`; the new `SEO Smoke` workflow was recognized by GitHub Actions and the push-triggered run `26677226207` completed successfully.
 - Round 14 complete: enhanced `/seo-monitoring` with a Search Console submission loop covering smoke verification, sitemap submission, URL Inspection, request indexing boundaries, Page indexing review, and exception routing.
 - Round 14 validation: targeted SEO monitoring/SEO smoke/YMYL tests passed, `npm run seo:smoke` passed against production, full `npm test` passed with 88 files / 230 tests, and `npm run build` passed.
+- Round 14 deployed: GitHub main is `c3155333ec488985f28738af3f7d01a2c157798d`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; post-deploy `npm run seo:smoke` passed and `/seo-monitoring` returned the Search Console loop.
