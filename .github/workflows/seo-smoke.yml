@@ -48,7 +48,7 @@ jobs:
         run: node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json
 
       - name: Validate SEO evidence artifact
-        run: npm run seo:evidence-validate
+        run: node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json
 
       - name: Upload SEO evidence
         uses: actions/upload-artifact@v7
@@ -58,4 +58,5 @@ jobs:
           path: |
             seo-smoke-result.json
             gsc-evidence-result.json
+            seo-evidence-validation-result.json
           retention-days: 30

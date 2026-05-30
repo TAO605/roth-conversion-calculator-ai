@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.80",
+    date: "2026-05-30",
+    type: "patch",
+    title: "SEO evidence validation summary artifact",
+    summary:
+      "Added the validator's JSON summary to the production SEO evidence artifact so downloaded proof packages include the smoke output, GSC priority URL evidence, and the machine-readable validation result together.",
+    affectedArea: "GitHub Actions artifact contents, Search Console retry evidence, incident review records, and SEO proof-package completeness",
+    rollbackPath:
+      "Remove seo-evidence-validation-result.json from the SEO Smoke workflow and artifact upload path if the validation summary should no longer be retained.",
+  },
+  {
     version: "1.0.79",
     date: "2026-05-30",
     type: "patch",
