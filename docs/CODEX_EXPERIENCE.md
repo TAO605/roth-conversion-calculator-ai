@@ -315,3 +315,29 @@ Targeted SEO/YMYL tests and `npm run seo:smoke` passed against production.
 **Future trigger words:**
 
 SEO smoke, production check, sitemap regression, robots regression, canonical mismatch, post-deploy verification.
+
+## 2026-05-30 - SEO Smoke Needs Automation After Manual Proof
+
+**Symptom:**
+
+`npm run seo:smoke` made production checks repeatable, but still depended on a human or agent remembering to run it after deployment.
+
+**Root cause:**
+
+Manual post-deploy verification closes one release loop but does not provide ongoing regression detection.
+
+**Fix:**
+
+Added `.github/workflows/seo-smoke.yml` to run the SEO smoke command on pushes to `main`, manual dispatch, and a daily schedule.
+
+**Guard:**
+
+`tests/core/seo-smoke-workflow.test.ts` verifies the workflow triggers, production URL, Node setup, delay after push, and smoke command.
+
+**Validation:**
+
+Targeted workflow and SEO smoke tests passed locally before deployment.
+
+**Future trigger words:**
+
+GitHub Actions SEO, automated smoke check, scheduled SEO monitor, post-deploy SEO automation.

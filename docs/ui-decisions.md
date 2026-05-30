@@ -119,3 +119,14 @@ Decision:
 - Default to the production `www` domain but allow `SEO_SMOKE_BASE_URL` for previews.
 - Check homepage, canonical, robots, sitemap, llms.txt, required trust copy, canonical host, and high-risk YMYL phrases.
 - Treat smoke failures as command failures so they can be added to automation later.
+
+## 2026-05-30 - SEO Smoke Runs In GitHub Actions
+
+The production SEO smoke command is now wired into GitHub Actions.
+
+Decision:
+
+- Run on `workflow_dispatch`, pushes to `main`, and a daily schedule.
+- Wait 90 seconds after push-triggered runs to reduce race conditions with Vercel production aliasing.
+- Use Node 22 and `npm ci` for repeatable execution.
+- Keep the workflow secret-free and read-only.

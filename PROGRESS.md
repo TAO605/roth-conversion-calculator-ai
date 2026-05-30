@@ -41,3 +41,5 @@
 - Round 12 complete: added a repeatable `npm run seo:smoke` command for homepage, robots, sitemap, llms.txt, canonical, required trust copy, canonical host, and high-risk YMYL phrase checks.
 - Round 12 validation: targeted SEO/YMYL tests passed, `npm run seo:smoke` passed against production, full `npm test` passed with 87 files / 228 tests, and `npm run build` passed with homepage First Load JS around 135 kB.
 - Round 12 deployed: GitHub main is `c8a78cbe41c021109c0ba3b7f484913a69350cf2`; Vercel production deployment was aliased to `https://www.roth-conversion-calculator-ai.shop`; post-deploy `npm run seo:smoke` passed.
+- Round 13 complete: added a GitHub Actions workflow to run production `npm run seo:smoke` after pushes to main, on manual dispatch, and on a daily schedule.
+- Round 13 validation: targeted SEO workflow/script/YMYL tests passed, `npm run seo:smoke` passed against production, full `npm test` passed with 88 files / 229 tests, and `npm run build` passed with homepage First Load JS around 135 kB.

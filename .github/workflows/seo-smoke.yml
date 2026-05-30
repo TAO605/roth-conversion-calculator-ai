@@ -1,0 +1,44 @@
+name: SEO Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "17 9 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: seo-smoke-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  production-seo-smoke:
+    name: Production SEO smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SEO_SMOKE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Wait for production alias after push
+        if: github.event_name == 'push'
+        run: sleep 90
+
+      - name: Run SEO smoke check
+        run: npm run seo:smoke

@@ -73,3 +73,10 @@
 - Verify homepage trust copy, canonical host, robots discovery, sitemap host consistency, llms.txt discovery, and banned YMYL wording.
 - Allow the same command to run against preview URLs through an environment variable.
 - Use smoke output as deployment evidence in `PROGRESS.md`.
+
+## Automated SEO Smoke
+
+- After a smoke command is proven locally, wire it into CI with manual, push, and scheduled triggers.
+- Add a short post-push delay when production deployment is handled by an external platform.
+- Keep the workflow read-only and secret-free when checking public URLs.
+- Test workflow text so future edits do not accidentally remove triggers or the production URL.
