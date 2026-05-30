@@ -51,3 +51,11 @@
 - Generate a plain-text packet rather than a styled modal so users can paste it into email, notes, or advisor intake forms.
 - Include inputs, modeled outputs, triggered review items, records to bring, and the required disclaimer.
 - Avoid decision language. The packet supports a qualified professional conversation; it does not decide whether a conversion fits the user.
+
+## Responsive Result Actions
+
+- When result actions grow beyond two buttons, use a responsive action group instead of free-form wrapping.
+- Mobile: one full-width button per row.
+- Tablet: two columns so paired actions scan cleanly.
+- Desktop: horizontal wrapping row aligned with the result heading.
+- Keep destructive actions visually distinct and icon-backed.

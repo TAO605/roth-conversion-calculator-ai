@@ -85,3 +85,15 @@ Decision:
 - Include input-triggered review items from the tax impact prioritization module.
 - Include document prompts such as tax returns, Form 8606 records, IRA balances, withholding, Medicare, Marketplace, Social Security, investment income, and RMD context.
 - Keep the action as clipboard copy rather than collecting user email or advisor details.
+
+## 2026-05-30 - Result Actions Use Responsive Grouping
+
+The result action row now has four actions, so the layout uses explicit responsive behavior instead of relying on loose wrapping.
+
+Decision:
+
+- Use a labeled `Result actions` group.
+- Use full-width single-column buttons on mobile.
+- Use two columns on small/tablet viewports.
+- Return to a compact flex row on wide desktop.
+- Add a reset icon so the destructive utility action is visually recognizable.

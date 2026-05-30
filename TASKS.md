@@ -9,3 +9,4 @@
 - [done] Add tax data trust metadata with IRS source links and professional-review status
 - [done] Prioritize hidden tax interaction warnings from user inputs without estimating unsupported amounts
 - [done] Add copyable CPA review packet for professional handoff
+- [done] Make result actions responsive and mobile-friendly

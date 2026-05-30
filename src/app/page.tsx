@@ -3,6 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
+import { RotateCcw } from "lucide-react";
 import { Card } from "@/common/ui/card";
 import {
   loadShareInputFromHash,
@@ -198,12 +199,15 @@ export default function HomePage() {
                   High-confidence federal estimate with user-estimated state and future assumptions.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div
+                aria-label="Result actions"
+                className="grid w-full min-w-0 grid-cols-1 gap-2 sm:w-auto sm:grid-cols-2 xl:flex xl:flex-wrap xl:justify-end [&>button]:w-full xl:[&>button]:w-auto"
+              >
                 <ShareResultButton input={input} />
                 <PdfReportButton input={input} result={result} />
                 <CopyProfessionalHandoffButton input={input} result={result} />
                 <button
-                  className="min-h-11 rounded-[14px] px-4 py-2 text-sm font-semibold text-systemRed transition hover:bg-red-50 dark:hover:bg-white/10"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[14px] px-4 py-2 text-sm font-semibold text-systemRed transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-systemRed focus:ring-offset-2 dark:hover:bg-white/10 dark:focus:ring-offset-neutral-950"
                   onClick={() => {
                     clearStoredCalculatorInput();
                     setInput(initialInput);
@@ -211,6 +215,7 @@ export default function HomePage() {
                   }}
                   type="button"
                 >
+                  <RotateCcw aria-hidden="true" size={16} />
                   Reset
                 </button>
               </div>

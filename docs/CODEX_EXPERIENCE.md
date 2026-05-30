@@ -237,3 +237,29 @@ Targeted professional-handoff, warning, and YMYL tests passed before full-suite 
 **Future trigger words:**
 
 CPA packet, professional handoff, advisor checklist, copy packet, tax review materials, CPA questions.
+
+## 2026-05-30 - Growing Result Actions Need Explicit Responsive Layout
+
+**Symptom:**
+
+The result card accumulated share, report, CPA packet, and reset actions, which could wrap unevenly on mobile.
+
+**Root cause:**
+
+The original action row used simple flex wrapping, which was fine for two actions but less predictable after the action set grew.
+
+**Fix:**
+
+Changed the action group to mobile single-column, tablet two-column, and desktop flex wrapping; added a lucide reset icon.
+
+**Guard:**
+
+`tests/core/result-actions-layout.test.ts` verifies the responsive classes, action ordering, and reset icon.
+
+**Validation:**
+
+Targeted result-action, professional-handoff, homepage-performance, and YMYL tests passed before full-suite validation.
+
+**Future trigger words:**
+
+result buttons crowded, mobile action layout, Copy CPA packet button, result action group, reset button icon.
