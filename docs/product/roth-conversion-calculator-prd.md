@@ -7,6 +7,18 @@
 
 > 合规声明：本产品仅用于教育和演示，不构成税务、财务、法律或投资建议。所有税务规则、税率表和 AI 知识库必须以 IRS 官方资料为准，并在上线前由具备美国税务经验的专业人士复核。
 
+## V1.3 执行手册工程化补充
+
+2026-05-30 已对《罗斯转换计算器 V1.3 最终完整执行手册（全链路整合版）》完成当前项目基线评估。详细结论见 `docs/product/v1.3-current-state-gap-assessment.md`。
+
+执行原则：
+
+1. 采纳 V1.3 的“工具优先、隐私优先、输入即计算、结果前置、隐藏成本提示、支付方式对比”等方向。
+2. 不直接采纳 “100% accurate”“you should convert”“Strongly recommend”“Optimal Conversion Amount”“唯一/最准确/零错误保障” 等税务 YMYL 高风险表达。
+3. 保留当前 Next.js 15、动态 sitemap、内容集群、Methodology/Disclaimer/Editorial Policy 等 SEO 与合规基础设施，不把站点压缩成单页工具。
+4. 把 V1.3 的极简 UI 作为后续 `Quick Estimate` 或 `Focused Calculator Mode` 的设计方向，而不是无审查替换全站。
+5. 后续所有 V1.3 相关实施优先增加合规禁用语测试和计算回归测试，再进入 UI 与高级税务交互功能。
+
 ## 1. 产品目标
 
 ### 1.1 核心目标

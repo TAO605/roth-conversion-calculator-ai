@@ -19,6 +19,18 @@ describe("AI guardrails", () => {
     expect(containsForbiddenAdvice("You should convert the full amount.")).toBe(true);
   });
 
+  it("detects V1.3 high-risk recommendation and accuracy claims", () => {
+    expect(containsForbiddenAdvice("Strongly recommend paying taxes with external funds.")).toBe(true);
+    expect(containsForbiddenAdvice("This result is 100% accurate.")).toBe(true);
+    expect(containsForbiddenAdvice("The optimal conversion amount is $45,000.")).toBe(true);
+    expect(containsForbiddenAdvice("We guarantee the accuracy of this estimate.")).toBe(true);
+  });
+
+  it("rejects optimal-action prompts before model execution", () => {
+    expect(classifyAiQuestion("What is my optimal conversion amount?")).toBe("decision_advice");
+    expect(classifyAiQuestion("What do you recommend for my IRA conversion?")).toBe("decision_advice");
+  });
+
   it("appends the required disclaimer", () => {
     expect(appendDisclaimer("Educational explanation.")).toContain(REQUIRED_DISCLAIMER);
   });
