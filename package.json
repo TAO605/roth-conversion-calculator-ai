@@ -12,6 +12,7 @@
     "seo:smoke": "node scripts/seo-smoke.mjs",
     "seo:gsc-evidence": "node scripts/gsc-evidence.mjs",
     "seo:evidence-validate": "node scripts/validate-seo-evidence.mjs",
+    "seo:evidence-manifest": "node scripts/generate-seo-evidence-manifest.mjs",
     "lint": "next lint"
   },
   "dependencies": {

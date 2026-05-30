@@ -27,3 +27,4 @@
 - [done] Document sitemap freshness evidence in SEO monitoring operations
 - [done] Validate production SEO evidence artifacts before upload
 - [done] Retain SEO evidence validation summary in production artifact
+- [done] Add machine-readable SEO evidence artifact manifest

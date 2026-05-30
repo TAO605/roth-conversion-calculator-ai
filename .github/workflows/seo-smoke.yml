@@ -50,6 +50,9 @@ jobs:
       - name: Validate SEO evidence artifact
         run: node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json
 
+      - name: Generate SEO evidence manifest
+        run: node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json
+
       - name: Upload SEO evidence
         uses: actions/upload-artifact@v7
         if: always()
@@ -59,4 +62,5 @@ jobs:
             seo-smoke-result.json
             gsc-evidence-result.json
             seo-evidence-validation-result.json
+            seo-evidence-manifest.json
           retention-days: 30

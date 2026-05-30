@@ -123,4 +123,5 @@
 - Validate artifact JSON before upload so parse errors, missing priority URLs, stale `lastmodFresh`, noindex drift, or host mismatches fail CI while the run context is still visible.
 - Keep validator defaults aligned with workflow output filenames: `seo-smoke-result.json` and `gsc-evidence-result.json`.
 - Retain `seo-evidence-validation-result.json` in the artifact so downloaded evidence packages include the validator's machine-readable summary.
+- Retain `seo-evidence-manifest.json` so each evidence package identifies its workflow run, commit SHA, event type, included files, file sizes, production host, and retention window.
 - Use the validator locally when downloading an artifact for Search Console retry evidence or incident review.

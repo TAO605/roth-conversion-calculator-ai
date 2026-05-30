@@ -1,0 +1,67 @@
+import fs from "node:fs";
+
+const DEFAULT_FILES = [
+  "seo-smoke-result.json",
+  "gsc-evidence-result.json",
+  "seo-evidence-validation-result.json",
+];
+
+function fileRecord(filePath) {
+  const stats = fs.statSync(filePath);
+
+  return {
+    bytes: stats.size,
+    name: filePath,
+  };
+}
+
+function readText(filePath) {
+  const bytes = fs.readFileSync(filePath);
+  const hasUtf16Bom = bytes[0] === 0xff && bytes[1] === 0xfe;
+  const hasUtf16Nulls = bytes.length > 5 && bytes[3] === 0 && bytes[5] === 0;
+
+  return bytes.toString(hasUtf16Bom || hasUtf16Nulls ? "utf16le" : "utf8").replace(/^\uFEFF/, "");
+}
+
+function readJson(filePath) {
+  return JSON.parse(readText(filePath));
+}
+
+function run() {
+  const smoke = readJson("seo-smoke-result.json");
+  const validation = readJson("seo-evidence-validation-result.json");
+  const files = DEFAULT_FILES.map(fileRecord);
+
+  const manifest = {
+    artifactName: "production-seo-evidence",
+    baseUrl: smoke.baseUrl,
+    eventName: process.env.GITHUB_EVENT_NAME || "local",
+    files,
+    generatedAt: new Date().toISOString(),
+    gitHubRunAttempt: process.env.GITHUB_RUN_ATTEMPT || "",
+    gitHubRunId: process.env.GITHUB_RUN_ID || "",
+    gitHubServerUrl: process.env.GITHUB_SERVER_URL || "https://github.com",
+    gitHubSha: process.env.GITHUB_SHA || "",
+    gitHubWorkflow: process.env.GITHUB_WORKFLOW || "",
+    ok: validation.ok === true,
+    retentionDays: 30,
+  };
+
+  console.log(JSON.stringify(manifest, null, 2));
+}
+
+try {
+  run();
+} catch (error) {
+  console.error(
+    JSON.stringify(
+      {
+        error: error instanceof Error ? error.message : String(error),
+        ok: false,
+      },
+      null,
+      2,
+    ),
+  );
+  process.exit(1);
+}

@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.81",
+    date: "2026-05-30",
+    type: "patch",
+    title: "SEO evidence manifest",
+    summary:
+      "Added a machine-readable manifest to the production SEO evidence artifact so each proof package records run metadata, commit identity, event type, retained files, file sizes, production host, and retention window.",
+    affectedArea: "GitHub Actions SEO artifact traceability, Search Console evidence packages, incident review, and post-launch audit records",
+    rollbackPath:
+      "Remove scripts/generate-seo-evidence-manifest.mjs, the seo:evidence-manifest package script, the Generate SEO evidence manifest workflow step, and seo-evidence-manifest.json from the artifact upload path.",
+  },
+  {
     version: "1.0.80",
     date: "2026-05-30",
     type: "patch",
