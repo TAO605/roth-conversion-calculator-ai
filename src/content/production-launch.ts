@@ -46,7 +46,7 @@ export function buildProductionLaunchGroups(): ProductionLaunchGroup[] {
       steps: [
         step(
           "Configure Vercel environment variables",
-          "Set NEXT_PUBLIC_SITE_URL=https://www.roth-conversion-calculator-ai.shop, NEXT_PUBLIC_GA_MEASUREMENT_ID=G-2YJ3V38RGJ, and NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=HRbRO-Uc1Qg324AW4DLI681t-BqvwgwJxfTt3w9VXqk.",
+          "Set NEXT_PUBLIC_SITE_URL=https://www.roth-conversion-calculator-ai.shop, NEXT_PUBLIC_GA_MEASUREMENT_ID=G-2YJ3V38RGJ, and NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=bGl0K-Jm1Fck2gNqxkHlFPNWJjZDIGG5SeRvrmp1d4Q.",
           "Environment variable screenshot",
         ),
         step(

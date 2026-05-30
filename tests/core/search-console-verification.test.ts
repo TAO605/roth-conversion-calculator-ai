@@ -5,7 +5,7 @@ import { buildGoogleSiteVerification, getGoogleSiteVerificationToken } from "@/c
 
 describe("Google Search Console verification", () => {
   it("accepts safe verification tokens and rejects malformed values", () => {
-    expect(getGoogleSiteVerificationToken({})).toBe("HRbRO-Uc1Qg324AW4DLI681t-BqvwgwJxfTt3w9VXqk");
+    expect(getGoogleSiteVerificationToken({})).toBe("bGl0K-Jm1Fck2gNqxkHlFPNWJjZDIGG5SeRvrmp1d4Q");
     expect(getGoogleSiteVerificationToken({ NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: "abc_DEF-123456" })).toBe(
       "abc_DEF-123456",
     );
@@ -15,7 +15,7 @@ describe("Google Search Console verification", () => {
 
   it("builds Next metadata verification only when a token is configured", () => {
     expect(buildGoogleSiteVerification({})).toEqual({
-      google: "HRbRO-Uc1Qg324AW4DLI681t-BqvwgwJxfTt3w9VXqk",
+      google: "bGl0K-Jm1Fck2gNqxkHlFPNWJjZDIGG5SeRvrmp1d4Q",
     });
     expect(buildGoogleSiteVerification({ NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: "abc_DEF-123456" })).toEqual({
       google: "abc_DEF-123456",

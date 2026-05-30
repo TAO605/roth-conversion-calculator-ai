@@ -23,7 +23,7 @@ describe("production launch guide", () => {
     expect(labels).toContain("Confirm rollback deployment");
     expect(groups[0].steps[0].detail).toContain("www.roth-conversion-calculator-ai.shop");
     expect(groups[1].steps[0].detail).toContain("G-2YJ3V38RGJ");
-    expect(groups[1].steps[0].detail).toContain("HRbRO-Uc1Qg324AW4DLI681t-BqvwgwJxfTt3w9VXqk");
+    expect(groups[1].steps[0].detail).toContain("bGl0K-Jm1Fck2gNqxkHlFPNWJjZDIGG5SeRvrmp1d4Q");
     expect(summary.totalSteps).toBeGreaterThanOrEqual(12);
     expect(summary.requiredEvidence).toContain("Production URL");
     expect(summary.requiredEvidence).toContain("GSC property");

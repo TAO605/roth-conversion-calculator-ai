@@ -26,7 +26,7 @@ describe("production domain configuration", () => {
 
     expect(content).toContain("NEXT_PUBLIC_SITE_URL=https://www.roth-conversion-calculator-ai.shop");
     expect(content).toContain("NEXT_PUBLIC_GA_MEASUREMENT_ID=G-2YJ3V38RGJ");
-    expect(content).toContain("NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=HRbRO-Uc1Qg324AW4DLI681t-BqvwgwJxfTt3w9VXqk");
+    expect(content).toContain("NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=bGl0K-Jm1Fck2gNqxkHlFPNWJjZDIGG5SeRvrmp1d4Q");
     expect(content).not.toMatch(/password|密码|secret|token=/i);
   });
 });
