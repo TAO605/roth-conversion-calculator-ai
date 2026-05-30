@@ -9,27 +9,101 @@ const cards = [
   ["Federal tax", "federalTax"],
   ["State tax", "stateTax"],
   ["Potential penalty", "earlyDistributionPenalty"],
-  ["Total upfront cost", "totalUpfrontCost"],
   ["Roth future value", "rothFutureValue"],
-  ["After-tax difference", "afterTaxDifference"],
+  ["Traditional after-tax value", "traditionalAfterTaxValue"],
 ] as const;
 
+function formatBracketRoom(result: RothConversionResult): string {
+  const room = result.bracketImpact.roomInCurrentBracketBeforeConversion;
+
+  return room === null ? "Top bracket" : formatCurrency(room);
+}
+
+function bracketRoomNote(result: RothConversionResult): string {
+  if (result.bracketImpact.roomInCurrentBracketBeforeConversion === null) {
+    return "The current income is already in the top modeled federal bracket.";
+  }
+
+  if (result.bracketImpact.crossesBracket) {
+    return `${formatCurrency(result.bracketImpact.incomeTaxedInHigherBrackets)} of the modeled conversion is taxed above the starting bracket.`;
+  }
+
+  return `${formatCurrency(result.bracketImpact.roomInCurrentBracketAfterConversion ?? 0)} remains in the starting bracket after this conversion.`;
+}
+
 export function ResultSummary({ result }: ResultSummaryProps) {
+  const afterTaxDifferenceIsPositive = result.afterTaxDifference >= 0;
+
   return (
-    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-      {cards.map(([label, key]) => (
-        <div className="rounded-[16px] bg-white/65 p-4 dark:bg-white/10" key={key}>
-          <p className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">{label}</p>
-          <p className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">{formatCurrency(result[key])}</p>
+    <div className="grid gap-4">
+      <div className="grid gap-3 lg:grid-cols-3" aria-label="Primary result estimates">
+        <div className="rounded-[16px] bg-neutral-950 p-4 text-white shadow-sm dark:bg-white">
+          <p className="text-xs font-medium uppercase tracking-[0.08em] text-white/65 dark:text-neutral-500">
+            Estimated upfront tax
+          </p>
+          <p className="mt-2 text-3xl font-semibold tracking-normal text-white dark:text-neutral-950">
+            {formatCurrency(result.totalUpfrontCost)}
+          </p>
+          <p className="mt-2 text-xs leading-5 text-white/70 dark:text-neutral-600">
+            Federal, state, and any modeled early distribution penalty.
+          </p>
         </div>
-      ))}
-      <div className="rounded-[16px] bg-blue-500/10 p-4 sm:col-span-2 xl:col-span-3">
-        <p className="text-xs font-medium uppercase tracking-[0.08em] text-systemBlue">Break-even estimate</p>
-        <p className="mt-2 text-xl font-semibold text-neutral-950 dark:text-white">
-          {result.breakEvenYear === null
-            ? "Not reached within the current projection period"
-            : `${result.breakEvenYear} years`}
-        </p>
+
+        <div className="rounded-[16px] bg-blue-500/10 p-4 shadow-sm">
+          <p className="text-xs font-medium uppercase tracking-[0.08em] text-systemBlue">Modeled bracket room</p>
+          <p className="mt-2 text-3xl font-semibold tracking-normal text-neutral-950 dark:text-white">
+            {formatBracketRoom(result)}
+          </p>
+          <p className="mt-2 text-xs leading-5 text-neutral-600 dark:text-neutral-300">{bracketRoomNote(result)}</p>
+        </div>
+
+        <div className="rounded-[16px] bg-white/65 p-4 shadow-sm dark:bg-white/10">
+          <p className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">
+            Projected after-tax difference
+          </p>
+          <p
+            className={`mt-2 text-3xl font-semibold tracking-normal ${
+              afterTaxDifferenceIsPositive ? "text-systemGreen" : "text-systemRed"
+            }`}
+          >
+            {formatCurrency(result.afterTaxDifference)}
+          </p>
+          <p className="mt-2 text-xs leading-5 text-neutral-600 dark:text-neutral-300">
+            Projection after upfront cost, using the assumptions entered.
+          </p>
+        </div>
+      </div>
+
+      <div className="rounded-[16px] bg-neutral-50 p-4 dark:bg-white/10">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">
+              Scenario reading
+            </p>
+            <p className="mt-2 text-sm leading-6 text-neutral-700 dark:text-neutral-200">
+              Based on your inputs, this scenario models {formatCurrency(result.taxableConversion)} of taxable Roth
+              conversion income and {formatCurrency(result.totalUpfrontCost)} of upfront cost. Review the bracket room,
+              hidden tax-impact warnings, and assumptions before using this estimate for planning.
+            </p>
+          </div>
+          <div className="shrink-0 rounded-[12px] bg-white px-3 py-2 text-sm font-semibold text-neutral-950 shadow-sm dark:bg-neutral-950 dark:text-white">
+            Break-even:{" "}
+            {result.breakEvenYear === null
+              ? "not reached in projection"
+              : `${result.breakEvenYear} years`}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+        {cards.map(([label, key]) => (
+          <div className="rounded-[14px] bg-white/65 p-4 dark:bg-white/10" key={key}>
+            <p className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">
+              {label}
+            </p>
+            <p className="mt-2 text-xl font-semibold text-neutral-950 dark:text-white">{formatCurrency(result[key])}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
