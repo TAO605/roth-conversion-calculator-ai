@@ -21,3 +21,4 @@
 - [done] Store downloadable SEO and GSC evidence artifacts in GitHub Actions
 - [done] Add Search Console indexing retry protocol after transient Google backend errors
 - [done] Move SEO Smoke automation to Node 24 runtime readiness
+- [done] Upgrade SEO Smoke workflow to native Node 24 GitHub Actions

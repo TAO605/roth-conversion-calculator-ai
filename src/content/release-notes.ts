@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.75",
+    date: "2026-05-30",
+    type: "patch",
+    title: "Native Node 24 GitHub Actions",
+    summary:
+      "Upgraded the production SEO Smoke workflow to native Node 24 GitHub Actions versions for checkout, setup-node, and upload-artifact, removing the temporary forced Node 24 compatibility flag.",
+    affectedArea: "GitHub Actions SEO automation, scheduled production evidence checks, dependency installation, and artifact upload runtime compatibility",
+    rollbackPath:
+      "Restore the previous action versions in .github/workflows/seo-smoke.yml and re-enable the forced Node 24 compatibility flag if a newer action regression appears.",
+  },
+  {
     version: "1.0.74",
     date: "2026-05-30",
     type: "patch",

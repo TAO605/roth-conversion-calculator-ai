@@ -11,9 +11,6 @@ on:
 permissions:
   contents: read
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 concurrency:
   group: seo-smoke-${{ github.ref }}
   cancel-in-progress: false
@@ -29,10 +26,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
@@ -51,7 +48,7 @@ jobs:
         run: node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json
 
       - name: Upload SEO evidence
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: production-seo-evidence
