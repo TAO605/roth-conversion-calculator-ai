@@ -25,7 +25,7 @@ describe("AI compliance gateway", () => {
 
     expect(validation.ok).toBe(false);
     expect(validation.reason).toBe("decision_advice");
-    expect(validation.answer).toContain("cannot tell you whether you should convert");
+    expect(validation.answer).toContain("cannot provide a personal conversion decision");
     expect(validation.answer).toContain(REQUIRED_DISCLAIMER);
   });
 

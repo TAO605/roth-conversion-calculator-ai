@@ -47,8 +47,8 @@ export function AiExplainer({ input, result }: { input: RothConversionInput; res
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Educational AI helper</p>
           <h2 className="mt-1 text-xl font-bold text-neutral-950 dark:text-white">Ask AI to explain this estimate</h2>
           <p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
-            Use it for plain-English explanations of the numbers on this page. It will not tell you whether you should
-            convert or how much to convert.
+            Use it for plain-English explanations of the numbers on this page. It explains rules and assumptions, not
+            personal conversion decisions or action amounts.
           </p>
         </div>
       </div>

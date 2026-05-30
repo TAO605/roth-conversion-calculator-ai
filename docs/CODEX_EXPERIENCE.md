@@ -72,7 +72,7 @@ Split inputs into a visible `Quick Estimate` block and a collapsed `Advanced ass
 
 **Guard:**
 
-`tests/core/calculator-input-layout.test.ts` verifies the quick fields are visible and advanced assumptions are collapsed by default.
+`tests/core/calculator-input-layout.test.ts` verifies the quick fields are visible and advanced assumptions are collapsed by default. `tests/core/ymyl-language-guard.test.ts` normalizes whitespace before scanning so risky phrases split across JSX lines are still caught.
 
 **Validation:**
 

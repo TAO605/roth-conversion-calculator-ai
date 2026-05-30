@@ -30,7 +30,7 @@ const sensitiveDataPatterns = [
 
 const refusalText: Record<AiRejectionReason, string> = {
   decision_advice:
-    "I can explain Roth conversion rules and calculator results, but I cannot tell you whether you should convert or choose an optimal amount. A licensed tax professional can review your full tax picture.",
+    "I can explain Roth conversion rules and calculator results, but I cannot provide a personal conversion decision or select an action amount. A licensed tax professional can review your full tax picture.",
   unrelated: "I can only answer educational questions about Roth conversions, IRAs, IRS rules, and this calculator.",
   sensitive_data:
     "Please remove personal identifiers, account numbers, Social Security numbers, and other sensitive data before using the AI explainer. You can ask general Roth conversion education questions without sharing private identifiers.",

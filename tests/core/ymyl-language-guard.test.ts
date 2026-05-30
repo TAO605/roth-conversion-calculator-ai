@@ -59,9 +59,10 @@ describe("YMYL user-facing language guard", () => {
     const files = scannedRoots.flatMap((root) => collectFiles(path.join(projectRoot, root)));
     const findings = files.flatMap((file) => {
       const content = fs.readFileSync(file, "utf8");
+      const normalizedContent = content.replace(/\s+/g, " ");
 
       return bannedUserFacingPatterns.flatMap(({ label, pattern }) => {
-        const matches = content.match(pattern) ?? [];
+        const matches = normalizedContent.match(pattern) ?? [];
 
         return matches.map((match) => `${path.relative(projectRoot, file)}: ${label}: "${match}"`);
       });
