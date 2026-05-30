@@ -1,6 +1,12 @@
-const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.roth-conversion-calculator-ai.shop";
+const defaultSiteUrl = "https://www.roth-conversion-calculator-ai.shop";
+
+export function normalizeSiteUrl(value: string | undefined): string {
+  const rawSiteUrl = value?.trim() || defaultSiteUrl;
+
+  return rawSiteUrl.replace(/\/+$/, "");
+}
 
 export const siteConfig = {
-  siteUrl: rawSiteUrl.replace(/\/$/, ""),
+  siteUrl: normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   siteName: "AI Roth Conversion Calculator",
 };
