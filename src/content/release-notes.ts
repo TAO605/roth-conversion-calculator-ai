@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.90",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Blog draft SEO review command",
+    summary:
+      "Added a local blog draft review command so user-written drafts can be checked for primary keyword placement, word count, heading structure, image alt text, and keyword-density review before engineering publication.",
+    affectedArea:
+      "User-owned blog writing workflow, SEO review operations, content QA automation, and YMYL-safe publication guardrails",
+    rollbackPath:
+      "Remove scripts/blog-seo-review.mjs, the seo:blog-review package script, the blog SEO review tests, and the draft command section from the blog authoring SEO review workflow.",
+  },
+  {
     version: "1.0.89",
     date: "2026-06-01",
     type: "patch",

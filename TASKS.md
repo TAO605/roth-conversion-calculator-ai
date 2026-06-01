@@ -38,3 +38,5 @@
 - [done] Extend structured-data evidence to priority educational pages
 - [done] Expand structured-data evidence to additional YMYL guide pages
 - [done] Complete structured-data evidence across existing guide pages
+- [done] Document user-owned blog writing and SEO review workflow
+- [done] Add automated blog draft SEO review command
