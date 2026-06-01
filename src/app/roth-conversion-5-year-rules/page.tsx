@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buildFiveYearRuleSections, getFiveYearRulesSummary } from "@/content/five-year-rules-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion 5-Year Rules Guide",
@@ -27,7 +27,24 @@ export default function RothConversionFiveYearRulesPage() {
         }}
         type="application/ld+json"
       />
-      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-5-year-rules",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Roth conversion five-year rules",
+                "Distribution timing review",
+                "Retirement account records",
+                "Calculator boundaries",
+              ],
+            }),
+          ),
+        }}
+        type="application/ld+json"
+      />      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
         <Link className="hover:text-systemBlue" href="/">
           Calculator
         </Link>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buildCpaReviewChecklistGroups, getCpaReviewChecklistSummary } from "@/content/cpa-review-checklist";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "CPA Review Checklist",
@@ -27,7 +27,24 @@ export default function CpaReviewChecklistPage() {
         }}
         type="application/ld+json"
       />
-      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/cpa-review-checklist",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "CPA review preparation",
+                "Roth conversion records",
+                "Professional tax review",
+                "Calculator boundaries",
+              ],
+            }),
+          ),
+        }}
+        type="application/ld+json"
+      />      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
         <Link className="hover:text-systemBlue" href="/">
           Calculator
         </Link>

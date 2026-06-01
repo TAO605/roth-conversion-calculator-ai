@@ -37,3 +37,4 @@
 - [done] Add production structured-data evidence check to CI artifacts
 - [done] Extend structured-data evidence to priority educational pages
 - [done] Expand structured-data evidence to additional YMYL guide pages
+- [done] Complete structured-data evidence across existing guide pages

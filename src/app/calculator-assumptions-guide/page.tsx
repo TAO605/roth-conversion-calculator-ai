@@ -4,7 +4,7 @@ import {
   getCalculatorAssumptionSummary,
 } from "@/content/calculator-assumptions-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Calculator Assumptions Guide",
@@ -30,7 +30,24 @@ export default function CalculatorAssumptionsGuidePage() {
         }}
         type="application/ld+json"
       />
-      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/calculator-assumptions-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Calculator assumptions",
+                "Roth conversion inputs",
+                "Educational tax modeling",
+                "Professional review preparation",
+              ],
+            }),
+          ),
+        }}
+        type="application/ld+json"
+      />      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
         <Link className="hover:text-systemBlue" href="/">
           Calculator
         </Link>

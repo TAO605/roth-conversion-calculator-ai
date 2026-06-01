@@ -181,27 +181,21 @@ describe("structured data", () => {
   });
 
   it("mounts WebPage and Breadcrumb structured data on priority educational pages", () => {
-    const irmaaPage = fs.readFileSync(
-      path.join(process.cwd(), "src/app/roth-conversion-irmaa-guide/page.tsx"),
-      "utf8",
-    );
-    const acaPage = fs.readFileSync(
-      path.join(process.cwd(), "src/app/roth-conversion-aca-premium-tax-credit-guide/page.tsx"),
-      "utf8",
-    );
-    const bracketPage = fs.readFileSync(path.join(process.cwd(), "src/app/tax-brackets/2026/page.tsx"), "utf8");
-    const niitPage = fs.readFileSync(path.join(process.cwd(), "src/app/roth-conversion-niit-guide/page.tsx"), "utf8");
-    const rmdPage = fs.readFileSync(path.join(process.cwd(), "src/app/roth-conversion-rmd-guide/page.tsx"), "utf8");
-    const socialSecurityPage = fs.readFileSync(
-      path.join(process.cwd(), "src/app/roth-conversion-social-security-tax-guide/page.tsx"),
-      "utf8",
-    );
-    const estimatedTaxPage = fs.readFileSync(
-      path.join(process.cwd(), "src/app/roth-conversion-estimated-tax-guide/page.tsx"),
-      "utf8",
-    );
+    const appDir = path.join(process.cwd(), "src/app");
+    const guidePagePaths = fs
+      .readdirSync(appDir, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .filter((name) => name.startsWith("roth-conversion-") || ["calculator-assumptions-guide", "cpa-review-checklist"].includes(name))
+      .map((name) => path.join(appDir, name, "page.tsx"))
+      .filter((pagePath) => fs.existsSync(pagePath));
+    const priorityPagePaths = [...guidePagePaths, path.join(appDir, "tax-brackets/2026/page.tsx")];
 
-    for (const page of [irmaaPage, acaPage, bracketPage, niitPage, rmdPage, socialSecurityPage, estimatedTaxPage]) {
+    expect(priorityPagePaths.length).toBeGreaterThanOrEqual(19);
+
+    for (const pagePath of priorityPagePaths) {
+      const page = fs.readFileSync(pagePath, "utf8");
+
       expect(page).toContain("breadcrumbJsonLd");
       expect(page).toContain("contentWebPageJsonLd");
       expect(page).toContain('type="application/ld+json"');

@@ -35,6 +35,54 @@ const monitoredPages = [
     path: "/roth-conversion-estimated-tax-guide",
     requiredTypes: ["BreadcrumbList", "WebPage"],
   },
+  {
+    path: "/calculator-assumptions-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/cpa-review-checklist",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-5-year-rules",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-capital-gains-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-cpa-questions",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-custodian-process",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-mistakes",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-planning-checklist",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-qcd-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-recharacterization-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-tax-forms",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-timeline",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
 ];
 const forbiddenKeyPattern = /^(aggregateRating|review|reviewRating|ratingValue|reviewCount)$/i;
 const forbiddenTextPattern = /optimal conversion amount|hidden fees|100%\s+accurate|guaranteed|voiceInput|voiceOutput/gi;

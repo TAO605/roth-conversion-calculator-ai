@@ -30,12 +30,17 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("validateStructuredDataEvidence");
     expect(script).toContain("structuredDataTypeCount");
     expect(script).toContain("pageCount");
+    expect(script).toContain("pageCount >= 20");
     expect(script).toContain("/roth-conversion-irmaa-guide");
     expect(script).toContain("/roth-conversion-aca-premium-tax-credit-guide");
     expect(script).toContain("/roth-conversion-niit-guide");
     expect(script).toContain("/roth-conversion-rmd-guide");
     expect(script).toContain("/roth-conversion-social-security-tax-guide");
     expect(script).toContain("/roth-conversion-estimated-tax-guide");
+    expect(script).toContain("/calculator-assumptions-guide");
+    expect(script).toContain("/cpa-review-checklist");
+    expect(script).toContain("/roth-conversion-tax-forms");
+    expect(script).toContain("/roth-conversion-timeline");
     expect(script).toContain("must contain a single JSON object");
     expect(structuredDataScript).toContain("STRUCTURED_DATA_EVIDENCE_BASE_URL");
     expect(structuredDataScript).toContain("WebApplication");
@@ -57,6 +62,10 @@ describe("SEO evidence artifact validation", () => {
     expect(structuredDataScript).toContain("/roth-conversion-rmd-guide");
     expect(structuredDataScript).toContain("/roth-conversion-social-security-tax-guide");
     expect(structuredDataScript).toContain("/roth-conversion-estimated-tax-guide");
+    expect(structuredDataScript).toContain("/calculator-assumptions-guide");
+    expect(structuredDataScript).toContain("/cpa-review-checklist");
+    expect(structuredDataScript).toContain("/roth-conversion-tax-forms");
+    expect(structuredDataScript).toContain("/roth-conversion-timeline");
     expect(structuredDataScript).toContain("BreadcrumbList");
     expect(workflow).toContain("Run structured data evidence check");
     expect(workflow).toContain("node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json");

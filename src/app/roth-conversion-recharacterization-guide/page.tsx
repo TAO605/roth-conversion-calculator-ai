@@ -4,7 +4,7 @@ import {
   getRecharacterizationGuideSummary,
 } from "@/content/recharacterization-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion Recharacterization Guide",
@@ -30,7 +30,24 @@ export default function RothConversionRecharacterizationGuidePage() {
         }}
         type="application/ld+json"
       />
-      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-recharacterization-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Roth conversion recharacterization limits",
+                "IRA contribution recharacterization",
+                "Transaction correction review",
+                "Calculator boundaries",
+              ],
+            }),
+          ),
+        }}
+        type="application/ld+json"
+      />      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
         <Link className="hover:text-systemBlue" href="/">
           Calculator
         </Link>

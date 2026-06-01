@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.89",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Complete guide structured data evidence",
+    summary:
+      "Completed WebPage and BreadcrumbList structured-data coverage across the existing guide library without changing user-written blog content, then expanded the production evidence check so retained artifacts verify all monitored guide pages.",
+    affectedArea:
+      "Existing guide pages, structured-data monitoring, production SEO evidence artifacts, release guardrails, and V1.3 semantic SEO implementation",
+    rollbackPath:
+      "Remove contentWebPageJsonLd from the remaining guide pages, then remove those paths from scripts/structured-data-evidence.mjs and the SEO evidence validator if the evidence scope needs to return to the smaller monitored set.",
+  },
+  {
     version: "1.0.88",
     date: "2026-06-01",
     type: "patch",

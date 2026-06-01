@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buildQcdGuideSections, getQcdGuideSummary } from "@/content/qcd-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion QCD Guide",
@@ -27,7 +27,24 @@ export default function RothConversionQcdGuidePage() {
         }}
         type="application/ld+json"
       />
-      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-qcd-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Qualified charitable distributions",
+                "RMD coordination",
+                "Roth conversion boundaries",
+                "Professional review preparation",
+              ],
+            }),
+          ),
+        }}
+        type="application/ld+json"
+      />      <nav className="flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-400">
         <Link className="hover:text-systemBlue" href="/">
           Calculator
         </Link>
