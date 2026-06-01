@@ -15,6 +15,7 @@ export interface BlogDraftReviewWorkflow {
   command: string;
   evidenceCommand: string;
   ownershipBoundary: string;
+  readinessCommand: string;
   hardChecks: string[];
   manualReview: string[];
   publicationDuties: string[];
@@ -145,6 +146,7 @@ export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
     evidenceCommand: "npm run seo:blog-evidence-validate -- blog-review-result.json",
     ownershipBoundary:
       "The user writes or approves the blog article body; AI reviews, formats, validates, and publishes only after approval.",
+    readinessCommand: 'npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword"',
     hardChecks: [
       "Primary keyword appears within the first 100 words.",
       "Primary keyword appears within the final 100 words.",
@@ -168,6 +170,7 @@ export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
       "Add metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD from real article data.",
       "Add sitemap, RSS, llms.txt, and internal-link discovery paths when the article is approved.",
       "Retain and validate the blog review JSON evidence before engineering publication.",
+      "Use the one-step readiness command for quick pre-publication checks when a retained JSON file is not needed yet.",
       "Run blog review, YMYL language tests, production build, SEO smoke, and structured-data evidence before release.",
     ],
   };

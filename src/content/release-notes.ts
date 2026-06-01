@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.94",
+    date: "2026-06-01",
+    type: "patch",
+    title: "One-step blog publication readiness check",
+    summary:
+      "Added a one-step blog readiness command that runs draft SEO review and publication evidence validation together, returning a single JSON payload for quick pre-publication checks without manual redirection.",
+    affectedArea:
+      "Blog publication QA automation, content operations workflow, user-owned article review, semantic SEO evidence, and YMYL-safe release checks",
+    rollbackPath:
+      "Remove scripts/blog-publication-readiness.mjs, the seo:blog-ready package script, its tests, and the readiness command references from the blog workflow documentation and content operations page.",
+  },
+  {
     version: "1.0.93",
     date: "2026-06-01",
     type: "patch",

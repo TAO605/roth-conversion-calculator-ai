@@ -166,6 +166,14 @@ The publication evidence validator confirms the retained review JSON has:
 - Semantic heading hierarchy evidence.
 - Paragraph evidence in `semanticSummary`.
 
+For a fast pre-publication readiness check that does not require a retained intermediate file yet, run:
+
+```bash
+npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword"
+```
+
+This command runs the draft review and publication evidence validation in one step, then returns a single JSON readiness payload. Use the retained `blog-review-result.json` workflow when a release package or reviewer handoff needs a separate saved evidence file.
+
 ## Visible Operations Page
 
 The same review gate is surfaced on `/content-operations` so the publishing workflow is visible inside the site, not only in engineering documentation.

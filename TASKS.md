@@ -43,3 +43,4 @@
 - [done] Surface blog draft SEO review workflow on content operations page
 - [done] Add semantic structure evidence to blog draft SEO review
 - [done] Add retained blog publication evidence validator
+- [done] Add one-step blog publication readiness command

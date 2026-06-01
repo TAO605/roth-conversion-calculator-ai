@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { pathToFileURL } from "node:url";
 
 const DEFAULT_REVIEW_PATH = "blog-review-result.json";
 
@@ -54,7 +55,7 @@ function validateChecks(review) {
   }
 }
 
-function validateBlogReviewEvidence(review) {
+export function validateBlogReviewEvidence(review) {
   assert(review.ok === true, "blog review evidence must have ok: true");
   assert(typeof review.keyword === "string" && review.keyword.length > 0, "blog review keyword is missing");
   assert(Number.isFinite(review.wordCount) && review.wordCount >= 800, "blog review wordCount must be at least 800");
@@ -93,18 +94,20 @@ function run() {
   );
 }
 
-try {
-  run();
-} catch (error) {
-  console.error(
-    JSON.stringify(
-      {
-        error: error instanceof Error ? error.message : String(error),
-        ok: false,
-      },
-      null,
-      2,
-    ),
-  );
-  process.exit(1);
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try {
+    run();
+  } catch (error) {
+    console.error(
+      JSON.stringify(
+        {
+          error: error instanceof Error ? error.message : String(error),
+          ok: false,
+        },
+        null,
+        2,
+      ),
+    );
+    process.exit(1);
+  }
 }
