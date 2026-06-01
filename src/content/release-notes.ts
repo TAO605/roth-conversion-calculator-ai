@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.91",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Visible blog review operations workflow",
+    summary:
+      "Added the user-owned blog draft SEO review gate to the Content Operations Playbook so article drafts have visible hard checks, manual review signals, and AI publication duties before release.",
+    affectedArea:
+      "Content operations page, blog publishing workflow, SEO review guardrails, YMYL-safe article publication, and release governance",
+    rollbackPath:
+      "Remove getBlogDraftReviewWorkflow and the Blog Draft SEO Review section from /content-operations, then return the content-operations feature registry version to the previous release.",
+  },
+  {
     version: "1.0.90",
     date: "2026-06-01",
     type: "patch",

@@ -11,6 +11,14 @@ export interface ContentOperationsGroup {
   steps: ContentOperationsStep[];
 }
 
+export interface BlogDraftReviewWorkflow {
+  command: string;
+  ownershipBoundary: string;
+  hardChecks: string[];
+  manualReview: string[];
+  publicationDuties: string[];
+}
+
 function step(label: string, output: string, detail: string): ContentOperationsStep {
   return { label, output, detail };
 }
@@ -128,6 +136,35 @@ export function buildContentOperationsGroups(): ContentOperationsGroup[] {
       ],
     },
   ];
+}
+
+export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
+  return {
+    command: 'npm run seo:blog-review -- --file path/to/draft.md --keyword "primary keyword"',
+    ownershipBoundary:
+      "The user writes or approves the blog article body; AI reviews, formats, validates, and publishes only after approval.",
+    hardChecks: [
+      "Primary keyword appears within the first 100 words.",
+      "Primary keyword appears within the final 100 words.",
+      "Draft has at least 800 words.",
+      "Exactly one H1 appears on the page.",
+      "H1 contains the primary keyword.",
+      "At least one H2 contains the primary keyword when it reads naturally.",
+      "Every uploaded image includes descriptive alt text.",
+    ],
+    manualReview: [
+      "1,500+ words is preferred for blog articles when the topic supports it.",
+      "Keyword density target is reviewed as 2% to 4% without keyword stuffing.",
+      "H2 sections form the article outline; H3 and H4 support real subsections.",
+      "Tax, Medicare, ACA, IRS, and state-tax claims stay source-aligned and educational.",
+      "No personalized recommendations, best/optimal claims, guarantees, fake ratings, or 100% accuracy claims.",
+    ],
+    publicationDuties: [
+      "Add metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD from real article data.",
+      "Add sitemap, RSS, llms.txt, and internal-link discovery paths when the article is approved.",
+      "Run blog review, YMYL language tests, production build, SEO smoke, and structured-data evidence before release.",
+    ],
+  };
 }
 
 export function getContentOperationsSummary(groups: ContentOperationsGroup[]) {

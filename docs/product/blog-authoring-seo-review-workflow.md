@@ -145,3 +145,15 @@ The command reads a Markdown or HTML draft and returns JSON evidence for:
 - Keyword-density review.
 
 Hard failures should be fixed before publication. Keyword density is still a manual editorial review signal; do not force exact-match repetition if it harms clarity or YMYL trust.
+
+## Visible Operations Page
+
+The same review gate is surfaced on `/content-operations` so the publishing workflow is visible inside the site, not only in engineering documentation.
+
+Before publishing a user-written blog article, use that page to confirm:
+
+- The user-owned writing boundary is preserved.
+- The draft review command has been run.
+- Hard checks are fixed before release.
+- Manual density and 1,500+ word-count signals are reviewed without keyword stuffing.
+- AI publication duties cover metadata, canonical URL, Article JSON-LD, Breadcrumb JSON-LD, sitemap, RSS, llms.txt, tests, build, and production SEO evidence.

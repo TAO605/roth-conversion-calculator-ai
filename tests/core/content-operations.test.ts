@@ -3,7 +3,11 @@ import fs from "node:fs";
 import path from "node:path";
 import sitemap from "@/app/sitemap";
 import { blogPosts } from "@/content/blog";
-import { buildContentOperationsGroups, getContentOperationsSummary } from "@/content/content-operations";
+import {
+  buildContentOperationsGroups,
+  getBlogDraftReviewWorkflow,
+  getContentOperationsSummary,
+} from "@/content/content-operations";
 import { buildSiteIndexGroups } from "@/content/site-index";
 import { buildLlmsText } from "@/core/seo/llms";
 
@@ -40,5 +44,33 @@ describe("content operations playbook", () => {
     expect(homePage).toContain('href="/content-operations"');
     expect(siteIndexUrls).toContain("/content-operations");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/content-operations");
+  });
+
+  it("publishes the user-owned blog draft review gate without generating article copy", () => {
+    const workflow = getBlogDraftReviewWorkflow();
+    const pageFile = fs.readFileSync(path.join(process.cwd(), "src/app/content-operations/page.tsx"), "utf8");
+
+    expect(workflow.command).toBe('npm run seo:blog-review -- --file path/to/draft.md --keyword "primary keyword"');
+    expect(workflow.ownershipBoundary).toContain("user writes or approves the blog article body");
+    expect(workflow.hardChecks).toEqual(
+      expect.arrayContaining([
+        "Primary keyword appears within the first 100 words.",
+        "Primary keyword appears within the final 100 words.",
+        "Draft has at least 800 words.",
+        "Exactly one H1 appears on the page.",
+        "Every uploaded image includes descriptive alt text.",
+      ]),
+    );
+    expect(workflow.manualReview).toEqual(
+      expect.arrayContaining([
+        "1,500+ words is preferred for blog articles when the topic supports it.",
+        "Keyword density target is reviewed as 2% to 4% without keyword stuffing.",
+        "No personalized recommendations, best/optimal claims, guarantees, fake ratings, or 100% accuracy claims.",
+      ]),
+    );
+    expect(workflow.publicationDuties.join(" ")).toContain("Article JSON-LD");
+    expect(workflow.publicationDuties.join(" ")).toContain("SEO smoke");
+    expect(pageFile).toContain("Blog Draft SEO Review");
+    expect(pageFile).toContain("getBlogDraftReviewWorkflow");
   });
 });

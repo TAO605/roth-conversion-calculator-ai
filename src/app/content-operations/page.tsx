@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { buildContentOperationsGroups, getContentOperationsSummary } from "@/content/content-operations";
+import {
+  buildContentOperationsGroups,
+  getBlogDraftReviewWorkflow,
+  getContentOperationsSummary,
+} from "@/content/content-operations";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { breadcrumbJsonLd } from "@/core/seo/json-ld";
 
@@ -13,6 +17,7 @@ export const metadata = {
 export default function ContentOperationsPage() {
   const groups = buildContentOperationsGroups();
   const summary = getContentOperationsSummary(groups);
+  const blogDraftReview = getBlogDraftReviewWorkflow();
 
   return (
     <main className="mx-auto grid max-w-6xl gap-8 px-4 py-10">
@@ -89,6 +94,46 @@ export default function ContentOperationsPage() {
             </div>
           </article>
         ))}
+      </section>
+
+      <section className="grid gap-5 rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+        <div className="grid gap-2">
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Blog publishing gate</p>
+          <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Blog Draft SEO Review</h2>
+          <p className="max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+            {blogDraftReview.ownershipBoundary}
+          </p>
+          <code className="mt-2 overflow-x-auto rounded-[14px] bg-neutral-950 px-4 py-3 text-sm leading-6 text-white">
+            {blogDraftReview.command}
+          </code>
+        </div>
+
+        <div className="grid gap-3 lg:grid-cols-3">
+          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+            <h3 className="font-semibold text-neutral-950 dark:text-white">Hard checks</h3>
+            <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              {blogDraftReview.hardChecks.map((check) => (
+                <li key={check}>{check}</li>
+              ))}
+            </ul>
+          </article>
+          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+            <h3 className="font-semibold text-neutral-950 dark:text-white">Manual review</h3>
+            <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              {blogDraftReview.manualReview.map((check) => (
+                <li key={check}>{check}</li>
+              ))}
+            </ul>
+          </article>
+          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+            <h3 className="font-semibold text-neutral-950 dark:text-white">AI publication duties</h3>
+            <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              {blogDraftReview.publicationDuties.map((duty) => (
+                <li key={duty}>{duty}</li>
+              ))}
+            </ul>
+          </article>
+        </div>
       </section>
 
       <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
