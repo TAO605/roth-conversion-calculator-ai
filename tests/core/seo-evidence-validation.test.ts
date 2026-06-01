@@ -8,24 +8,47 @@ describe("SEO evidence artifact validation", () => {
       scripts: Record<string, string>;
     };
     const script = fs.readFileSync(path.join(process.cwd(), "scripts/validate-seo-evidence.mjs"), "utf8");
+    const structuredDataScript = fs.readFileSync(
+      path.join(process.cwd(), "scripts/structured-data-evidence.mjs"),
+      "utf8",
+    );
     const workflow = fs.readFileSync(path.join(process.cwd(), ".github/workflows/seo-smoke.yml"), "utf8");
     const manifestScript = fs.readFileSync(path.join(process.cwd(), "scripts/generate-seo-evidence-manifest.mjs"), "utf8");
 
     expect(packageJson.scripts["seo:evidence-validate"]).toBe("node scripts/validate-seo-evidence.mjs");
     expect(packageJson.scripts["seo:evidence-manifest"]).toBe("node scripts/generate-seo-evidence-manifest.mjs");
+    expect(packageJson.scripts["seo:structured-data"]).toBe("node scripts/structured-data-evidence.mjs");
     expect(script).toContain("seo-smoke-result.json");
     expect(script).toContain("gsc-evidence-result.json");
+    expect(script).toContain("structured-data-evidence-result.json");
     expect(script).toContain("lastmodFresh");
     expect(script).toContain("priorityUrlCount");
     expect(script).toContain("hasUtf16Bom");
     expect(script).toContain("utf16le");
     expect(script).toContain("/seo-monitoring");
     expect(script).toContain("/tax-brackets/2026");
+    expect(script).toContain("validateStructuredDataEvidence");
+    expect(script).toContain("structuredDataTypeCount");
     expect(script).toContain("must contain a single JSON object");
+    expect(structuredDataScript).toContain("STRUCTURED_DATA_EVIDENCE_BASE_URL");
+    expect(structuredDataScript).toContain("WebApplication");
+    expect(structuredDataScript).toContain("WebSite");
+    expect(structuredDataScript).toContain("WebPage");
+    expect(structuredDataScript).toContain("HowTo");
+    expect(structuredDataScript).toContain("Organization");
+    expect(structuredDataScript).toContain("FAQPage");
+    expect(structuredDataScript).toContain("aggregateRating");
+    expect(structuredDataScript).toContain("reviewRating");
+    expect(structuredDataScript).toContain("100%\\s+accurate");
+    expect(structuredDataScript).toContain("voiceInput");
+    expect(structuredDataScript).toContain("siteUrlCount");
+    expect(workflow).toContain("Run structured data evidence check");
+    expect(workflow).toContain("node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json");
     expect(workflow).toContain("Validate SEO evidence artifact");
     expect(workflow).toContain("node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json");
     expect(workflow).toContain("Generate SEO evidence manifest");
     expect(workflow).toContain("node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json");
+    expect(manifestScript).toContain("structured-data-evidence-result.json");
     expect(manifestScript).toContain("GITHUB_RUN_ID");
     expect(manifestScript).toContain("GITHUB_SHA");
     expect(manifestScript).toContain("hasUtf16Bom");
@@ -41,10 +64,12 @@ describe("SEO evidence artifact validation", () => {
 
     expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");
     expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
+    expect(workflow).toContain("node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json");
     expect(workflow).toContain("node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json");
     expect(workflow).toContain("node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json");
     expect(workflow).toContain("seo-smoke-result.json");
     expect(workflow).toContain("gsc-evidence-result.json");
+    expect(workflow).toContain("structured-data-evidence-result.json");
     expect(workflow).toContain("seo-evidence-validation-result.json");
     expect(workflow).toContain("seo-evidence-manifest.json");
     expect(workflow).toContain("name: production-seo-evidence");

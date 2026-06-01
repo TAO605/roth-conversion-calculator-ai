@@ -2,8 +2,10 @@ import fs from "node:fs";
 
 const DEFAULT_SMOKE_PATH = "seo-smoke-result.json";
 const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
+const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
+const structuredDataPath = process.argv[4] || DEFAULT_STRUCTURED_DATA_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -71,21 +73,40 @@ function validateGscEvidence(gsc, expectedBaseUrl) {
   }
 }
 
+function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
+  assert(structuredData.ok === true, "Structured data evidence must be ok");
+  assert(structuredData.baseUrl === expectedBaseUrl, "Structured data evidence baseUrl must match SEO smoke baseUrl");
+  assert(structuredData.jsonLdScriptCount >= 6, "Structured data evidence must include homepage JSON-LD scripts");
+  assert(Array.isArray(structuredData.types), "Structured data evidence types must be an array");
+  assert(Array.isArray(structuredData.forbiddenKeys), "Structured data forbiddenKeys must be an array");
+  assert(Array.isArray(structuredData.forbiddenTextMatches), "Structured data forbiddenTextMatches must be an array");
+  assert(structuredData.forbiddenKeys.length === 0, "Structured data must not include review or rating keys");
+  assert(structuredData.forbiddenTextMatches.length === 0, "Structured data must not include unsafe YMYL text");
+  assert(structuredData.siteUrlCount > 0, "Structured data must include canonical site URLs");
+
+  for (const type of ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization", "FAQPage"]) {
+    assert(structuredData.types.includes(type), `Structured data evidence missing ${type}`);
+  }
+}
+
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
+  const structuredData = readJson(structuredDataPath);
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
+  validateStructuredDataEvidence(structuredData, smoke.baseUrl);
 
   console.log(
     JSON.stringify(
       {
-        artifactFiles: [smokePath, gscPath],
+        artifactFiles: [smokePath, gscPath, structuredDataPath],
         baseUrl: smoke.baseUrl,
         gscPriorityUrlCount: gsc.priorityUrlCount,
         ok: true,
         smokeCheckCount: smoke.results.length,
+        structuredDataTypeCount: structuredData.types.length,
       },
       null,
       2,

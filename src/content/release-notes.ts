@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.86",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Structured data evidence artifact",
+    summary:
+      "Added a production structured-data evidence command and wired it into the SEO Smoke workflow so the retained proof package now checks homepage JSON-LD types, canonical host consistency, fake review fields, unsupported feature claims, and unsafe YMYL phrases before artifact upload.",
+    affectedArea:
+      "Production SEO evidence automation, homepage structured-data monitoring, GitHub Actions artifacts, and V1.3 semantic structured-data SEO implementation",
+    rollbackPath:
+      "Remove scripts/structured-data-evidence.mjs, the seo:structured-data package script, the structured data workflow step, and structured-data-evidence-result.json from the evidence validator, manifest, and uploaded artifact.",
+  },
+  {
     version: "1.0.85",
     date: "2026-06-01",
     type: "patch",

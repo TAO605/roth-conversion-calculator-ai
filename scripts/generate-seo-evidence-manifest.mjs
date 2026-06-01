@@ -3,6 +3,7 @@ import fs from "node:fs";
 const DEFAULT_FILES = [
   "seo-smoke-result.json",
   "gsc-evidence-result.json",
+  "structured-data-evidence-result.json",
   "seo-evidence-validation-result.json",
   "seo-evidence-manifest.json",
 ];
