@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.95",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Blog readiness publication status",
+    summary:
+      "Added explicit publicationStatus and manualReviewRequired fields to the one-step blog readiness output so drafts with passing hard checks still pause for editorial review when preferred/manual SEO signals need attention.",
+    affectedArea:
+      "Blog readiness automation, editorial handoff evidence, content operations workflow, semantic SEO review, and YMYL-safe article publication gates",
+    rollbackPath:
+      "Remove publicationStatus and manualReviewRequired from scripts/blog-publication-readiness.mjs and revert the matching tests, documentation, release note, and content operations copy.",
+  },
+  {
     version: "1.0.94",
     date: "2026-06-01",
     type: "patch",

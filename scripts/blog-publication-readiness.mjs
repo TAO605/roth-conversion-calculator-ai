@@ -52,12 +52,15 @@ function parseArgs(argv) {
 export function buildBlogPublicationReadiness(source, options) {
   const review = reviewBlogDraft(source, options);
   validateBlogReviewEvidence(review);
+  const manualReviewRequired = review.preferredReady !== true;
 
   return {
     evidenceType: "blog-publication-readiness",
     keyword: review.keyword,
+    manualReviewRequired,
     ok: true,
     preferredReady: review.preferredReady,
+    publicationStatus: manualReviewRequired ? "manual-review-required" : "ready-for-publication",
     review,
     validation: {
       hardCheckCount: review.hardChecks.length,

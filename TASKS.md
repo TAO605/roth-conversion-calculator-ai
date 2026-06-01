@@ -44,3 +44,4 @@
 - [done] Add semantic structure evidence to blog draft SEO review
 - [done] Add retained blog publication evidence validator
 - [done] Add one-step blog publication readiness command
+- [done] Add explicit blog readiness publication status

@@ -171,6 +171,7 @@ export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
       "Add sitemap, RSS, llms.txt, and internal-link discovery paths when the article is approved.",
       "Retain and validate the blog review JSON evidence before engineering publication.",
       "Use the one-step readiness command for quick pre-publication checks when a retained JSON file is not needed yet.",
+      "Treat `manual-review-required` as a stop for editorial review; publish only after the final reviewer accepts the remaining manual signals.",
       "Run blog review, YMYL language tests, production build, SEO smoke, and structured-data evidence before release.",
     ],
   };

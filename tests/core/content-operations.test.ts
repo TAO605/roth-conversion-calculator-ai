@@ -75,6 +75,7 @@ describe("content operations playbook", () => {
     expect(workflow.publicationDuties.join(" ")).toContain("Article JSON-LD");
     expect(workflow.publicationDuties.join(" ")).toContain("validate the blog review JSON evidence");
     expect(workflow.publicationDuties.join(" ")).toContain("one-step readiness command");
+    expect(workflow.publicationDuties.join(" ")).toContain("manual-review-required");
     expect(workflow.publicationDuties.join(" ")).toContain("SEO smoke");
     expect(pageFile).toContain("Blog Draft SEO Review");
     expect(pageFile).toContain("evidenceCommand");

@@ -29,7 +29,9 @@ function runReady(filePath: string) {
   return JSON.parse(output) as {
     evidenceType: string;
     keyword: string;
+    manualReviewRequired: boolean;
     ok: boolean;
+    publicationStatus: string;
     review: { ok: boolean; hardChecks: Array<{ id: string; passed: boolean }> };
     validation: { hardCheckCount: number; semanticSummary: { validHeadingHierarchy: boolean }; wordCount: number };
   };
@@ -55,10 +57,40 @@ Roth conversion calculator review should stay educational and assumption-based b
     expect(result.evidenceType).toBe("blog-publication-readiness");
     expect(result.ok).toBe(true);
     expect(result.keyword).toBe("Roth conversion calculator");
+    expect(result.manualReviewRequired).toBe(true);
+    expect(result.publicationStatus).toBe("manual-review-required");
     expect(result.review.ok).toBe(true);
     expect(result.validation.hardCheckCount).toBeGreaterThanOrEqual(8);
     expect(result.validation.wordCount).toBeGreaterThanOrEqual(800);
     expect(result.validation.semanticSummary.validHeadingHierarchy).toBe(true);
+  });
+
+  it("marks drafts ready for publication only when manual review signals pass too", () => {
+    const repeatedKeyword = Array.from({ length: 8 }, () => "Roth conversion calculator").join(" ");
+    const draft = writeDraft(`# Roth Conversion Calculator Guide
+
+Roth conversion calculator planning starts with a clear paragraph and **educational estimate** language.
+
+## Roth Conversion Calculator Strategy
+
+${makeWords(750)}
+
+## Roth Conversion Calculator Review
+
+${makeWords(750)}
+
+${repeatedKeyword}
+
+![Calculator inputs](calculator-inputs.png)
+
+Roth conversion calculator review should stay educational and assumption-based before a professional tax review.
+`);
+
+    const result = runReady(draft);
+
+    expect(result.ok).toBe(true);
+    expect(result.manualReviewRequired).toBe(false);
+    expect(result.publicationStatus).toBe("ready-for-publication");
   });
 
   it("fails when the retained hard-check rules would fail", () => {

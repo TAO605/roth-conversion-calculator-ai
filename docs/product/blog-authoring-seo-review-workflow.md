@@ -172,7 +172,15 @@ For a fast pre-publication readiness check that does not require a retained inte
 npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword"
 ```
 
-This command runs the draft review and publication evidence validation in one step, then returns a single JSON readiness payload. Use the retained `blog-review-result.json` workflow when a release package or reviewer handoff needs a separate saved evidence file.
+This command runs the draft review and publication evidence validation in one step, then returns a single JSON readiness payload.
+
+The payload includes:
+
+- `publicationStatus: "manual-review-required"` when hard checks pass but preferred/manual review signals still need editorial review.
+- `publicationStatus: "ready-for-publication"` only when hard checks and preferred/manual review signals pass.
+- `manualReviewRequired` as a boolean for automation and reviewer handoff.
+
+Use the retained `blog-review-result.json` workflow when a release package or reviewer handoff needs a separate saved evidence file.
 
 ## Visible Operations Page
 
