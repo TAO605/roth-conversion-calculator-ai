@@ -58,4 +58,17 @@ describe("homepage SEO and UX upgrades", () => {
     expect(source).toContain("Transparent calculation method");
     expect(source).toContain("Taxable conversion = conversion amount minus pro-rata after-tax basis");
   });
+
+  it("keeps homepage semantic landmarks explicit for crawlers and assistive technology", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+
+    expect(source.match(/<main\b/g)).toHaveLength(1);
+    expect(source.match(/<h1\b/g)).toHaveLength(1);
+    expect(source).toContain('aria-label="Primary navigation"');
+    expect(source).toContain('aria-label="Roth conversion calculator"');
+    expect(source).toContain('aria-labelledby="calculator-inputs-heading"');
+    expect(source).toContain('id="calculator-inputs-heading"');
+    expect(source).toContain('aria-label="Roth conversion estimate results"');
+    expect(source).toContain('aria-label="Footer navigation and disclaimer"');
+  });
 });

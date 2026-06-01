@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.85",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Homepage semantic landmark audit",
+    summary:
+      "Added explicit semantic labels and heading associations to the homepage primary navigation, calculator region, input section, results article, and footer while preserving existing layout and calculator behavior.",
+    affectedArea: "Homepage semantic HTML, accessibility landmarks, crawler-readable structure, and V1.3 semantic SEO implementation",
+    rollbackPath:
+      "Remove the added aria-label and aria-labelledby attributes and the homepage semantic landmark test if the page should return to its previous landmark annotations.",
+  },
+  {
     version: "1.0.84",
     date: "2026-06-01",
     type: "patch",

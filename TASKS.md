@@ -33,3 +33,4 @@
 - [done] Add dual-model AI architecture risk addendum to engineering docs
 - [done] Add semantic HTML and structured-data SEO evaluation addendum
 - [done] Add safe homepage structured-data graph and guard tests
+- [done] Add homepage semantic landmark audit and guard test

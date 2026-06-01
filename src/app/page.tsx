@@ -139,7 +139,10 @@ export default function HomePage() {
       ) : null}
       {isFeatureEnabled("privacy-safe-analytics") ? <CalculatorAnalyticsBeacon input={input} result={result} /> : null}
       <header className="grid w-full min-w-0 max-w-full gap-4 pt-4">
-        <nav className="flex w-full min-w-0 flex-col items-start justify-between gap-3 rounded-[18px] bg-white/65 px-4 py-3 text-sm shadow-sm backdrop-blur-xl dark:bg-white/10 sm:flex-row sm:items-center">
+        <nav
+          aria-label="Primary navigation"
+          className="flex w-full min-w-0 flex-col items-start justify-between gap-3 rounded-[18px] bg-white/65 px-4 py-3 text-sm shadow-sm backdrop-blur-xl dark:bg-white/10 sm:flex-row sm:items-center"
+        >
           <Link className="shrink-0 font-semibold text-neutral-950 dark:text-white" href="/">
             RothCalc
           </Link>
@@ -198,22 +201,28 @@ export default function HomePage() {
         </section>
       </header>
 
-      <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-[0.95fr_1.05fr]" id="calculator">
-        <Card>
+      <section
+        aria-label="Roth conversion calculator"
+        className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-[0.95fr_1.05fr]"
+        id="calculator"
+      >
+        <section aria-labelledby="calculator-inputs-heading">
+          <Card>
           <div className="mb-5">
-            <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Inputs</h2>
+            <h2 className="text-2xl font-bold text-neutral-950 dark:text-white" id="calculator-inputs-heading">Inputs</h2>
             <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
               Adjust any parameter. Results update instantly.
             </p>
           </div>
           <CalculatorInput onChange={setInput} value={input} />
-        </Card>
+          </Card>
+        </section>
 
-        <div className="grid gap-5">
+        <article aria-label="Roth conversion estimate results" className="grid gap-5">
           <Card>
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Results</h2>
+                <h2 className="text-2xl font-bold text-neutral-950 dark:text-white" id="calculator-results-heading">Results</h2>
                 <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
                   High-confidence federal estimate with user-estimated state and future assumptions.
                 </p>
@@ -265,7 +274,7 @@ export default function HomePage() {
               <CalculationBreakdown input={input} result={result} />
             </div>
           </details>
-        </div>
+        </article>
       </section>
 
       <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-2" id="method-and-sources" aria-label="Trust and calculation methodology">
@@ -338,7 +347,10 @@ export default function HomePage() {
 
       <FaqSection />
 
-      <footer className="w-full min-w-0 border-t border-neutral-200 py-6 text-xs leading-5 text-neutral-500 dark:border-white/10 dark:text-neutral-400">
+      <footer
+        aria-label="Footer navigation and disclaimer"
+        className="w-full min-w-0 border-t border-neutral-200 py-6 text-xs leading-5 text-neutral-500 dark:border-white/10 dark:text-neutral-400"
+      >
         <div className="mb-4 flex flex-wrap gap-3">
           <Link className="hover:text-systemBlue" href="/blog">
             Guides
