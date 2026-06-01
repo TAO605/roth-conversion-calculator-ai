@@ -13,6 +13,7 @@ export interface ContentOperationsGroup {
 
 export interface BlogDraftReviewWorkflow {
   command: string;
+  evidenceCommand: string;
   ownershipBoundary: string;
   hardChecks: string[];
   manualReview: string[];
@@ -141,6 +142,7 @@ export function buildContentOperationsGroups(): ContentOperationsGroup[] {
 export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
   return {
     command: 'npm run seo:blog-review -- --file path/to/draft.md --keyword "primary keyword"',
+    evidenceCommand: "npm run seo:blog-evidence-validate -- blog-review-result.json",
     ownershipBoundary:
       "The user writes or approves the blog article body; AI reviews, formats, validates, and publishes only after approval.",
     hardChecks: [
@@ -165,6 +167,7 @@ export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
     publicationDuties: [
       "Add metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD from real article data.",
       "Add sitemap, RSS, llms.txt, and internal-link discovery paths when the article is approved.",
+      "Retain and validate the blog review JSON evidence before engineering publication.",
       "Run blog review, YMYL language tests, production build, SEO smoke, and structured-data evidence before release.",
     ],
   };

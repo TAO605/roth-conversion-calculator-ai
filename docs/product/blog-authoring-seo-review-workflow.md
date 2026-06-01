@@ -149,6 +149,23 @@ The command reads a Markdown or HTML draft and returns JSON evidence for:
 
 Hard failures should be fixed before publication. Keyword density is still a manual editorial review signal; do not force exact-match repetition if it harms clarity or YMYL trust.
 
+Retain the command output as JSON when preparing an article for engineering publication:
+
+```bash
+npm --silent run seo:blog-review -- --file path/to/draft.md --keyword "primary keyword" > blog-review-result.json
+npm run seo:blog-evidence-validate -- blog-review-result.json
+```
+
+The publication evidence validator confirms the retained review JSON has:
+
+- `ok: true`.
+- All hard checks present and passing.
+- At least 800 words.
+- Exactly one H1 and at least one H2.
+- No empty image alt text.
+- Semantic heading hierarchy evidence.
+- Paragraph evidence in `semanticSummary`.
+
 ## Visible Operations Page
 
 The same review gate is surfaced on `/content-operations` so the publishing workflow is visible inside the site, not only in engineering documentation.

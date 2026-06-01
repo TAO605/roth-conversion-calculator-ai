@@ -51,6 +51,7 @@ describe("content operations playbook", () => {
     const pageFile = fs.readFileSync(path.join(process.cwd(), "src/app/content-operations/page.tsx"), "utf8");
 
     expect(workflow.command).toBe('npm run seo:blog-review -- --file path/to/draft.md --keyword "primary keyword"');
+    expect(workflow.evidenceCommand).toBe("npm run seo:blog-evidence-validate -- blog-review-result.json");
     expect(workflow.ownershipBoundary).toContain("user writes or approves the blog article body");
     expect(workflow.hardChecks).toEqual(
       expect.arrayContaining([
@@ -71,8 +72,10 @@ describe("content operations playbook", () => {
       ]),
     );
     expect(workflow.publicationDuties.join(" ")).toContain("Article JSON-LD");
+    expect(workflow.publicationDuties.join(" ")).toContain("validate the blog review JSON evidence");
     expect(workflow.publicationDuties.join(" ")).toContain("SEO smoke");
     expect(pageFile).toContain("Blog Draft SEO Review");
+    expect(pageFile).toContain("evidenceCommand");
     expect(pageFile).toContain("getBlogDraftReviewWorkflow");
   });
 });

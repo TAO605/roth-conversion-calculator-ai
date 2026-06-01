@@ -106,6 +106,9 @@ export default function ContentOperationsPage() {
           <code className="mt-2 overflow-x-auto rounded-[14px] bg-neutral-950 px-4 py-3 text-sm leading-6 text-white">
             {blogDraftReview.command}
           </code>
+          <code className="overflow-x-auto rounded-[14px] bg-neutral-900 px-4 py-3 text-sm leading-6 text-white">
+            {blogDraftReview.evidenceCommand}
+          </code>
         </div>
 
         <div className="grid gap-3 lg:grid-cols-3">

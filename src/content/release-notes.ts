@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.93",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Blog publication evidence validator",
+    summary:
+      "Added a blog publication evidence validator so retained seo:blog-review JSON output can be checked for passing hard checks, semanticSummary evidence, word count, heading structure, and image alt readiness before article release.",
+    affectedArea:
+      "Blog publication QA automation, retained review evidence, content operations workflow, user-owned article publishing, and YMYL-safe release gates",
+    rollbackPath:
+      "Remove scripts/validate-blog-publication-evidence.mjs, the seo:blog-evidence-validate package script, its tests, and the evidence validation command from the blog workflow documentation and content operations page.",
+  },
+  {
     version: "1.0.92",
     date: "2026-06-01",
     type: "patch",
