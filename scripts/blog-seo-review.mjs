@@ -87,6 +87,38 @@ function extractImages(source) {
   return [...markdownImages, ...htmlImages];
 }
 
+function extractParagraphs(source) {
+  const htmlParagraphs = [...source.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
+    .map((match) => normalizeWhitespace(stripMarkup(match[1])))
+    .filter((text) => text.length > 0);
+  const markdownParagraphs = source
+    .replace(/---[\s\S]*?---/, " ")
+    .split(/\n{2,}/)
+    .map((block) => normalizeWhitespace(block))
+    .filter((block) => {
+      if (block.length === 0) return false;
+      if (/^#{1,6}\s+/.test(block)) return false;
+      if (/^!\[[^\]]*\]\([^)]+\)$/.test(block)) return false;
+      if (/^```/.test(block)) return false;
+      if (/^[-*+]\s+/.test(block)) return false;
+      if (/^\d+\.\s+/.test(block)) return false;
+      if (/^<\/?[a-z][\s\S]*>$/i.test(block)) return false;
+
+      return true;
+    });
+
+  return [...htmlParagraphs, ...markdownParagraphs];
+}
+
+function extractStrong(source) {
+  const htmlStrong = [...source.matchAll(/<strong\b[^>]*>([\s\S]*?)<\/strong>/gi)].map((match) =>
+    normalizeWhitespace(stripMarkup(match[1])),
+  );
+  const markdownStrong = [...source.matchAll(/\*\*([^*]+)\*\*/g)].map((match) => normalizeWhitespace(match[1]));
+
+  return [...htmlStrong, ...markdownStrong].filter((text) => text.length > 0);
+}
+
 function stripMarkup(source) {
   return source
     .replace(/---[\s\S]*?---/, " ")
@@ -115,6 +147,14 @@ function makeCheck(id, passed, detail) {
   return { detail, id, passed };
 }
 
+function hasValidHeadingHierarchy(headings) {
+  return headings.every((heading, index) => {
+    if (index === 0) return heading.level === 1;
+
+    return heading.level <= headings[index - 1].level + 1;
+  });
+}
+
 export function reviewBlogDraft(source, options) {
   source = source.replace(/^\uFEFF/, "");
   const keyword = normalizeWhitespace(options.keyword);
@@ -126,6 +166,8 @@ export function reviewBlogDraft(source, options) {
   const h1s = headings.filter((heading) => heading.level === 1);
   const h2s = headings.filter((heading) => heading.level === 2);
   const images = extractImages(source);
+  const paragraphs = extractParagraphs(source);
+  const strongPhrases = extractStrong(source);
   const emptyAltImages = images.filter((image) => image.alt.length === 0);
   const keywordOccurrences = countKeyword(plainText, keyword);
   const keywordWordCount = getWords(keyword).length || 1;
@@ -144,6 +186,11 @@ export function reviewBlogDraft(source, options) {
     ),
     makeCheck("minimum_word_count", words.length >= options.minWords, `Draft should have at least ${options.minWords} words.`),
     makeCheck("single_h1", h1s.length === 1, "Draft should contain exactly one H1."),
+    makeCheck(
+      "heading_hierarchy",
+      hasValidHeadingHierarchy(headings),
+      "Headings should not skip levels; use H2 for main sections, then H3 and H4 for nested subsections.",
+    ),
     makeCheck("h1_contains_keyword", h1s.some((heading) => countKeyword(heading.text, keyword) > 0), "H1 should contain the primary keyword."),
     makeCheck(
       "h2_contains_keyword",
@@ -163,6 +210,21 @@ export function reviewBlogDraft(source, options) {
       keywordDensity >= options.densityMin && keywordDensity <= options.densityMax,
       `Primary keyword density review target is ${options.densityMin}%-${options.densityMax}% without keyword stuffing.`,
     ),
+    makeCheck(
+      "h2_outline_review",
+      h2s.length >= 2,
+      "H2 elements should form the article outline; add enough main sections for the search intent.",
+    ),
+    makeCheck(
+      "paragraph_text_structure",
+      paragraphs.length > 0,
+      "Normal body text should use paragraphs, not heading tags.",
+    ),
+    makeCheck(
+      "strong_emphasis_review",
+      strongPhrases.length > 0,
+      "Use strong emphasis only for important terms or high-value phrases when it improves scanning.",
+    ),
   ];
 
   return {
@@ -178,6 +240,11 @@ export function reviewBlogDraft(source, options) {
     manualReview,
     ok: hardChecks.every((check) => check.passed),
     preferredReady: manualReview.every((check) => check.passed),
+    semanticSummary: {
+      paragraphCount: paragraphs.length,
+      strongPhraseCount: strongPhrases.length,
+      validHeadingHierarchy: hasValidHeadingHierarchy(headings),
+    },
     wordCount: words.length,
   };
 }

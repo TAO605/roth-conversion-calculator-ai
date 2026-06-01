@@ -34,6 +34,11 @@ function runReview(filePath: string, keyword = "Roth conversion calculator") {
     wordCount: number;
     hardChecks: Array<{ id: string; passed: boolean }>;
     manualReview: Array<{ id: string; passed: boolean }>;
+    semanticSummary: {
+      paragraphCount: number;
+      strongPhraseCount: number;
+      validHeadingHierarchy: boolean;
+    };
   };
 }
 
@@ -57,6 +62,8 @@ Roth conversion calculator review should stay educational and assumption-based b
     expect(result.ok).toBe(true);
     expect(result.wordCount).toBeGreaterThanOrEqual(800);
     expect(result.hardChecks.every((check) => check.passed)).toBe(true);
+    expect(result.semanticSummary.paragraphCount).toBeGreaterThan(0);
+    expect(result.semanticSummary.validHeadingHierarchy).toBe(true);
   });
 
   it("fails hard checks for missing keyword placement, duplicate H1s, short body, and empty image alt text", () => {
@@ -115,6 +122,9 @@ Roth conversion calculator output should be reviewed before decisions.
     expect(script).toContain("keyword_final_100_words");
     expect(script).toContain("keyword_density_review");
     expect(script).toContain("image_alt_text");
+    expect(script).toContain("heading_hierarchy");
+    expect(script).toContain("paragraph_text_structure");
+    expect(script).toContain("h2_outline_review");
   });
 
   it("handles UTF-8 BOM drafts from Windows writing tools", () => {
@@ -135,5 +145,48 @@ Roth conversion calculator review remains educational.
 
     expect(result.ok).toBe(true);
     expect(result.hardChecks.find((check) => check.id === "single_h1")?.passed).toBe(true);
+  });
+
+  it("fails skipped heading levels while exposing paragraph and strong semantic evidence", () => {
+    const draft = writeDraft(`# Roth Conversion Calculator Draft
+
+Roth conversion calculator review starts with a paragraph and **educational estimate** language.
+
+### Skipped Heading
+
+![Draft worksheet](draft.png)
+
+${makeWords(820)}
+
+Roth conversion calculator review remains educational.
+`);
+
+    expect(() =>
+      execFileSync(process.execPath, ["scripts/blog-seo-review.mjs", "--file", draft, "--keyword", "Roth conversion calculator"], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ).toThrow();
+
+    const fixedDraft = writeDraft(`# Roth Conversion Calculator Draft
+
+Roth conversion calculator review starts with a paragraph and **educational estimate** language.
+
+## Roth Conversion Calculator Outline
+
+### Nested Review Detail
+
+![Draft worksheet](draft.png)
+
+${makeWords(820)}
+
+Roth conversion calculator review remains educational.
+`);
+    const result = runReview(fixedDraft);
+
+    expect(result.ok).toBe(true);
+    expect(result.semanticSummary.paragraphCount).toBeGreaterThanOrEqual(2);
+    expect(result.semanticSummary.strongPhraseCount).toBe(1);
+    expect(result.manualReview.find((check) => check.id === "paragraph_text_structure")?.passed).toBe(true);
   });
 });

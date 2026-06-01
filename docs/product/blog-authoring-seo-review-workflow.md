@@ -141,7 +141,10 @@ The command reads a Markdown or HTML draft and returns JSON evidence for:
 - Single H1.
 - H1 keyword inclusion.
 - H2 keyword inclusion.
+- Heading hierarchy, including no skipped levels from H1 directly to H3 or deeper.
 - Uploaded image alt text.
+- Paragraph structure for normal body text.
+- Strong emphasis usage for important terms or high-value phrases.
 - Keyword-density review.
 
 Hard failures should be fixed before publication. Keyword density is still a manual editorial review signal; do not force exact-match repetition if it harms clarity or YMYL trust.

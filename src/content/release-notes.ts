@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.92",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Semantic blog draft review evidence",
+    summary:
+      "Expanded the blog draft SEO review command to report heading hierarchy, paragraph structure, H2 outline readiness, and strong-emphasis usage so user-written drafts can be checked against semantic HTML expectations before publication.",
+    affectedArea:
+      "Blog draft QA automation, semantic HTML review, content operations playbook, user-owned article publishing workflow, and YMYL-safe SEO release checks",
+    rollbackPath:
+      "Remove the heading_hierarchy hard check, semanticSummary output, paragraph/strong/manual review checks, and matching documentation updates from the blog draft review workflow.",
+  },
+  {
     version: "1.0.91",
     date: "2026-06-01",
     type: "patch",

@@ -41,3 +41,4 @@
 - [done] Document user-owned blog writing and SEO review workflow
 - [done] Add automated blog draft SEO review command
 - [done] Surface blog draft SEO review workflow on content operations page
+- [done] Add semantic structure evidence to blog draft SEO review

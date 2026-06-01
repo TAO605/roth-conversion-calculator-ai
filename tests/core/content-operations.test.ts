@@ -58,6 +58,7 @@ describe("content operations playbook", () => {
         "Primary keyword appears within the final 100 words.",
         "Draft has at least 800 words.",
         "Exactly one H1 appears on the page.",
+        "Heading levels do not skip from H1 directly to H3 or deeper.",
         "Every uploaded image includes descriptive alt text.",
       ]),
     );
@@ -65,6 +66,7 @@ describe("content operations playbook", () => {
       expect.arrayContaining([
         "1,500+ words is preferred for blog articles when the topic supports it.",
         "Keyword density target is reviewed as 2% to 4% without keyword stuffing.",
+        "Normal body text is represented as paragraphs, not oversized heading text.",
         "No personalized recommendations, best/optimal claims, guarantees, fake ratings, or 100% accuracy claims.",
       ]),
     );
