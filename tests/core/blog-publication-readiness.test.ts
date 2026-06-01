@@ -81,7 +81,7 @@ Roth conversion calculator review should stay educational and assumption-based b
     expect(result.manualReviewRequired).toBe(true);
     expect(result.publicationStatus).toBe("manual-review-required");
     expect(result.review.ok).toBe(true);
-    expect(result.validation.hardCheckCount).toBeGreaterThanOrEqual(8);
+    expect(result.validation.hardCheckCount).toBeGreaterThanOrEqual(9);
     expect(result.validation.wordCount).toBeGreaterThanOrEqual(800);
     expect(result.validation.semanticSummary.validHeadingHierarchy).toBe(true);
   });
@@ -145,6 +145,25 @@ Roth conversion calculator review should stay educational and assumption-based b
 Roth conversion calculator planning starts here.
 
 ### Skipped heading
+
+${makeWords(820)}
+
+Roth conversion calculator review should stay educational.
+`);
+
+    expect(() => runReady(draft)).toThrow();
+  });
+
+  it("fails before publication when the draft includes high-risk YMYL wording", () => {
+    const draft = writeDraft(`# Roth Conversion Calculator Guide
+
+Roth conversion calculator planning starts here.
+
+## Roth Conversion Calculator Recommendation
+
+You should convert the full amount because it is the best amount.
+
+![Calculator inputs](calculator-inputs.png)
 
 ${makeWords(820)}
 

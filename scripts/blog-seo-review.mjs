@@ -6,6 +6,19 @@ const DEFAULT_MIN_WORDS = 800;
 const DEFAULT_PREFERRED_WORDS = 1500;
 const DEFAULT_DENSITY_MIN = 2;
 const DEFAULT_DENSITY_MAX = 4;
+const YMYL_RISK_PATTERNS = [
+  { label: "direct should-convert advice", pattern: /\byou should convert\b/gi },
+  { label: "strong recommendation language", pattern: /\bstrongly recommend\b/gi },
+  { label: "personal optimal conversion claim", pattern: /\boptimal conversion amount\b/gi },
+  { label: "best amount claim", pattern: /\bbest amount\b/gi },
+  { label: "best move claim", pattern: /\bbest move\b/gi },
+  { label: "100 percent accuracy claim", pattern: /\b100%\s+accurate\b/gi },
+  { label: "perfect accuracy claim", pattern: /\bperfectly accurate\b/gi },
+  { label: "zero-error claim", pattern: /\bzero[-\s]?error\b/gi },
+  { label: "accuracy guarantee", pattern: /\bguarantee(?:d|s)?\s+(?:the\s+)?accuracy\b/gi },
+  { label: "risk-free claim", pattern: /\brisk[-\s]?free\b/gi },
+  { label: "fake rating claim", pattern: /\b(?:5-star|five-star)\s+(?:rated|rating)\b/gi },
+];
 
 function parseArgs(argv) {
   const args = {
@@ -147,6 +160,15 @@ function makeCheck(id, passed, detail) {
   return { detail, id, passed };
 }
 
+function collectYMYLRiskMatches(text) {
+  return YMYL_RISK_PATTERNS.flatMap(({ label, pattern }) => {
+    pattern.lastIndex = 0;
+    const matches = text.match(pattern) ?? [];
+
+    return matches.map((match) => ({ label, match: normalizeWhitespace(match) }));
+  });
+}
+
 function hasValidHeadingHierarchy(headings) {
   return headings.every((heading, index) => {
     if (index === 0) return heading.level === 1;
@@ -172,6 +194,7 @@ export function reviewBlogDraft(source, options) {
   const keywordOccurrences = countKeyword(plainText, keyword);
   const keywordWordCount = getWords(keyword).length || 1;
   const keywordDensity = words.length > 0 ? (keywordOccurrences * keywordWordCount * 100) / words.length : 0;
+  const ymylRiskMatches = collectYMYLRiskMatches(plainText);
 
   const hardChecks = [
     makeCheck(
@@ -198,6 +221,11 @@ export function reviewBlogDraft(source, options) {
       "At least one H2 should contain the primary keyword naturally.",
     ),
     makeCheck("image_alt_text", emptyAltImages.length === 0, "Every uploaded image should have descriptive alt text."),
+    makeCheck(
+      "no_high_risk_ymyl_language",
+      ymylRiskMatches.length === 0,
+      "Draft should avoid personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.",
+    ),
   ];
   const manualReview = [
     makeCheck(
@@ -246,6 +274,7 @@ export function reviewBlogDraft(source, options) {
       validHeadingHierarchy: hasValidHeadingHierarchy(headings),
     },
     wordCount: words.length,
+    ymylRiskMatches,
   };
 }
 

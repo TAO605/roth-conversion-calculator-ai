@@ -32,6 +32,7 @@ function runReview(filePath: string, keyword = "Roth conversion calculator") {
     ok: boolean;
     preferredReady: boolean;
     wordCount: number;
+    ymylRiskMatches: Array<{ label: string; match: string }>;
     hardChecks: Array<{ id: string; passed: boolean }>;
     manualReview: Array<{ id: string; passed: boolean }>;
     semanticSummary: {
@@ -62,6 +63,8 @@ Roth conversion calculator review should stay educational and assumption-based b
     expect(result.ok).toBe(true);
     expect(result.wordCount).toBeGreaterThanOrEqual(800);
     expect(result.hardChecks.every((check) => check.passed)).toBe(true);
+    expect(result.hardChecks.find((check) => check.id === "no_high_risk_ymyl_language")?.passed).toBe(true);
+    expect(result.ymylRiskMatches).toEqual([]);
     expect(result.semanticSummary.paragraphCount).toBeGreaterThan(0);
     expect(result.semanticSummary.validHeadingHierarchy).toBe(true);
   });
@@ -125,6 +128,7 @@ Roth conversion calculator output should be reviewed before decisions.
     expect(script).toContain("heading_hierarchy");
     expect(script).toContain("paragraph_text_structure");
     expect(script).toContain("h2_outline_review");
+    expect(script).toContain("no_high_risk_ymyl_language");
   });
 
   it("handles UTF-8 BOM drafts from Windows writing tools", () => {
@@ -188,5 +192,29 @@ Roth conversion calculator review remains educational.
     expect(result.semanticSummary.paragraphCount).toBeGreaterThanOrEqual(2);
     expect(result.semanticSummary.strongPhraseCount).toBe(1);
     expect(result.manualReview.find((check) => check.id === "paragraph_text_structure")?.passed).toBe(true);
+  });
+
+  it("fails drafts with high-risk YMYL recommendation or accuracy language", () => {
+    const draft = writeDraft(`# Roth Conversion Calculator Draft
+
+Roth conversion calculator review starts with an educational paragraph.
+
+## Roth Conversion Calculator Advice
+
+You should convert the full amount because this is the optimal conversion amount.
+
+![Draft worksheet](draft.png)
+
+${makeWords(820)}
+
+Roth conversion calculator review remains educational and 100% accurate.
+`);
+
+    expect(() =>
+      execFileSync(process.execPath, ["scripts/blog-seo-review.mjs", "--file", draft, "--keyword", "Roth conversion calculator"], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ).toThrow();
   });
 });

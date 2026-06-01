@@ -37,6 +37,7 @@ function validateChecks(review) {
     "h1_contains_keyword",
     "h2_contains_keyword",
     "image_alt_text",
+    "no_high_risk_ymyl_language",
   ]) {
     const check = findCheck(review.hardChecks, id);
     assert(check, `blog review hard check missing ${id}`);
@@ -62,6 +63,8 @@ export function validateBlogReviewEvidence(review) {
   assert(Number.isFinite(review.keywordOccurrences) && review.keywordOccurrences > 0, "blog review keywordOccurrences must be positive");
   assert(Number.isFinite(review.keywordDensity), "blog review keywordDensity must be numeric");
   assert(review.emptyAltImageCount === 0, "blog review must not have empty image alt text");
+  assert(Array.isArray(review.ymylRiskMatches), "blog review ymylRiskMatches must be an array");
+  assert(review.ymylRiskMatches.length === 0, "blog review must not include high-risk YMYL language");
   assert(review.headingCounts?.h1 === 1, "blog review must have exactly one H1");
   assert(review.headingCounts?.h2 >= 1, "blog review must have at least one H2");
   assert(review.semanticSummary?.validHeadingHierarchy === true, "blog review semanticSummary must confirm heading hierarchy");

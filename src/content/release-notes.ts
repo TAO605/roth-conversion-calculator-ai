@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.97",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Blog YMYL language publication guard",
+    summary:
+      "Added a hard YMYL language check to the blog review and readiness commands so drafts are blocked before publication when they contain personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, or 100% accuracy claims.",
+    affectedArea:
+      "Blog draft QA automation, user-owned article review, publication evidence validation, content operations workflow, and YMYL-safe article release gates",
+    rollbackPath:
+      "Remove the no_high_risk_ymyl_language check, ymylRiskMatches output, validator requirement, and related documentation, tests, release note, and content operations copy.",
+  },
+  {
     version: "1.0.96",
     date: "2026-06-01",
     type: "patch",

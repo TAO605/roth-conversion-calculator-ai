@@ -157,6 +157,7 @@ export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
       "H1 contains the primary keyword.",
       "At least one H2 contains the primary keyword when it reads naturally.",
       "Every uploaded image includes descriptive alt text.",
+      "Draft avoids personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.",
     ],
     manualReview: [
       "1,500+ words is preferred for blog articles when the topic supports it.",
@@ -165,7 +166,6 @@ export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
       "Normal body text is represented as paragraphs, not oversized heading text.",
       "Strong emphasis is reserved for important terms or high-value phrases.",
       "Tax, Medicare, ACA, IRS, and state-tax claims stay source-aligned and educational.",
-      "No personalized recommendations, best/optimal claims, guarantees, fake ratings, or 100% accuracy claims.",
     ],
     publicationDuties: [
       "Add metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD from real article data.",

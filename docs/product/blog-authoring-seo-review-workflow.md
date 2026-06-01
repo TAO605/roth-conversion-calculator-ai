@@ -45,6 +45,7 @@ Each blog page should pass these checks before publication:
 - Normal body text uses paragraph text, not heading tags.
 - Important terms or high-value phrases may be bolded when useful for scanning.
 - Every uploaded image has a descriptive `alt` attribute.
+- The draft avoids personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.
 - Internal links point to the calculator and relevant supporting guides.
 - External links point to official or reputable sources when tax, Medicare, ACA, or legal/financial context is discussed.
 
@@ -146,6 +147,7 @@ The command reads a Markdown or HTML draft and returns JSON evidence for:
 - Paragraph structure for normal body text.
 - Strong emphasis usage for important terms or high-value phrases.
 - Keyword-density review.
+- High-risk YMYL language, including personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.
 
 Hard failures should be fixed before publication. Keyword density is still a manual editorial review signal; do not force exact-match repetition if it harms clarity or YMYL trust.
 
@@ -163,6 +165,7 @@ The publication evidence validator confirms the retained review JSON has:
 - At least 800 words.
 - Exactly one H1 and at least one H2.
 - No empty image alt text.
+- No high-risk YMYL language matches.
 - Semantic heading hierarchy evidence.
 - Paragraph evidence in `semanticSummary`.
 

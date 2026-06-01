@@ -677,7 +677,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "content-operations-playbook",
     label: "Content operations playbook",
-    version: "1.0.96",
+    version: "1.0.97",
     layer: "content",
     enabled: true,
     locked: false,

@@ -64,6 +64,7 @@ describe("content operations playbook", () => {
         "Exactly one H1 appears on the page.",
         "Heading levels do not skip from H1 directly to H3 or deeper.",
         "Every uploaded image includes descriptive alt text.",
+        "Draft avoids personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.",
       ]),
     );
     expect(workflow.manualReview).toEqual(
@@ -71,7 +72,7 @@ describe("content operations playbook", () => {
         "1,500+ words is preferred for blog articles when the topic supports it.",
         "Keyword density target is reviewed as 2% to 4% without keyword stuffing.",
         "Normal body text is represented as paragraphs, not oversized heading text.",
-        "No personalized recommendations, best/optimal claims, guarantees, fake ratings, or 100% accuracy claims.",
+        "Tax, Medicare, ACA, IRS, and state-tax claims stay source-aligned and educational.",
       ]),
     );
     expect(workflow.publicationDuties.join(" ")).toContain("Article JSON-LD");

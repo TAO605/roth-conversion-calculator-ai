@@ -46,3 +46,4 @@
 - [done] Add one-step blog publication readiness command
 - [done] Add explicit blog readiness publication status
 - [done] Add blog readiness JSON output file support
+- [done] Add blog YMYL language hard guard to publication readiness
