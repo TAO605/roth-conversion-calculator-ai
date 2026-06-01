@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.96",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Blog readiness evidence output file",
+    summary:
+      "Added an --output option to the one-step blog readiness command so publication readiness JSON can be saved directly without shell redirection while still printing the same evidence payload.",
+    affectedArea:
+      "Blog readiness automation, publication evidence retention, reviewer handoff workflow, content operations playbook, and YMYL-safe article release gates",
+    rollbackPath:
+      "Remove --output handling from scripts/blog-publication-readiness.mjs and revert the related tests, documentation, release note, and content operations command copy.",
+  },
+  {
     version: "1.0.95",
     date: "2026-06-01",
     type: "patch",

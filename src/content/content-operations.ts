@@ -146,7 +146,8 @@ export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
     evidenceCommand: "npm run seo:blog-evidence-validate -- blog-review-result.json",
     ownershipBoundary:
       "The user writes or approves the blog article body; AI reviews, formats, validates, and publishes only after approval.",
-    readinessCommand: 'npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword"',
+    readinessCommand:
+      'npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword" --output blog-ready-result.json',
     hardChecks: [
       "Primary keyword appears within the first 100 words.",
       "Primary keyword appears within the final 100 words.",

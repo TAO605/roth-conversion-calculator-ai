@@ -37,6 +37,27 @@ function runReady(filePath: string) {
   };
 }
 
+function runReadyWithOutput(filePath: string, outputPath: string) {
+  const output = execFileSync(
+    process.execPath,
+    [
+      "scripts/blog-publication-readiness.mjs",
+      "--file",
+      filePath,
+      "--keyword",
+      "Roth conversion calculator",
+      "--output",
+      outputPath,
+    ],
+    {
+      cwd: process.cwd(),
+      encoding: "utf8",
+    },
+  );
+
+  return JSON.parse(output) as ReturnType<typeof runReady> & { outputPath: string };
+}
+
 describe("blog publication readiness command", () => {
   it("runs review and validation in one command for user-written drafts", () => {
     const draft = writeDraft(`# Roth Conversion Calculator Guide
@@ -93,6 +114,31 @@ Roth conversion calculator review should stay educational and assumption-based b
     expect(result.publicationStatus).toBe("ready-for-publication");
   });
 
+  it("can write the readiness JSON evidence to an output file", () => {
+    const evidencePath = path.join(os.tmpdir(), `blog-ready-evidence-${randomUUID()}`, "ready.json");
+    const draft = writeDraft(`# Roth Conversion Calculator Guide
+
+Roth conversion calculator planning starts with a clear paragraph and **educational estimate** language.
+
+## Roth Conversion Calculator Checklist
+
+![Calculator inputs](calculator-inputs.png)
+
+${makeWords(1500)}
+
+Roth conversion calculator review should stay educational and assumption-based before a professional tax review.
+`);
+
+    const result = runReadyWithOutput(draft, evidencePath);
+    const saved = JSON.parse(fs.readFileSync(evidencePath, "utf8")) as typeof result;
+
+    expect(result.ok).toBe(true);
+    expect(result.outputPath).toBe(path.resolve(evidencePath));
+    expect(saved.outputPath).toBe(path.resolve(evidencePath));
+    expect(saved.publicationStatus).toBe("manual-review-required");
+    expect(saved.validation.semanticSummary.validHeadingHierarchy).toBe(true);
+  });
+
   it("fails when the retained hard-check rules would fail", () => {
     const draft = writeDraft(`# Roth Conversion Calculator Guide
 
@@ -119,5 +165,6 @@ Roth conversion calculator review should stay educational.
 
     expect(packageJson.scripts["seo:blog-ready"]).toBe("node scripts/blog-publication-readiness.mjs");
     expect(workflowDoc).toContain("npm run seo:blog-ready");
+    expect(workflowDoc).toContain("--output blog-ready-result.json");
   });
 });

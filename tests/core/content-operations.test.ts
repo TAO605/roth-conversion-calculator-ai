@@ -52,7 +52,9 @@ describe("content operations playbook", () => {
 
     expect(workflow.command).toBe('npm run seo:blog-review -- --file path/to/draft.md --keyword "primary keyword"');
     expect(workflow.evidenceCommand).toBe("npm run seo:blog-evidence-validate -- blog-review-result.json");
-    expect(workflow.readinessCommand).toBe('npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword"');
+    expect(workflow.readinessCommand).toBe(
+      'npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword" --output blog-ready-result.json',
+    );
     expect(workflow.ownershipBoundary).toContain("user writes or approves the blog article body");
     expect(workflow.hardChecks).toEqual(
       expect.arrayContaining([

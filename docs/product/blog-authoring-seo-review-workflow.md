@@ -169,10 +169,11 @@ The publication evidence validator confirms the retained review JSON has:
 For a fast pre-publication readiness check that does not require a retained intermediate file yet, run:
 
 ```bash
-npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword"
+npm run seo:blog-ready -- --file path/to/draft.md --keyword "primary keyword" --output blog-ready-result.json
 ```
 
 This command runs the draft review and publication evidence validation in one step, then returns a single JSON readiness payload.
+When `--output` is provided, the same JSON payload is also written to that file so the readiness evidence can be attached to a release note, reviewer handoff, or publication ticket without shell redirection.
 
 The payload includes:
 

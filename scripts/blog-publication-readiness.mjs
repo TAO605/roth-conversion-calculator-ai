@@ -39,6 +39,9 @@ function parseArgs(argv) {
     } else if (arg === "--density-max") {
       args.densityMax = Number(next);
       index += 1;
+    } else if (arg === "--output") {
+      args.output = next;
+      index += 1;
     }
   }
 
@@ -75,7 +78,16 @@ function run() {
   const args = parseArgs(process.argv.slice(2));
   const filePath = path.resolve(args.file);
   const source = fs.readFileSync(filePath, "utf8");
-  const result = buildBlogPublicationReadiness(source, args);
+  const result = {
+    ...buildBlogPublicationReadiness(source, args),
+    ...(args.output ? { outputPath: path.resolve(args.output) } : {}),
+  };
+
+  if (args.output) {
+    const outputPath = path.resolve(args.output);
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(outputPath, `${JSON.stringify(result, null, 2)}\n`, "utf8");
+  }
 
   console.log(JSON.stringify(result, null, 2));
 }
