@@ -29,6 +29,9 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("/tax-brackets/2026");
     expect(script).toContain("validateStructuredDataEvidence");
     expect(script).toContain("structuredDataTypeCount");
+    expect(script).toContain("pageCount");
+    expect(script).toContain("/roth-conversion-irmaa-guide");
+    expect(script).toContain("/roth-conversion-aca-premium-tax-credit-guide");
     expect(script).toContain("must contain a single JSON object");
     expect(structuredDataScript).toContain("STRUCTURED_DATA_EVIDENCE_BASE_URL");
     expect(structuredDataScript).toContain("WebApplication");
@@ -42,6 +45,11 @@ describe("SEO evidence artifact validation", () => {
     expect(structuredDataScript).toContain("100%\\s+accurate");
     expect(structuredDataScript).toContain("voiceInput");
     expect(structuredDataScript).toContain("siteUrlCount");
+    expect(structuredDataScript).toContain("monitoredPages");
+    expect(structuredDataScript).toContain("/roth-conversion-irmaa-guide");
+    expect(structuredDataScript).toContain("/roth-conversion-aca-premium-tax-credit-guide");
+    expect(structuredDataScript).toContain("/tax-brackets/2026");
+    expect(structuredDataScript).toContain("BreadcrumbList");
     expect(workflow).toContain("Run structured data evidence check");
     expect(workflow).toContain("node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json");
     expect(workflow).toContain("Validate SEO evidence artifact");

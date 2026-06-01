@@ -1,7 +1,25 @@
 const DEFAULT_BASE_URL = "https://www.roth-conversion-calculator-ai.shop";
 const baseUrl = (process.env.STRUCTURED_DATA_EVIDENCE_BASE_URL || DEFAULT_BASE_URL).replace(/\/+$/, "");
 
-const requiredTypes = ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization", "FAQPage"];
+const homepagePath = "/";
+const monitoredPages = [
+  {
+    path: "/",
+    requiredTypes: ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization", "FAQPage"],
+  },
+  {
+    path: "/roth-conversion-irmaa-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-aca-premium-tax-credit-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/tax-brackets/2026",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+];
 const forbiddenKeyPattern = /^(aggregateRating|review|reviewRating|ratingValue|reviewCount)$/i;
 const forbiddenTextPattern = /optimal conversion amount|hidden fees|100%\s+accurate|guaranteed|voiceInput|voiceOutput/gi;
 
@@ -11,8 +29,8 @@ function assert(condition, message) {
   }
 }
 
-async function fetchHomepage() {
-  const response = await fetch(`${baseUrl}/`, {
+async function fetchPage(pathname) {
+  const response = await fetch(`${baseUrl}${pathname === "/" ? "/" : pathname}`, {
     headers: {
       "user-agent": "roth-conversion-calculator-structured-data-evidence/1.0",
     },
@@ -81,19 +99,21 @@ function getSiteUrls(entries) {
     .map((entry) => entry.value);
 }
 
-async function run() {
-  const homepage = await fetchHomepage();
-  assert(homepage.status === 200, `Homepage returned ${homepage.status}`);
-  assert(homepage.contentType.includes("text/html"), `Homepage content-type was ${homepage.contentType}`);
+async function inspectPage(page) {
+  const response = await fetchPage(page.path);
+  assert(response.status === 200, `${page.path} returned ${response.status}`);
+  assert(response.contentType.includes("text/html"), `${page.path} content-type was ${response.contentType}`);
 
-  const scripts = extractJsonLdScripts(homepage.text);
-  assert(scripts.length >= requiredTypes.length, `Expected at least ${requiredTypes.length} JSON-LD scripts`);
+  const scripts = extractJsonLdScripts(response.text);
+  assert(scripts.length >= page.requiredTypes.length, `${page.path} expected at least ${page.requiredTypes.length} JSON-LD scripts`);
 
   const parsed = scripts.map((script, index) => {
     try {
       return JSON.parse(script);
     } catch (error) {
-      throw new Error(`JSON-LD script ${index + 1} is not parseable: ${error instanceof Error ? error.message : error}`);
+      throw new Error(
+        `${page.path} JSON-LD script ${index + 1} is not parseable: ${error instanceof Error ? error.message : error}`,
+      );
     }
   });
   const nodes = parsed.flatMap(flattenNodes);
@@ -104,25 +124,50 @@ async function run() {
   const forbiddenTextMatches = serialized.match(forbiddenTextPattern) ?? [];
   const siteUrls = getSiteUrls(entries);
 
-  for (const type of requiredTypes) {
-    assert(types.includes(type), `Structured data missing ${type}`);
+  for (const type of page.requiredTypes) {
+    assert(types.includes(type), `${page.path} structured data missing ${type}`);
   }
 
-  assert(forbiddenKeys.length === 0, `Structured data includes forbidden review/rating keys: ${forbiddenKeys.join(", ")}`);
-  assert(forbiddenTextMatches.length === 0, `Structured data includes unsafe text: ${forbiddenTextMatches.join(", ")}`);
-  assert(siteUrls.length > 0, "Structured data did not expose any site URLs");
-  assert(siteUrls.every((url) => url.startsWith(baseUrl)), "Structured data contains non-canonical site URL");
+  assert(
+    forbiddenKeys.length === 0,
+    `${page.path} structured data includes forbidden review/rating keys: ${forbiddenKeys.join(", ")}`,
+  );
+  assert(forbiddenTextMatches.length === 0, `${page.path} structured data includes unsafe text: ${forbiddenTextMatches.join(", ")}`);
+  assert(siteUrls.length > 0, `${page.path} structured data did not expose any site URLs`);
+  assert(siteUrls.every((url) => url.startsWith(baseUrl)), `${page.path} structured data contains non-canonical site URL`);
+
+  return {
+    forbiddenKeys,
+    forbiddenTextMatches,
+    jsonLdScriptCount: scripts.length,
+    path: page.path,
+    siteUrlCount: siteUrls.length,
+    types,
+  };
+}
+
+async function run() {
+  const pages = [];
+
+  for (const page of monitoredPages) {
+    pages.push(await inspectPage(page));
+  }
+
+  const homepage = pages.find((page) => page.path === homepagePath);
+  assert(homepage, "Homepage structured data evidence is missing");
 
   console.log(
     JSON.stringify(
       {
         baseUrl,
-        forbiddenKeys,
-        forbiddenTextMatches,
-        jsonLdScriptCount: scripts.length,
+        forbiddenKeys: pages.flatMap((page) => page.forbiddenKeys),
+        forbiddenTextMatches: pages.flatMap((page) => page.forbiddenTextMatches),
+        jsonLdScriptCount: homepage.jsonLdScriptCount,
         ok: true,
-        siteUrlCount: siteUrls.length,
-        types,
+        pageCount: pages.length,
+        pages,
+        siteUrlCount: homepage.siteUrlCount,
+        types: homepage.types,
       },
       null,
       2,

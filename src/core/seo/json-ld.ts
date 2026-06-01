@@ -89,6 +89,34 @@ export function homepageWebPageJsonLd() {
   };
 }
 
+export interface ContentWebPageJsonLdInput {
+  path: string;
+  name: string;
+  description: string;
+  about: string[];
+}
+
+export function contentWebPageJsonLd(input: ContentWebPageJsonLdInput) {
+  const url = absoluteUrl(input.path);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name: input.name,
+    description: input.description,
+    inLanguage: "en-US",
+    isPartOf: {
+      "@id": `${siteConfig.siteUrl}/#website`,
+    },
+    publisher: {
+      "@id": `${siteConfig.siteUrl}/#organization`,
+    },
+    about: input.about,
+  };
+}
+
 export function calculatorHowToJsonLd() {
   return {
     "@context": "https://schema.org",

@@ -35,3 +35,4 @@
 - [done] Add safe homepage structured-data graph and guard tests
 - [done] Add homepage semantic landmark audit and guard test
 - [done] Add production structured-data evidence check to CI artifacts
+- [done] Extend structured-data evidence to priority educational pages

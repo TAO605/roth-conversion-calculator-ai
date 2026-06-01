@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buildIrmaaGuideSections, getIrmaaGuideSummary } from "@/content/irmaa-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion IRMAA Guide",
@@ -23,6 +23,24 @@ export default function RothConversionIrmaaGuidePage() {
               { name: "Calculator", path: "/" },
               { name: "Roth Conversion IRMAA Guide", path: "/roth-conversion-irmaa-guide" },
             ]),
+          ),
+        }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-irmaa-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Roth conversion income",
+                "Medicare IRMAA review",
+                "Modified adjusted gross income",
+                "Calculator boundaries",
+              ],
+            }),
           ),
         }}
         type="application/ld+json"

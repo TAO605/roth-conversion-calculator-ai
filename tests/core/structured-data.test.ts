@@ -5,6 +5,7 @@ import {
   articleJsonLd,
   breadcrumbJsonLd,
   calculatorHowToJsonLd,
+  contentWebPageJsonLd,
   homepageWebPageJsonLd,
   organizationJsonLd,
   webApplicationJsonLd,
@@ -71,6 +72,25 @@ describe("structured data", () => {
       name: "Guides",
       item: "https://www.roth-conversion-calculator-ai.shop/blog",
     });
+  });
+
+  it("builds content WebPage JSON-LD for priority educational pages", () => {
+    const jsonLd = contentWebPageJsonLd({
+      path: "/roth-conversion-irmaa-guide",
+      name: "Roth Conversion IRMAA Guide",
+      description: "Educational Roth conversion IRMAA guide.",
+      about: ["Roth conversion income", "Medicare IRMAA review"],
+    });
+
+    expect(jsonLd).toMatchObject({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://www.roth-conversion-calculator-ai.shop/roth-conversion-irmaa-guide#webpage",
+      url: "https://www.roth-conversion-calculator-ai.shop/roth-conversion-irmaa-guide",
+      isPartOf: { "@id": `${siteConfig.siteUrl}/#website` },
+      publisher: { "@id": `${siteConfig.siteUrl}/#organization` },
+    });
+    expect(jsonLd.about).toContain("Medicare IRMAA review");
   });
 
   it("builds calculator HowTo and Organization JSON-LD for homepage SEO", () => {
@@ -158,6 +178,24 @@ describe("structured data", () => {
     expect(blogPage).toContain("Open the calculator");
     expect(blogIndex).toContain("Topics");
     expect(statePage).toContain("breadcrumbJsonLd");
+  });
+
+  it("mounts WebPage and Breadcrumb structured data on priority educational pages", () => {
+    const irmaaPage = fs.readFileSync(
+      path.join(process.cwd(), "src/app/roth-conversion-irmaa-guide/page.tsx"),
+      "utf8",
+    );
+    const acaPage = fs.readFileSync(
+      path.join(process.cwd(), "src/app/roth-conversion-aca-premium-tax-credit-guide/page.tsx"),
+      "utf8",
+    );
+    const bracketPage = fs.readFileSync(path.join(process.cwd(), "src/app/tax-brackets/2026/page.tsx"), "utf8");
+
+    for (const page of [irmaaPage, acaPage, bracketPage]) {
+      expect(page).toContain("breadcrumbJsonLd");
+      expect(page).toContain("contentWebPageJsonLd");
+      expect(page).toContain('type="application/ld+json"');
+    }
   });
 
   it("mounts HowTo and Organization structured data on the homepage", () => {

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.87",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Priority page structured data evidence",
+    summary:
+      "Extended structured-data monitoring beyond the homepage by adding source-aligned WebPage and BreadcrumbList JSON-LD to priority educational pages and requiring those pages in the retained production evidence artifact.",
+    affectedArea:
+      "Priority SEO pages, IRMAA and ACA education guides, 2026 federal tax brackets page, structured-data evidence automation, and V1.3 semantic SEO guardrails",
+    rollbackPath:
+      "Remove contentWebPageJsonLd from priority pages, remove the tax-brackets breadcrumb JSON-LD, and return scripts/structured-data-evidence.mjs plus the evidence validator to homepage-only checks.",
+  },
+  {
     version: "1.0.86",
     date: "2026-06-01",
     type: "patch",

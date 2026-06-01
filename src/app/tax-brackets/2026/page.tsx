@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formatCurrency, formatPercent } from "@/common/format/currency";
 import { taxBracketRatePages } from "@/content/tax-bracket-rate-pages";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 import { FEDERAL_TAX_BRACKETS_2026 } from "@/core/tax-data/2026";
 
 const filingStatusLabels = {
@@ -21,6 +22,35 @@ export const metadata = {
 export default function FederalTaxBrackets2026Page() {
   return (
     <main className="mx-auto grid max-w-6xl gap-7 px-4 py-10">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Calculator", path: "/" },
+              { name: "2026 Federal Tax Brackets", path: "/tax-brackets/2026" },
+            ]),
+          ),
+        }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/tax-brackets/2026",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "2026 federal tax brackets",
+                "Roth conversion taxable income",
+                "Filing status bracket tables",
+                "Educational tax modeling",
+              ],
+            }),
+          ),
+        }}
+        type="application/ld+json"
+      />
       <header>
         <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Tax year 2026</p>
         <h1 className="mt-3 text-4xl font-bold text-neutral-950 dark:text-white">2026 Federal Tax Brackets</h1>

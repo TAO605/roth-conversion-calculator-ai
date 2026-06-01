@@ -77,6 +77,8 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
   assert(structuredData.ok === true, "Structured data evidence must be ok");
   assert(structuredData.baseUrl === expectedBaseUrl, "Structured data evidence baseUrl must match SEO smoke baseUrl");
   assert(structuredData.jsonLdScriptCount >= 6, "Structured data evidence must include homepage JSON-LD scripts");
+  assert(structuredData.pageCount >= 4, "Structured data evidence must include priority content pages");
+  assert(Array.isArray(structuredData.pages), "Structured data evidence pages must be an array");
   assert(Array.isArray(structuredData.types), "Structured data evidence types must be an array");
   assert(Array.isArray(structuredData.forbiddenKeys), "Structured data forbiddenKeys must be an array");
   assert(Array.isArray(structuredData.forbiddenTextMatches), "Structured data forbiddenTextMatches must be an array");
@@ -86,6 +88,28 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
 
   for (const type of ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization", "FAQPage"]) {
     assert(structuredData.types.includes(type), `Structured data evidence missing ${type}`);
+  }
+
+  for (const pathname of [
+    "/",
+    "/roth-conversion-irmaa-guide",
+    "/roth-conversion-aca-premium-tax-credit-guide",
+    "/tax-brackets/2026",
+  ]) {
+    const page = findResult(structuredData.pages, "path", pathname);
+    assert(page, `Structured data evidence missing ${pathname}`);
+    assert(Array.isArray(page.types), `${pathname} structured data types must be an array`);
+    assert(Array.isArray(page.forbiddenKeys) && page.forbiddenKeys.length === 0, `${pathname} must not include review or rating keys`);
+    assert(
+      Array.isArray(page.forbiddenTextMatches) && page.forbiddenTextMatches.length === 0,
+      `${pathname} must not include unsafe YMYL text`,
+    );
+    assert(page.siteUrlCount > 0, `${pathname} structured data must include canonical site URLs`);
+
+    if (pathname !== "/") {
+      assert(page.types.includes("WebPage"), `${pathname} structured data evidence missing WebPage`);
+      assert(page.types.includes("BreadcrumbList"), `${pathname} structured data evidence missing BreadcrumbList`);
+    }
   }
 }
 

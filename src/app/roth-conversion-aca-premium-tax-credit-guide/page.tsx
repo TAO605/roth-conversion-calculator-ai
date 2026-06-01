@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buildAcaPtcGuideSections, getAcaPtcGuideSummary } from "@/content/aca-premium-tax-credit-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion ACA Premium Tax Credit Guide",
@@ -26,6 +26,24 @@ export default function RothConversionAcaPremiumTaxCreditGuidePage() {
                 path: "/roth-conversion-aca-premium-tax-credit-guide",
               },
             ]),
+          ),
+        }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-aca-premium-tax-credit-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Roth conversion income",
+                "ACA premium tax credit review",
+                "Marketplace income estimates",
+                "Calculator boundaries",
+              ],
+            }),
           ),
         }}
         type="application/ld+json"
