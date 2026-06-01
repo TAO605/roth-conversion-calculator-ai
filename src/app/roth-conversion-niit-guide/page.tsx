@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buildNiitGuideSections, getNiitGuideSummary } from "@/content/niit-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion NIIT Guide",
@@ -23,6 +23,24 @@ export default function RothConversionNiitGuidePage() {
               { name: "Calculator", path: "/" },
               { name: "Roth Conversion NIIT Guide", path: "/roth-conversion-niit-guide" },
             ]),
+          ),
+        }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-niit-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Roth conversion income",
+                "Net investment income tax review",
+                "MAGI threshold review",
+                "Calculator boundaries",
+              ],
+            }),
           ),
         }}
         type="application/ld+json"

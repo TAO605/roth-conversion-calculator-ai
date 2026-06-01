@@ -77,7 +77,7 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
   assert(structuredData.ok === true, "Structured data evidence must be ok");
   assert(structuredData.baseUrl === expectedBaseUrl, "Structured data evidence baseUrl must match SEO smoke baseUrl");
   assert(structuredData.jsonLdScriptCount >= 6, "Structured data evidence must include homepage JSON-LD scripts");
-  assert(structuredData.pageCount >= 4, "Structured data evidence must include priority content pages");
+  assert(structuredData.pageCount >= 8, "Structured data evidence must include priority content pages");
   assert(Array.isArray(structuredData.pages), "Structured data evidence pages must be an array");
   assert(Array.isArray(structuredData.types), "Structured data evidence types must be an array");
   assert(Array.isArray(structuredData.forbiddenKeys), "Structured data forbiddenKeys must be an array");
@@ -95,6 +95,10 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
     "/roth-conversion-irmaa-guide",
     "/roth-conversion-aca-premium-tax-credit-guide",
     "/tax-brackets/2026",
+    "/roth-conversion-niit-guide",
+    "/roth-conversion-rmd-guide",
+    "/roth-conversion-social-security-tax-guide",
+    "/roth-conversion-estimated-tax-guide",
   ]) {
     const page = findResult(structuredData.pages, "path", pathname);
     assert(page, `Structured data evidence missing ${pathname}`);

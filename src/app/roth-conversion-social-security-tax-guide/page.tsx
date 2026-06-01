@@ -4,7 +4,7 @@ import {
   getSocialSecurityTaxGuideSummary,
 } from "@/content/social-security-tax-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion Social Security Tax Guide",
@@ -29,6 +29,24 @@ export default function RothConversionSocialSecurityTaxGuidePage() {
                 path: "/roth-conversion-social-security-tax-guide",
               },
             ]),
+          ),
+        }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-social-security-tax-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Roth conversion income",
+                "Social Security taxable benefits",
+                "IRS Publication 915 worksheet review",
+                "Calculator boundaries",
+              ],
+            }),
           ),
         }}
         type="application/ld+json"

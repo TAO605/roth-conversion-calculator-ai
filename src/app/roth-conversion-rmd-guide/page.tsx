@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buildRmdGuideSections, getRmdGuideSummary } from "@/content/rmd-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion RMD Guide",
@@ -23,6 +23,24 @@ export default function RothConversionRmdGuidePage() {
               { name: "Calculator", path: "/" },
               { name: "Roth Conversion RMD Guide", path: "/roth-conversion-rmd-guide" },
             ]),
+          ),
+        }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-rmd-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Roth conversion sequence review",
+                "Required minimum distributions",
+                "Retirement account records",
+                "Calculator boundaries",
+              ],
+            }),
           ),
         }}
         type="application/ld+json"

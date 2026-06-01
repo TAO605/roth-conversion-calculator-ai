@@ -190,8 +190,18 @@ describe("structured data", () => {
       "utf8",
     );
     const bracketPage = fs.readFileSync(path.join(process.cwd(), "src/app/tax-brackets/2026/page.tsx"), "utf8");
+    const niitPage = fs.readFileSync(path.join(process.cwd(), "src/app/roth-conversion-niit-guide/page.tsx"), "utf8");
+    const rmdPage = fs.readFileSync(path.join(process.cwd(), "src/app/roth-conversion-rmd-guide/page.tsx"), "utf8");
+    const socialSecurityPage = fs.readFileSync(
+      path.join(process.cwd(), "src/app/roth-conversion-social-security-tax-guide/page.tsx"),
+      "utf8",
+    );
+    const estimatedTaxPage = fs.readFileSync(
+      path.join(process.cwd(), "src/app/roth-conversion-estimated-tax-guide/page.tsx"),
+      "utf8",
+    );
 
-    for (const page of [irmaaPage, acaPage, bracketPage]) {
+    for (const page of [irmaaPage, acaPage, bracketPage, niitPage, rmdPage, socialSecurityPage, estimatedTaxPage]) {
       expect(page).toContain("breadcrumbJsonLd");
       expect(page).toContain("contentWebPageJsonLd");
       expect(page).toContain('type="application/ld+json"');

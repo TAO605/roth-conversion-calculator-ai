@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.88",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Expanded guide structured data evidence",
+    summary:
+      "Expanded priority structured-data evidence to additional YMYL-sensitive guide pages covering NIIT, RMDs, Social Security taxable benefits, and estimated tax review, using source-aligned WebPage and BreadcrumbList schema without adding unsupported recommendation or review markup.",
+    affectedArea:
+      "Long-tail educational SEO pages, structured-data monitoring, retained production evidence artifacts, and V1.3 semantic SEO guardrails",
+    rollbackPath:
+      "Remove contentWebPageJsonLd from the NIIT, RMD, Social Security tax, and estimated tax guides, then remove those paths from scripts/structured-data-evidence.mjs and the SEO evidence validator.",
+  },
+  {
     version: "1.0.87",
     date: "2026-06-01",
     type: "patch",

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buildEstimatedTaxGuideSections, getEstimatedTaxGuideSummary } from "@/content/estimated-tax-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 
 export const metadata = {
   title: "Roth Conversion Estimated Tax Guide",
@@ -23,6 +23,24 @@ export default function RothConversionEstimatedTaxGuidePage() {
               { name: "Calculator", path: "/" },
               { name: "Roth Conversion Estimated Tax Guide", path: "/roth-conversion-estimated-tax-guide" },
             ]),
+          ),
+        }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            contentWebPageJsonLd({
+              path: "/roth-conversion-estimated-tax-guide",
+              name: metadata.title,
+              description: metadata.description,
+              about: [
+                "Roth conversion income",
+                "Estimated tax review",
+                "IRA withholding and payment timing",
+                "Calculator boundaries",
+              ],
+            }),
           ),
         }}
         type="application/ld+json"

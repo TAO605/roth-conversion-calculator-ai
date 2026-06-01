@@ -19,6 +19,22 @@ const monitoredPages = [
     path: "/tax-brackets/2026",
     requiredTypes: ["BreadcrumbList", "WebPage"],
   },
+  {
+    path: "/roth-conversion-niit-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-rmd-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-social-security-tax-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
+    path: "/roth-conversion-estimated-tax-guide",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
 ];
 const forbiddenKeyPattern = /^(aggregateRating|review|reviewRating|ratingValue|reviewCount)$/i;
 const forbiddenTextPattern = /optimal conversion amount|hidden fees|100%\s+accurate|guaranteed|voiceInput|voiceOutput/gi;
