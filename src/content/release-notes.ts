@@ -10,6 +10,17 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.84",
+    date: "2026-06-01",
+    type: "patch",
+    title: "Safe homepage structured data graph",
+    summary:
+      "Added source-aligned WebSite and WebPage JSON-LD to the homepage, strengthened the WebApplication node with canonical IDs and visible feature references, and added structured-data guard tests that block fake ratings, unsupported voice features, non-canonical URLs, and unsafe YMYL phrases.",
+    affectedArea: "Homepage structured data, semantic SEO guardrails, JSON-LD test coverage, and V1.3 structured-data implementation",
+    rollbackPath:
+      "Remove websiteJsonLd, homepageWebPageJsonLd, the added homepage JSON-LD scripts, and the structured-data guard test if the homepage should return to the previous WebApplication/HowTo/Organization-only schema set.",
+  },
+  {
     version: "1.0.83",
     date: "2026-05-30",
     type: "patch",

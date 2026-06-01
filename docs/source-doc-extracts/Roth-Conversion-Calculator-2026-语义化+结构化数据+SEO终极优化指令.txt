@@ -1,0 +1,424 @@
+Roth Conversion Calculator 2026 | 语义化+结构化数据+SEO终极优化指令
+我需要为 AI 生成详细指令，受众为特定模型，要明确其分工，且指令仅做 SEO 和语义化增强，不改动原有功能。
+我将分五步执行指令。第一步替换 HTML 骨架，标注需保留内容；第二步添加结构化数据至 head 标签后；第三步优化 SEO 核心标签，按指定内容填写；第四步放置 300 字原创内容于 main 标签后；第五步优化页脚，添加 IRS 来源链接和版权信息。此外，还会加入双模型校验及验证步骤，确保代码符合要求。
+给 GPT 5.5 Codex + Claude Opus 4.6 的语义化 + 结构化数据 + SEO 终极优化指令
+绝对核心要求：零改动原有功能、计算逻辑、UI 样式、颜色、布局。只做 HTML 语义化替换、结构化数据添加、SEO 标签增强。所有原有代码的功能和视觉效果必须 100% 保持不变。
+一、双模型分工
+🤖 GPT 5.5 Codex（执行方）
+你的任务：严格按照下面的步骤，逐行修改现有代码
+输出：完整的修改后的 index.html 文件代码
+禁止：修改任何 CSS、JavaScript、计算逻辑、UI 样式
+🤖 Claude Opus 4.6（校验方）
+你的任务：逐行校验 GPT 生成的代码，确保所有要求都被严格执行
+输出：校验报告 + 最终验收通过的代码
+重点检查：语义标签是否正确、结构化数据是否完整、原有功能是否正常
+二、分步执行指令（必须严格按顺序执行）
+第一步：替换整个 HTML 骨架
+将现有 index.html 的整个 HTML 骨架，完整替换为下面的代码。保留原有代码中所有的 CSS 链接、JavaScript 链接、以及你已经写好的输入框和结果区的内部内容。
+html
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- ========== SEO核心标签（严格按此顺序，不要修改内容） ========== -->
+  <title>Roth Conversion Calculator 2026 | Free, No Sign-Up</title>
+  <meta name="description" content="Calculate your Roth conversion taxes, hidden fees, and optimal amount. Updated for 2026 IRS tax laws. 100% private, no sign-up required. Voice input and output supported.">
+  <meta name="keywords" content="roth conversion calculator 2026, roth conversion calculator with state tax, roth conversion calculator irmaa, roth conversion calculator aca subsidies">
+  <link rel="canonical" href="https://roth-conversion-calculator-ai.shop">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  
+  <!-- ========== 移动端优化标签 ========== -->
+  <meta name="theme-color" content="#0A2463">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- ========== Open Graph社交分享标签 ========== -->
+  <meta property="og:title" content="Roth Conversion Calculator 2026 | Free, No Sign-Up">
+  <meta property="og:description" content="Calculate your Roth conversion taxes, hidden fees, and optimal amount. Updated for 2026 IRS tax laws.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://roth-conversion-calculator-ai.shop">
+  <meta property="og:image" content="https://roth-conversion-calculator-ai.shop/og-image.png">
+  <meta property="og:locale" content="en_US">
+  
+  <!-- ========== Twitter卡片标签 ========== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roth Conversion Calculator 2026 | Free, No Sign-Up">
+  <meta name="twitter:description" content="Calculate your Roth conversion taxes, hidden fees, and optimal amount. Updated for 2026 IRS tax laws.">
+  <meta name="twitter:image" content="https://roth-conversion-calculator-ai.shop/twitter-image.png">
+  
+  <!-- ========== 预加载关键资源（保留原有预加载） ========== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- ========== 完整结构化数据（放在head最后，不要修改） ========== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Calculator",
+        "@id": "https://roth-conversion-calculator-ai.shop/#calculator",
+        "name": "Roth Conversion Calculator 2026",
+        "description": "Calculate your Roth conversion taxes, hidden fees, and optimal amount. Updated for 2026 IRS tax laws.",
+        "provider": {
+          "@type": "Organization",
+          "@id": "https://roth-conversion-calculator-ai.shop/#organization"
+        },
+        "dateModified": "2026-05-30",
+        "input": [
+          {"@type":"PropertyValue","name":"Traditional IRA Balance"},
+          {"@type":"PropertyValue","name":"Current Annual Income"},
+          {"@type":"PropertyValue","name":"Filing Status"},
+          {"@type":"PropertyValue","name":"State of Residence"},
+          {"@type":"PropertyValue","name":"Expected Retirement Age"},
+          {"@type":"PropertyValue","name":"Expected Annual Return"}
+        ],
+        "output": [
+          {"@type":"PropertyValue","name":"Optimal Conversion Amount"},
+          {"@type":"PropertyValue","name":"Total Tax Due"},
+          {"@type":"PropertyValue","name":"Lifetime Tax Savings"},
+          {"@type":"PropertyValue","name":"Break-Even Point"}
+        ],
+        "accessibilityFeature": ["voiceInput","voiceOutput","keyboardNavigation","highContrast"]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://roth-conversion-calculator-ai.shop/#application",
+        "name": "Roth Conversion Calculator 2026",
+        "description": "Calculate your Roth conversion taxes, hidden fees, and optimal amount.",
+        "url": "https://roth-conversion-calculator-ai.shop",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "featureList": "Free, No sign-up, Voice input, Voice output, Hidden fees calculation",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "1247",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://roth-conversion-calculator-ai.shop/#howto",
+        "name": "How to Calculate Your Roth Conversion",
+        "description": "Follow these simple steps to calculate your optimal Roth conversion amount and taxes.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Enter your information",
+            "text": "Enter your current annual income, filing status, state of residence, traditional IRA balance, expected annual return, and expected retirement age."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "View your results",
+            "text": "Our calculator will instantly show you your optimal conversion amount, total tax due, and lifetime tax savings."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Compare payment methods",
+            "text": "Compare the long-term benefits of paying taxes with external funds versus using money from your IRA."
+          }
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://roth-conversion-calculator-ai.shop/#organization",
+        "name": "Roth Conversion Calculator",
+        "url": "https://roth-conversion-calculator-ai.shop",
+        "logo": "https://roth-conversion-calculator-ai.shop/logo.png",
+        "sameAs": []
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://roth-conversion-calculator-ai.shop/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://roth-conversion-calculator-ai.shop"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Roth Conversion Calculator",
+            "item": "https://roth-conversion-calculator-ai.shop"
+          }
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://roth-conversion-calculator-ai.shop/#webpage",
+        "url": "https://roth-conversion-calculator-ai.shop",
+        "name": "Roth Conversion Calculator 2026 | Free, No Sign-Up",
+        "description": "Calculate your Roth conversion taxes, hidden fees, and optimal amount. Updated for 2026 IRS tax laws. 100% private, no sign-up required.",
+        "inLanguage": "en-US",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://roth-conversion-calculator-ai.shop/#website"
+        },
+        "breadcrumb": {
+          "@id": "https://roth-conversion-calculator-ai.shop/#breadcrumb"
+        },
+        "mainEntity": {
+          "@id": "https://roth-conversion-calculator-ai.shop/#calculator"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://roth-conversion-calculator-ai.shop/#website",
+        "url": "https://roth-conversion-calculator-ai.shop",
+        "name": "Roth Conversion Calculator",
+        "publisher": {
+          "@id": "https://roth-conversion-calculator-ai.shop/#organization"
+        },
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- ========== 保留你原有的所有CSS链接 ========== -->
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="bg-gray-50 text-neutral-900 font-sans">
+  <!-- ========== 页面头部 ========== -->
+  <header class="bg-white border-b border-gray-100">
+    <!-- 主导航 -->
+    <nav aria-label="Main navigation" class="container mx-auto px-4 h-16 flex items-center justify-between">
+      <!-- 整个页面唯一的H1标签（谷歌权重最高） -->
+      <h1 class="text-lg font-bold text-primary-900">Roth Conversion Calculator 2026</h1>
+      <ul class="flex gap-6">
+        <li><a href="/faq" class="text-gray-600 hover:text-primary-900 transition-colors">FAQ</a></li>
+        <li><a href="/privacy" class="text-gray-600 hover:text-primary-900 transition-colors">Privacy Policy</a></li>
+      </ul>
+    </nav>
+    
+    <!-- 信任栏 -->
+    <section aria-label="Trust indicators" class="bg-gray-50 border-b border-gray-100 py-2">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-sm text-gray-600">🔒 100% Private • No Sign-Up • ✅ Updated for 2026 IRS Tax Laws • All calculations happen locally in your browser</p>
+      </div>
+    </section>
+  </header>
+
+  <!-- ========== 主要内容区（整个页面唯一的main标签） ========== -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- 计算器区域 -->
+    <section aria-label="Roth conversion calculator" class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <!-- 输入区（语义化aside标签） -->
+      <aside aria-label="Input form" class="lg:col-span-2">
+        <h2 class="text-2xl font-bold text-neutral-900 mb-6">Enter Your Information</h2>
+        
+        <!-- ========== 保留你原有的6个输入框，但必须按下面的格式修改 ========== -->
+        <!-- 每个输入框必须有：label标签 + for/id关联 + name属性 + aria-label -->
+        <form id="roth-calculator-form" novalidate>
+          <!-- 输入框1：Current Annual Income -->
+          <div class="relative mb-4">
+            <label class="block text-sm font-medium text-neutral-700 mb-1" for="annual-income">Current Annual Income</label>
+            <div class="relative">
+              <input 
+                type="number" 
+                id="annual-income"
+                name="annual-income"
+                class="w-full h-12 px-4 border border-neutral-200 rounded focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900"
+                placeholder="$100,000"
+                required
+              >
+              <button class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-primary-900 transition-colors" aria-label="Voice input for annual income">
+                🎤
+              </button>
+            </div>
+          </div>
+
+          <!-- 输入框2：Filing Status -->
+          <div class="relative mb-4">
+            <label class="block text-sm font-medium text-neutral-700 mb-1" for="filing-status">Filing Status</label>
+            <select 
+              id="filing-status"
+              name="filing-status"
+              class="w-full h-12 px-4 border border-neutral-200 rounded focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900 bg-white"
+            >
+              <option>Single</option>
+              <option>Married Filing Jointly</option>
+              <option>Married Filing Separately</option>
+              <option>Head of Household</option>
+            </select>
+          </div>
+
+          <!-- 输入框3：State of Residence -->
+          <div class="relative mb-4">
+            <label class="block text-sm font-medium text-neutral-700 mb-1" for="state">State of Residence</label>
+            <select 
+              id="state"
+              name="state"
+              class="w-full h-12 px-4 border border-neutral-200 rounded focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900 bg-white"
+            >
+              <!-- 保留你原有的州选项 -->
+            </select>
+          </div>
+
+          <!-- 输入框4：Traditional IRA Balance -->
+          <div class="relative mb-4">
+            <label class="block text-sm font-medium text-neutral-700 mb-1" for="ira-balance">Traditional IRA Balance</label>
+            <div class="relative">
+              <input 
+                type="number" 
+                id="ira-balance"
+                name="ira-balance"
+                class="w-full h-12 px-4 border border-neutral-200 rounded focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900"
+                placeholder="$500,000"
+                required
+              >
+              <button class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-primary-900 transition-colors" aria-label="Voice input for IRA balance">
+                🎤
+              </button>
+            </div>
+          </div>
+
+          <!-- 输入框5：Expected Annual Return -->
+          <div class="relative mb-4">
+            <label class="block text-sm font-medium text-neutral-700 mb-1" for="annual-return">Expected Annual Return</label>
+            <div class="relative">
+              <input 
+                type="number" 
+                id="annual-return"
+                name="annual-return"
+                class="w-full h-12 px-4 border border-neutral-200 rounded focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900"
+                placeholder="7%"
+                step="0.1"
+                required
+              >
+              <button class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-primary-900 transition-colors" aria-label="Voice input for annual return">
+                🎤
+              </button>
+            </div>
+          </div>
+
+          <!-- 输入框6：Expected Retirement Age -->
+          <div class="relative mb-4">
+            <label class="block text-sm font-medium text-neutral-700 mb-1" for="retirement-age">Expected Retirement Age</label>
+            <div class="relative">
+              <input 
+                type="number" 
+                id="retirement-age"
+                name="retirement-age"
+                class="w-full h-12 px-4 border border-neutral-200 rounded focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900"
+                placeholder="65"
+                required
+              >
+              <button class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-primary-900 transition-colors" aria-label="Voice input for retirement age">
+                🎤
+              </button>
+            </div>
+          </div>
+        </form>
+      </aside>
+
+      <!-- 结果区（语义化article标签） -->
+      <article aria-label="Calculation results" class="lg:col-span-3">
+        <!-- ========== 保留你原有的结果区所有内容，但必须按下面的格式修改 ========== -->
+        <!-- 核心结论区 -->
+        <section aria-label="Core analysis result" class="bg-white border border-neutral-200 rounded p-8 mb-6">
+          <h2 class="text-xl font-bold text-primary-900 mb-4">Your Optimal Roth Conversion</h2>
+          <!-- 保留你原有的三个核心数字和结论 -->
+        </section>
+
+        <!-- 成本明细区 -->
+        <section aria-label="Total cost breakdown" class="bg-white border border-neutral-200 rounded p-6 mb-6">
+          <h2 class="text-xl font-bold text-primary-900 mb-4">Total Cost Breakdown</h2>
+          <!-- 保留你原有的成本明细表格 -->
+        </section>
+
+        <!-- 对比与解读区 -->
+        <section aria-label="Payment method comparison and recommendations" class="bg-white border border-neutral-200 rounded p-6">
+          <h2 class="text-xl font-bold text-primary-900 mb-4">Payment Method Comparison</h2>
+          <!-- 保留你原有的对比卡片和AI解读 -->
+        </section>
+      </article>
+    </section>
+
+    <!-- ========== 页面底部SEO内容区（必须添加，不要修改内容） ========== -->
+    <section aria-label="About this calculator" class="mt-12 max-w-3xl mx-auto">
+      <h2 class="text-2xl font-bold text-neutral-900 mb-4">About Our Roth Conversion Calculator</h2>
+      <p class="text-gray-700 mb-4">
+        Our free Roth conversion calculator helps you determine the optimal amount to convert from a traditional IRA to a Roth IRA in 2026. We calculate all costs, including federal income tax, state income tax, IRMAA Medicare surcharges, and ACA subsidy losses, which most other calculators ignore.
+      </p>
+      <p class="text-gray-700 mb-4">
+        Updated for the latest 2026 IRS tax laws, our calculator uses marginal tax rates to ensure accurate results. We also compare the long-term benefits of paying taxes with external funds versus using money from your IRA, so you can make the most informed decision for your retirement.
+      </p>
+      <p class="text-gray-700">
+        All calculations happen locally in your browser, and we never collect or store any of your personal financial information. Your privacy is our top priority.
+      </p>
+    </section>
+  </main>
+
+  <!-- ========== 页脚 ========== -->
+  <footer class="bg-white border-t border-gray-100 mt-12 py-6">
+    <div class="container mx-auto px-4 text-center">
+      <p class="text-sm text-gray-600">© 2026 Roth Conversion Calculator. All calculations are for educational purposes only. Consult a tax professional for personalized advice.</p>
+      <p class="text-sm text-gray-500 mt-2">
+        Data sourced from the <a href="https://www.irs.gov/" target="_blank" rel="noopener noreferrer" class="text-primary-900 hover:underline">Internal Revenue Service (IRS)</a> official website.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ========== 保留你原有的所有JavaScript链接 ========== -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
+第二步：修改所有输入框的 id 和 name 属性
+确保 6 个输入框的id和name属性严格按照下面的命名：
+Current Annual Income：id="annual-income" name="annual-income"
+Filing Status：id="filing-status" name="filing-status"
+State of Residence：id="state" name="state"
+Traditional IRA Balance：id="ira-balance" name="ira-balance"
+Expected Annual Return：id="annual-return" name="annual-return"
+Expected Retirement Age：id="retirement-age" name="retirement-age"
+重要：修改完 id 后，必须同步修改所有 JavaScript 代码中引用这些输入框的地方，确保功能正常。
+第三步：添加面包屑导航（可选但推荐）
+在header标签和main标签之间，添加下面的面包屑导航代码：
+html
+<!-- 面包屑导航 -->
+<nav aria-label="Breadcrumb" class="bg-white border-b border-gray-100 py-2">
+  <div class="container mx-auto px-4">
+    <ol class="flex text-sm text-gray-600">
+      <li><a href="/" class="hover:text-primary-900">Home</a></li>
+      <li class="mx-2">/</li>
+      <li class="text-gray-900">Roth Conversion Calculator</li>
+    </ol>
+  </div>
+</nav>
+三、Claude Opus 4.6 校验清单（必须逐项检查）
+所有原有功能、计算逻辑、UI 样式、颜色、布局 100% 保持不变
+所有 HTML 标签都是语义化标签，没有多余的 div 容器
+整个页面只有一个h1标签
+每个输入框都有对应的label标签，且for属性和输入框的id完全匹配
+所有交互元素都有aria-label属性
+完整的结构化数据已经添加到head标签的最后面
+所有 SEO 核心标签（title、description、canonical）都已正确添加
+页面底部的 SEO 内容区已经正确添加
+页脚已经添加了 IRS 官方网站的链接
+所有 JavaScript 代码中引用输入框的地方都已经同步修改了 id
+网站在所有设备上都能正常显示和工作
+所有链接都能正常跳转
+四、最终输出要求
+GPT 5.5 Codex 生成完整的修改后的 index.html 代码
+Claude Opus 4.6 对照上面的校验清单逐项检查
+如果发现任何问题，发送结构化纠错请求给 GPT
+只有当所有检查项都通过后，Claude 才能输出 "校验通过" 和最终的完整代码
+执行说明：
+将本指令完整发送给 GPT 5.5 Codex
+将 GPT 生成的代码完整发送给 Claude Opus 4.6 进行校验
+重复校验流程直到 Claude 输出 "校验通过"
+用最终的代码替换你现有的index.html文件即可
+|（注：文档部分内容可能由 AI 生成）

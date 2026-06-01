@@ -13,11 +13,24 @@ export function webApplicationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
+    "@id": `${siteConfig.siteUrl}/#application`,
     name: "Roth Conversion Calculator",
+    url: siteConfig.siteUrl,
     applicationCategory: "FinanceApplication",
     operatingSystem: "Any",
     description:
       "Educational Roth conversion calculator for estimating taxes, potential penalties, break-even years, and after-tax retirement value.",
+    isAccessibleForFree: true,
+    featureList: [
+      "Federal tax estimate",
+      "State tax assumption input",
+      "Tax payment method comparison",
+      "Tax interaction warnings",
+      "Professional review packet",
+    ],
+    provider: {
+      "@id": `${siteConfig.siteUrl}/#organization`,
+    },
     offers: {
       "@type": "Offer",
       price: "0",
@@ -30,9 +43,49 @@ export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${siteConfig.siteUrl}/#organization`,
     name: siteConfig.siteName,
     url: siteConfig.siteUrl,
     sameAs: [],
+  };
+}
+
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteConfig.siteUrl}/#website`,
+    name: siteConfig.siteName,
+    url: siteConfig.siteUrl,
+    inLanguage: "en-US",
+    publisher: {
+      "@id": `${siteConfig.siteUrl}/#organization`,
+    },
+  };
+}
+
+export function homepageWebPageJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${siteConfig.siteUrl}/#webpage`,
+    url: siteConfig.siteUrl,
+    name: "AI Roth Conversion Calculator 2026",
+    description:
+      "Educational Roth conversion calculator for modeling tax cost, break-even years, tax payment assumptions, and review items for professional discussion.",
+    inLanguage: "en-US",
+    isPartOf: {
+      "@id": `${siteConfig.siteUrl}/#website`,
+    },
+    mainEntity: {
+      "@id": `${siteConfig.siteUrl}/#application`,
+    },
+    about: [
+      "Roth conversion tax estimates",
+      "Traditional IRA to Roth IRA conversion assumptions",
+      "Federal tax brackets",
+      "Professional tax review preparation",
+    ],
   };
 }
 

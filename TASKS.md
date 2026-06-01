@@ -30,3 +30,6 @@
 - [done] Add machine-readable SEO evidence artifact manifest
 - [done] Make SEO evidence manifest self-describing
 - [done] Add SEO evidence artifact review checklist to monitoring operations
+- [done] Add dual-model AI architecture risk addendum to engineering docs
+- [done] Add semantic HTML and structured-data SEO evaluation addendum
+- [done] Add safe homepage structured-data graph and guard tests

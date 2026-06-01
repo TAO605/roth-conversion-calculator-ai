@@ -159,13 +159,14 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "seo-structured-content",
     label: "Article, breadcrumb, and long-tail content matrix",
-    version: "1.0.13",
+    version: "1.0.84",
     layer: "content",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/core/seo, src/content/blog, src/app/blog, src/app/states",
-    rollbackPath: "Remove Article/Breadcrumb JSON-LD scripts and revert blog content additions.",
+    rollbackPath:
+      "Remove the homepage WebSite/WebPage JSON-LD additions, Article/Breadcrumb JSON-LD scripts, and related structured-content tests.",
   },
   {
     id: "production-readiness",
@@ -312,14 +313,15 @@ export const featureRegistry: FeatureRegistryItem[] = [
   },
   {
     id: "homepage-howto-structured-data",
-    label: "Homepage HowTo and Organization structured data",
-    version: "1.0.27",
+    label: "Homepage structured data",
+    version: "1.0.84",
     layer: "content",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/core/seo/json-ld and src/app/page.tsx",
-    rollbackPath: "Disable homepage-howto-structured-data in the feature registry or remove the HowTo and Organization JSON-LD scripts from the homepage.",
+    rollbackPath:
+      "Disable homepage-howto-structured-data in the feature registry or remove the WebSite, WebPage, HowTo, and Organization JSON-LD scripts from the homepage.",
   },
   {
     id: "pwa-install-icons",

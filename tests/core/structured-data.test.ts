@@ -1,8 +1,28 @@
 import { describe, expect, it } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
-import { articleJsonLd, breadcrumbJsonLd, calculatorHowToJsonLd, organizationJsonLd } from "@/core/seo/json-ld";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  calculatorHowToJsonLd,
+  homepageWebPageJsonLd,
+  organizationJsonLd,
+  webApplicationJsonLd,
+  websiteJsonLd,
+} from "@/core/seo/json-ld";
 import { siteConfig } from "@/core/seo/site-config";
+
+function walkJson(value: unknown): Array<{ key: string; value: unknown }> {
+  if (!value || typeof value !== "object") {
+    return [];
+  }
+
+  if (Array.isArray(value)) {
+    return value.flatMap((item) => walkJson(item));
+  }
+
+  return Object.entries(value).flatMap(([key, item]) => [{ key, value: item }, ...walkJson(item)]);
+}
 
 describe("structured data", () => {
   it("builds Article JSON-LD with authorship, dates, canonical URL, and publisher", () => {
@@ -56,6 +76,9 @@ describe("structured data", () => {
   it("builds calculator HowTo and Organization JSON-LD for homepage SEO", () => {
     const howTo = calculatorHowToJsonLd();
     const organization = organizationJsonLd();
+    const website = websiteJsonLd();
+    const webPage = homepageWebPageJsonLd();
+    const application = webApplicationJsonLd();
 
     expect(howTo).toMatchObject({
       "@context": "https://schema.org",
@@ -73,6 +96,55 @@ describe("structured data", () => {
       name: siteConfig.siteName,
       url: siteConfig.siteUrl,
     });
+    expect(website).toMatchObject({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${siteConfig.siteUrl}/#website`,
+      url: siteConfig.siteUrl,
+      publisher: { "@id": `${siteConfig.siteUrl}/#organization` },
+    });
+    expect(webPage).toMatchObject({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${siteConfig.siteUrl}/#webpage`,
+      url: siteConfig.siteUrl,
+      isPartOf: { "@id": `${siteConfig.siteUrl}/#website` },
+      mainEntity: { "@id": `${siteConfig.siteUrl}/#application` },
+    });
+    expect(application).toMatchObject({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "@id": `${siteConfig.siteUrl}/#application`,
+      url: siteConfig.siteUrl,
+      provider: { "@id": `${siteConfig.siteUrl}/#organization` },
+    });
+  });
+
+  it("keeps homepage structured data source-aligned and free of unsafe SEO shortcuts", () => {
+    const nodes = [
+      webApplicationJsonLd(),
+      websiteJsonLd(),
+      homepageWebPageJsonLd(),
+      organizationJsonLd(),
+      calculatorHowToJsonLd(),
+    ];
+    const serialized = JSON.stringify(nodes);
+    const allEntries = nodes.flatMap((node) => walkJson(node));
+    const allKeys = allEntries.map((entry) => entry.key);
+    const allUrls = allEntries
+      .filter(
+        (entry) =>
+          typeof entry.value === "string" &&
+          /^https?:\/\//.test(entry.value) &&
+          ["@id", "url", "item", "mainEntityOfPage"].includes(entry.key),
+      )
+      .map((entry) => entry.value as string);
+
+    expect(allKeys).not.toContain("aggregateRating");
+    expect(allKeys).not.toContain("review");
+    expect(serialized).not.toMatch(/optimal conversion amount|hidden fees|guaranteed|100%\s+accurate/i);
+    expect(serialized).not.toMatch(/voiceInput|voiceOutput|reviewCount|ratingValue/i);
+    expect(allUrls.every((url) => url.startsWith(siteConfig.siteUrl))).toBe(true);
   });
 
   it("mounts Article and Breadcrumb structured data on dynamic content pages", () => {
@@ -93,5 +165,7 @@ describe("structured data", () => {
 
     expect(homePage).toContain("calculatorHowToJsonLd");
     expect(homePage).toContain("organizationJsonLd");
+    expect(homePage).toContain("websiteJsonLd");
+    expect(homePage).toContain("homepageWebPageJsonLd");
   });
 });

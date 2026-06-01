@@ -26,7 +26,14 @@ import { calculateRothConversion } from "@/core/calculator/roth-conversion";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { isFeatureEnabled } from "@/core/features/feature-registry";
-import { calculatorHowToJsonLd, faqJsonLd, organizationJsonLd, webApplicationJsonLd } from "@/core/seo/json-ld";
+import {
+  calculatorHowToJsonLd,
+  faqJsonLd,
+  homepageWebPageJsonLd,
+  organizationJsonLd,
+  webApplicationJsonLd,
+  websiteJsonLd,
+} from "@/core/seo/json-ld";
 import { TAX_DATA_FRESHNESS } from "@/core/tax-data/freshness";
 
 const initialInput: RothConversionInput = {
@@ -105,6 +112,14 @@ export default function HomePage() {
     <main className="mx-auto grid w-full max-w-7xl gap-8 overflow-x-clip px-4 py-6 sm:px-6 lg:px-8">
       <script
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationJsonLd()) }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageWebPageJsonLd()) }}
         type="application/ld+json"
       />
       {isFeatureEnabled("homepage-howto-structured-data") ? (
