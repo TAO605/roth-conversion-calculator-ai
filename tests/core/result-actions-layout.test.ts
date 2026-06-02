@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 describe("result actions layout", () => {
   it("keeps result actions responsive as the action set grows", () => {
-    const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
     const actionsIndex = source.indexOf('aria-label="Result actions"');
     const shareIndex = source.indexOf("<ShareResultButton input={input} />");
     const reportIndex = source.indexOf("<PdfReportButton input={input} result={result} />");

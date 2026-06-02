@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.109",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Homepage calculator client island",
+    summary:
+      "Converted the homepage back to a server component and moved the interactive calculator workflow into a dedicated HomeCalculatorClient island, keeping JSON-LD, navigation, source copy, FAQ, and footer content server-rendered while reducing first-load JavaScript.",
+    affectedArea:
+      "Homepage rendering architecture, Core Web Vitals readiness, client bundle size, structured-data rendering, calculator interactivity, and PageSpeed follow-up optimization",
+    rollbackPath:
+      "Move the HomeCalculatorClient content back into src/app/page.tsx with the previous use client boundary, remove src/app/HomeCalculatorClient.tsx, and revert the related tests, release note, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.108",
     date: "2026-06-02",
     type: "patch",

@@ -58,3 +58,4 @@
 - [done] Add blog publication manifest validator command
 - [done] Add mobile Lighthouse performance evidence to SEO artifacts
 - [done] Split below-the-fold homepage UI from the first-load bundle
+- [done] Move interactive homepage calculator into a client island

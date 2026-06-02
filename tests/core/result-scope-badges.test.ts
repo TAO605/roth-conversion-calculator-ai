@@ -19,7 +19,7 @@ describe("result scope badges", () => {
   });
 
   it("places result scope before the primary result summary", () => {
-    const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
     const scopeIndex = source.indexOf("<ResultScopeBadges");
     const summaryIndex = source.indexOf("<ResultSummary result={result} />");
     const warningIndex = source.indexOf("<TaxImpactWarnings input={input} result={result} />");

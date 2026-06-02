@@ -55,9 +55,11 @@ describe("GA4 analytics", () => {
   it("mounts GA and calculator event beacons through the app shell", () => {
     const layout = fs.readFileSync(path.join(process.cwd(), "src/app/layout.tsx"), "utf8");
     const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const calculatorClient = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
     expect(layout).toContain("GoogleAnalytics");
-    expect(homePage).toContain("CalculatorAnalyticsBeacon");
-    expect(homePage).toContain('isFeatureEnabled("privacy-safe-analytics")');
+    expect(homePage).toContain("HomeCalculatorClient");
+    expect(calculatorClient).toContain("CalculatorAnalyticsBeacon");
+    expect(calculatorClient).toContain('isFeatureEnabled("privacy-safe-analytics")');
   });
 });

@@ -523,3 +523,29 @@ Run targeted GSC evidence, sitemap, release, and feature tests; full tests; buil
 **Future trigger words:**
 
 sitemap freshness regression, stale lastmod, GSC evidence lastmod, priority URL freshness, Search Console sitemap proof.
+
+## 2026-06-02 - Playwright Must Avoid Stale Port Reuse
+
+**Symptom:**
+
+Homepage E2E failed after the calculator client-island split because Playwright reused an existing `127.0.0.1:3000` server from a different project, so the accessibility snapshot showed an unrelated organic supplier site.
+
+**Root cause:**
+
+The Playwright config hard-coded port `3000` with `reuseExistingServer: true`, which is convenient locally but unsafe when another app already occupies the default port.
+
+**Fix:**
+
+Added `PLAYWRIGHT_PORT` support to `playwright.config.ts` and validated the homepage smoke on an isolated port. Updated stale homepage assertions to match current compliant copy and user-like number replacement behavior.
+
+**Guard:**
+
+Run E2E with an explicit clean port when validating release work, for example `$env:PLAYWRIGHT_PORT='3107'; npx playwright test tests/e2e/home.spec.ts`.
+
+**Validation:**
+
+Desktop and mobile homepage E2E passed on the isolated port, followed by full `npm test` and `npm run build`.
+
+**Future trigger words:**
+
+Playwright wrong app, stale localhost, port collision, E2E snapshot mismatch, homepage smoke false failure.

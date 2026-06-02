@@ -63,7 +63,7 @@ describe("professional handoff packet", () => {
   });
 
   it("mounts the packet action in the homepage results actions", () => {
-    const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
     expect(source).toContain("CopyProfessionalHandoffButton");
     expect(source.indexOf("<CopyProfessionalHandoffButton input={input} result={result} />")).toBeGreaterThan(

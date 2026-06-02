@@ -5,34 +5,32 @@ import path from "node:path";
 describe("homepage performance boundaries", () => {
   it("lazy-loads non-critical homepage modules instead of statically bundling them", () => {
     const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const calculatorClient = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
-    expect(homePage).toContain('from "next/dynamic"');
-    expect(homePage).toContain("LazyPanelFallback");
-    expect(homePage).toMatch(/dynamic<[\s\S]+import\("@\/features\/charts\/ProjectionChart"\)/);
-    expect(homePage).toMatch(/dynamic<[\s\S]+import\("@\/features\/ai-assistant\/AiExplainer"\)/);
-    expect(homePage).toMatch(/dynamic<[\s\S]+import\("@\/features\/calculation-breakdown\/CalculationBreakdown"\)/);
-    expect(homePage).toMatch(/dynamic[\s\S]+import\("@\/features\/faq\/FaqSection"\)/);
-    expect(homePage).toMatch(/dynamic<[\s\S]+import\("@\/features\/pdf-report\/PdfReportButton"\)/);
-    expect(homePage).toMatch(/dynamic<[\s\S]+import\("@\/features\/tax-data-freshness\/TaxDataFreshnessCard"\)/);
-    expect(homePage).toMatch(/dynamic<[\s\S]+import\("@\/features\/analytics\/CalculatorAnalyticsBeacon"\)/);
+    expect(homePage).not.toContain('"use client"');
+    expect(homePage).toContain("HomeCalculatorClient");
+    expect(calculatorClient).toContain('"use client"');
+    expect(calculatorClient).toContain('from "next/dynamic"');
+    expect(calculatorClient).toContain("LazyPanelFallback");
+    expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/charts\/ProjectionChart"\)/);
+    expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/ai-assistant\/AiExplainer"\)/);
+    expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/calculation-breakdown\/CalculationBreakdown"\)/);
+    expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/pdf-report\/PdfReportButton"\)/);
+    expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/analytics\/CalculatorAnalyticsBeacon"\)/);
 
-    expect(homePage).not.toContain('import { ProjectionChart } from "@/features/charts/ProjectionChart"');
-    expect(homePage).not.toContain('import { AiExplainer } from "@/features/ai-assistant/AiExplainer"');
-    expect(homePage).not.toContain('import { CalculationBreakdown } from "@/features/calculation-breakdown/CalculationBreakdown"');
-    expect(homePage).not.toContain('import { FaqSection } from "@/features/faq/FaqSection"');
-    expect(homePage).not.toContain('import { PdfReportButton } from "@/features/pdf-report/PdfReportButton"');
-    expect(homePage).not.toContain('import { TaxDataFreshnessCard } from "@/features/tax-data-freshness/TaxDataFreshnessCard"');
-    expect(homePage).not.toContain('import { CalculatorAnalyticsBeacon } from "@/features/analytics/CalculatorAnalyticsBeacon"');
+    expect(calculatorClient).not.toContain('import { ProjectionChart } from "@/features/charts/ProjectionChart"');
+    expect(calculatorClient).not.toContain('import { AiExplainer } from "@/features/ai-assistant/AiExplainer"');
+    expect(calculatorClient).not.toContain('import { CalculationBreakdown } from "@/features/calculation-breakdown/CalculationBreakdown"');
+    expect(calculatorClient).not.toContain('import { PdfReportButton } from "@/features/pdf-report/PdfReportButton"');
+    expect(calculatorClient).not.toContain('import { CalculatorAnalyticsBeacon } from "@/features/analytics/CalculatorAnalyticsBeacon"');
   });
 
   it("uses size-stable lazy fallbacks for below-the-fold modules", () => {
-    const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const calculatorClient = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
-    expect(homePage).toContain('className="min-h-[17rem]" label="Loading projection..."');
-    expect(homePage).toContain('className="min-h-[24rem]" label="Loading AI helper..."');
-    expect(homePage).toContain('className="min-h-[18rem]" label="Loading calculation details..."');
-    expect(homePage).toContain('className="min-h-[14rem]" label="Loading FAQ..."');
-    expect(homePage).toContain('className="min-h-[11rem]" label="Loading tax data status..."');
+    expect(calculatorClient).toContain('className="min-h-[17rem]" label="Loading projection..."');
+    expect(calculatorClient).toContain('className="min-h-[24rem]" label="Loading AI helper..."');
+    expect(calculatorClient).toContain('className="min-h-[18rem]" label="Loading calculation details..."');
   });
 
   it("keeps FAQ structured data available without statically bundling FAQ UI", () => {

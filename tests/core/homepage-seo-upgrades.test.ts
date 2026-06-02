@@ -34,7 +34,10 @@ describe("homepage SEO and UX upgrades", () => {
   });
 
   it("keeps the homepage navigation focused while preserving crawlable secondary links", () => {
-    const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const source = [
+      fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8"),
+      fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8"),
+    ].join("\n");
 
     const navSource = source.slice(source.indexOf("<nav"), source.indexOf("</nav>"));
 
@@ -60,10 +63,14 @@ describe("homepage SEO and UX upgrades", () => {
   });
 
   it("keeps homepage semantic landmarks explicit for crawlers and assistive technology", () => {
-    const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const pageSource = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+    const source = [
+      pageSource,
+      fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8"),
+    ].join("\n");
 
-    expect(source.match(/<main\b/g)).toHaveLength(1);
-    expect(source.match(/<h1\b/g)).toHaveLength(1);
+    expect(pageSource.match(/<main\b/g)).toHaveLength(1);
+    expect(pageSource.match(/<h1\b/g)).toHaveLength(1);
     expect(source).toContain('aria-label="Primary navigation"');
     expect(source).toContain('aria-label="Roth conversion calculator"');
     expect(source).toContain('aria-labelledby="calculator-inputs-heading"');

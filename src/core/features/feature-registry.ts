@@ -226,13 +226,14 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "homepage-lazy-loading",
     label: "Homepage lazy loading for non-critical modules",
-    version: "1.0.108",
+    version: "1.0.109",
     layer: "common",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/app/page.tsx",
-    rollbackPath: "Replace dynamic imports with the previous static imports in the homepage and move FAQ items back into FaqSection if needed.",
+    rollbackPath:
+      "Move HomeCalculatorClient content back into src/app/page.tsx with the previous use client boundary, restore static imports if needed, and move FAQ items back into FaqSection if needed.",
   },
   {
     id: "glossary-hub",
