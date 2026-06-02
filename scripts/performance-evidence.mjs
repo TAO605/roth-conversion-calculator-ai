@@ -80,24 +80,84 @@ function topItems(items, sortKey, mapItem, limit = 5) {
     .map(mapItem);
 }
 
+function classifyUrl(url) {
+  if (!url) {
+    return "unknown";
+  }
+
+  if (url === "Unattributable") {
+    return "unattributable";
+  }
+
+  if (url === targetUrl || url === `${targetUrl}/`) {
+    return "homepageDocument";
+  }
+
+  if (url.includes("/_next/static/chunks/")) {
+    return "nextChunk";
+  }
+
+  if (url.startsWith(targetUrl)) {
+    return "firstPartyOther";
+  }
+
+  return "thirdParty";
+}
+
+function addAttribution(groups, groupName, durationMs) {
+  if (typeof durationMs !== "number" || durationMs <= 0) {
+    return;
+  }
+
+  const current = groups.get(groupName) ?? { count: 0, durationMs: 0 };
+  groups.set(groupName, {
+    count: current.count + 1,
+    durationMs: current.durationMs + durationMs,
+  });
+}
+
+function summarizeAttribution(longTasks, scriptBootup) {
+  const groups = new Map();
+
+  for (const task of longTasks) {
+    addAttribution(groups, classifyUrl(task.url), task.durationMs);
+  }
+
+  for (const script of scriptBootup) {
+    addAttribution(groups, classifyUrl(script.url), script.totalMs);
+  }
+
+  return Array.from(groups.entries())
+    .map(([group, summary]) => ({
+      count: summary.count,
+      durationMs: roundMetric(summary.durationMs),
+      group,
+    }))
+    .sort((a, b) => b.durationMs - a.durationMs);
+}
+
 function summarizeTbtDiagnostics(audits) {
-  return {
-    longTasks: topItems(auditItems(audits, "long-tasks"), "duration", (item) => ({
+  const longTasks = topItems(auditItems(audits, "long-tasks"), "duration", (item) => ({
       durationMs: roundMetric(item.duration),
       startTimeMs: roundMetric(item.startTime),
       url: item.url || "",
-    })),
+    }));
+  const scriptBootup = topItems(auditItems(audits, "bootup-time"), "total", (item) => ({
+      parseCompileMs: roundMetric(item.scriptParseCompile),
+      scriptingMs: roundMetric(item.scripting),
+      totalMs: roundMetric(item.total),
+      url: item.url || "",
+    }));
+
+  return {
+    attributionSummary: summarizeAttribution(longTasks, scriptBootup),
+    longTasks,
     mainThreadWork: topItems(auditItems(audits, "mainthread-work-breakdown"), "duration", (item) => ({
       durationMs: roundMetric(item.duration),
       group: item.group || "",
       groupLabel: item.groupLabel || "",
     })),
-    scriptBootup: topItems(auditItems(audits, "bootup-time"), "total", (item) => ({
-      parseCompileMs: roundMetric(item.scriptParseCompile),
-      scriptingMs: roundMetric(item.scripting),
-      totalMs: roundMetric(item.total),
-      url: item.url || "",
-    })),
+    scriptBootup,
     thirdPartyMainThread: topItems(auditItems(audits, "third-party-summary"), "mainThreadTime", (item) => ({
       blockingTimeMs: roundMetric(item.blockingTime),
       entity: item.entity || "",

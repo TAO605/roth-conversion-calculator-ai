@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.118",
+    date: "2026-06-02",
+    type: "patch",
+    title: "First-party TBT attribution",
+    summary:
+      "Added a compact attribution summary to mobile performance evidence so long tasks and script bootup are grouped by homepage document, Next.js chunks, first-party resources, third-party resources, or unattributable work.",
+    affectedArea:
+      "Mobile Lighthouse evidence, first-party TBT triage, GitHub Actions SEO artifacts, Core Web Vitals operations, and PageSpeed follow-up optimization",
+    rollbackPath:
+      "Remove attributionSummary, classifyUrl, addAttribution, and summarizeAttribution from scripts/performance-evidence.mjs, remove attributionSummary validation, then revert the related tests, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.117",
     date: "2026-06-02",
     type: "patch",

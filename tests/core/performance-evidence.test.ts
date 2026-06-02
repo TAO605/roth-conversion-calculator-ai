@@ -24,6 +24,10 @@ describe("mobile performance evidence", () => {
     expect(script).toContain("reviewTriggers");
     expect(script).toContain("reviewSummary");
     expect(script).toContain("tbtDiagnostics");
+    expect(script).toContain("attributionSummary");
+    expect(script).toContain("homepageDocument");
+    expect(script).toContain("nextChunk");
+    expect(script).toContain("unattributable");
     expect(script).toContain("long-tasks");
     expect(script).toContain("mainthread-work-breakdown");
     expect(script).toContain("bootup-time");
