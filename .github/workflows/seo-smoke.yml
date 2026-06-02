@@ -23,6 +23,7 @@ jobs:
     env:
       SEO_SMOKE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
       GSC_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
+      PERFORMANCE_EVIDENCE_URL: https://www.roth-conversion-calculator-ai.shop
       STRUCTURED_DATA_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
       BLOG_DISCOVERY_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
 
@@ -49,6 +50,9 @@ jobs:
       - name: Run GSC priority URL evidence check
         run: node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json
 
+      - name: Run mobile performance evidence check
+        run: node scripts/performance-evidence.mjs | tee performance-evidence-result.json
+
       - name: Run structured data evidence check
         run: node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json
 
@@ -69,6 +73,7 @@ jobs:
           path: |
             seo-smoke-result.json
             gsc-evidence-result.json
+            performance-evidence-result.json
             structured-data-evidence-result.json
             blog-discovery-evidence-result.json
             seo-evidence-validation-result.json

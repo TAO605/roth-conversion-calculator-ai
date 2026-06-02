@@ -14,6 +14,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain('cron: "17 9 * * *"');
     expect(workflow).toContain("SEO_SMOKE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("GSC_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
+    expect(workflow).toContain("PERFORMANCE_EVIDENCE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("STRUCTURED_DATA_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("BLOG_DISCOVERY_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("uses: actions/checkout@v6");
@@ -23,6 +24,8 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("sleep 90");
     expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");
     expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
+    expect(workflow).toContain("Run mobile performance evidence check");
+    expect(workflow).toContain("node scripts/performance-evidence.mjs | tee performance-evidence-result.json");
     expect(workflow).toContain("Run structured data evidence check");
     expect(workflow).toContain("node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json");
     expect(workflow).toContain("Run blog discovery evidence check");
@@ -39,6 +42,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("name: production-seo-evidence");
     expect(workflow).toContain("seo-smoke-result.json");
     expect(workflow).toContain("gsc-evidence-result.json");
+    expect(workflow).toContain("performance-evidence-result.json");
     expect(workflow).toContain("structured-data-evidence-result.json");
     expect(workflow).toContain("blog-discovery-evidence-result.json");
     expect(workflow).toContain("seo-evidence-validation-result.json");

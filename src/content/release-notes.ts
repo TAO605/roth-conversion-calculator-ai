@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.107",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Mobile performance evidence guard",
+    summary:
+      "Added a Lighthouse-backed mobile performance evidence command and retained CI artifact file so PageSpeed-style regression checks cover performance score, SEO score, LCP, TBT, and CLS alongside existing production SEO evidence.",
+    affectedArea:
+      "PageSpeed follow-up workflow, mobile Lighthouse lab evidence, production SEO evidence artifacts, CI performance regression checks, and Core Web Vitals operations",
+    rollbackPath:
+      "Remove scripts/performance-evidence.mjs, the seo:performance package script, the workflow performance evidence step and artifact file, the validator and manifest references, and the related tests, release note, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.106",
     date: "2026-06-02",
     type: "patch",

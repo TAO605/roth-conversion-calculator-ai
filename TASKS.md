@@ -56,3 +56,4 @@
 - [done] Add retained output support to final blog publication validator
 - [done] Add blog publication evidence manifest command
 - [done] Add blog publication manifest validator command
+- [done] Add mobile Lighthouse performance evidence to SEO artifacts
