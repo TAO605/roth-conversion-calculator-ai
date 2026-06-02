@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.117",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Deferred GA4 idle loader",
+    summary:
+      "Replaced immediate Next.js GA4 script scheduling with a small dataLayer queue and deferred external gtag.js injection after load, idle time, and a short fallback delay.",
+    affectedArea:
+      "Privacy-safe analytics, third-party script scheduling, mobile TBT readiness, Core Web Vitals operations, and PageSpeed follow-up optimization",
+    rollbackPath:
+      "Restore src/features/analytics/GoogleAnalytics.tsx to use Next.js Script with lazyOnload, remove buildDeferredGtagLoaderScript from src/core/analytics/ga.ts, then revert the related analytics test, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.116",
     date: "2026-06-02",
     type: "patch",

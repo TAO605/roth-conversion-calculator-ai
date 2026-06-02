@@ -1,5 +1,4 @@
-import Script from "next/script";
-import { buildGtagConfigScript, buildGtagScriptSrc, getGaMeasurementId } from "@/core/analytics/ga";
+import { buildDeferredGtagLoaderScript, getGaMeasurementId } from "@/core/analytics/ga";
 
 export function GoogleAnalytics() {
   const measurementId = getGaMeasurementId();
@@ -9,13 +8,9 @@ export function GoogleAnalytics() {
   }
 
   return (
-    <>
-      <Script id="ga4-loader" src={buildGtagScriptSrc(measurementId)} strategy="lazyOnload" />
-      <Script
-        dangerouslySetInnerHTML={{ __html: buildGtagConfigScript(measurementId) }}
-        id="ga4-config"
-        strategy="lazyOnload"
-      />
-    </>
+    <script
+      dangerouslySetInnerHTML={{ __html: buildDeferredGtagLoaderScript(measurementId) }}
+      id="ga4-deferred-loader"
+    />
   );
 }

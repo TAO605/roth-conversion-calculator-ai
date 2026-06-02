@@ -601,3 +601,29 @@ Targeted analytics/performance/evidence tests, full `npm test`, build, productio
 **Future trigger words:**
 
 GA4 TBT, lazyOnload analytics, GTM long task, CI Lighthouse lab noise, scriptBootupTop homepage.
+
+## 2026-06-02 - Defer Third-Party Analytics With A Queue, Not Just Script Strategy
+
+**Symptom:**
+
+Even after GA4 moved to Next.js `lazyOnload`, production Lighthouse diagnostics could still capture `googletagmanager.com` long tasks and script bootup inside the measured window.
+
+**Root cause:**
+
+`lazyOnload` delays the script until after load, but the external third-party script can still start early enough to overlap Lighthouse's performance window and compete with calculator interactivity on slower lab runs.
+
+**Fix:**
+
+Replaced the direct Next.js GA4 script scheduling with a tiny inline dataLayer/gtag queue and deferred external `gtag.js` injection after page load, browser idle time, and a short fallback delay.
+
+**Guard:**
+
+`tests/core/analytics.test.ts` requires `buildDeferredGtagLoaderScript`, `requestIdleCallback`, the load listener, `window.gtag` queueing, and the removal of `next/script` for GA4.
+
+**Validation:**
+
+Targeted analytics/performance/evidence tests, full `npm test`, build, production SEO evidence commands, Vercel deployment, and live homepage marker checks passed. Production Lighthouse returned TBT `67ms` and no `googletagmanager.com` rows in retained long-task or script-bootup diagnostics.
+
+**Future trigger words:**
+
+deferred analytics queue, GA4 idle loader, third-party script TBT, GTM removed from long tasks, analytics script strategy.

@@ -5,6 +5,7 @@ import type { RothConversionInput } from "@/core/calculator/types";
 import { calculateRothConversion } from "@/core/calculator/roth-conversion";
 import {
   buildCalculatorAnalyticsEvent,
+  buildDeferredGtagLoaderScript,
   buildGtagConfigScript,
   buildGtagScriptSrc,
   getGaMeasurementId,
@@ -39,6 +40,10 @@ describe("GA4 analytics", () => {
   it("builds GA4 script assets for the configured measurement ID", () => {
     expect(buildGtagScriptSrc("G-ABC123XYZ9")).toBe("https://www.googletagmanager.com/gtag/js?id=G-ABC123XYZ9");
     expect(buildGtagConfigScript("G-ABC123XYZ9")).toContain("gtag('config','G-ABC123XYZ9'");
+    expect(buildDeferredGtagLoaderScript("G-ABC123XYZ9")).toContain("requestIdleCallback");
+    expect(buildDeferredGtagLoaderScript("G-ABC123XYZ9")).toContain("window.addEventListener('load'");
+    expect(buildDeferredGtagLoaderScript("G-ABC123XYZ9")).toContain("setTimeout(load,3000)");
+    expect(buildDeferredGtagLoaderScript("G-ABC123XYZ9")).toContain("window.gtag=window.gtag||gtag");
   });
 
   it("buckets calculator analytics without exposing exact financial inputs", () => {
@@ -62,7 +67,10 @@ describe("GA4 analytics", () => {
     const calculatorClient = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
     expect(layout).toContain("GoogleAnalytics");
-    expect(googleAnalytics).toContain('strategy="lazyOnload"');
+    expect(googleAnalytics).toContain("buildDeferredGtagLoaderScript");
+    expect(googleAnalytics).toContain("ga4-deferred-loader");
+    expect(googleAnalytics).not.toContain("next/script");
+    expect(googleAnalytics).not.toContain('strategy="lazyOnload"');
     expect(googleAnalytics).not.toContain('strategy="afterInteractive"');
     expect(homePage).toContain("HomeCalculatorClient");
     expect(calculatorClient).toContain("CalculatorAnalyticsBeacon");

@@ -100,6 +100,34 @@ export function buildGtagConfigScript(measurementId: string): string {
   ].join("");
 }
 
+export function buildDeferredGtagLoaderScript(measurementId: string): string {
+  const src = buildGtagScriptSrc(measurementId);
+
+  return [
+    "window.dataLayer=window.dataLayer||[];",
+    "function gtag(){dataLayer.push(arguments);}",
+    "window.gtag=window.gtag||gtag;",
+    "gtag('js',new Date());",
+    `gtag('config','${measurementId}',{send_page_view:true});`,
+    "(function(){",
+    "var loaded=false;",
+    "function load(){",
+    "if(loaded){return;}",
+    "loaded=true;",
+    "var script=document.createElement('script');",
+    "script.async=true;",
+    `script.src='${src}';`,
+    "document.head.appendChild(script);",
+    "}",
+    "function schedule(){",
+    "var run=function(){setTimeout(load,3000);};",
+    "if('requestIdleCallback' in window){window.requestIdleCallback(run,{timeout:5000});}else{setTimeout(run,5000);}",
+    "}",
+    "if(document.readyState==='complete'){schedule();}else{window.addEventListener('load',schedule,{once:true});}",
+    "}());",
+  ].join("");
+}
+
 export function buildCalculatorAnalyticsEvent(
   input: RothConversionInput,
   result: RothConversionResult,

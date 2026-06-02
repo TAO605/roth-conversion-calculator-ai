@@ -7,9 +7,9 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.116",
+      version: "1.0.117",
       type: "patch",
-      title: "Lazy GA4 loading",
+      title: "Deferred GA4 idle loader",
     });
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
