@@ -123,6 +123,12 @@ export function buildPerformanceAuditGroups(): PerformanceAuditGroup[] {
           "Run npm run seo:performance and confirm samplePolicy.attempts retains every Lighthouse attempt, validSamples is at least 1, and selectionStrategy is median-total-blocking-time-valid-seo-sample.",
         ),
         check(
+          "Classify Lighthouse runtime warnings",
+          "Warnings triaged before release",
+          "/performance-audit",
+          "Review warningClassification: none means no runtime warning, chrome-temp-cleanup-warning is non-blocking when a valid report exists, and runtime-warning is blocking until reviewed.",
+        ),
+        check(
           "Archive verification output",
           "Fresh test and build evidence",
           "/release-notes",

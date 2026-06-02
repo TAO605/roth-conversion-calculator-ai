@@ -22,6 +22,7 @@ describe("performance audit playbook", () => {
     expect(labels).toContain("Verify mobile input ergonomics");
     expect(labels).toContain("Compare bundle size after each release");
     expect(labels).toContain("Review multi-sample Lighthouse evidence");
+    expect(labels).toContain("Classify Lighthouse runtime warnings");
     expect(summary.totalChecks).toBeGreaterThanOrEqual(12);
     expect(summary.targetMetrics).toEqual(
       expect.arrayContaining([
@@ -30,11 +31,14 @@ describe("performance audit playbook", () => {
         "CLS under 0.1",
         "Lighthouse SEO over 90",
         "3 samples, median TBT selected",
+        "Warnings triaged before release",
       ]),
     );
-    expect(groups.flatMap((group) => group.checks.map((check) => check.action)).join("\n")).toContain(
-      "median-total-blocking-time-valid-seo-sample",
-    );
+    const actions = groups.flatMap((group) => group.checks.map((check) => check.action)).join("\n");
+    expect(actions).toContain("median-total-blocking-time-valid-seo-sample");
+    expect(actions).toContain("warningClassification");
+    expect(actions).toContain("chrome-temp-cleanup-warning");
+    expect(actions).toContain("runtime-warning");
   });
 
   it("exposes performance audit through sitemap, homepage, site index, and LLM discovery", () => {

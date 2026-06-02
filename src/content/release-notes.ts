@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.122",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Performance warning playbook",
+    summary:
+      "Updated the performance audit playbook so operators can interpret Lighthouse warningClassification values for clean samples, non-blocking Chrome temporary-directory cleanup warnings, and blocking runtime warnings.",
+    affectedArea:
+      "Performance audit playbook, Lighthouse evidence review, PageSpeed follow-up workflow, release regression checks, and lab-warning operations",
+    rollbackPath:
+      "Remove the Lighthouse runtime warning classification check from src/content/performance-audit.ts, then revert the related performance-audit test, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.121",
     date: "2026-06-02",
     type: "patch",
