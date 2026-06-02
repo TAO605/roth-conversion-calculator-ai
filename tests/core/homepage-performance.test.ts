@@ -67,4 +67,18 @@ describe("homepage performance boundaries", () => {
       homePage.indexOf('aria-label="AI calculator workflow"'),
     );
   });
+
+  it("keeps mobile result summary compact before secondary actions", () => {
+    const resultSummary = fs.readFileSync(path.join(process.cwd(), "src/features/result-summary/ResultSummary.tsx"), "utf8");
+    const calculatorClient = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
+
+    expect(resultSummary).toContain("p-3 text-white");
+    expect(resultSummary).toContain("sm:p-4");
+    expect(resultSummary).toContain("text-2xl");
+    expect(resultSummary).toContain("sm:text-3xl");
+    expect(resultSummary).toContain("hidden text-xs");
+    expect(calculatorClient.indexOf("<ResultSummary result={result} />")).toBeLessThan(
+      calculatorClient.indexOf('aria-label="Result actions"'),
+    );
+  });
 });

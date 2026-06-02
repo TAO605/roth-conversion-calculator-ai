@@ -120,36 +120,36 @@ export function HomeCalculatorClient() {
 
         <article aria-label="Roth conversion estimate results" className="grid gap-5">
           <Card>
-            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 sm:mb-5">
               <div>
                 <h2 className="text-2xl font-bold text-neutral-950 dark:text-white" id="calculator-results-heading">Results</h2>
                 <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
                   High-confidence federal estimate with user-estimated state and future assumptions.
                 </p>
               </div>
-              <div
-                aria-label="Result actions"
-                className="grid w-full min-w-0 grid-cols-1 gap-2 sm:w-auto sm:grid-cols-2 xl:flex xl:flex-wrap xl:justify-end [&>button]:w-full xl:[&>button]:w-auto"
-              >
-                <ShareResultButton input={input} />
-                <PdfReportButton input={input} result={result} />
-                <CopyProfessionalHandoffButton input={input} result={result} />
-                <button
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[14px] px-4 py-2 text-sm font-semibold text-systemRed transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-systemRed focus:ring-offset-2 dark:hover:bg-white/10 dark:focus:ring-offset-neutral-950"
-                  onClick={() => {
-                    clearStoredCalculatorInput();
-                    setInput(initialInput);
-                    window.history.replaceState(null, "", window.location.pathname);
-                  }}
-                  type="button"
-                >
-                  <RotateCcw aria-hidden="true" size={16} />
-                  Reset
-                </button>
-              </div>
             </div>
             <ResultScopeBadges taxYear={input.taxYear} />
             <ResultSummary result={result} />
+            <div
+              aria-label="Result actions"
+              className="mt-4 grid w-full min-w-0 grid-cols-2 gap-2 xl:flex xl:flex-wrap xl:justify-end [&>button]:w-full xl:[&>button]:w-auto"
+            >
+              <ShareResultButton input={input} />
+              <PdfReportButton input={input} result={result} />
+              <CopyProfessionalHandoffButton input={input} result={result} />
+              <button
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[14px] px-4 py-2 text-sm font-semibold text-systemRed transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-systemRed focus:ring-offset-2 dark:hover:bg-white/10 dark:focus:ring-offset-neutral-950"
+                onClick={() => {
+                  clearStoredCalculatorInput();
+                  setInput(initialInput);
+                  window.history.replaceState(null, "", window.location.pathname);
+                }}
+                type="button"
+              >
+                <RotateCcw aria-hidden="true" size={16} />
+                Reset
+              </button>
+            </div>
             <div className="mt-4">
               <TaxImpactWarnings input={input} result={result} />
             </div>

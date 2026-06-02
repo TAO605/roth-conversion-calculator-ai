@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.113",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Mobile result density refinement",
+    summary:
+      "Compressed the mobile result summary and moved secondary result actions after the core estimate so small-screen users see the main tax numbers before share, report, CPA packet, and reset controls.",
+    affectedArea:
+      "Homepage mobile result density, calculator result hierarchy, Core Web Vitals readiness, action layout, and PageSpeed follow-up optimization",
+    rollbackPath:
+      "Restore ResultSummary mobile padding, text sizing, and explanatory text visibility, move result actions back into the result header area in HomeCalculatorClient, then revert the related tests, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.112",
     date: "2026-06-02",
     type: "patch",
