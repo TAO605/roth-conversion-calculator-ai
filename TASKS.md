@@ -60,3 +60,4 @@
 - [done] Split below-the-fold homepage UI from the first-load bundle
 - [done] Move interactive homepage calculator into a client island
 - [done] Simplify mobile homepage background paint for LCP stability
+- [done] Reduce mobile glass effects on first-paint card and navigation surfaces

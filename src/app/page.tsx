@@ -50,7 +50,7 @@ export default function HomePage() {
       <header className="grid w-full min-w-0 max-w-full gap-4 pt-4">
         <nav
           aria-label="Primary navigation"
-          className="flex w-full min-w-0 flex-col items-start justify-between gap-3 rounded-[18px] bg-white/65 px-4 py-3 text-sm shadow-sm backdrop-blur-xl dark:bg-white/10 sm:flex-row sm:items-center"
+          className="flex w-full min-w-0 flex-col items-start justify-between gap-3 rounded-[18px] bg-white/75 px-4 py-3 text-sm shadow-sm backdrop-blur-none dark:bg-white/10 sm:flex-row sm:items-center sm:bg-white/65 sm:backdrop-blur-xl"
         >
           <Link className="shrink-0 font-semibold text-neutral-950 dark:text-white" href="/">
             RothCalc

@@ -49,4 +49,14 @@ describe("homepage performance boundaries", () => {
     expect(mobileBlock).toContain("linear-gradient");
     expect(mobileBlock).not.toContain("radial-gradient");
   });
+
+  it("keeps mobile glass effects out of the first-paint path", () => {
+    const card = fs.readFileSync(path.join(process.cwd(), "src/common/ui/card.tsx"), "utf8");
+    const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+
+    expect(card).toContain("shadow-sm backdrop-blur-none");
+    expect(card).toContain("sm:shadow-material sm:backdrop-blur-xl");
+    expect(homePage).toContain("shadow-sm backdrop-blur-none");
+    expect(homePage).toContain("sm:backdrop-blur-xl");
+  });
 });

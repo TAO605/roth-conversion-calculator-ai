@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.111",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Mobile glass paint reduction",
+    summary:
+      "Reduced small-screen first-paint work by disabling backdrop blur and heavy material shadows on the shared card surface and primary navigation until the sm breakpoint, while preserving the desktop glass treatment.",
+    affectedArea:
+      "Homepage mobile rendering, shared card surface, primary navigation, Core Web Vitals readiness, LCP stability, and PageSpeed follow-up optimization",
+    rollbackPath:
+      "Restore the shared Card and homepage primary navigation classes to always use shadow-material and backdrop-blur-xl, then revert the related performance test, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.110",
     date: "2026-06-02",
     type: "patch",
