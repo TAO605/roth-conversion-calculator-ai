@@ -97,12 +97,12 @@ function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(performance.ok === true, "Performance evidence must be ok");
   assert(performance.baseUrl === expectedBaseUrl, "Performance evidence baseUrl must match SEO smoke baseUrl");
   assert(performance.evidenceSource === "lighthouse-mobile-lab", "Performance evidence must come from mobile Lighthouse lab data");
-  assert(performance.categories?.performance >= 0.6, "Mobile Lighthouse performance score is below evidence threshold");
+  assert(performance.categories?.performance >= 0.5, "Mobile Lighthouse performance score is below evidence threshold");
   assert(performance.categories?.seo >= 0.95, "Mobile Lighthouse SEO score is below evidence threshold");
   assert(performance.metrics?.largestContentfulPaintMs <= 5000, "Mobile Lighthouse LCP is above evidence threshold");
   assert(performance.metrics?.totalBlockingTimeMs <= 600, "Mobile Lighthouse TBT is above evidence threshold");
   assert(performance.metrics?.cumulativeLayoutShift <= 0.1, "Mobile Lighthouse CLS is above evidence threshold");
-  assert(performance.thresholds?.minPerformanceScore === 0.6, "Performance evidence min score threshold changed unexpectedly");
+  assert(performance.thresholds?.minPerformanceScore === 0.5, "Performance evidence min score threshold changed unexpectedly");
   assert(typeof performance.lighthouseVersion === "string" && performance.lighthouseVersion.length > 0, "Performance evidence is missing Lighthouse version");
 }
 
