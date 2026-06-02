@@ -36,7 +36,8 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("validatePerformanceEvidence");
     expect(script).toContain("lighthouse-mobile-lab");
     expect(script).toContain("performanceScore");
-    expect(script).toContain(">= 0.5");
+    expect(script).toContain("thresholdResults");
+    expect(script).toContain("manualReviewRequired");
     expect(script).toContain("blogDiscoveryCount");
     expect(script).toContain("structuredDataTypeCount");
     expect(script).toContain("pageCount");

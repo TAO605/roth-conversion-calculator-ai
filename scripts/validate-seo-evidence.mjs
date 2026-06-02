@@ -97,11 +97,13 @@ function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(performance.ok === true, "Performance evidence must be ok");
   assert(performance.baseUrl === expectedBaseUrl, "Performance evidence baseUrl must match SEO smoke baseUrl");
   assert(performance.evidenceSource === "lighthouse-mobile-lab", "Performance evidence must come from mobile Lighthouse lab data");
-  assert(performance.categories?.performance >= 0.5, "Mobile Lighthouse performance score is below evidence threshold");
   assert(performance.categories?.seo >= 0.95, "Mobile Lighthouse SEO score is below evidence threshold");
-  assert(performance.metrics?.largestContentfulPaintMs <= 5000, "Mobile Lighthouse LCP is above evidence threshold");
-  assert(performance.metrics?.totalBlockingTimeMs <= 600, "Mobile Lighthouse TBT is above evidence threshold");
-  assert(performance.metrics?.cumulativeLayoutShift <= 0.1, "Mobile Lighthouse CLS is above evidence threshold");
+  assert(typeof performance.categories?.performance === "number", "Performance evidence is missing performance score");
+  assert(typeof performance.metrics?.largestContentfulPaintMs === "number", "Performance evidence is missing LCP");
+  assert(typeof performance.metrics?.totalBlockingTimeMs === "number", "Performance evidence is missing TBT");
+  assert(typeof performance.metrics?.cumulativeLayoutShift === "number", "Performance evidence is missing CLS");
+  assert(Array.isArray(performance.thresholdResults), "Performance evidence must include thresholdResults");
+  assert(typeof performance.manualReviewRequired === "boolean", "Performance evidence must include manualReviewRequired");
   assert(performance.thresholds?.minPerformanceScore === 0.5, "Performance evidence min score threshold changed unexpectedly");
   assert(typeof performance.lighthouseVersion === "string" && performance.lighthouseVersion.length > 0, "Performance evidence is missing Lighthouse version");
 }

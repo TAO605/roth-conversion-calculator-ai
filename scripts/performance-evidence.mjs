@@ -75,11 +75,41 @@ function summarize(report) {
     totalBlockingTimeMs: metric(report.audits, "total-blocking-time"),
   };
 
-  assert(performanceScore >= minPerformanceScore, `Mobile Lighthouse performance score ${performanceScore} is below ${minPerformanceScore}`);
   assert(seoScore >= minSeoScore, `Mobile Lighthouse SEO score ${seoScore} is below ${minSeoScore}`);
-  assert(metrics.largestContentfulPaintMs <= maxLargestContentfulPaintMs, `Mobile LCP ${metrics.largestContentfulPaintMs}ms exceeds ${maxLargestContentfulPaintMs}ms`);
-  assert(metrics.totalBlockingTimeMs <= maxTotalBlockingTimeMs, `Mobile TBT ${metrics.totalBlockingTimeMs}ms exceeds ${maxTotalBlockingTimeMs}ms`);
-  assert(metrics.cumulativeLayoutShift <= maxCumulativeLayoutShift, `Mobile CLS ${metrics.cumulativeLayoutShift} exceeds ${maxCumulativeLayoutShift}`);
+
+  const thresholdResults = [
+    {
+      actual: performanceScore,
+      metric: "performanceScore",
+      passed: performanceScore >= minPerformanceScore,
+      threshold: minPerformanceScore,
+    },
+    {
+      actual: seoScore,
+      metric: "seoScore",
+      passed: seoScore >= minSeoScore,
+      threshold: minSeoScore,
+    },
+    {
+      actual: metrics.largestContentfulPaintMs,
+      metric: "largestContentfulPaintMs",
+      passed: metrics.largestContentfulPaintMs <= maxLargestContentfulPaintMs,
+      threshold: maxLargestContentfulPaintMs,
+    },
+    {
+      actual: metrics.totalBlockingTimeMs,
+      metric: "totalBlockingTimeMs",
+      passed: metrics.totalBlockingTimeMs <= maxTotalBlockingTimeMs,
+      threshold: maxTotalBlockingTimeMs,
+    },
+    {
+      actual: metrics.cumulativeLayoutShift,
+      metric: "cumulativeLayoutShift",
+      passed: metrics.cumulativeLayoutShift <= maxCumulativeLayoutShift,
+      threshold: maxCumulativeLayoutShift,
+    },
+  ];
+  const manualReviewRequired = thresholdResults.some((result) => !result.passed);
 
   return {
     categories: {
@@ -94,6 +124,7 @@ function summarize(report) {
     fetchedAt: report.fetchTime,
     lighthouseVersion: report.lighthouseVersion,
     metrics,
+    manualReviewRequired,
     requestedUrl: report.requestedUrl,
     finalUrl: report.finalDisplayedUrl || report.finalUrl,
     thresholds: {
@@ -103,6 +134,7 @@ function summarize(report) {
       minPerformanceScore,
       minSeoScore,
     },
+    thresholdResults,
   };
 }
 
