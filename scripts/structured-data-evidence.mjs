@@ -1,8 +1,12 @@
+import fs from "node:fs";
+import path from "node:path";
+
 const DEFAULT_BASE_URL = "https://www.roth-conversion-calculator-ai.shop";
 const baseUrl = (process.env.STRUCTURED_DATA_EVIDENCE_BASE_URL || DEFAULT_BASE_URL).replace(/\/+$/, "");
+const BLOG_SOURCE_PATH = path.join(process.cwd(), "src/content/blog.ts");
 
 const homepagePath = "/";
-const monitoredPages = [
+const staticMonitoredPages = [
   {
     path: "/",
     requiredTypes: ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization", "FAQPage"],
@@ -83,58 +87,6 @@ const monitoredPages = [
     path: "/roth-conversion-timeline",
     requiredTypes: ["BreadcrumbList", "WebPage"],
   },
-  {
-    path: "/blog/what-is-a-roth-conversion-2026",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/is-a-roth-conversion-worth-it",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/roth-conversion-5-year-rule",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/roth-conversion-taxes",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/backdoor-roth-conversion-guide",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/roth-conversion-tax-brackets-2026",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/roth-conversion-state-taxes",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/roth-conversion-break-even",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/paying-roth-conversion-taxes",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/roth-conversion-pro-rata-rule",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/roth-conversion-before-retirement",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/roth-conversion-after-retirement",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
-  {
-    path: "/blog/multi-year-roth-conversion-planning",
-    requiredTypes: ["Article", "BreadcrumbList"],
-  },
 ];
 const forbiddenKeyPattern = /^(aggregateRating|review|reviewRating|ratingValue|reviewCount)$/i;
 const forbiddenTextPattern = /optimal conversion amount|hidden fees|100%\s+accurate|guaranteed|voiceInput|voiceOutput/gi;
@@ -143,6 +95,23 @@ function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
   }
+}
+
+function readBlogArticlePages() {
+  const source = fs.readFileSync(BLOG_SOURCE_PATH, "utf8");
+  const slugs = [...source.matchAll(/\bslug:\s*"([^"]+)"/g)].map((match) => match[1]);
+  const uniqueSlugs = Array.from(new Set(slugs));
+
+  assert(uniqueSlugs.length > 0, "Blog source did not expose any slugs for structured data evidence");
+
+  return uniqueSlugs.map((slug) => ({
+    path: `/blog/${slug}`,
+    requiredTypes: ["Article", "BreadcrumbList"],
+  }));
+}
+
+function buildMonitoredPages() {
+  return [...staticMonitoredPages, ...readBlogArticlePages()];
 }
 
 async function fetchPage(pathname) {
@@ -264,6 +233,7 @@ async function inspectPage(page) {
 
 async function run() {
   const pages = [];
+  const monitoredPages = buildMonitoredPages();
 
   for (const page of monitoredPages) {
     pages.push(await inspectPage(page));

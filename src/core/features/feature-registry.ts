@@ -159,7 +159,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "seo-structured-content",
     label: "Article, breadcrumb, and long-tail content matrix",
-    version: "1.0.99",
+    version: "1.0.100",
     layer: "content",
     enabled: true,
     locked: false,

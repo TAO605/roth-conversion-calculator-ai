@@ -1,8 +1,11 @@
 import fs from "node:fs";
+import path from "node:path";
 
 const DEFAULT_SMOKE_PATH = "seo-smoke-result.json";
 const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
+const BLOG_SOURCE_PATH = path.join(process.cwd(), "src/content/blog.ts");
+const STATIC_STRUCTURED_DATA_PAGE_COUNT = 20;
 const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
 const structuredDataPath = process.argv[4] || DEFAULT_STRUCTURED_DATA_PATH;
@@ -30,6 +33,16 @@ function readJson(filePath) {
   assert(raw.startsWith("{") && raw.endsWith("}"), `${filePath} must contain a single JSON object`);
 
   return JSON.parse(raw);
+}
+
+function readBlogSlugCount() {
+  const source = fs.readFileSync(BLOG_SOURCE_PATH, "utf8");
+  const slugs = [...source.matchAll(/\bslug:\s*"([^"]+)"/g)].map((match) => match[1]);
+  const uniqueSlugs = Array.from(new Set(slugs));
+
+  assert(uniqueSlugs.length > 0, "Blog source did not expose any slugs for SEO evidence validation");
+
+  return uniqueSlugs.length;
 }
 
 function findResult(results, key, value) {
@@ -74,10 +87,15 @@ function validateGscEvidence(gsc, expectedBaseUrl) {
 }
 
 function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
+  const expectedStructuredDataPageCount = STATIC_STRUCTURED_DATA_PAGE_COUNT + readBlogSlugCount();
+
   assert(structuredData.ok === true, "Structured data evidence must be ok");
   assert(structuredData.baseUrl === expectedBaseUrl, "Structured data evidence baseUrl must match SEO smoke baseUrl");
   assert(structuredData.jsonLdScriptCount >= 6, "Structured data evidence must include homepage JSON-LD scripts");
-  assert(structuredData.pageCount >= 33, "Structured data evidence must include priority content and blog pages");
+  assert(
+    structuredData.pageCount >= expectedStructuredDataPageCount,
+    `Structured data evidence must include at least ${expectedStructuredDataPageCount} priority content and blog pages`,
+  );
   assert(Array.isArray(structuredData.pages), "Structured data evidence pages must be an array");
   assert(Array.isArray(structuredData.types), "Structured data evidence types must be an array");
   assert(Array.isArray(structuredData.forbiddenKeys), "Structured data forbiddenKeys must be an array");

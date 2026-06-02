@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.100",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Dynamic blog structured-data evidence",
+    summary:
+      "Changed production structured-data evidence from a hand-maintained blog path list to a source-driven blog slug reader so future blog posts are automatically required to expose Article and BreadcrumbList JSON-LD in retained SEO evidence.",
+    affectedArea:
+      "Blog Article schema monitoring, production structured-data evidence, SEO artifact validation, future blog publishing automation, and source-driven release governance",
+    rollbackPath:
+      "Restore the explicit blog path list in scripts/structured-data-evidence.mjs, remove the blog slug reader from the structured-data evidence validator, and revert the related tests, documentation, release note, and feature registry version.",
+  },
+  {
     version: "1.0.99",
     date: "2026-06-02",
     type: "patch",

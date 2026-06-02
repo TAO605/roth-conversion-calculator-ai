@@ -49,3 +49,4 @@
 - [done] Add blog YMYL language hard guard to publication readiness
 - [done] Add blog internal and official source link hard guards
 - [done] Add blog Article structured-data evidence to production SEO artifacts
+- [done] Make blog Article structured-data evidence source-driven

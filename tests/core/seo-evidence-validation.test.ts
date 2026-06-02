@@ -30,7 +30,9 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("validateStructuredDataEvidence");
     expect(script).toContain("structuredDataTypeCount");
     expect(script).toContain("pageCount");
-    expect(script).toContain("pageCount >= 33");
+    expect(script).toContain("STATIC_STRUCTURED_DATA_PAGE_COUNT");
+    expect(script).toContain("readBlogSlugCount");
+    expect(script).toContain("expectedStructuredDataPageCount");
     expect(script).toContain("/roth-conversion-irmaa-guide");
     expect(script).toContain("/roth-conversion-aca-premium-tax-credit-guide");
     expect(script).toContain("/roth-conversion-niit-guide");
@@ -66,9 +68,9 @@ describe("SEO evidence artifact validation", () => {
     expect(structuredDataScript).toContain("/cpa-review-checklist");
     expect(structuredDataScript).toContain("/roth-conversion-tax-forms");
     expect(structuredDataScript).toContain("/roth-conversion-timeline");
-    expect(structuredDataScript).toContain("/blog/what-is-a-roth-conversion-2026");
-    expect(structuredDataScript).toContain("/blog/roth-conversion-tax-brackets-2026");
-    expect(structuredDataScript).toContain("/blog/multi-year-roth-conversion-planning");
+    expect(structuredDataScript).toContain("src/content/blog.ts");
+    expect(structuredDataScript).toContain("readBlogArticlePages");
+    expect(structuredDataScript).toContain('path: `/blog/${slug}`');
     expect(structuredDataScript).toContain("Article");
     expect(structuredDataScript).toContain("BreadcrumbList");
     expect(workflow).toContain("Run structured data evidence check");

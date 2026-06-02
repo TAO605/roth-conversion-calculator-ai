@@ -12,6 +12,7 @@ import {
   websiteJsonLd,
 } from "@/core/seo/json-ld";
 import { siteConfig } from "@/core/seo/site-config";
+import { blogPosts } from "@/content/blog";
 
 function walkJson(value: unknown): Array<{ key: string; value: unknown }> {
   if (!value || typeof value !== "object") {
@@ -182,8 +183,10 @@ describe("structured data", () => {
     expect(blogPage).toContain("Open the calculator");
     expect(blogIndex).toContain("Topics");
     expect(statePage).toContain("breadcrumbJsonLd");
-    expect(structuredDataEvidenceScript).toContain("/blog/what-is-a-roth-conversion-2026");
-    expect(structuredDataEvidenceScript).toContain("/blog/multi-year-roth-conversion-planning");
+    expect(blogPosts.length).toBeGreaterThanOrEqual(13);
+    expect(structuredDataEvidenceScript).toContain("src/content/blog.ts");
+    expect(structuredDataEvidenceScript).toContain("readBlogArticlePages");
+    expect(structuredDataEvidenceScript).toContain('path: `/blog/${slug}`');
     expect(structuredDataEvidenceScript).toContain('requiredTypes: ["Article", "BreadcrumbList"]');
   });
 
