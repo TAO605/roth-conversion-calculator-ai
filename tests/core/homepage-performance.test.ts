@@ -41,4 +41,12 @@ describe("homepage performance boundaries", () => {
     expect(homePage).toContain("faqJsonLd(faqItems)");
     expect(faqSection).toContain('import { faqItems } from "@/features/faq/faq-items"');
   });
+
+  it("uses a lighter mobile background paint path for LCP stability", () => {
+    const globalCss = fs.readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
+    const mobileBlock = globalCss.match(/@media \(max-width: 640px\) \{[\s\S]+?\n\}/)?.[0] ?? "";
+
+    expect(mobileBlock).toContain("linear-gradient");
+    expect(mobileBlock).not.toContain("radial-gradient");
+  });
 });

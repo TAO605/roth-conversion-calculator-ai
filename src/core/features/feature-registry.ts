@@ -226,7 +226,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "homepage-lazy-loading",
     label: "Homepage lazy loading for non-critical modules",
-    version: "1.0.109",
+    version: "1.0.110",
     layer: "common",
     enabled: true,
     locked: false,

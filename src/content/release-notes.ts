@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.110",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Mobile LCP paint simplification",
+    summary:
+      "Simplified the mobile homepage background paint path by removing the large radial gradient under the small-screen breakpoint while preserving the desktop visual treatment, reducing mobile render work without changing calculator behavior, structured data, or YMYL copy.",
+    affectedArea:
+      "Homepage mobile rendering, Core Web Vitals readiness, LCP stability, visual background paint, PageSpeed follow-up optimization, and regression tests",
+    rollbackPath:
+      "Remove the max-width 640px background override from src/app/globals.css, revert the homepage performance test, and restore the release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.109",
     date: "2026-06-02",
     type: "patch",

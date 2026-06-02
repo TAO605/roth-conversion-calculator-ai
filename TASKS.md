@@ -59,3 +59,4 @@
 - [done] Add mobile Lighthouse performance evidence to SEO artifacts
 - [done] Split below-the-fold homepage UI from the first-load bundle
 - [done] Move interactive homepage calculator into a client island
+- [done] Simplify mobile homepage background paint for LCP stability
