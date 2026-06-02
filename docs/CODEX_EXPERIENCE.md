@@ -575,3 +575,29 @@ Targeted performance/evidence/release/feature tests, full `npm test`, `npm run b
 **Future trigger words:**
 
 Lighthouse variance, CI TBT spike, manualReviewRequired performance, reviewTriggers missing, performance evidence triage.
+
+## 2026-06-02 - Lazy Analytics Helps Production But Does Not Eliminate CI TBT Variance
+
+**Symptom:**
+
+GA4/GTM appeared in local Lighthouse long-task and script-bootup diagnostics, so the GA4 scripts were moved from `afterInteractive` to `lazyOnload`. Production Lighthouse improved, but a later GitHub Actions run still produced a high TBT manual-review artifact.
+
+**Root cause:**
+
+Third-party analytics can contribute to measured long tasks, but GitHub-hosted Lighthouse runs also show runner-specific TBT variance. In the post-change CI artifact, the top script-bootup row was the homepage document rather than GTM, so the issue was not a simple analytics-only bottleneck.
+
+**Fix:**
+
+Keep GA4 on `lazyOnload` and keep the performance evidence artifact retaining `reviewTriggers`, `reviewSummary`, and `tbtDiagnostics` so reviewers can distinguish production findings from CI lab noise.
+
+**Guard:**
+
+`tests/core/analytics.test.ts` prevents GA4 from regressing to `afterInteractive`, and `scripts/validate-seo-evidence.mjs` requires retained TBT diagnostics in uploaded artifacts.
+
+**Validation:**
+
+Targeted analytics/performance/evidence tests, full `npm test`, build, production SEO evidence commands, Vercel production deployment, and GitHub Actions artifact validation all passed.
+
+**Future trigger words:**
+
+GA4 TBT, lazyOnload analytics, GTM long task, CI Lighthouse lab noise, scriptBootupTop homepage.
