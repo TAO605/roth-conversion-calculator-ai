@@ -131,6 +131,29 @@ describe("blog final publication validation", () => {
     });
   });
 
+  it("writes retained final publication validation evidence when --output is provided", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), `blog-final-output-${randomUUID()}-`));
+    const payload = buildPackage();
+    const outputPath = path.join(dir, "blog-final-publication-result.json");
+    const files = {
+      blogDiscovery: writeJson(dir, "blog-discovery-evidence-result.json", payload.blogDiscovery),
+      readiness: writeJson(dir, "blog-ready-result.json", payload.readiness),
+      smoke: writeJson(dir, "seo-smoke-result.json", payload.smoke),
+      structuredData: writeJson(dir, "structured-data-evidence-result.json", payload.structuredData),
+    };
+
+    const result = runValidator(files, ["--output", outputPath]);
+    const saved = JSON.parse(fs.readFileSync(outputPath, "utf8"));
+
+    expect(result.outputPath).toBe(outputPath);
+    expect(saved).toMatchObject({
+      evidenceType: "blog-final-publication-validation",
+      ok: true,
+      outputPath,
+      path: BLOG_PATH,
+    });
+  });
+
   it("registers the package script and documents the final validation command", () => {
     const packageJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), "package.json"), "utf8")) as {
       scripts: Record<string, string>;
@@ -142,5 +165,6 @@ describe("blog final publication validation", () => {
 
     expect(packageJson.scripts["seo:blog-final-validate"]).toBe("node scripts/validate-blog-final-publication.mjs");
     expect(workflowDoc).toContain("seo:blog-final-validate");
+    expect(workflowDoc).toContain("--output blog-final-publication-result.json");
   });
 });

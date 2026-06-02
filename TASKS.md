@@ -53,3 +53,4 @@
 - [done] Add blog discovery evidence to production SEO artifacts
 - [done] Add final blog publication review gate to content operations
 - [done] Add final blog publication package validator
+- [done] Add retained output support to final blog publication validator

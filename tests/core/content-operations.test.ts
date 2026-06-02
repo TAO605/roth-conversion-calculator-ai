@@ -97,9 +97,11 @@ describe("content operations playbook", () => {
     expect(finalReview.goal).toContain("after the user finishes or approves the article body");
     expect(finalReview.validationCommand).toContain("npm run seo:blog-final-validate");
     expect(finalReview.validationCommand).toContain("--path /blog/approved-slug");
+    expect(finalReview.validationCommand).toContain("--output blog-final-publication-result.json");
     expect(finalReview.requiredEvidence).toEqual(
       expect.arrayContaining([
         "`blog-ready-result.json` with `ok: true` and a reviewed publication status.",
+        "`blog-final-publication-result.json` retained after final package validation.",
         "Post-deploy production evidence from SEO smoke, structured-data evidence, blog discovery evidence, sitemap, RSS, and llms.txt.",
       ]),
     );

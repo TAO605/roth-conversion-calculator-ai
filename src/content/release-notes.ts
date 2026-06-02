@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.104",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Blog final validation evidence output",
+    summary:
+      "Added --output support to the final blog publication package validator so approved article release packages can retain blog-final-publication-result.json alongside readiness, structured-data, discovery, and SEO smoke evidence.",
+    affectedArea:
+      "Blog final publication validation, retained release evidence, reviewer handoff artifacts, content operations documentation, and YMYL-safe publishing governance",
+    rollbackPath:
+      "Remove --output handling from scripts/validate-blog-final-publication.mjs, remove blog-final-publication-result.json references from content operations and blog workflow documentation, and revert the related tests, release note, task, progress, and feature version update.",
+  },
+  {
     version: "1.0.103",
     date: "2026-06-02",
     type: "patch",

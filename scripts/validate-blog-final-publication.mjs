@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 const DEFAULT_READINESS_PATH = "blog-ready-result.json";
@@ -42,6 +43,9 @@ function parseArgs(argv) {
       index += 1;
     } else if (arg === "--manual-review-accepted") {
       args.manualReviewAccepted = true;
+    } else if (arg === "--output") {
+      args.output = next;
+      index += 1;
     }
   }
 
@@ -144,8 +148,18 @@ function run() {
     smoke: readJson(args.smokePath),
     structuredData: readJson(args.structuredDataPath),
   });
+  const payload = {
+    ...result,
+    ...(args.output ? { outputPath: path.resolve(args.output) } : {}),
+  };
 
-  console.log(JSON.stringify(result, null, 2));
+  if (args.output) {
+    const outputPath = path.resolve(args.output);
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(outputPath, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
+  }
+
+  console.log(JSON.stringify(payload, null, 2));
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
