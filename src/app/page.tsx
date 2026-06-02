@@ -94,23 +94,24 @@ export default function HomePage() {
             review the method and IRS sources. Your financial inputs stay in this browser.
           </div>
         </div>
-        <section className="grid gap-3 text-sm text-neutral-600 dark:text-neutral-300 sm:grid-cols-3" aria-label="AI calculator workflow">
-          <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
-            <strong className="block text-neutral-950 dark:text-white">1. Calculate</strong>
-            Enter conversion amount, income, basis, state tax, age, and expected return.
-          </div>
-          <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
-            <strong className="block text-neutral-950 dark:text-white">2. Ask AI</strong>
-            Get a plain-English explanation of break-even years, penalties, basis, and assumptions.
-          </div>
-          <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
-            <strong className="block text-neutral-950 dark:text-white">3. Review</strong>
-            Check the transparent method, official sources, and compliance limits before acting.
-          </div>
-        </section>
       </header>
 
       <HomeCalculatorClient />
+
+      <section className="grid gap-3 text-sm text-neutral-600 dark:text-neutral-300 sm:grid-cols-3" aria-label="AI calculator workflow">
+        <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+          <strong className="block text-neutral-950 dark:text-white">1. Calculate</strong>
+          Enter conversion amount, income, basis, state tax, age, and expected return.
+        </div>
+        <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+          <strong className="block text-neutral-950 dark:text-white">2. Ask AI</strong>
+          Get a plain-English explanation of break-even years, penalties, basis, and assumptions.
+        </div>
+        <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+          <strong className="block text-neutral-950 dark:text-white">3. Review</strong>
+          Check the transparent method, official sources, and compliance limits before acting.
+        </div>
+      </section>
 
       <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-2" id="method-and-sources" aria-label="Trust and calculation methodology">
         {isFeatureEnabled("tax-data-freshness") ? <TaxDataFreshnessCard compact /> : null}

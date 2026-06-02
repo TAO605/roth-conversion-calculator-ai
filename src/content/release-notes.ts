@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.112",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Mobile calculator-first layout",
+    summary:
+      "Moved the homepage workflow explainer cards after the calculator so mobile users reach the input surface sooner, while retaining the educational workflow content below the core calculator experience.",
+    affectedArea:
+      "Homepage mobile first-screen density, calculator access, Core Web Vitals readiness, educational workflow copy, and PageSpeed follow-up optimization",
+    rollbackPath:
+      "Move the AI calculator workflow section back above HomeCalculatorClient in src/app/page.tsx, then revert the related performance test, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.111",
     date: "2026-06-02",
     type: "patch",

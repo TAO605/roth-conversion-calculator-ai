@@ -59,4 +59,12 @@ describe("homepage performance boundaries", () => {
     expect(homePage).toContain("shadow-sm backdrop-blur-none");
     expect(homePage).toContain("sm:backdrop-blur-xl");
   });
+
+  it("places the calculator before workflow explainer cards for mobile first-screen density", () => {
+    const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+
+    expect(homePage.indexOf("<HomeCalculatorClient />")).toBeLessThan(
+      homePage.indexOf('aria-label="AI calculator workflow"'),
+    );
+  });
 });

@@ -61,3 +61,4 @@
 - [done] Move interactive homepage calculator into a client island
 - [done] Simplify mobile homepage background paint for LCP stability
 - [done] Reduce mobile glass effects on first-paint card and navigation surfaces
+- [done] Move workflow explainer cards after the calculator for mobile first-screen density
