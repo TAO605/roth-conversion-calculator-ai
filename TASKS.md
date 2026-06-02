@@ -70,3 +70,4 @@
 - [done] Add first-party TBT attribution summary to mobile performance evidence
 - [done] Add median multi-sample Lighthouse performance evidence
 - [done] Surface multi-sample Lighthouse sample policy in performance audit playbook
+- [done] Classify non-blocking Lighthouse Chrome temp cleanup warnings

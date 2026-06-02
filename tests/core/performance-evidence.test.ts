@@ -22,6 +22,9 @@ describe("mobile performance evidence", () => {
     expect(script).toContain("PERFORMANCE_EVIDENCE_SAMPLE_COUNT");
     expect(script).toContain("sampleCount");
     expect(script).toContain("collectSample");
+    expect(script).toContain("classifyLighthouseWarning");
+    expect(script).toContain("chrome-temp-cleanup-warning");
+    expect(script).toContain("runtime warning");
     expect(script).toContain("selectedMedianSample");
     expect(script).toContain("median-total-blocking-time-valid-seo-sample");
     expect(script).toContain("No valid Lighthouse samples produced a passing SEO category");
@@ -33,6 +36,8 @@ describe("mobile performance evidence", () => {
     expect(script).toContain("requestedSamples");
     expect(script).toContain("validSamples");
     expect(script).toContain("selectedAttempt");
+    expect(script).toContain("warningClassification");
+    expect(script).toContain("warningSummary");
     expect(script).toContain("attempts");
     expect(script).toContain("tbtDiagnostics");
     expect(script).toContain("attributionSummary");

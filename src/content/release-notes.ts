@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.121",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Lighthouse warning classification",
+    summary:
+      "Added explicit warningClassification and samplePolicy warning summaries to mobile Lighthouse evidence so valid samples with Chrome temporary-directory cleanup warnings are distinguished from blocking runtime issues.",
+    affectedArea:
+      "Mobile Lighthouse evidence, GitHub Actions SEO artifacts, performance evidence review, PageSpeed follow-up workflow, and lab-warning triage",
+    rollbackPath:
+      "Remove classifyLighthouseWarning, warningClassification, and samplePolicy.warningSummary from scripts/performance-evidence.mjs, remove warningClassification validation, then revert the related tests, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.120",
     date: "2026-06-02",
     type: "patch",

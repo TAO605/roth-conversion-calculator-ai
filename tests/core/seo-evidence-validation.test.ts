@@ -43,6 +43,8 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("samplePolicy");
     expect(script).toContain("requestedSamples");
     expect(script).toContain("validSamples");
+    expect(script).toContain("warningClassification");
+    expect(script).toContain("warningSummary");
     expect(script).toContain("median-total-blocking-time-valid-seo-sample");
     expect(script).toContain("tbtDiagnostics");
     expect(script).toContain("attributionSummary");

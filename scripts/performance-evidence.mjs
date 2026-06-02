@@ -74,6 +74,31 @@ function roundMetric(value) {
   return typeof value === "number" ? Math.round(value * 100) / 100 : value;
 }
 
+function classifyLighthouseWarning(warning) {
+  if (!warning) {
+    return {
+      blocking: false,
+      kind: "none",
+      message: "No Lighthouse runtime warning.",
+    };
+  }
+
+  if (/EPERM, Permission denied/i.test(warning) && /lighthouse\.\d+/i.test(warning)) {
+    return {
+      blocking: false,
+      kind: "chrome-temp-cleanup-warning",
+      message:
+        "Lighthouse produced a valid report, but Chrome launcher could not remove a temporary profile directory after the run.",
+    };
+  }
+
+  return {
+    blocking: true,
+    kind: "runtime-warning",
+    message: "Lighthouse emitted a runtime warning that needs review.",
+  };
+}
+
 function topItems(items, sortKey, mapItem, limit = 5) {
   return items
     .filter((item) => typeof item?.[sortKey] === "number" && item[sortKey] > 0)
@@ -260,6 +285,7 @@ function attemptSummary(attempt, summary, lighthouseWarning) {
   return {
     attempt,
     lighthouseWarning: lighthouseWarning || null,
+    warningClassification: classifyLighthouseWarning(lighthouseWarning),
     ok: true,
     performanceScore: summary.categories.performance,
     seoScore: summary.categories.seo,
@@ -275,6 +301,7 @@ function failedAttemptSummary(attempt, error, lighthouseWarning = null) {
     attempt,
     error: error instanceof Error ? error.message : String(error),
     lighthouseWarning: lighthouseWarning || null,
+    warningClassification: classifyLighthouseWarning(lighthouseWarning),
     ok: false,
   };
 }
@@ -337,7 +364,13 @@ async function run() {
           selectedAttempt: selectedSample.attempt,
           selectionStrategy: "median-total-blocking-time-valid-seo-sample",
           validSamples: validSamples.length,
+          warningSummary: attempts.map((attempt) => ({
+            attempt: attempt.attempt,
+            blocking: attempt.warningClassification.blocking,
+            kind: attempt.warningClassification.kind,
+          })),
         },
+        warningClassification: classifyLighthouseWarning(selectedSample.lighthouseWarning),
         ...summary,
       },
       null,
