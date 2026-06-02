@@ -110,6 +110,16 @@ function summarize(report) {
     },
   ];
   const manualReviewRequired = thresholdResults.some((result) => !result.passed);
+  const reviewTriggers = thresholdResults
+    .filter((result) => !result.passed)
+    .map((result) => ({
+      actual: result.actual,
+      metric: result.metric,
+      threshold: result.threshold,
+    }));
+  const reviewSummary = manualReviewRequired
+    ? `Manual review required for ${reviewTriggers.map((trigger) => trigger.metric).join(", ")}. Treat isolated GitHub runner TBT variance as lab evidence before changing production UX.`
+    : "No manual performance review required.";
 
   return {
     categories: {
@@ -125,6 +135,8 @@ function summarize(report) {
     lighthouseVersion: report.lighthouseVersion,
     metrics,
     manualReviewRequired,
+    reviewSummary,
+    reviewTriggers,
     requestedUrl: report.requestedUrl,
     finalUrl: report.finalDisplayedUrl || report.finalUrl,
     thresholds: {

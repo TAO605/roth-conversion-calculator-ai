@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.114",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Performance review trigger evidence",
+    summary:
+      "Added explicit reviewTriggers and reviewSummary fields to mobile Lighthouse evidence so CI performance variance identifies the exact metric that needs review before any production UX change.",
+    affectedArea:
+      "Mobile Lighthouse evidence, PageSpeed follow-up workflow, GitHub Actions SEO artifacts, Core Web Vitals operations, and performance review triage",
+    rollbackPath:
+      "Remove reviewTriggers and reviewSummary from scripts/performance-evidence.mjs, then revert the related tests, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.113",
     date: "2026-06-02",
     type: "patch",

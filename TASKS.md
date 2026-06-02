@@ -63,3 +63,4 @@
 - [done] Reduce mobile glass effects on first-paint card and navigation surfaces
 - [done] Move workflow explainer cards after the calculator for mobile first-screen density
 - [done] Compact mobile result summary and move secondary result actions after core estimates
+- [done] Add metric-level review triggers to mobile Lighthouse performance evidence

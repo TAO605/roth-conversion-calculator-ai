@@ -21,6 +21,8 @@ describe("mobile performance evidence", () => {
     expect(script).toContain("maxCumulativeLayoutShift");
     expect(script).toContain("lighthouse-mobile-lab");
     expect(script).toContain("manualReviewRequired");
+    expect(script).toContain("reviewTriggers");
+    expect(script).toContain("reviewSummary");
     expect(script).toContain("thresholdResults");
     expect(script).toContain("largest-contentful-paint");
     expect(script).toContain("total-blocking-time");

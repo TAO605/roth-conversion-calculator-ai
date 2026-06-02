@@ -104,6 +104,8 @@ function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(typeof performance.metrics?.cumulativeLayoutShift === "number", "Performance evidence is missing CLS");
   assert(Array.isArray(performance.thresholdResults), "Performance evidence must include thresholdResults");
   assert(typeof performance.manualReviewRequired === "boolean", "Performance evidence must include manualReviewRequired");
+  assert(Array.isArray(performance.reviewTriggers), "Performance evidence must include reviewTriggers");
+  assert(typeof performance.reviewSummary === "string" && performance.reviewSummary.length > 0, "Performance evidence must include reviewSummary");
   assert(performance.thresholds?.minPerformanceScore === 0.5, "Performance evidence min score threshold changed unexpectedly");
   assert(typeof performance.lighthouseVersion === "string" && performance.lighthouseVersion.length > 0, "Performance evidence is missing Lighthouse version");
 }
