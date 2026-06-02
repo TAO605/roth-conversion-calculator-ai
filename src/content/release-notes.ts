@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.99",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Blog Article structured-data evidence",
+    summary:
+      "Expanded the production structured-data evidence command and retained SEO artifact validator to cover existing blog Article pages, requiring Article and BreadcrumbList JSON-LD across the current blog library while preserving the user-owned article writing boundary.",
+    affectedArea:
+      "Production structured-data evidence, blog Article JSON-LD monitoring, SEO Smoke artifacts, schema validation, and YMYL-safe publishing governance",
+    rollbackPath:
+      "Remove the blog paths from scripts/structured-data-evidence.mjs, lower the structured-data artifact pageCount requirement, remove the blog Article validator branch, and revert the related tests, documentation, release note, and feature registry version.",
+  },
+  {
     version: "1.0.98",
     date: "2026-06-02",
     type: "patch",

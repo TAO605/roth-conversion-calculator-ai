@@ -77,7 +77,7 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
   assert(structuredData.ok === true, "Structured data evidence must be ok");
   assert(structuredData.baseUrl === expectedBaseUrl, "Structured data evidence baseUrl must match SEO smoke baseUrl");
   assert(structuredData.jsonLdScriptCount >= 6, "Structured data evidence must include homepage JSON-LD scripts");
-  assert(structuredData.pageCount >= 20, "Structured data evidence must include priority content pages");
+  assert(structuredData.pageCount >= 33, "Structured data evidence must include priority content and blog pages");
   assert(Array.isArray(structuredData.pages), "Structured data evidence pages must be an array");
   assert(Array.isArray(structuredData.types), "Structured data evidence types must be an array");
   assert(Array.isArray(structuredData.forbiddenKeys), "Structured data forbiddenKeys must be an array");
@@ -122,7 +122,10 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
     );
     assert(page.siteUrlCount > 0, `${pathname} structured data must include canonical site URLs`);
 
-    if (pathname !== "/") {
+    if (pathname.startsWith("/blog/")) {
+      assert(page.types.includes("Article"), `${pathname} structured data evidence missing Article`);
+      assert(page.types.includes("BreadcrumbList"), `${pathname} structured data evidence missing BreadcrumbList`);
+    } else if (pathname !== "/") {
       assert(page.types.includes("WebPage"), `${pathname} structured data evidence missing WebPage`);
       assert(page.types.includes("BreadcrumbList"), `${pathname} structured data evidence missing BreadcrumbList`);
     }

@@ -83,6 +83,58 @@ const monitoredPages = [
     path: "/roth-conversion-timeline",
     requiredTypes: ["BreadcrumbList", "WebPage"],
   },
+  {
+    path: "/blog/what-is-a-roth-conversion-2026",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/is-a-roth-conversion-worth-it",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/roth-conversion-5-year-rule",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/roth-conversion-taxes",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/backdoor-roth-conversion-guide",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/roth-conversion-tax-brackets-2026",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/roth-conversion-state-taxes",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/roth-conversion-break-even",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/paying-roth-conversion-taxes",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/roth-conversion-pro-rata-rule",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/roth-conversion-before-retirement",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/roth-conversion-after-retirement",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
+  {
+    path: "/blog/multi-year-roth-conversion-planning",
+    requiredTypes: ["Article", "BreadcrumbList"],
+  },
 ];
 const forbiddenKeyPattern = /^(aggregateRating|review|reviewRating|ratingValue|reviewCount)$/i;
 const forbiddenTextPattern = /optimal conversion amount|hidden fees|100%\s+accurate|guaranteed|voiceInput|voiceOutput/gi;

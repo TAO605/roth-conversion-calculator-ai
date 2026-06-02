@@ -171,6 +171,10 @@ describe("structured data", () => {
     const blogPage = fs.readFileSync(path.join(process.cwd(), "src/app/blog/[slug]/page.tsx"), "utf8");
     const blogIndex = fs.readFileSync(path.join(process.cwd(), "src/app/blog/page.tsx"), "utf8");
     const statePage = fs.readFileSync(path.join(process.cwd(), "src/app/states/[state]/page.tsx"), "utf8");
+    const structuredDataEvidenceScript = fs.readFileSync(
+      path.join(process.cwd(), "scripts/structured-data-evidence.mjs"),
+      "utf8",
+    );
 
     expect(blogPage).toContain("articleJsonLd");
     expect(blogPage).toContain("breadcrumbJsonLd");
@@ -178,6 +182,9 @@ describe("structured data", () => {
     expect(blogPage).toContain("Open the calculator");
     expect(blogIndex).toContain("Topics");
     expect(statePage).toContain("breadcrumbJsonLd");
+    expect(structuredDataEvidenceScript).toContain("/blog/what-is-a-roth-conversion-2026");
+    expect(structuredDataEvidenceScript).toContain("/blog/multi-year-roth-conversion-planning");
+    expect(structuredDataEvidenceScript).toContain('requiredTypes: ["Article", "BreadcrumbList"]');
   });
 
   it("mounts WebPage and Breadcrumb structured data on priority educational pages", () => {

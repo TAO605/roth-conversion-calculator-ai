@@ -48,3 +48,4 @@
 - [done] Add blog readiness JSON output file support
 - [done] Add blog YMYL language hard guard to publication readiness
 - [done] Add blog internal and official source link hard guards
+- [done] Add blog Article structured-data evidence to production SEO artifacts
