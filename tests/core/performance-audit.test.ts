@@ -21,9 +21,19 @@ describe("performance audit playbook", () => {
     expect(labels).toContain("Run Lighthouse on SEO landing pages");
     expect(labels).toContain("Verify mobile input ergonomics");
     expect(labels).toContain("Compare bundle size after each release");
+    expect(labels).toContain("Review multi-sample Lighthouse evidence");
     expect(summary.totalChecks).toBeGreaterThanOrEqual(12);
     expect(summary.targetMetrics).toEqual(
-      expect.arrayContaining(["LCP under 2.5s", "INP under 200ms", "CLS under 0.1", "Lighthouse SEO over 90"]),
+      expect.arrayContaining([
+        "LCP under 2.5s",
+        "INP under 200ms",
+        "CLS under 0.1",
+        "Lighthouse SEO over 90",
+        "3 samples, median TBT selected",
+      ]),
+    );
+    expect(groups.flatMap((group) => group.checks.map((check) => check.action)).join("\n")).toContain(
+      "median-total-blocking-time-valid-seo-sample",
     );
   });
 

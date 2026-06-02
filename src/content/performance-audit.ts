@@ -117,6 +117,12 @@ export function buildPerformanceAuditGroups(): PerformanceAuditGroup[] {
           "Open robots.txt, sitemap.xml, feed.xml, and llms.txt after deployment.",
         ),
         check(
+          "Review multi-sample Lighthouse evidence",
+          "3 samples, median TBT selected",
+          "/performance-audit",
+          "Run npm run seo:performance and confirm samplePolicy.attempts retains every Lighthouse attempt, validSamples is at least 1, and selectionStrategy is median-total-blocking-time-valid-seo-sample.",
+        ),
+        check(
           "Archive verification output",
           "Fresh test and build evidence",
           "/release-notes",

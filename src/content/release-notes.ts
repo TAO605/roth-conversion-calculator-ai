@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.120",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Performance audit sample policy",
+    summary:
+      "Updated the performance audit playbook so operators can review the new multi-sample Lighthouse samplePolicy, retained attempts, valid sample count, and median TBT selection strategy from the live operations page.",
+    affectedArea:
+      "Performance audit playbook, Core Web Vitals operations, Lighthouse evidence review, PageSpeed follow-up workflow, and release regression checks",
+    rollbackPath:
+      "Remove the multi-sample Lighthouse evidence check from src/content/performance-audit.ts, then revert the related performance-audit test, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.119",
     date: "2026-06-02",
     type: "patch",
