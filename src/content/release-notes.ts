@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.115",
+    date: "2026-06-02",
+    type: "patch",
+    title: "TBT attribution diagnostics",
+    summary:
+      "Added compact Lighthouse diagnostics for long tasks, main-thread work, script bootup cost, and third-party main-thread time so TBT review evidence can distinguish page work from lab-runner variance.",
+    affectedArea:
+      "Mobile Lighthouse evidence, TBT triage, GitHub Actions SEO artifacts, Core Web Vitals operations, and performance review diagnostics",
+    rollbackPath:
+      "Remove tbtDiagnostics helpers and output from scripts/performance-evidence.mjs, remove tbtDiagnostics assertions from scripts/validate-seo-evidence.mjs, then revert the related tests, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.114",
     date: "2026-06-02",
     type: "patch",

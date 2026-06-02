@@ -23,6 +23,11 @@ describe("mobile performance evidence", () => {
     expect(script).toContain("manualReviewRequired");
     expect(script).toContain("reviewTriggers");
     expect(script).toContain("reviewSummary");
+    expect(script).toContain("tbtDiagnostics");
+    expect(script).toContain("long-tasks");
+    expect(script).toContain("mainthread-work-breakdown");
+    expect(script).toContain("bootup-time");
+    expect(script).toContain("third-party-summary");
     expect(script).toContain("thresholdResults");
     expect(script).toContain("largest-contentful-paint");
     expect(script).toContain("total-blocking-time");

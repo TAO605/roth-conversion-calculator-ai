@@ -40,6 +40,8 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("manualReviewRequired");
     expect(script).toContain("reviewTriggers");
     expect(script).toContain("reviewSummary");
+    expect(script).toContain("tbtDiagnostics");
+    expect(script).toContain("thirdPartyMainThread");
     expect(script).toContain("blogDiscoveryCount");
     expect(script).toContain("structuredDataTypeCount");
     expect(script).toContain("pageCount");

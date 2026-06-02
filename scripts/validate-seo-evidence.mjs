@@ -106,6 +106,14 @@ function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(typeof performance.manualReviewRequired === "boolean", "Performance evidence must include manualReviewRequired");
   assert(Array.isArray(performance.reviewTriggers), "Performance evidence must include reviewTriggers");
   assert(typeof performance.reviewSummary === "string" && performance.reviewSummary.length > 0, "Performance evidence must include reviewSummary");
+  assert(typeof performance.tbtDiagnostics === "object" && performance.tbtDiagnostics !== null, "Performance evidence must include tbtDiagnostics");
+  assert(Array.isArray(performance.tbtDiagnostics.longTasks), "Performance evidence must include tbtDiagnostics.longTasks");
+  assert(Array.isArray(performance.tbtDiagnostics.mainThreadWork), "Performance evidence must include tbtDiagnostics.mainThreadWork");
+  assert(Array.isArray(performance.tbtDiagnostics.scriptBootup), "Performance evidence must include tbtDiagnostics.scriptBootup");
+  assert(
+    Array.isArray(performance.tbtDiagnostics.thirdPartyMainThread),
+    "Performance evidence must include tbtDiagnostics.thirdPartyMainThread",
+  );
   assert(performance.thresholds?.minPerformanceScore === 0.5, "Performance evidence min score threshold changed unexpectedly");
   assert(typeof performance.lighthouseVersion === "string" && performance.lighthouseVersion.length > 0, "Performance evidence is missing Lighthouse version");
 }

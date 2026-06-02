@@ -64,6 +64,49 @@ function metric(audits, key) {
   return audits[key]?.numericValue ?? null;
 }
 
+function auditItems(audits, key) {
+  return audits[key]?.details?.items ?? [];
+}
+
+function roundMetric(value) {
+  return typeof value === "number" ? Math.round(value * 100) / 100 : value;
+}
+
+function topItems(items, sortKey, mapItem, limit = 5) {
+  return items
+    .filter((item) => typeof item?.[sortKey] === "number" && item[sortKey] > 0)
+    .sort((a, b) => b[sortKey] - a[sortKey])
+    .slice(0, limit)
+    .map(mapItem);
+}
+
+function summarizeTbtDiagnostics(audits) {
+  return {
+    longTasks: topItems(auditItems(audits, "long-tasks"), "duration", (item) => ({
+      durationMs: roundMetric(item.duration),
+      startTimeMs: roundMetric(item.startTime),
+      url: item.url || "",
+    })),
+    mainThreadWork: topItems(auditItems(audits, "mainthread-work-breakdown"), "duration", (item) => ({
+      durationMs: roundMetric(item.duration),
+      group: item.group || "",
+      groupLabel: item.groupLabel || "",
+    })),
+    scriptBootup: topItems(auditItems(audits, "bootup-time"), "total", (item) => ({
+      parseCompileMs: roundMetric(item.scriptParseCompile),
+      scriptingMs: roundMetric(item.scripting),
+      totalMs: roundMetric(item.total),
+      url: item.url || "",
+    })),
+    thirdPartyMainThread: topItems(auditItems(audits, "third-party-summary"), "mainThreadTime", (item) => ({
+      blockingTimeMs: roundMetric(item.blockingTime),
+      entity: item.entity || "",
+      mainThreadTimeMs: roundMetric(item.mainThreadTime),
+      transferSizeBytes: item.transferSize ?? 0,
+    })),
+  };
+}
+
 function summarize(report) {
   const performanceScore = report.categories.performance.score;
   const seoScore = report.categories.seo.score;
@@ -137,6 +180,7 @@ function summarize(report) {
     manualReviewRequired,
     reviewSummary,
     reviewTriggers,
+    tbtDiagnostics: summarizeTbtDiagnostics(report.audits),
     requestedUrl: report.requestedUrl,
     finalUrl: report.finalDisplayedUrl || report.finalUrl,
     thresholds: {
