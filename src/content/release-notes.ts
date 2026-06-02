@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.116",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Lazy GA4 loading",
+    summary:
+      "Moved the GA4 loader and config scripts to Next.js lazyOnload strategy so analytics runs after the load event instead of competing with the calculator's first interactive path.",
+    affectedArea:
+      "Privacy-safe analytics, mobile TBT readiness, GA4 script loading, Core Web Vitals operations, and PageSpeed follow-up optimization",
+    rollbackPath:
+      "Change the GA4 Script strategy values in src/features/analytics/GoogleAnalytics.tsx back to afterInteractive, then revert the related analytics test, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.115",
     date: "2026-06-02",
     type: "patch",

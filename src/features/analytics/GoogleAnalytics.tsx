@@ -10,11 +10,11 @@ export function GoogleAnalytics() {
 
   return (
     <>
-      <Script id="ga4-loader" src={buildGtagScriptSrc(measurementId)} strategy="afterInteractive" />
+      <Script id="ga4-loader" src={buildGtagScriptSrc(measurementId)} strategy="lazyOnload" />
       <Script
         dangerouslySetInnerHTML={{ __html: buildGtagConfigScript(measurementId) }}
         id="ga4-config"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
     </>
   );

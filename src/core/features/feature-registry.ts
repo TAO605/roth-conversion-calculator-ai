@@ -182,7 +182,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "privacy-safe-analytics",
     label: "Privacy-safe GA4 analytics",
-    version: "1.0.15",
+    version: "1.0.116",
     layer: "common",
     enabled: true,
     locked: false,

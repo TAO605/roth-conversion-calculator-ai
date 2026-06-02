@@ -65,3 +65,4 @@
 - [done] Compact mobile result summary and move secondary result actions after core estimates
 - [done] Add metric-level review triggers to mobile Lighthouse performance evidence
 - [done] Add TBT attribution diagnostics to mobile Lighthouse performance evidence
+- [done] Move GA4 scripts to lazyOnload for lower first-interaction contention
