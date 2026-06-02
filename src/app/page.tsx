@@ -50,7 +50,7 @@ export default function HomePage() {
       <header className="grid w-full min-w-0 max-w-full gap-4 pt-4">
         <nav
           aria-label="Primary navigation"
-          className="flex w-full min-w-0 flex-col items-start justify-between gap-3 rounded-[18px] bg-white/75 px-4 py-3 text-sm shadow-sm backdrop-blur-none dark:bg-white/10 sm:flex-row sm:items-center sm:bg-white/65 sm:backdrop-blur-xl"
+          className="flex w-full min-w-0 flex-col items-start justify-between gap-3 rounded border border-neutral-200 bg-white px-4 py-3 text-sm shadow-none dark:border-white/10 dark:bg-neutral-950 sm:flex-row sm:items-center"
         >
           <Link className="shrink-0 font-semibold text-neutral-950 dark:text-white" href="/">
             RothCalc
@@ -61,7 +61,7 @@ export default function HomePage() {
                 Calculator
               </a>
               <a className="hover:text-systemBlue" href="#ai-explainer">
-                AI helper
+                Explanation
               </a>
               <a className="hover:text-systemBlue" href="#method-and-sources">
                 Sources
@@ -70,45 +70,45 @@ export default function HomePage() {
             {isFeatureEnabled("theme-toggle") ? <ThemeToggle /> : null}
           </div>
         </nav>
-        <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">AI-powered 2026 estimate</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">2026 tax estimate</p>
         <div className="grid gap-4 lg:grid-cols-[1fr_0.72fr] lg:items-end">
           <div>
             <h1 className="max-w-4xl text-4xl font-bold tracking-normal text-neutral-950 dark:text-white sm:text-5xl">
-              AI Roth Conversion Calculator
+              Roth Conversion Calculator 2026
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
-              Estimate Roth conversion taxes, break-even years, and after-tax value. AI then explains the result,
-              the inputs, and the limits in plain English without giving personal tax advice.
+              Estimate Roth conversion taxes, bracket impact, break-even years, and projected after-tax value. The
+              result explains the assumptions and limits in plain English without giving personal tax advice.
             </p>
             <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-              <a className="rounded-full bg-systemBlue px-5 py-3 text-white shadow-sm transition hover:bg-blue-600" href="#calculator">
+              <a className="rounded bg-[#0A2463] px-5 py-3 text-white transition-colors hover:bg-[#081f55]" href="#calculator">
                 Start calculating
               </a>
-              <a className="rounded-full bg-white/70 px-5 py-3 text-neutral-800 shadow-sm transition hover:bg-white dark:bg-white/10 dark:text-neutral-100 dark:hover:bg-white/15" href="#ai-explainer">
-                Ask AI after results
+              <a className="rounded border border-neutral-200 bg-white px-5 py-3 text-neutral-800 transition-colors hover:bg-neutral-50 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-100 dark:hover:bg-neutral-900" href="#ai-explainer">
+                Review explanation
               </a>
             </div>
           </div>
-          <div className="rounded-[18px] bg-white/65 p-4 text-sm leading-6 text-neutral-600 shadow-sm dark:bg-white/10 dark:text-neutral-300">
-            <strong>One focused workflow.</strong> Calculate the tax estimate, ask AI what the numbers mean, then
-            review the method and IRS sources. Your financial inputs stay in this browser.
+          <div className="rounded border border-neutral-200 bg-white p-4 text-sm leading-6 text-neutral-600 shadow-none dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-300">
+            <strong>One focused workflow.</strong> Calculate the tax estimate, review what the numbers mean, then
+            check the method and IRS sources. Your financial inputs stay in this browser.
           </div>
         </div>
       </header>
 
       <HomeCalculatorClient />
 
-      <section className="grid gap-3 text-sm text-neutral-600 dark:text-neutral-300 sm:grid-cols-3" aria-label="AI calculator workflow">
-        <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+      <section className="grid gap-3 text-sm text-neutral-600 dark:text-neutral-300 sm:grid-cols-3" aria-label="Calculator workflow">
+        <div className="rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
           <strong className="block text-neutral-950 dark:text-white">1. Calculate</strong>
           Enter conversion amount, income, basis, state tax, age, and expected return.
         </div>
-        <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
-          <strong className="block text-neutral-950 dark:text-white">2. Ask AI</strong>
-          Get a plain-English explanation of break-even years, penalties, basis, and assumptions.
+        <div className="rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
+          <strong className="block text-neutral-950 dark:text-white">2. Review</strong>
+          Read a plain-English explanation of break-even years, penalties, basis, and assumptions.
         </div>
-        <div className="rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
-          <strong className="block text-neutral-950 dark:text-white">3. Review</strong>
+        <div className="rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
+          <strong className="block text-neutral-950 dark:text-white">3. Verify</strong>
           Check the transparent method, official sources, and compliance limits before acting.
         </div>
       </section>
@@ -123,14 +123,14 @@ export default function HomePage() {
             CPA or tax professional should review before any real decision.
           </p>
           <div className="mt-4 grid gap-3 text-sm leading-6 text-neutral-700 dark:text-neutral-200">
-            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
+            <p className="rounded border border-neutral-200 bg-neutral-50 px-3 py-2 dark:border-white/10 dark:bg-neutral-900">
               Taxable conversion = conversion amount minus pro-rata after-tax basis.
             </p>
-            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
+            <p className="rounded border border-neutral-200 bg-neutral-50 px-3 py-2 dark:border-white/10 dark:bg-neutral-900">
               Current-year cost = estimated federal income tax plus user-entered state tax plus any modeled early
               distribution penalty.
             </p>
-            <p className="rounded-[12px] bg-neutral-50 px-3 py-2 dark:bg-white/10">
+            <p className="rounded border border-neutral-200 bg-neutral-50 px-3 py-2 dark:border-white/10 dark:bg-neutral-900">
               Future comparison = Roth tax-free projection versus traditional IRA projection after the selected
               retirement marginal tax rate.
             </p>
@@ -240,7 +240,7 @@ export default function HomePage() {
             Release Notes
           </Link>
         </div>
-        <details className="mb-4 rounded-[16px] bg-white/60 p-4 dark:bg-white/10">
+        <details className="mb-4 rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
           <summary className="cursor-pointer text-sm font-semibold text-neutral-800 dark:text-neutral-100">
             More planning guides
           </summary>

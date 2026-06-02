@@ -41,7 +41,7 @@ const initialInput: RothConversionInput = {
 
 function LazyPanelFallback({ className = "min-h-24", label = "Loading module..." }: { className?: string; label?: string }) {
   return (
-    <div className={`${className} animate-pulse rounded-[16px] bg-white/60 p-4 text-sm text-neutral-500 dark:bg-white/10 dark:text-neutral-400`}>
+    <div className={`${className} rounded border border-neutral-200 bg-white p-4 text-sm text-neutral-500 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-400`}>
       {label}
     </div>
   );
@@ -103,10 +103,10 @@ export function HomeCalculatorClient() {
       {isFeatureEnabled("privacy-safe-analytics") ? <CalculatorAnalyticsBeacon input={input} result={result} /> : null}
       <section
         aria-label="Roth conversion calculator"
-        className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-[0.95fr_1.05fr]"
+        className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-5"
         id="calculator"
       >
-        <section aria-labelledby="calculator-inputs-heading">
+        <section aria-labelledby="calculator-inputs-heading" className="lg:col-span-2">
           <Card>
           <div className="mb-5">
             <h2 className="text-2xl font-bold text-neutral-950 dark:text-white" id="calculator-inputs-heading">Inputs</h2>
@@ -118,7 +118,7 @@ export function HomeCalculatorClient() {
           </Card>
         </section>
 
-        <article aria-label="Roth conversion estimate results" className="grid gap-5">
+        <article aria-label="Roth conversion estimate results" className="grid gap-5 lg:col-span-3">
           <Card>
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3 sm:mb-5">
               <div>
@@ -138,7 +138,7 @@ export function HomeCalculatorClient() {
               <PdfReportButton input={input} result={result} />
               <CopyProfessionalHandoffButton input={input} result={result} />
               <button
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[14px] px-4 py-2 text-sm font-semibold text-systemRed transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-systemRed focus:ring-offset-2 dark:hover:bg-white/10 dark:focus:ring-offset-neutral-950"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-systemRed transition-colors hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-systemRed focus:ring-offset-2 dark:border-white/10 dark:bg-neutral-950 dark:hover:bg-neutral-900 dark:focus:ring-offset-neutral-950"
                 onClick={() => {
                   clearStoredCalculatorInput();
                   setInput(initialInput);
@@ -166,7 +166,7 @@ export function HomeCalculatorClient() {
             <h2 className="mb-4 text-2xl font-bold text-neutral-950 dark:text-white">Projection</h2>
             <ProjectionChart projection={result.projection} />
           </Card>
-          <details className="rounded-[20px] border border-white/60 bg-white/65 p-5 shadow-sm dark:border-white/10 dark:bg-white/10">
+          <details className="rounded border border-neutral-200 bg-white p-6 shadow-none dark:border-white/10 dark:bg-neutral-950">
             <summary className="cursor-pointer text-base font-semibold text-neutral-950 dark:text-white">
               Advanced calculation details
             </summary>

@@ -19,7 +19,7 @@ function FieldShell({ label, description, error, children }: FieldShellProps) {
 }
 
 const inputClass =
-  "min-h-12 w-full min-w-0 rounded-[12px] border border-neutral-200 bg-white/85 px-3 text-base text-neutral-950 outline-none transition focus:border-systemBlue focus:ring-4 focus:ring-blue-500/15 dark:border-white/15 dark:bg-white/10 dark:text-white";
+  "min-h-12 w-full min-w-0 rounded border border-neutral-200 bg-white px-3 text-base text-neutral-950 outline-none transition-colors focus:border-[#0A2463] focus:ring-1 focus:ring-[#0A2463] dark:border-white/15 dark:bg-neutral-950 dark:text-white";
 
 export function TextField({
   label,

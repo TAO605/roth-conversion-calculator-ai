@@ -196,3 +196,11 @@ Decision:
 - Save `seo-smoke-result.json` and `gsc-evidence-result.json` with `tee`.
 - Upload both files as the `production-seo-evidence` artifact.
 - Retain artifacts for 30 days to support Search Console retries, incident review, and launch evidence.
+## 2026-06-02 - Professional Calculator UI Beats AI-First Branding
+
+Decision:
+
+- Treat no-AI UI direction as a visual trust brief, not as permission to replace the Next.js SEO architecture with a single `index.html`.
+- Keep AI as an optional explanation surface, but keep the homepage hero, H1, CTA, and primary workflow centered on `Roth Conversion Calculator 2026`.
+- Use plain bordered financial-tool surfaces for the core calculator instead of glass, glow, heavy shadows, oversized rounded corners, or translucent panels.
+- Guard the refactor with source tests so future UI passes cannot reintroduce the most visible template styling on the homepage calculator surface.

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.123",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Professional calculator UI pass",
+    summary:
+      "Adapted the no-AI UI refactor brief into a scoped homepage calculator pass with plain financial-tool surfaces, calculator-first hero copy, a 40/60 input/result layout, and worksheet-style primary result numbers while preserving calculation and SEO behavior.",
+    affectedArea:
+      "Homepage hero, shared Card/Button/Field primitives, calculator input surface, result summary cards, UI regression guards, and V1.3 engineering documentation",
+    rollbackPath:
+      "Restore the previous homepage hero copy and shared UI primitive classes, revert the calculator layout and result-summary style changes, then remove the UI no-AI regression test and documentation addendum.",
+  },
+  {
     version: "1.0.122",
     date: "2026-06-02",
     type: "patch",

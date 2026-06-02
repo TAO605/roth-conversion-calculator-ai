@@ -1,5 +1,13 @@
 # UI Checklist
 
+## Professional Calculator UI
+
+- [ ] Homepage H1 stays focused on `Roth Conversion Calculator 2026`, not AI-first branding.
+- [ ] Shared Card/Button/Field primitives stay plain: small radius, neutral border, white surface, no backdrop blur, no material shadow, no active scale.
+- [ ] Desktop calculator layout stays close to 40/60 input/result weighting when both columns are visible.
+- [ ] AI explanation language stays lower in hierarchy than the calculator, result, sources, and compliance boundaries.
+- [ ] Primary result money values use monospace worksheet-style numbers.
+
 ## Result Summary
 
 - [ ] Primary result row shows upfront tax, bracket room, and after-tax difference.

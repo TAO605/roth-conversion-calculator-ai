@@ -50,21 +50,22 @@ describe("homepage performance boundaries", () => {
     expect(mobileBlock).not.toContain("radial-gradient");
   });
 
-  it("keeps mobile glass effects out of the first-paint path", () => {
+  it("keeps decorative glass effects out of the core calculator path", () => {
     const card = fs.readFileSync(path.join(process.cwd(), "src/common/ui/card.tsx"), "utf8");
     const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
 
-    expect(card).toContain("shadow-sm backdrop-blur-none");
-    expect(card).toContain("sm:shadow-material sm:backdrop-blur-xl");
-    expect(homePage).toContain("shadow-sm backdrop-blur-none");
-    expect(homePage).toContain("sm:backdrop-blur-xl");
+    expect(card).toContain("shadow-none");
+    expect(card).not.toContain("backdrop-blur");
+    expect(card).not.toContain("shadow-material");
+    expect(homePage).toContain("shadow-none");
+    expect(homePage).not.toContain("backdrop-blur");
   });
 
   it("places the calculator before workflow explainer cards for mobile first-screen density", () => {
     const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
 
     expect(homePage.indexOf("<HomeCalculatorClient />")).toBeLessThan(
-      homePage.indexOf('aria-label="AI calculator workflow"'),
+      homePage.indexOf('aria-label="Calculator workflow"'),
     );
   });
 
@@ -72,10 +73,10 @@ describe("homepage performance boundaries", () => {
     const resultSummary = fs.readFileSync(path.join(process.cwd(), "src/features/result-summary/ResultSummary.tsx"), "utf8");
     const calculatorClient = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
-    expect(resultSummary).toContain("p-3 text-white");
+    expect(resultSummary).toContain("p-3 shadow-none");
     expect(resultSummary).toContain("sm:p-4");
-    expect(resultSummary).toContain("text-2xl");
-    expect(resultSummary).toContain("sm:text-3xl");
+    expect(resultSummary).toContain("font-mono");
+    expect(resultSummary).toContain("text-[32px]");
     expect(resultSummary).toContain("hidden text-xs");
     expect(calculatorClient.indexOf("<ResultSummary result={result} />")).toBeLessThan(
       calculatorClient.indexOf('aria-label="Result actions"'),

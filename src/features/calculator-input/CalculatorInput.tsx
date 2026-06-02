@@ -33,7 +33,7 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
 
   return (
     <div className="grid grid-cols-1 gap-4" data-testid="calculator-input-grid">
-      <section className="grid gap-4 rounded-[18px] bg-blue-500/10 p-4 shadow-sm ring-1 ring-blue-500/10 dark:bg-white/10 dark:ring-white/10">
+      <section className="grid gap-4 rounded border border-neutral-200 bg-white p-4 shadow-none dark:border-white/10 dark:bg-neutral-950">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-systemBlue">
             Quick Estimate
@@ -106,7 +106,7 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
         </div>
       </section>
 
-      <details className="rounded-[18px] bg-white/60 p-4 shadow-sm dark:bg-white/10" data-testid="advanced-inputs">
+      <details className="rounded border border-neutral-200 bg-white p-4 shadow-none dark:border-white/10 dark:bg-neutral-950" data-testid="advanced-inputs">
         <summary className="cursor-pointer text-sm font-semibold text-neutral-950 dark:text-white">
           Advanced assumptions
         </summary>
@@ -152,7 +152,7 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
             error={errors.withheldForTaxes}
             onChange={(event) => update("withheldForTaxes", numberValue(event.target.value))}
           />
-          <label className="flex items-center justify-between rounded-[14px] bg-white/60 px-4 py-3 dark:bg-white/10">
+          <label className="flex items-center justify-between rounded border border-neutral-200 bg-white px-4 py-3 dark:border-white/10 dark:bg-neutral-950">
             <span>
               <span className="block text-sm font-semibold">Penalty exception applies</span>
               <span className="text-xs text-neutral-500 dark:text-neutral-400">

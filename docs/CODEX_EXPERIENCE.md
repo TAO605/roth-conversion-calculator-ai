@@ -653,3 +653,28 @@ Targeted performance/evidence/release/feature tests, full `npm test`, `npm run b
 **Future trigger words:**
 
 Lighthouse null SEO category, CI TBT variance, single-sample performance evidence, median Lighthouse sample, samplePolicy missing.
+## 2026-06-02 - Separate Visible No-AI UI From SEO Metadata Changes
+
+**Symptom:**
+
+A no-AI visual refactor can remove AI-first hero copy while the live HTML still contains legacy AI branding in metadata or JSON-LD.
+
+**Root cause:**
+
+Visible UI, SEO title/meta, site config, and structured data are separate surfaces. A source document that says "UI only" should not silently change SEO metadata, but the remaining metadata match can still look like a missed no-AI cleanup if it is not recorded.
+
+**Fix:**
+
+Treat the first pass as homepage/core calculator UI only: remove AI-first visible hero and CTA language, preserve SEO architecture, and explicitly document remaining metadata as a separate review item.
+
+**Guard:**
+
+`tests/core/ui-no-ai-style.test.ts` guards visible homepage copy and core calculator styling. A future SEO-title pass should add separate tests for `src/app/layout.tsx`, `src/core/seo/site-config.ts`, and `src/core/seo/json-ld.ts`.
+
+**Validation:**
+
+Targeted UI/release/feature tests, full `npm test`, `npm run build`, Vercel production deployment, production SEO smoke, GSC evidence, structured-data evidence, blog discovery evidence, and mobile Lighthouse evidence passed.
+
+**Future trigger words:**
+
+no-AI UI, AI metadata remains, SEO title debranding, structured data site name, visible hero versus JSON-LD.

@@ -42,7 +42,7 @@ describe("homepage SEO and UX upgrades", () => {
     const navSource = source.slice(source.indexOf("<nav"), source.indexOf("</nav>"));
 
     expect(navSource).toContain("Calculator");
-    expect(navSource).toContain("AI helper");
+    expect(navSource).toContain("Explanation");
     expect(navSource).toContain("Sources");
     expect(navSource).not.toContain("IRMAA");
     expect(navSource).not.toContain("Production launch");
