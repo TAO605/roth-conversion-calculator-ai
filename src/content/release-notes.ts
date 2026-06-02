@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.119",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Median Lighthouse performance evidence",
+    summary:
+      "Added multi-sample mobile Lighthouse collection so performance evidence records each attempt, ignores invalid SEO-category samples, and selects the valid median TBT sample for retained artifacts.",
+    affectedArea:
+      "Mobile Lighthouse evidence, GitHub Actions SEO artifacts, Core Web Vitals operations, PageSpeed follow-up monitoring, and TBT variance triage",
+    rollbackPath:
+      "Remove samplePolicy, collectSample, failedAttemptSummary, selectedMedianSample, and PERFORMANCE_EVIDENCE_SAMPLE_COUNT from scripts/performance-evidence.mjs, remove samplePolicy validation, then revert the related tests, release note, feature version, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.118",
     date: "2026-06-02",
     type: "patch",

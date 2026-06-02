@@ -726,7 +726,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "performance-audit-playbook",
     label: "Performance audit playbook",
-    version: "1.0.118",
+    version: "1.0.119",
     layer: "content",
     enabled: true,
     locked: false,

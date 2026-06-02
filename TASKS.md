@@ -68,3 +68,4 @@
 - [done] Move GA4 scripts to lazyOnload for lower first-interaction contention
 - [done] Defer external GA4 script injection until load and browser idle time
 - [done] Add first-party TBT attribution summary to mobile performance evidence
+- [done] Add median multi-sample Lighthouse performance evidence

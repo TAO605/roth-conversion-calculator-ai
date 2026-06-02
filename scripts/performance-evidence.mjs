@@ -10,6 +10,8 @@ const minSeoScore = Number(process.env.PERFORMANCE_EVIDENCE_MIN_SEO_SCORE || "0.
 const maxLargestContentfulPaintMs = Number(process.env.PERFORMANCE_EVIDENCE_MAX_LCP_MS || "5000");
 const maxTotalBlockingTimeMs = Number(process.env.PERFORMANCE_EVIDENCE_MAX_TBT_MS || "600");
 const maxCumulativeLayoutShift = Number(process.env.PERFORMANCE_EVIDENCE_MAX_CLS || "0.1");
+const requestedSampleCount = Number(process.env.PERFORMANCE_EVIDENCE_SAMPLE_COUNT || "3");
+const sampleCount = Math.min(Math.max(Math.trunc(requestedSampleCount) || 1, 1), 5);
 
 function assert(condition, message) {
   if (!condition) {
@@ -168,8 +170,8 @@ function summarizeTbtDiagnostics(audits) {
 }
 
 function summarize(report) {
-  const performanceScore = report.categories.performance.score;
-  const seoScore = report.categories.seo.score;
+  const performanceScore = report.categories?.performance?.score ?? null;
+  const seoScore = report.categories?.seo?.score ?? null;
   const metrics = {
     cumulativeLayoutShift: metric(report.audits, "cumulative-layout-shift"),
     firstContentfulPaintMs: metric(report.audits, "first-contentful-paint"),
@@ -254,20 +256,88 @@ function summarize(report) {
   };
 }
 
-async function run() {
+function attemptSummary(attempt, summary, lighthouseWarning) {
+  return {
+    attempt,
+    lighthouseWarning: lighthouseWarning || null,
+    ok: true,
+    performanceScore: summary.categories.performance,
+    seoScore: summary.categories.seo,
+    largestContentfulPaintMs: roundMetric(summary.metrics.largestContentfulPaintMs),
+    totalBlockingTimeMs: roundMetric(summary.metrics.totalBlockingTimeMs),
+    cumulativeLayoutShift: roundMetric(summary.metrics.cumulativeLayoutShift),
+    manualReviewRequired: summary.manualReviewRequired,
+  };
+}
+
+function failedAttemptSummary(attempt, error, lighthouseWarning = null) {
+  return {
+    attempt,
+    error: error instanceof Error ? error.message : String(error),
+    lighthouseWarning: lighthouseWarning || null,
+    ok: false,
+  };
+}
+
+function selectedMedianSample(validSamples) {
+  return [...validSamples]
+    .sort((a, b) => a.summary.metrics.totalBlockingTimeMs - b.summary.metrics.totalBlockingTimeMs)
+    [Math.floor((validSamples.length - 1) / 2)];
+}
+
+async function collectSample(attempt) {
   const outputPath = path.join(os.tmpdir(), `rothcalc-lighthouse-${Date.now()}.json`);
-  const lighthouseWarning = await runLighthouse(outputPath);
-  const report = JSON.parse(fs.readFileSync(outputPath, "utf8"));
-  fs.rmSync(outputPath, { force: true });
-  const summary = summarize(report);
+  let lighthouseWarning = null;
+
+  try {
+    lighthouseWarning = await runLighthouse(outputPath);
+    const report = JSON.parse(fs.readFileSync(outputPath, "utf8"));
+    const summary = summarize(report);
+
+    return {
+      attempt,
+      lighthouseWarning,
+      summary,
+      attemptSummary: attemptSummary(attempt, summary, lighthouseWarning),
+    };
+  } catch (error) {
+    return {
+      attempt,
+      attemptSummary: failedAttemptSummary(attempt, error, lighthouseWarning),
+    };
+  } finally {
+    fs.rmSync(outputPath, { force: true });
+  }
+}
+
+async function run() {
+  const samples = [];
+
+  for (let attempt = 1; attempt <= sampleCount; attempt += 1) {
+    samples.push(await collectSample(attempt));
+  }
+
+  const validSamples = samples.filter((sample) => sample.summary);
+  assert(validSamples.length > 0, "No valid Lighthouse samples produced a passing SEO category");
+
+  const selectedSample = selectedMedianSample(validSamples);
+  const summary = selectedSample.summary;
+  const attempts = samples.map((sample) => sample.attemptSummary);
 
   console.log(
     JSON.stringify(
       {
         baseUrl: targetUrl,
         evidenceSource: "lighthouse-mobile-lab",
-        lighthouseWarning: lighthouseWarning || null,
+        lighthouseWarning: selectedSample.lighthouseWarning || null,
         ok: true,
+        samplePolicy: {
+          attempts,
+          requestedSamples: sampleCount,
+          selectedAttempt: selectedSample.attempt,
+          selectionStrategy: "median-total-blocking-time-valid-seo-sample",
+          validSamples: validSamples.length,
+        },
         ...summary,
       },
       null,

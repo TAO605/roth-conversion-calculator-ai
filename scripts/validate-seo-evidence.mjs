@@ -106,6 +106,14 @@ function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(typeof performance.manualReviewRequired === "boolean", "Performance evidence must include manualReviewRequired");
   assert(Array.isArray(performance.reviewTriggers), "Performance evidence must include reviewTriggers");
   assert(typeof performance.reviewSummary === "string" && performance.reviewSummary.length > 0, "Performance evidence must include reviewSummary");
+  assert(typeof performance.samplePolicy === "object" && performance.samplePolicy !== null, "Performance evidence must include samplePolicy");
+  assert(Array.isArray(performance.samplePolicy.attempts), "Performance evidence samplePolicy must include attempts");
+  assert(performance.samplePolicy.requestedSamples >= 1, "Performance evidence samplePolicy must include requestedSamples");
+  assert(performance.samplePolicy.validSamples >= 1, "Performance evidence samplePolicy must include validSamples");
+  assert(
+    performance.samplePolicy.selectionStrategy === "median-total-blocking-time-valid-seo-sample",
+    "Performance evidence samplePolicy selection strategy changed unexpectedly",
+  );
   assert(typeof performance.tbtDiagnostics === "object" && performance.tbtDiagnostics !== null, "Performance evidence must include tbtDiagnostics");
   assert(Array.isArray(performance.tbtDiagnostics.attributionSummary), "Performance evidence must include tbtDiagnostics.attributionSummary");
   assert(Array.isArray(performance.tbtDiagnostics.longTasks), "Performance evidence must include tbtDiagnostics.longTasks");
