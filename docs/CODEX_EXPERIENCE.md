@@ -549,3 +549,29 @@ Desktop and mobile homepage E2E passed on the isolated port, followed by full `n
 **Future trigger words:**
 
 Playwright wrong app, stale localhost, port collision, E2E snapshot mismatch, homepage smoke false failure.
+
+## 2026-06-02 - CI Lighthouse Variance Needs Metric-Level Triggers
+
+**Symptom:**
+
+Production mobile Lighthouse checks passed locally, but GitHub Actions sometimes marked performance evidence as `manualReviewRequired` because TBT spiked on the hosted runner.
+
+**Root cause:**
+
+The retained evidence only exposed `manualReviewRequired` and threshold rows. Reviewers had to inspect the whole performance payload to determine whether the trigger was TBT, LCP, CLS, SEO score, or overall performance score.
+
+**Fix:**
+
+Added `reviewTriggers` and `reviewSummary` to `scripts/performance-evidence.mjs`, then hardened `scripts/validate-seo-evidence.mjs` so uploaded production artifacts must retain those diagnostic fields.
+
+**Guard:**
+
+`tests/core/performance-evidence.test.ts` and `tests/core/seo-evidence-validation.test.ts` require the new fields in the performance evidence command and artifact validator.
+
+**Validation:**
+
+Targeted performance/evidence/release/feature tests, full `npm test`, `npm run build`, local production evidence validation, production SEO evidence commands, and GitHub Actions artifact download all passed.
+
+**Future trigger words:**
+
+Lighthouse variance, CI TBT spike, manualReviewRequired performance, reviewTriggers missing, performance evidence triage.
