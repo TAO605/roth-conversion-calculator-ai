@@ -185,6 +185,7 @@ describe("structured data", () => {
     expect(statePage).toContain("breadcrumbJsonLd");
     expect(blogPosts.length).toBeGreaterThanOrEqual(13);
     expect(structuredDataEvidenceScript).toContain("src/content/blog.ts");
+    expect(structuredDataEvidenceScript).toContain("fileURLToPath(import.meta.url)");
     expect(structuredDataEvidenceScript).toContain("readBlogArticlePages");
     expect(structuredDataEvidenceScript).toContain('path: `/blog/${slug}`');
     expect(structuredDataEvidenceScript).toContain('requiredTypes: ["Article", "BreadcrumbList"]');

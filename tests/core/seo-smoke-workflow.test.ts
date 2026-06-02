@@ -15,6 +15,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("SEO_SMOKE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("GSC_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("STRUCTURED_DATA_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
+    expect(workflow).toContain("BLOG_DISCOVERY_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("uses: actions/checkout@v6");
     expect(workflow).toContain("uses: actions/setup-node@v6");
     expect(workflow).toContain("node-version: 24");
@@ -24,6 +25,8 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
     expect(workflow).toContain("Run structured data evidence check");
     expect(workflow).toContain("node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json");
+    expect(workflow).toContain("Run blog discovery evidence check");
+    expect(workflow).toContain("node scripts/blog-discovery-evidence.mjs | tee blog-discovery-evidence-result.json");
     expect(workflow).toContain("Validate SEO evidence artifact");
     expect(workflow).toContain("node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json");
     expect(workflow).toContain("Generate SEO evidence manifest");
@@ -37,6 +40,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("seo-smoke-result.json");
     expect(workflow).toContain("gsc-evidence-result.json");
     expect(workflow).toContain("structured-data-evidence-result.json");
+    expect(workflow).toContain("blog-discovery-evidence-result.json");
     expect(workflow).toContain("seo-evidence-validation-result.json");
     expect(workflow).toContain("seo-evidence-manifest.json");
     expect(workflow).toContain("retention-days: 30");

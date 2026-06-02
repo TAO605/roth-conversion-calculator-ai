@@ -1,9 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const DEFAULT_BASE_URL = "https://www.roth-conversion-calculator-ai.shop";
 const baseUrl = (process.env.STRUCTURED_DATA_EVIDENCE_BASE_URL || DEFAULT_BASE_URL).replace(/\/+$/, "");
-const BLOG_SOURCE_PATH = path.join(process.cwd(), "src/content/blog.ts");
+const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
+const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
 
 const homepagePath = "/";
 const staticMonitoredPages = [

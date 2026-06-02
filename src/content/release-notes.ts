@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.101",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Blog discovery evidence artifact",
+    summary:
+      "Added a production blog discovery evidence command and retained artifact file that verify every current blog post is discoverable from the blog hub, sitemap, and RSS feed while confirming llms.txt includes the expected recent-guide coverage.",
+    affectedArea:
+      "Blog publishing discovery, sitemap coverage, RSS coverage, llms.txt evidence, SEO Smoke artifacts, and source-driven content governance",
+    rollbackPath:
+      "Remove scripts/blog-discovery-evidence.mjs, the seo:blog-discovery package script, the workflow step, blog-discovery-evidence-result.json from the artifact manifest and validator, and the related tests, documentation, release note, and feature registry version.",
+  },
+  {
     version: "1.0.100",
     date: "2026-06-02",
     type: "patch",

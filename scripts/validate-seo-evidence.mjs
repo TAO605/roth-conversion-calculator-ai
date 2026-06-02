@@ -1,14 +1,19 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const DEFAULT_SMOKE_PATH = "seo-smoke-result.json";
 const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
-const BLOG_SOURCE_PATH = path.join(process.cwd(), "src/content/blog.ts");
+const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
+const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
+const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
 const STATIC_STRUCTURED_DATA_PAGE_COUNT = 20;
 const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
 const structuredDataPath = process.argv[4] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[5] || DEFAULT_BLOG_DISCOVERY_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -150,20 +155,45 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
   }
 }
 
+function validateBlogDiscoveryEvidence(blogDiscovery, expectedBaseUrl) {
+  const blogSlugCount = readBlogSlugCount();
+  const expectedLlmsMinimum = Math.min(8, blogSlugCount);
+
+  assert(blogDiscovery.ok === true, "Blog discovery evidence must be ok");
+  assert(blogDiscovery.baseUrl === expectedBaseUrl, "Blog discovery evidence baseUrl must match SEO smoke baseUrl");
+  assert(blogDiscovery.blogPostCount === blogSlugCount, "Blog discovery evidence blogPostCount must match content source");
+
+  for (const check of ["blogHub", "sitemap", "rss", "llms"]) {
+    assert(blogDiscovery.checks?.[check]?.status === 200, `Blog discovery ${check} status must be 200`);
+  }
+
+  assert(blogDiscovery.checks.blogHub.coveredCount === blogSlugCount, "Blog hub must cover every blog post");
+  assert(blogDiscovery.checks.sitemap.coveredCount === blogSlugCount, "Sitemap must cover every blog post");
+  assert(blogDiscovery.checks.rss.coveredCount === blogSlugCount, "RSS feed must cover every blog post");
+  assert(Array.isArray(blogDiscovery.checks.blogHub.missing) && blogDiscovery.checks.blogHub.missing.length === 0, "Blog hub must not miss article links");
+  assert(Array.isArray(blogDiscovery.checks.sitemap.missing) && blogDiscovery.checks.sitemap.missing.length === 0, "Sitemap must not miss blog URLs");
+  assert(Array.isArray(blogDiscovery.checks.rss.missing) && blogDiscovery.checks.rss.missing.length === 0, "RSS feed must not miss blog URLs");
+  assert(blogDiscovery.checks.llms.coveredCount >= expectedLlmsMinimum, "llms.txt must cover the expected recent blog guide count");
+  assert(blogDiscovery.checks.llms.expectedMinimum === expectedLlmsMinimum, "llms.txt expectedMinimum must match current blog count");
+}
+
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
   const structuredData = readJson(structuredDataPath);
+  const blogDiscovery = readJson(blogDiscoveryPath);
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
+  validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
 
   console.log(
     JSON.stringify(
       {
-        artifactFiles: [smokePath, gscPath, structuredDataPath],
+        artifactFiles: [smokePath, gscPath, structuredDataPath, blogDiscoveryPath],
         baseUrl: smoke.baseUrl,
+        blogDiscoveryCount: blogDiscovery.blogPostCount,
         gscPriorityUrlCount: gsc.priorityUrlCount,
         ok: true,
         smokeCheckCount: smoke.results.length,

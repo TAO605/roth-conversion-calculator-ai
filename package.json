@@ -12,6 +12,7 @@
     "seo:smoke": "node scripts/seo-smoke.mjs",
     "seo:gsc-evidence": "node scripts/gsc-evidence.mjs",
     "seo:structured-data": "node scripts/structured-data-evidence.mjs",
+    "seo:blog-discovery": "node scripts/blog-discovery-evidence.mjs",
     "seo:blog-review": "node scripts/blog-seo-review.mjs",
     "seo:blog-evidence-validate": "node scripts/validate-blog-publication-evidence.mjs",
     "seo:blog-ready": "node scripts/blog-publication-readiness.mjs",
