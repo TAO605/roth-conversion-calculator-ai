@@ -26,6 +26,7 @@ export interface BlogFinalPublicationReview {
   goal: string;
   validationCommand: string;
   manifestCommand: string;
+  manifestValidationCommand: string;
   requiredEvidence: string[];
   stopConditions: string[];
   publishCriteria: string[];
@@ -199,11 +200,14 @@ export function getBlogFinalPublicationReview(): BlogFinalPublicationReview {
       "npm run seo:blog-final-validate -- --path /blog/approved-slug --readiness blog-ready-result.json --smoke seo-smoke-result.json --structured-data structured-data-evidence-result.json --blog-discovery blog-discovery-evidence-result.json --output blog-final-publication-result.json",
     manifestCommand:
       "npm run seo:blog-publication-manifest -- --path /blog/approved-slug --readiness blog-ready-result.json --final blog-final-publication-result.json --smoke seo-smoke-result.json --structured-data structured-data-evidence-result.json --blog-discovery blog-discovery-evidence-result.json --output blog-publication-manifest.json",
+    manifestValidationCommand:
+      "npm run seo:blog-publication-manifest-validate -- --manifest blog-publication-manifest.json",
     requiredEvidence: [
       "`blog-ready-result.json` with `ok: true` and a reviewed publication status.",
       "`blog-review-result.json` retained when a separate reviewer handoff or release package is needed.",
       "`blog-final-publication-result.json` retained after final package validation.",
       "`blog-publication-manifest.json` retained as the evidence inventory for the article release package.",
+      "Manifest validation output confirms retained evidence file hashes still match.",
       "Confirmed internal link target and at least one official source link in the article body.",
       "Article metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD derived from the approved article data.",
       "Post-deploy production evidence from SEO smoke, structured-data evidence, blog discovery evidence, sitemap, RSS, and llms.txt.",

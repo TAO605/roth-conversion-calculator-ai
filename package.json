@@ -18,6 +18,7 @@
     "seo:blog-ready": "node scripts/blog-publication-readiness.mjs",
     "seo:blog-final-validate": "node scripts/validate-blog-final-publication.mjs",
     "seo:blog-publication-manifest": "node scripts/generate-blog-publication-manifest.mjs",
+    "seo:blog-publication-manifest-validate": "node scripts/validate-blog-publication-manifest.mjs",
     "seo:evidence-validate": "node scripts/validate-seo-evidence.mjs",
     "seo:evidence-manifest": "node scripts/generate-seo-evidence-manifest.mjs",
     "lint": "next lint"

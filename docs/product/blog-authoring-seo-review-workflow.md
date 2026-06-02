@@ -233,6 +233,14 @@ npm run seo:blog-publication-manifest -- --path /blog/approved-slug --readiness 
 
 The manifest records the article path, publication status, evidence file roles, byte sizes, and SHA-256 hashes so the release package can be reviewed later without guessing which files belonged to the publication.
 
+Validate the manifest after archiving or handoff with:
+
+```bash
+npm run seo:blog-publication-manifest-validate -- --manifest blog-publication-manifest.json
+```
+
+The manifest validator confirms required evidence roles are present, the article path is a `/blog/` URL, Article and BreadcrumbList structured-data types are recorded, and every retained file still matches the byte count and SHA-256 hash stored in the manifest.
+
 Stop publication when:
 
 - The article body has not been written or approved by the user.

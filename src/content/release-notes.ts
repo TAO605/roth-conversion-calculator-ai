@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.106",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Blog publication manifest validator",
+    summary:
+      "Added a manifest validator for retained blog publication packages so archived readiness, final validation, SEO smoke, structured-data, and blog discovery evidence can be checked for required roles, Article/Breadcrumb coverage, byte counts, and SHA-256 hash integrity.",
+    affectedArea:
+      "Blog publication evidence retention, manifest integrity checks, reviewer handoff validation, release auditability, and YMYL-safe publishing governance",
+    rollbackPath:
+      "Remove scripts/validate-blog-publication-manifest.mjs, the seo:blog-publication-manifest-validate package script, manifest validator references from content operations and blog workflow documentation, and the related tests, release note, task, progress, and feature version update.",
+  },
+  {
     version: "1.0.105",
     date: "2026-06-02",
     type: "patch",
