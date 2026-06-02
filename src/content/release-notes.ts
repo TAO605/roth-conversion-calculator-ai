@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.102",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Blog final publication review gate",
+    summary:
+      "Added a visible final publication review gate to the Content Operations Playbook so user-owned blog drafts must retain readiness evidence, resolve manual-review stops, and pass post-deploy discovery and structured-data evidence before AI publishes them.",
+    affectedArea:
+      "Blog publishing operations, user-owned article approval, YMYL stop conditions, retained readiness evidence, discovery evidence, and release governance",
+    rollbackPath:
+      "Remove getBlogFinalPublicationReview, the Final publication review section from /content-operations, and the related tests, release note, documentation, task, progress, and content-operations feature version update.",
+  },
+  {
     version: "1.0.101",
     date: "2026-06-02",
     type: "patch",

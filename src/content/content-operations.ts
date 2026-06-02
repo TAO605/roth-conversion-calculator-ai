@@ -21,6 +21,14 @@ export interface BlogDraftReviewWorkflow {
   publicationDuties: string[];
 }
 
+export interface BlogFinalPublicationReview {
+  title: string;
+  goal: string;
+  requiredEvidence: string[];
+  stopConditions: string[];
+  publishCriteria: string[];
+}
+
 function step(label: string, output: string, detail: string): ContentOperationsStep {
   return { label, output, detail };
 }
@@ -176,6 +184,35 @@ export function getBlogDraftReviewWorkflow(): BlogDraftReviewWorkflow {
       "Use the one-step readiness command for quick pre-publication checks when a retained JSON file is not needed yet.",
       "Treat `manual-review-required` as a stop for editorial review; publish only after the final reviewer accepts the remaining manual signals.",
       "Run blog review, YMYL language tests, production build, SEO smoke, and structured-data evidence before release.",
+    ],
+  };
+}
+
+export function getBlogFinalPublicationReview(): BlogFinalPublicationReview {
+  return {
+    title: "Final publication review",
+    goal:
+      "Use this gate after the user finishes or approves the article body, before AI turns the draft into a published route.",
+    requiredEvidence: [
+      "`blog-ready-result.json` with `ok: true` and a reviewed publication status.",
+      "`blog-review-result.json` retained when a separate reviewer handoff or release package is needed.",
+      "Confirmed internal link target and at least one official source link in the article body.",
+      "Article metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD derived from the approved article data.",
+      "Post-deploy production evidence from SEO smoke, structured-data evidence, blog discovery evidence, sitemap, RSS, and llms.txt.",
+    ],
+    stopConditions: [
+      "The article body has not been written or approved by the user.",
+      "`publicationStatus` is `manual-review-required` and the remaining manual signals have not been accepted.",
+      "Any hard check fails for heading hierarchy, image alt text, YMYL language, internal links, or official source links.",
+      "The draft uses personalized tax advice, best/optimal claims, guarantees, fake ratings, risk-free claims, or 100% accuracy claims.",
+      "The article introduces tax, Medicare, ACA, Social Security, or state-tax claims that are not source-aligned.",
+    ],
+    publishCriteria: [
+      "The user-approved body is the source of truth for the article text.",
+      "Hard checks pass, and any manual-review-required items are explicitly resolved before release.",
+      "The new URL is reachable from the blog hub and included in sitemap, RSS, and llms.txt when appropriate.",
+      "Production structured-data evidence includes the new blog page with Article and BreadcrumbList.",
+      "Release notes and progress records include rollback path, validation commands, deployment URL, and retained evidence artifact.",
     ],
   };
 }

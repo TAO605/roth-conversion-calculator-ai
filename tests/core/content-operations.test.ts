@@ -5,6 +5,7 @@ import sitemap from "@/app/sitemap";
 import { blogPosts } from "@/content/blog";
 import {
   buildContentOperationsGroups,
+  getBlogFinalPublicationReview,
   getBlogDraftReviewWorkflow,
   getContentOperationsSummary,
 } from "@/content/content-operations";
@@ -86,5 +87,33 @@ describe("content operations playbook", () => {
     expect(pageFile).toContain("evidenceCommand");
     expect(pageFile).toContain("readinessCommand");
     expect(pageFile).toContain("getBlogDraftReviewWorkflow");
+  });
+
+  it("exposes a final publication review gate before AI publishes user-owned blog articles", () => {
+    const finalReview = getBlogFinalPublicationReview();
+    const pageFile = fs.readFileSync(path.join(process.cwd(), "src/app/content-operations/page.tsx"), "utf8");
+
+    expect(finalReview.title).toBe("Final publication review");
+    expect(finalReview.goal).toContain("after the user finishes or approves the article body");
+    expect(finalReview.requiredEvidence).toEqual(
+      expect.arrayContaining([
+        "`blog-ready-result.json` with `ok: true` and a reviewed publication status.",
+        "Post-deploy production evidence from SEO smoke, structured-data evidence, blog discovery evidence, sitemap, RSS, and llms.txt.",
+      ]),
+    );
+    expect(finalReview.stopConditions).toEqual(
+      expect.arrayContaining([
+        "The article body has not been written or approved by the user.",
+        "`publicationStatus` is `manual-review-required` and the remaining manual signals have not been accepted.",
+        "The draft uses personalized tax advice, best/optimal claims, guarantees, fake ratings, risk-free claims, or 100% accuracy claims.",
+      ]),
+    );
+    expect(finalReview.publishCriteria.join(" ")).toContain("user-approved body is the source of truth");
+    expect(finalReview.publishCriteria.join(" ")).toContain("Article and BreadcrumbList");
+    expect(pageFile).toContain("getBlogFinalPublicationReview");
+    expect(pageFile).toContain("Final release gate");
+    expect(pageFile).toContain("Required evidence");
+    expect(pageFile).toContain("Stop conditions");
+    expect(pageFile).toContain("Publish criteria");
   });
 });

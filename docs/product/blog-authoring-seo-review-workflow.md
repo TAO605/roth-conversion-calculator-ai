@@ -202,3 +202,25 @@ Before publishing a user-written blog article, use that page to confirm:
 - Hard checks are fixed before release.
 - Manual density and 1,500+ word-count signals are reviewed without keyword stuffing.
 - AI publication duties cover metadata, canonical URL, Article JSON-LD, Breadcrumb JSON-LD, sitemap, RSS, llms.txt, tests, build, and production SEO evidence.
+
+## Final Publication Review Gate
+
+Before AI publishes a user-owned blog article, the `/content-operations` page exposes a final publication review gate.
+
+Required retained evidence:
+
+- `blog-ready-result.json` with `ok: true` and a reviewed publication status.
+- `blog-review-result.json` when a separate reviewer handoff or release package is needed.
+- Confirmed internal link target and at least one official source link in the article body.
+- Article metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD derived from the approved article data.
+- Post-deploy production evidence from SEO smoke, structured-data evidence, blog discovery evidence, sitemap, RSS, and `llms.txt`.
+
+Stop publication when:
+
+- The article body has not been written or approved by the user.
+- `publicationStatus` is `manual-review-required` and unresolved manual signals remain.
+- Any hard check fails for heading hierarchy, image alt text, YMYL language, internal links, or official source links.
+- The draft uses personalized tax advice, best/optimal claims, guarantees, fake ratings, risk-free claims, or 100% accuracy claims.
+- New tax, Medicare, ACA, Social Security, or state-tax claims are not source-aligned.
+
+Publish only when the user-approved body is the source of truth, hard checks pass, manual-review items are resolved, discovery surfaces are updated, production evidence passes, and release/progress records include validation and rollback details.

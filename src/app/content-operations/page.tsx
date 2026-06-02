@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   buildContentOperationsGroups,
+  getBlogFinalPublicationReview,
   getBlogDraftReviewWorkflow,
   getContentOperationsSummary,
 } from "@/content/content-operations";
@@ -18,6 +19,7 @@ export default function ContentOperationsPage() {
   const groups = buildContentOperationsGroups();
   const summary = getContentOperationsSummary(groups);
   const blogDraftReview = getBlogDraftReviewWorkflow();
+  const blogFinalReview = getBlogFinalPublicationReview();
 
   return (
     <main className="mx-auto grid max-w-6xl gap-8 px-4 py-10">
@@ -136,6 +138,42 @@ export default function ContentOperationsPage() {
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               {blogDraftReview.publicationDuties.map((duty) => (
                 <li key={duty}>{duty}</li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section className="grid gap-5 rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+        <div className="grid gap-2">
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Final release gate</p>
+          <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">{blogFinalReview.title}</h2>
+          <p className="max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+            {blogFinalReview.goal}
+          </p>
+        </div>
+        <div className="grid gap-3 lg:grid-cols-3">
+          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+            <h3 className="font-semibold text-neutral-950 dark:text-white">Required evidence</h3>
+            <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              {blogFinalReview.requiredEvidence.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+            <h3 className="font-semibold text-neutral-950 dark:text-white">Stop conditions</h3>
+            <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              {blogFinalReview.stopConditions.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+            <h3 className="font-semibold text-neutral-950 dark:text-white">Publish criteria</h3>
+            <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              {blogFinalReview.publishCriteria.map((item) => (
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </article>
