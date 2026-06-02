@@ -38,6 +38,8 @@ function validateChecks(review) {
     "h2_contains_keyword",
     "image_alt_text",
     "no_high_risk_ymyl_language",
+    "internal_link_presence",
+    "official_source_link_presence",
   ]) {
     const check = findCheck(review.hardChecks, id);
     assert(check, `blog review hard check missing ${id}`);
@@ -65,6 +67,8 @@ export function validateBlogReviewEvidence(review) {
   assert(review.emptyAltImageCount === 0, "blog review must not have empty image alt text");
   assert(Array.isArray(review.ymylRiskMatches), "blog review ymylRiskMatches must be an array");
   assert(review.ymylRiskMatches.length === 0, "blog review must not include high-risk YMYL language");
+  assert(review.linkSummary?.internalLinkCount > 0, "blog review must include at least one internal link");
+  assert(review.linkSummary?.officialSourceLinkCount > 0, "blog review must include at least one official source link");
   assert(review.headingCounts?.h1 === 1, "blog review must have exactly one H1");
   assert(review.headingCounts?.h2 >= 1, "blog review must have at least one H2");
   assert(review.semanticSummary?.validHeadingHierarchy === true, "blog review semanticSummary must confirm heading hierarchy");

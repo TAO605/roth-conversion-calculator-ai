@@ -25,11 +25,18 @@ function validReviewEvidence() {
       { id: "h2_contains_keyword", passed: true },
       { id: "image_alt_text", passed: true },
       { id: "no_high_risk_ymyl_language", passed: true },
+      { id: "internal_link_presence", passed: true },
+      { id: "official_source_link_presence", passed: true },
     ],
     headingCounts: { h1: 1, h2: 3 },
     keyword: "Roth conversion calculator",
     keywordDensity: 2.4,
     keywordOccurrences: 12,
+    linkSummary: {
+      internalLinkCount: 2,
+      officialSourceLinkCount: 1,
+      totalLinkCount: 4,
+    },
     manualReview: [
       { id: "preferred_blog_word_count", passed: true },
       { id: "keyword_density_review", passed: true },
@@ -73,7 +80,7 @@ describe("blog publication evidence validator", () => {
     expect(result.ok).toBe(true);
     expect(result.keyword).toBe("Roth conversion calculator");
     expect(result.wordCount).toBe(1550);
-    expect(result.hardCheckCount).toBeGreaterThanOrEqual(9);
+    expect(result.hardCheckCount).toBeGreaterThanOrEqual(11);
     expect(result.manualReviewCount).toBeGreaterThanOrEqual(5);
     expect(result.semanticSummary.validHeadingHierarchy).toBe(true);
   });
@@ -98,11 +105,20 @@ describe("blog publication evidence validator", () => {
     expect(script).toContain("heading_hierarchy");
     expect(script).toContain("paragraph_text_structure");
     expect(script).toContain("no_high_risk_ymyl_language");
+    expect(script).toContain("internal_link_presence");
+    expect(script).toContain("official_source_link_presence");
   });
 
   it("rejects evidence with high-risk YMYL language matches", () => {
     const evidence = validReviewEvidence();
     evidence.ymylRiskMatches = [{ label: "100 percent accuracy claim", match: "100% accurate" }];
+
+    expect(() => runValidation(writeJson(evidence))).toThrow();
+  });
+
+  it("rejects evidence without internal or official source links", () => {
+    const evidence = validReviewEvidence();
+    evidence.linkSummary = { internalLinkCount: 1, officialSourceLinkCount: 0, totalLinkCount: 1 };
 
     expect(() => runValidation(writeJson(evidence))).toThrow();
   });

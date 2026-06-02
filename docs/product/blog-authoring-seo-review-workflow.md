@@ -46,8 +46,9 @@ Each blog page should pass these checks before publication:
 - Important terms or high-value phrases may be bolded when useful for scanning.
 - Every uploaded image has a descriptive `alt` attribute.
 - The draft avoids personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.
-- Internal links point to the calculator and relevant supporting guides.
-- External links point to official or reputable sources when tax, Medicare, ACA, or legal/financial context is discussed.
+- At least one internal link points to the calculator or a relevant supporting guide.
+- At least one official source link supports tax, Medicare, ACA, Social Security, or government rule context.
+- Additional external links point to official or reputable sources when tax, Medicare, ACA, or legal/financial context is discussed.
 
 ## Keyword Density Review
 
@@ -148,6 +149,8 @@ The command reads a Markdown or HTML draft and returns JSON evidence for:
 - Strong emphasis usage for important terms or high-value phrases.
 - Keyword-density review.
 - High-risk YMYL language, including personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.
+- Internal link presence for calculator or supporting-guide discovery.
+- Official source link presence for YMYL trust and source alignment.
 
 Hard failures should be fixed before publication. Keyword density is still a manual editorial review signal; do not force exact-match repetition if it harms clarity or YMYL trust.
 
@@ -166,6 +169,8 @@ The publication evidence validator confirms the retained review JSON has:
 - Exactly one H1 and at least one H2.
 - No empty image alt text.
 - No high-risk YMYL language matches.
+- At least one internal link.
+- At least one official source link.
 - Semantic heading hierarchy evidence.
 - Paragraph evidence in `semanticSummary`.
 

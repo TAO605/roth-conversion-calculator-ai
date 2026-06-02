@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.98",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Blog link evidence publication guard",
+    summary:
+      "Added internal-link and official-source-link hard checks to the blog review, readiness, and publication evidence validation commands so user-written drafts must include both site discovery support and source-aligned YMYL trust evidence before publication.",
+    affectedArea:
+      "Blog draft QA automation, internal linking workflow, official source review, publication evidence validation, and YMYL-safe article release gates",
+    rollbackPath:
+      "Remove internal_link_presence, official_source_link_presence, linkSummary output, validator requirements, and the related tests, documentation, release note, and content operations copy.",
+  },
+  {
     version: "1.0.97",
     date: "2026-06-01",
     type: "patch",

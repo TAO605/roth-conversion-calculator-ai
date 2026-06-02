@@ -19,6 +19,15 @@ const YMYL_RISK_PATTERNS = [
   { label: "risk-free claim", pattern: /\brisk[-\s]?free\b/gi },
   { label: "fake rating claim", pattern: /\b(?:5-star|five-star)\s+(?:rated|rating)\b/gi },
 ];
+const SITE_HOSTS = new Set(["roth-conversion-calculator-ai.shop", "www.roth-conversion-calculator-ai.shop"]);
+const OFFICIAL_SOURCE_HOSTS = [
+  "irs.gov",
+  "medicare.gov",
+  "healthcare.gov",
+  "ssa.gov",
+  "treasury.gov",
+  "taxpayeradvocate.irs.gov",
+];
 
 function parseArgs(argv) {
   const args = {
@@ -100,6 +109,19 @@ function extractImages(source) {
   return [...markdownImages, ...htmlImages];
 }
 
+function extractLinks(source) {
+  const markdownLinks = [...source.matchAll(/(?<!!)\[([^\]]+)\]\(([^)]+)\)/g)].map((match) => ({
+    href: normalizeWhitespace(match[2]),
+    text: normalizeWhitespace(stripMarkup(match[1])),
+  }));
+  const htmlLinks = [...source.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)].map((match) => ({
+    href: normalizeWhitespace(match[1]),
+    text: normalizeWhitespace(stripMarkup(match[2])),
+  }));
+
+  return [...markdownLinks, ...htmlLinks].filter((link) => link.href.length > 0);
+}
+
 function extractParagraphs(source) {
   const htmlParagraphs = [...source.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
     .map((match) => normalizeWhitespace(stripMarkup(match[1])))
@@ -169,6 +191,28 @@ function collectYMYLRiskMatches(text) {
   });
 }
 
+function getHostname(href) {
+  try {
+    return new URL(href, "https://www.roth-conversion-calculator-ai.shop").hostname.toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+function isInternalLink(href) {
+  if (href.startsWith("/") || href.startsWith("#")) {
+    return true;
+  }
+
+  return SITE_HOSTS.has(getHostname(href));
+}
+
+function isOfficialSourceLink(href) {
+  const hostname = getHostname(href);
+
+  return OFFICIAL_SOURCE_HOSTS.some((host) => hostname === host || hostname.endsWith(`.${host}`));
+}
+
 function hasValidHeadingHierarchy(headings) {
   return headings.every((heading, index) => {
     if (index === 0) return heading.level === 1;
@@ -188,6 +232,9 @@ export function reviewBlogDraft(source, options) {
   const h1s = headings.filter((heading) => heading.level === 1);
   const h2s = headings.filter((heading) => heading.level === 2);
   const images = extractImages(source);
+  const links = extractLinks(source);
+  const internalLinks = links.filter((link) => isInternalLink(link.href));
+  const officialSourceLinks = links.filter((link) => isOfficialSourceLink(link.href));
   const paragraphs = extractParagraphs(source);
   const strongPhrases = extractStrong(source);
   const emptyAltImages = images.filter((image) => image.alt.length === 0);
@@ -225,6 +272,16 @@ export function reviewBlogDraft(source, options) {
       "no_high_risk_ymyl_language",
       ymylRiskMatches.length === 0,
       "Draft should avoid personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.",
+    ),
+    makeCheck(
+      "internal_link_presence",
+      internalLinks.length > 0,
+      "Draft should include at least one internal link to the calculator or a relevant supporting guide.",
+    ),
+    makeCheck(
+      "official_source_link_presence",
+      officialSourceLinks.length > 0,
+      "Draft should include at least one official source link for tax, Medicare, ACA, Social Security, or government rule context.",
     ),
   ];
   const manualReview = [
@@ -268,6 +325,11 @@ export function reviewBlogDraft(source, options) {
     manualReview,
     ok: hardChecks.every((check) => check.passed),
     preferredReady: manualReview.every((check) => check.passed),
+    linkSummary: {
+      internalLinkCount: internalLinks.length,
+      officialSourceLinkCount: officialSourceLinks.length,
+      totalLinkCount: links.length,
+    },
     semanticSummary: {
       paragraphCount: paragraphs.length,
       strongPhraseCount: strongPhrases.length,

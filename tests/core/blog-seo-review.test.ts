@@ -16,6 +16,8 @@ function makeWords(count: number): string {
   return Array.from({ length: count }, (_, index) => `planning${index}`).join(" ");
 }
 
+const linkEvidence = `[Open the calculator](/#calculator) and review the [IRS Roth IRA guidance](https://www.irs.gov/retirement-plans/roth-iras).`;
+
 function runReview(filePath: string, keyword = "Roth conversion calculator") {
   const output = execFileSync(
     process.execPath,
@@ -33,6 +35,7 @@ function runReview(filePath: string, keyword = "Roth conversion calculator") {
     preferredReady: boolean;
     wordCount: number;
     ymylRiskMatches: Array<{ label: string; match: string }>;
+    linkSummary: { internalLinkCount: number; officialSourceLinkCount: number; totalLinkCount: number };
     hardChecks: Array<{ id: string; passed: boolean }>;
     manualReview: Array<{ id: string; passed: boolean }>;
     semanticSummary: {
@@ -49,6 +52,8 @@ describe("blog SEO review command", () => {
 
 Roth conversion calculator planning starts with a clear educational scope and a careful review of taxable income.
 
+${linkEvidence}
+
 ## Roth Conversion Calculator Checklist
 
 ![Calculator inputs](calculator-inputs.png)
@@ -64,6 +69,10 @@ Roth conversion calculator review should stay educational and assumption-based b
     expect(result.wordCount).toBeGreaterThanOrEqual(800);
     expect(result.hardChecks.every((check) => check.passed)).toBe(true);
     expect(result.hardChecks.find((check) => check.id === "no_high_risk_ymyl_language")?.passed).toBe(true);
+    expect(result.hardChecks.find((check) => check.id === "internal_link_presence")?.passed).toBe(true);
+    expect(result.hardChecks.find((check) => check.id === "official_source_link_presence")?.passed).toBe(true);
+    expect(result.linkSummary.internalLinkCount).toBeGreaterThan(0);
+    expect(result.linkSummary.officialSourceLinkCount).toBeGreaterThan(0);
     expect(result.ymylRiskMatches).toEqual([]);
     expect(result.semanticSummary.paragraphCount).toBeGreaterThan(0);
     expect(result.semanticSummary.validHeadingHierarchy).toBe(true);
@@ -93,6 +102,8 @@ Short draft.
     const draft = writeDraft(`# Roth Conversion Calculator Review
 
 Roth conversion calculator users need a natural draft.
+
+${linkEvidence}
 
 ## Roth Conversion Calculator Review Steps
 
@@ -129,12 +140,16 @@ Roth conversion calculator output should be reviewed before decisions.
     expect(script).toContain("paragraph_text_structure");
     expect(script).toContain("h2_outline_review");
     expect(script).toContain("no_high_risk_ymyl_language");
+    expect(script).toContain("internal_link_presence");
+    expect(script).toContain("official_source_link_presence");
   });
 
   it("handles UTF-8 BOM drafts from Windows writing tools", () => {
     const draft = writeDraft(`\uFEFF# Roth Conversion Calculator Draft
 
 Roth conversion calculator review should still recognize the first heading when a writing tool saves a BOM.
+
+${linkEvidence}
 
 ## Roth Conversion Calculator Details
 
@@ -156,6 +171,8 @@ Roth conversion calculator review remains educational.
 
 Roth conversion calculator review starts with a paragraph and **educational estimate** language.
 
+${linkEvidence}
+
 ### Skipped Heading
 
 ![Draft worksheet](draft.png)
@@ -175,6 +192,8 @@ Roth conversion calculator review remains educational.
     const fixedDraft = writeDraft(`# Roth Conversion Calculator Draft
 
 Roth conversion calculator review starts with a paragraph and **educational estimate** language.
+
+${linkEvidence}
 
 ## Roth Conversion Calculator Outline
 
@@ -199,6 +218,8 @@ Roth conversion calculator review remains educational.
 
 Roth conversion calculator review starts with an educational paragraph.
 
+${linkEvidence}
+
 ## Roth Conversion Calculator Advice
 
 You should convert the full amount because this is the optimal conversion amount.
@@ -212,6 +233,46 @@ Roth conversion calculator review remains educational and 100% accurate.
 
     expect(() =>
       execFileSync(process.execPath, ["scripts/blog-seo-review.mjs", "--file", draft, "--keyword", "Roth conversion calculator"], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ).toThrow();
+  });
+
+  it("fails drafts that lack internal or official source links", () => {
+    const noLinks = writeDraft(`# Roth Conversion Calculator Draft
+
+Roth conversion calculator review starts with an educational paragraph.
+
+## Roth Conversion Calculator Outline
+
+![Draft worksheet](draft.png)
+
+${makeWords(820)}
+
+Roth conversion calculator review remains educational.
+`);
+    const internalOnly = writeDraft(`# Roth Conversion Calculator Draft
+
+Roth conversion calculator review starts with an educational paragraph and [opens the calculator](/#calculator).
+
+## Roth Conversion Calculator Outline
+
+![Draft worksheet](draft.png)
+
+${makeWords(820)}
+
+Roth conversion calculator review remains educational.
+`);
+
+    expect(() =>
+      execFileSync(process.execPath, ["scripts/blog-seo-review.mjs", "--file", noLinks, "--keyword", "Roth conversion calculator"], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ).toThrow();
+    expect(() =>
+      execFileSync(process.execPath, ["scripts/blog-seo-review.mjs", "--file", internalOnly, "--keyword", "Roth conversion calculator"], {
         cwd: process.cwd(),
         encoding: "utf8",
       }),

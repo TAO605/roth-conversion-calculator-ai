@@ -16,6 +16,8 @@ function makeWords(count: number): string {
   return Array.from({ length: count }, (_, index) => `planning${index}`).join(" ");
 }
 
+const linkEvidence = `[Open the calculator](/#calculator) and review the [IRS Roth IRA guidance](https://www.irs.gov/retirement-plans/roth-iras).`;
+
 function runReady(filePath: string) {
   const output = execFileSync(
     process.execPath,
@@ -33,7 +35,12 @@ function runReady(filePath: string) {
     ok: boolean;
     publicationStatus: string;
     review: { ok: boolean; hardChecks: Array<{ id: string; passed: boolean }> };
-    validation: { hardCheckCount: number; semanticSummary: { validHeadingHierarchy: boolean }; wordCount: number };
+    validation: {
+      hardCheckCount: number;
+      linkSummary: { internalLinkCount: number; officialSourceLinkCount: number };
+      semanticSummary: { validHeadingHierarchy: boolean };
+      wordCount: number;
+    };
   };
 }
 
@@ -64,6 +71,8 @@ describe("blog publication readiness command", () => {
 
 Roth conversion calculator planning starts with a clear paragraph and **educational estimate** language.
 
+${linkEvidence}
+
 ## Roth Conversion Calculator Checklist
 
 ![Calculator inputs](calculator-inputs.png)
@@ -81,7 +90,9 @@ Roth conversion calculator review should stay educational and assumption-based b
     expect(result.manualReviewRequired).toBe(true);
     expect(result.publicationStatus).toBe("manual-review-required");
     expect(result.review.ok).toBe(true);
-    expect(result.validation.hardCheckCount).toBeGreaterThanOrEqual(9);
+    expect(result.validation.hardCheckCount).toBeGreaterThanOrEqual(11);
+    expect(result.validation.linkSummary.internalLinkCount).toBeGreaterThan(0);
+    expect(result.validation.linkSummary.officialSourceLinkCount).toBeGreaterThan(0);
     expect(result.validation.wordCount).toBeGreaterThanOrEqual(800);
     expect(result.validation.semanticSummary.validHeadingHierarchy).toBe(true);
   });
@@ -91,6 +102,8 @@ Roth conversion calculator review should stay educational and assumption-based b
     const draft = writeDraft(`# Roth Conversion Calculator Guide
 
 Roth conversion calculator planning starts with a clear paragraph and **educational estimate** language.
+
+${linkEvidence}
 
 ## Roth Conversion Calculator Strategy
 
@@ -119,6 +132,8 @@ Roth conversion calculator review should stay educational and assumption-based b
     const draft = writeDraft(`# Roth Conversion Calculator Guide
 
 Roth conversion calculator planning starts with a clear paragraph and **educational estimate** language.
+
+${linkEvidence}
 
 ## Roth Conversion Calculator Checklist
 

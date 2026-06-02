@@ -67,6 +67,7 @@ export function buildBlogPublicationReadiness(source, options) {
     review,
     validation: {
       hardCheckCount: review.hardChecks.length,
+      linkSummary: review.linkSummary,
       manualReviewCount: review.manualReview.length,
       semanticSummary: review.semanticSummary,
       wordCount: review.wordCount,
