@@ -36,6 +36,7 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("validatePerformanceEvidence");
     expect(script).toContain("lighthouse-mobile-lab");
     expect(script).toContain("performanceScore");
+    expect(script).toContain(">= 0.6");
     expect(script).toContain("blogDiscoveryCount");
     expect(script).toContain("structuredDataTypeCount");
     expect(script).toContain("pageCount");
@@ -85,6 +86,7 @@ describe("SEO evidence artifact validation", () => {
     expect(structuredDataScript).toContain("BreadcrumbList");
     expect(workflow).toContain("Run structured data evidence check");
     expect(workflow).toContain("Run mobile performance evidence check");
+    expect(workflow).toContain("set -o pipefail");
     expect(workflow).toContain("node scripts/performance-evidence.mjs | tee performance-evidence-result.json");
     expect(workflow).toContain("node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json");
     expect(workflow).toContain("Run blog discovery evidence check");

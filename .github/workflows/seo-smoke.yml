@@ -45,25 +45,39 @@ jobs:
         run: sleep 90
 
       - name: Run SEO smoke check
-        run: node scripts/seo-smoke.mjs | tee seo-smoke-result.json
+        run: |
+          set -o pipefail
+          node scripts/seo-smoke.mjs | tee seo-smoke-result.json
 
       - name: Run GSC priority URL evidence check
-        run: node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json
+        run: |
+          set -o pipefail
+          node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json
 
       - name: Run mobile performance evidence check
-        run: node scripts/performance-evidence.mjs | tee performance-evidence-result.json
+        run: |
+          set -o pipefail
+          node scripts/performance-evidence.mjs | tee performance-evidence-result.json
 
       - name: Run structured data evidence check
-        run: node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json
+        run: |
+          set -o pipefail
+          node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json
 
       - name: Run blog discovery evidence check
-        run: node scripts/blog-discovery-evidence.mjs | tee blog-discovery-evidence-result.json
+        run: |
+          set -o pipefail
+          node scripts/blog-discovery-evidence.mjs | tee blog-discovery-evidence-result.json
 
       - name: Validate SEO evidence artifact
-        run: node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json
+        run: |
+          set -o pipefail
+          node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json
 
       - name: Generate SEO evidence manifest
-        run: node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json
+        run: |
+          set -o pipefail
+          node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json
 
       - name: Upload SEO evidence
         uses: actions/upload-artifact@v7

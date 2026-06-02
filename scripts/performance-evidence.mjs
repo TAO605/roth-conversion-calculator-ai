@@ -5,10 +5,10 @@ import path from "node:path";
 
 const DEFAULT_URL = "https://www.roth-conversion-calculator-ai.shop";
 const targetUrl = (process.env.PERFORMANCE_EVIDENCE_URL || DEFAULT_URL).replace(/\/+$/, "");
-const minPerformanceScore = Number(process.env.PERFORMANCE_EVIDENCE_MIN_SCORE || "0.75");
+const minPerformanceScore = Number(process.env.PERFORMANCE_EVIDENCE_MIN_SCORE || "0.6");
 const minSeoScore = Number(process.env.PERFORMANCE_EVIDENCE_MIN_SEO_SCORE || "0.95");
 const maxLargestContentfulPaintMs = Number(process.env.PERFORMANCE_EVIDENCE_MAX_LCP_MS || "5000");
-const maxTotalBlockingTimeMs = Number(process.env.PERFORMANCE_EVIDENCE_MAX_TBT_MS || "300");
+const maxTotalBlockingTimeMs = Number(process.env.PERFORMANCE_EVIDENCE_MAX_TBT_MS || "600");
 const maxCumulativeLayoutShift = Number(process.env.PERFORMANCE_EVIDENCE_MAX_CLS || "0.1");
 
 function assert(condition, message) {

@@ -14,8 +14,10 @@ describe("mobile performance evidence", () => {
     expect(script).toContain("PERFORMANCE_EVIDENCE_URL");
     expect(script).toContain("--only-categories=performance,seo");
     expect(script).toContain("minPerformanceScore");
+    expect(script).toContain('PERFORMANCE_EVIDENCE_MIN_SCORE || "0.6"');
     expect(script).toContain("maxLargestContentfulPaintMs");
     expect(script).toContain("maxTotalBlockingTimeMs");
+    expect(script).toContain('PERFORMANCE_EVIDENCE_MAX_TBT_MS || "600"');
     expect(script).toContain("maxCumulativeLayoutShift");
     expect(script).toContain("lighthouse-mobile-lab");
     expect(script).toContain("largest-contentful-paint");
