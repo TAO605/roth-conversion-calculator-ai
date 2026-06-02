@@ -7,7 +7,7 @@ import {
   saveCalculatorInput,
 } from "@/common/storage/calculator-persistence";
 import { faqJsonLd, webApplicationJsonLd } from "@/core/seo/json-ld";
-import { faqItems } from "@/features/faq/FaqSection";
+import { faqItems } from "@/features/faq/faq-items";
 import sitemap from "@/app/sitemap";
 import robots from "@/app/robots";
 import { metadata } from "@/app/layout";

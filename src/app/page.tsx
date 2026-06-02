@@ -17,11 +17,9 @@ import { ResultScopeBadges } from "@/features/result-scope/ResultScopeBadges";
 import { ResultSummary } from "@/features/result-summary/ResultSummary";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
 import { TaxPaymentComparison } from "@/features/tax-payment-comparison/TaxPaymentComparison";
-import { CalculationBreakdown } from "@/features/calculation-breakdown/CalculationBreakdown";
-import { FaqSection, faqItems } from "@/features/faq/FaqSection";
+import { faqItems } from "@/features/faq/faq-items";
 import { ShareResultButton } from "@/features/share-link/ShareResultButton";
 import { ThemeToggle } from "@/features/theme-toggle/ThemeToggle";
-import { TaxDataFreshnessCard } from "@/features/tax-data-freshness/TaxDataFreshnessCard";
 import { calculateRothConversion } from "@/core/calculator/roth-conversion";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
@@ -83,6 +81,21 @@ const CopyProfessionalHandoffButton = dynamic<{ input: RothConversionInput; resu
 const AiExplainer = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
   () => import("@/features/ai-assistant/AiExplainer").then((module) => module.AiExplainer),
   { loading: () => <LazyPanelFallback className="min-h-[24rem]" label="Loading AI helper..." /> },
+);
+
+const CalculationBreakdown = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
+  () => import("@/features/calculation-breakdown/CalculationBreakdown").then((module) => module.CalculationBreakdown),
+  { loading: () => <LazyPanelFallback className="min-h-[18rem]" label="Loading calculation details..." /> },
+);
+
+const FaqSection = dynamic(
+  () => import("@/features/faq/FaqSection").then((module) => module.FaqSection),
+  { loading: () => <LazyPanelFallback className="min-h-[14rem]" label="Loading FAQ..." /> },
+);
+
+const TaxDataFreshnessCard = dynamic<{ compact?: boolean }>(
+  () => import("@/features/tax-data-freshness/TaxDataFreshnessCard").then((module) => module.TaxDataFreshnessCard),
+  { loading: () => <LazyPanelFallback className="min-h-[11rem]" label="Loading tax data status..." /> },
 );
 
 const CalculatorAnalyticsBeacon = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(

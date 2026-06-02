@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.108",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Homepage below-fold bundle split",
+    summary:
+      "Split below-the-fold homepage FAQ, calculation details, and tax-data freshness UI into dynamic chunks while keeping FAQ structured-data items available for JSON-LD, reducing the homepage client bundle without changing calculator behavior or YMYL copy.",
+    affectedArea:
+      "Homepage Core Web Vitals readiness, client bundle size, FAQ structured data, calculation details loading, tax-data trust UI, and PageSpeed follow-up optimization",
+    rollbackPath:
+      "Restore static imports for FaqSection, CalculationBreakdown, and TaxDataFreshnessCard in src/app/page.tsx, move FAQ items back into FaqSection if needed, and revert the related tests, release note, task, progress, and performance documentation updates.",
+  },
+  {
     version: "1.0.107",
     date: "2026-06-02",
     type: "patch",
