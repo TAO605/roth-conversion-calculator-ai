@@ -627,3 +627,29 @@ Targeted analytics/performance/evidence tests, full `npm test`, build, productio
 **Future trigger words:**
 
 deferred analytics queue, GA4 idle loader, third-party script TBT, GTM removed from long tasks, analytics script strategy.
+
+## 2026-06-02 - Use Multi-Sample Lighthouse Evidence For CI Variance
+
+**Symptom:**
+
+Single Lighthouse runs could fail or overstate risk when the SEO category returned `null` transiently or when GitHub Actions produced an isolated TBT spike that did not reproduce in production local checks.
+
+**Root cause:**
+
+The performance evidence artifact previously represented only one Lighthouse sample, so a transient lab condition could become the whole retained performance story.
+
+**Fix:**
+
+Added `samplePolicy` to `scripts/performance-evidence.mjs`: collect up to three mobile Lighthouse samples by default, retain every attempt, discard invalid SEO-category samples from selection, and choose the valid median TBT sample for the final evidence payload.
+
+**Guard:**
+
+`scripts/validate-seo-evidence.mjs` now requires `samplePolicy`, and `tests/core/performance-evidence.test.ts` plus `tests/core/seo-evidence-validation.test.ts` guard the multi-sample fields and selection strategy.
+
+**Validation:**
+
+Targeted performance/evidence/release/feature tests, full `npm test`, `npm run build`, local production evidence package validation, Vercel production deployment, production SEO evidence commands, and GitHub Actions artifact download all passed. Final CI evidence retained three valid attempts with performance `0.99`, SEO `1.00`, LCP about `1664ms`, TBT about `80ms`, CLS `0`, and `manualReviewRequired: false`.
+
+**Future trigger words:**
+
+Lighthouse null SEO category, CI TBT variance, single-sample performance evidence, median Lighthouse sample, samplePolicy missing.
