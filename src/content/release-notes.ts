@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.105",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Blog publication evidence manifest",
+    summary:
+      "Added a blog publication manifest command so each user-approved article release can retain a single inventory of readiness, final validation, production SEO smoke, structured-data, and blog discovery evidence with file sizes and SHA-256 hashes.",
+    affectedArea:
+      "Blog publication evidence retention, reviewer handoff packages, release auditability, content operations documentation, and YMYL-safe publishing governance",
+    rollbackPath:
+      "Remove scripts/generate-blog-publication-manifest.mjs, the seo:blog-publication-manifest package script, manifest references from content operations and blog workflow documentation, and the related tests, release note, task, progress, and feature version update.",
+  },
+  {
     version: "1.0.104",
     date: "2026-06-02",
     type: "patch",

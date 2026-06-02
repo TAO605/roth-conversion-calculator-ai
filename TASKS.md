@@ -54,3 +54,4 @@
 - [done] Add final blog publication review gate to content operations
 - [done] Add final blog publication package validator
 - [done] Add retained output support to final blog publication validator
+- [done] Add blog publication evidence manifest command

@@ -98,10 +98,14 @@ describe("content operations playbook", () => {
     expect(finalReview.validationCommand).toContain("npm run seo:blog-final-validate");
     expect(finalReview.validationCommand).toContain("--path /blog/approved-slug");
     expect(finalReview.validationCommand).toContain("--output blog-final-publication-result.json");
+    expect(finalReview.manifestCommand).toContain("npm run seo:blog-publication-manifest");
+    expect(finalReview.manifestCommand).toContain("--final blog-final-publication-result.json");
+    expect(finalReview.manifestCommand).toContain("--output blog-publication-manifest.json");
     expect(finalReview.requiredEvidence).toEqual(
       expect.arrayContaining([
         "`blog-ready-result.json` with `ok: true` and a reviewed publication status.",
         "`blog-final-publication-result.json` retained after final package validation.",
+        "`blog-publication-manifest.json` retained as the evidence inventory for the article release package.",
         "Post-deploy production evidence from SEO smoke, structured-data evidence, blog discovery evidence, sitemap, RSS, and llms.txt.",
       ]),
     );
@@ -117,6 +121,7 @@ describe("content operations playbook", () => {
     expect(pageFile).toContain("getBlogFinalPublicationReview");
     expect(pageFile).toContain("Final release gate");
     expect(pageFile).toContain("validationCommand");
+    expect(pageFile).toContain("manifestCommand");
     expect(pageFile).toContain("Required evidence");
     expect(pageFile).toContain("Stop conditions");
     expect(pageFile).toContain("Publish criteria");

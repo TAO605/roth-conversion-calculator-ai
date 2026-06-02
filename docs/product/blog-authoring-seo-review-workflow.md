@@ -212,6 +212,7 @@ Required retained evidence:
 - `blog-ready-result.json` with `ok: true` and a reviewed publication status.
 - `blog-review-result.json` when a separate reviewer handoff or release package is needed.
 - `blog-final-publication-result.json` after final package validation.
+- `blog-publication-manifest.json` as the inventory for the article release package.
 - Confirmed internal link target and at least one official source link in the article body.
 - Article metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD derived from the approved article data.
 - Post-deploy production evidence from SEO smoke, structured-data evidence, blog discovery evidence, sitemap, RSS, and `llms.txt`.
@@ -223,6 +224,14 @@ npm run seo:blog-final-validate -- --path /blog/approved-slug --readiness blog-r
 ```
 
 If `publicationStatus` is `manual-review-required`, the command fails until the remaining manual signals are accepted and the command is run with `--manual-review-accepted`.
+
+Generate the final evidence inventory with:
+
+```bash
+npm run seo:blog-publication-manifest -- --path /blog/approved-slug --readiness blog-ready-result.json --final blog-final-publication-result.json --smoke seo-smoke-result.json --structured-data structured-data-evidence-result.json --blog-discovery blog-discovery-evidence-result.json --output blog-publication-manifest.json
+```
+
+The manifest records the article path, publication status, evidence file roles, byte sizes, and SHA-256 hashes so the release package can be reviewed later without guessing which files belonged to the publication.
 
 Stop publication when:
 
