@@ -215,6 +215,14 @@ Required retained evidence:
 - Article metadata, canonical URL, Article JSON-LD, and Breadcrumb JSON-LD derived from the approved article data.
 - Post-deploy production evidence from SEO smoke, structured-data evidence, blog discovery evidence, sitemap, RSS, and `llms.txt`.
 
+Validate the retained final publication package with:
+
+```bash
+npm run seo:blog-final-validate -- --path /blog/approved-slug --readiness blog-ready-result.json --smoke seo-smoke-result.json --structured-data structured-data-evidence-result.json --blog-discovery blog-discovery-evidence-result.json
+```
+
+If `publicationStatus` is `manual-review-required`, the command fails until the remaining manual signals are accepted and the command is run with `--manual-review-accepted`.
+
 Stop publication when:
 
 - The article body has not been written or approved by the user.

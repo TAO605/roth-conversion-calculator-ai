@@ -24,6 +24,7 @@ export interface BlogDraftReviewWorkflow {
 export interface BlogFinalPublicationReview {
   title: string;
   goal: string;
+  validationCommand: string;
   requiredEvidence: string[];
   stopConditions: string[];
   publishCriteria: string[];
@@ -193,6 +194,8 @@ export function getBlogFinalPublicationReview(): BlogFinalPublicationReview {
     title: "Final publication review",
     goal:
       "Use this gate after the user finishes or approves the article body, before AI turns the draft into a published route.",
+    validationCommand:
+      "npm run seo:blog-final-validate -- --path /blog/approved-slug --readiness blog-ready-result.json --smoke seo-smoke-result.json --structured-data structured-data-evidence-result.json --blog-discovery blog-discovery-evidence-result.json",
     requiredEvidence: [
       "`blog-ready-result.json` with `ok: true` and a reviewed publication status.",
       "`blog-review-result.json` retained when a separate reviewer handoff or release package is needed.",

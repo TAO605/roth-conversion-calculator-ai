@@ -95,6 +95,8 @@ describe("content operations playbook", () => {
 
     expect(finalReview.title).toBe("Final publication review");
     expect(finalReview.goal).toContain("after the user finishes or approves the article body");
+    expect(finalReview.validationCommand).toContain("npm run seo:blog-final-validate");
+    expect(finalReview.validationCommand).toContain("--path /blog/approved-slug");
     expect(finalReview.requiredEvidence).toEqual(
       expect.arrayContaining([
         "`blog-ready-result.json` with `ok: true` and a reviewed publication status.",
@@ -112,6 +114,7 @@ describe("content operations playbook", () => {
     expect(finalReview.publishCriteria.join(" ")).toContain("Article and BreadcrumbList");
     expect(pageFile).toContain("getBlogFinalPublicationReview");
     expect(pageFile).toContain("Final release gate");
+    expect(pageFile).toContain("validationCommand");
     expect(pageFile).toContain("Required evidence");
     expect(pageFile).toContain("Stop conditions");
     expect(pageFile).toContain("Publish criteria");

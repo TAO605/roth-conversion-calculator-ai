@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.103",
+    date: "2026-06-02",
+    type: "patch",
+    title: "Blog final publication package validator",
+    summary:
+      "Added a final blog publication package validator so approved article releases can verify readiness evidence, manual-review acceptance, production SEO smoke, Article structured data, and blog discovery evidence before being treated as publishable.",
+    affectedArea:
+      "Blog publication QA automation, retained evidence validation, manual-review stop conditions, structured-data release checks, and YMYL-safe publishing governance",
+    rollbackPath:
+      "Remove scripts/validate-blog-final-publication.mjs, the seo:blog-final-validate package script, its tests, the command references from content operations and blog workflow documentation, and the related release note, task, progress, and feature version update.",
+  },
+  {
     version: "1.0.102",
     date: "2026-06-02",
     type: "patch",

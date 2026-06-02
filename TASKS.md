@@ -52,3 +52,4 @@
 - [done] Make blog Article structured-data evidence source-driven
 - [done] Add blog discovery evidence to production SEO artifacts
 - [done] Add final blog publication review gate to content operations
+- [done] Add final blog publication package validator

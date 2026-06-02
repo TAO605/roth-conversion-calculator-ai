@@ -151,6 +151,9 @@ export default function ContentOperationsPage() {
           <p className="max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
             {blogFinalReview.goal}
           </p>
+          <code className="mt-2 overflow-x-auto rounded-[14px] bg-neutral-950 px-4 py-3 text-sm leading-6 text-white">
+            {blogFinalReview.validationCommand}
+          </code>
         </div>
         <div className="grid gap-3 lg:grid-cols-3">
           <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
