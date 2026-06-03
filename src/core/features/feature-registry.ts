@@ -27,13 +27,13 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "ai-explainer",
     label: "AI Roth Conversion Explainer",
-    version: "1.0.1",
+    version: "1.0.125",
     layer: "feature",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/features/ai-assistant",
-    rollbackPath: "Remove AiExplainer from the homepage and keep the calculator available.",
+    rollbackPath: "Remove AiExplainer from the homepage and keep the calculator available, or restore the previous support-panel copy and classes.",
   },
   {
     id: "scenario-history",

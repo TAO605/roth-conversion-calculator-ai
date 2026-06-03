@@ -31,7 +31,7 @@ describe("AiExplainer", () => {
     render(React.createElement(AiExplainer, { input, result: calculateRothConversion(input) }));
     fireEvent.click(screen.getByRole("button", { name: /explain/i }));
 
-    expect(await screen.findByText(/AI explainer is temporarily unavailable/i)).toBeTruthy();
+    expect(await screen.findByText(/explanation assistant is temporarily unavailable/i)).toBeTruthy();
     expect(screen.getByText(REQUIRED_DISCLAIMER)).toBeTruthy();
 
     await waitFor(() => {

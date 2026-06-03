@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.125",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Professional support panel UI",
+    summary:
+      "Extended the no-AI professional UI pass to the supporting calculator panels by demoting AI-first explainer language, removing glass/tinted card styling from warnings, payment comparison, projection, breakdown, and scope badges, and adding regression guards for the support panel surface.",
+    affectedArea:
+      "Explanation assistant, tax impact warnings, tax payment comparison, projection chart, calculation breakdown, result scope badges, homepage lazy fallbacks, UI tests, and engineering documentation",
+    rollbackPath:
+      "Restore the previous support panel classes and explainer headings in the affected feature components, then revert the related support-panel UI test, release note, feature version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.124",
     date: "2026-06-03",
     type: "patch",

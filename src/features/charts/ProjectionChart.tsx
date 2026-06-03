@@ -11,7 +11,7 @@ export function ProjectionChart({ projection }: ProjectionChartProps) {
 
   return (
     <div>
-      <div className="flex h-56 items-end gap-2 rounded-[16px] bg-white/60 p-4 dark:bg-white/10" aria-hidden="true">
+      <div className="flex h-56 items-end gap-2 rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950" aria-hidden="true">
         {sampled.map((point) => (
           <div className="flex h-full flex-1 items-end gap-1" data-testid="projection-bar-group" key={point.year}>
             <div

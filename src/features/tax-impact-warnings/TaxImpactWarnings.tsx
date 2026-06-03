@@ -10,13 +10,13 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
   return (
     <aside
       aria-label="Tax impact warnings"
-      className="rounded-[16px] bg-orange-50/80 p-4 text-sm text-neutral-800 shadow-sm ring-1 ring-orange-400/25 dark:bg-orange-400/10 dark:text-neutral-100"
+      className="rounded border border-orange-200 bg-white p-4 text-sm text-neutral-800 shadow-none dark:border-orange-400/30 dark:bg-neutral-950 dark:text-neutral-100"
       data-testid="tax-impact-warnings"
     >
       <p className="text-xs font-semibold uppercase tracking-[0.12em] text-systemOrange">Review before planning</p>
       <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
         <h3 className="font-semibold text-neutral-950 dark:text-white">Tax Impact Warnings</h3>
-        <span className="rounded-full bg-white/75 px-3 py-1 text-xs font-semibold text-systemOrange shadow-sm dark:bg-white/10">
+        <span className="rounded border border-orange-200 bg-white px-3 py-1 text-xs font-semibold text-systemOrange shadow-none dark:border-orange-400/30 dark:bg-neutral-950">
           {triggeredCount} input-triggered review items
         </span>
       </div>
@@ -26,7 +26,7 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
       </p>
       <ul className="mt-3 grid gap-2">
         {reviewItems.map((item) => (
-          <li className="rounded-[12px] bg-white/65 p-3 shadow-sm dark:bg-white/10" key={item.id}>
+          <li className="rounded border border-neutral-200 bg-white p-3 shadow-none dark:border-white/10 dark:bg-neutral-950" key={item.id}>
             <div className="flex flex-wrap items-center gap-2">
               {item.level === "input_triggered_review" ? (
                 <AlertTriangle aria-hidden="true" className="text-systemOrange" size={16} />
@@ -34,7 +34,7 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
                 <CircleHelp aria-hidden="true" className="text-neutral-500 dark:text-neutral-300" size={16} />
               )}
               <span className="font-semibold text-neutral-950 dark:text-white">{item.label}</span>
-              <span className="rounded-full bg-orange-100 px-2 py-0.5 text-[11px] font-semibold text-orange-800 dark:bg-orange-400/15 dark:text-orange-200">
+              <span className="rounded border border-orange-200 bg-orange-50 px-2 py-0.5 text-[11px] font-semibold text-orange-800 dark:border-orange-400/30 dark:bg-neutral-950 dark:text-orange-200">
                 {item.level === "input_triggered_review" ? "Input-triggered review" : "Review item"}
               </span>
             </div>

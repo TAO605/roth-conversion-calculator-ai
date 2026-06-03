@@ -13,7 +13,7 @@ export function TaxPaymentComparison({ input, result }: TaxPaymentComparisonProp
   return (
     <section
       aria-label="Tax payment method comparison"
-      className="rounded-[16px] bg-white/65 p-4 shadow-sm ring-1 ring-black/5 dark:bg-white/10 dark:ring-white/10"
+      className="rounded border border-neutral-200 bg-white p-4 shadow-none dark:border-white/10 dark:bg-neutral-950"
       data-testid="tax-payment-comparison"
     >
       <p className="text-xs font-semibold uppercase tracking-[0.12em] text-systemBlue">Payment method model</p>
@@ -24,11 +24,11 @@ export function TaxPaymentComparison({ input, result }: TaxPaymentComparisonProp
       </p>
 
       <div className="mt-4 grid gap-3 md:grid-cols-2">
-        <div className="rounded-[14px] bg-neutral-50 p-4 dark:bg-white/10">
+        <div className="rounded border border-neutral-200 bg-neutral-50 p-4 dark:border-white/10 dark:bg-neutral-900">
           <p className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">
             Pay with outside funds
           </p>
-          <p className="mt-2 text-2xl font-semibold text-neutral-950 dark:text-white">
+          <p className="mt-2 font-mono text-2xl font-semibold text-neutral-950 dark:text-white">
             {formatCurrency(comparison.outsideFunds.projectedRothValue)}
           </p>
           <p className="mt-2 text-xs leading-5 text-neutral-600 dark:text-neutral-300">
@@ -37,11 +37,11 @@ export function TaxPaymentComparison({ input, result }: TaxPaymentComparisonProp
           </p>
         </div>
 
-        <div className="rounded-[14px] bg-neutral-50 p-4 dark:bg-white/10">
+        <div className="rounded border border-neutral-200 bg-neutral-50 p-4 dark:border-white/10 dark:bg-neutral-900">
           <p className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">
             Withhold from IRA distribution
           </p>
-          <p className="mt-2 text-2xl font-semibold text-neutral-950 dark:text-white">
+          <p className="mt-2 font-mono text-2xl font-semibold text-neutral-950 dark:text-white">
             {formatCurrency(comparison.iraWithholding.projectedRothValue)}
           </p>
           <p className="mt-2 text-xs leading-5 text-neutral-600 dark:text-neutral-300">
@@ -51,7 +51,7 @@ export function TaxPaymentComparison({ input, result }: TaxPaymentComparisonProp
         </div>
       </div>
 
-      <div className="mt-3 rounded-[14px] bg-blue-500/10 p-3 text-sm leading-6 text-neutral-700 dark:text-neutral-200">
+      <div className="mt-3 rounded border border-neutral-200 bg-white p-3 text-sm leading-6 text-neutral-700 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-200">
         In this model, preserving the tax amount outside the IRA changes projected Roth value by{" "}
         <strong>{formatCurrency(comparison.projectedValueDifference)}</strong> by retirement.
         {comparison.iraWithholding.modeledPenalty > 0 ? (

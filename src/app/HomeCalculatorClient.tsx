@@ -67,7 +67,7 @@ const CopyProfessionalHandoffButton = dynamic<{ input: RothConversionInput; resu
 
 const AiExplainer = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
   () => import("@/features/ai-assistant/AiExplainer").then((module) => module.AiExplainer),
-  { loading: () => <LazyPanelFallback className="min-h-[24rem]" label="Loading AI helper..." /> },
+  { loading: () => <LazyPanelFallback className="min-h-[24rem]" label="Loading explanation assistant..." /> },
 );
 
 const CalculationBreakdown = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(

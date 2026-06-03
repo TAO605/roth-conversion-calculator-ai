@@ -26,11 +26,11 @@ export function AiExplainer({ input, result }: { input: RothConversionInput; res
 
       setAnswer(
         data.answer ||
-          "The AI explainer is temporarily unavailable. Please try again later or review the calculator results with a licensed tax professional.",
+          "The explanation assistant is temporarily unavailable. Please try again later or review the calculator results with a licensed tax professional.",
       );
     } catch {
       setAnswer(
-        "The AI explainer is temporarily unavailable. Please try again later or review the calculator results with a licensed tax professional.",
+        "The explanation assistant is temporarily unavailable. Please try again later or review the calculator results with a licensed tax professional.",
       );
     } finally {
       setLoading(false);
@@ -40,12 +40,12 @@ export function AiExplainer({ input, result }: { input: RothConversionInput; res
   return (
     <Card className="grid gap-4">
       <div className="flex items-start gap-3">
-        <span className="mt-1 inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-500/10 text-systemBlue">
+        <span className="mt-1 inline-flex h-9 w-9 items-center justify-center rounded border border-neutral-200 bg-white text-systemBlue dark:border-white/10 dark:bg-neutral-950">
           <MessageCircle size={19} />
         </span>
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Educational AI helper</p>
-          <h2 className="mt-1 text-xl font-bold text-neutral-950 dark:text-white">Ask AI to explain this estimate</h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Educational explanation</p>
+          <h2 className="mt-1 text-xl font-bold text-neutral-950 dark:text-white">Review this estimate in plain English</h2>
           <p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
             Use it for plain-English explanations of the numbers on this page. It explains rules and assumptions, not
             personal conversion decisions or action amounts.
@@ -53,8 +53,8 @@ export function AiExplainer({ input, result }: { input: RothConversionInput; res
         </div>
       </div>
       <textarea
-        aria-label="Ask the AI explainer a Roth conversion education question"
-        className="min-h-20 rounded-[14px] border border-neutral-200 bg-white/80 p-3 text-sm outline-none focus:border-systemBlue focus:ring-4 focus:ring-blue-500/15 dark:border-white/15 dark:bg-white/10"
+        aria-label="Ask the explanation assistant a Roth conversion education question"
+        className="min-h-20 rounded border border-neutral-200 bg-white p-3 text-sm outline-none transition-colors focus:border-[#0A2463] focus:ring-1 focus:ring-[#0A2463] dark:border-white/15 dark:bg-neutral-950"
         value={question}
         onChange={(event) => setQuestion(event.target.value)}
       />
@@ -68,7 +68,7 @@ export function AiExplainer({ input, result }: { input: RothConversionInput; res
       <Button disabled={loading || question.trim().length === 0} onClick={explain} type="button">
         {loading ? "Explaining..." : "Explain"}
       </Button>
-      {answer ? <p className="whitespace-pre-line rounded-[16px] bg-white/65 p-4 text-sm leading-6 dark:bg-white/10">{answer}</p> : null}
+      {answer ? <p className="whitespace-pre-line rounded border border-neutral-200 bg-neutral-50 p-4 text-sm leading-6 dark:border-white/10 dark:bg-neutral-900">{answer}</p> : null}
       <p className="text-xs leading-5 text-neutral-500 dark:text-neutral-400">{REQUIRED_DISCLAIMER}</p>
     </Card>
   );

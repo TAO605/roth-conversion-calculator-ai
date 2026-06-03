@@ -29,7 +29,7 @@ describe("homepage performance boundaries", () => {
     const calculatorClient = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
     expect(calculatorClient).toContain('className="min-h-[17rem]" label="Loading projection..."');
-    expect(calculatorClient).toContain('className="min-h-[24rem]" label="Loading AI helper..."');
+    expect(calculatorClient).toContain('className="min-h-[24rem]" label="Loading explanation assistant..."');
     expect(calculatorClient).toContain('className="min-h-[18rem]" label="Loading calculation details..."');
   });
 

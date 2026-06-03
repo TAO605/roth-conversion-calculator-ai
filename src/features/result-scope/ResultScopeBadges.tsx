@@ -15,7 +15,7 @@ export function ResultScopeBadges({ taxYear }: ResultScopeBadgesProps) {
     >
       {badges.map((badge) => (
         <span
-          className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 ring-1 ring-black/5 dark:bg-white/10 dark:text-neutral-200 dark:ring-white/10"
+          className="rounded border border-neutral-200 bg-white px-3 py-1 text-xs font-semibold text-neutral-700 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-200"
           key={badge}
         >
           {badge}

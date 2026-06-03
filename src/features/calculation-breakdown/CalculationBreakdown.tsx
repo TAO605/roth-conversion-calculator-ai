@@ -50,12 +50,12 @@ export function CalculationBreakdown({ input, result }: CalculationBreakdownProp
       </div>
       <div className="grid gap-3">
         {rows.map((row) => (
-          <div className="grid gap-2 rounded-[16px] bg-white/65 p-4 dark:bg-white/10 md:grid-cols-[1fr_auto]" key={row.label}>
+          <div className="grid gap-2 rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950 md:grid-cols-[1fr_auto]" key={row.label}>
             <div>
               <p className="font-semibold text-neutral-950 dark:text-white">{row.label}</p>
               <p className="mt-1 text-sm leading-6 text-neutral-600 dark:text-neutral-300">{row.detail}</p>
             </div>
-            <p className="text-2xl font-bold text-systemBlue md:text-right">{row.value}</p>
+            <p className="font-mono text-2xl font-bold text-systemBlue md:text-right">{row.value}</p>
           </div>
         ))}
       </div>

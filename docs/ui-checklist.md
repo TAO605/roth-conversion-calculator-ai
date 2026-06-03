@@ -7,6 +7,7 @@
 - [ ] Desktop calculator layout stays close to 40/60 input/result weighting when both columns are visible.
 - [ ] AI explanation language stays lower in hierarchy than the calculator, result, sources, and compliance boundaries.
 - [ ] Primary result money values use monospace worksheet-style numbers.
+- [ ] Supporting calculator panels avoid glass, heavy shadows, translucent backgrounds, and AI-first headings.
 
 ## Result Summary
 
