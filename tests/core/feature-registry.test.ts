@@ -74,6 +74,7 @@ describe("feature registry", () => {
     expect(getEnabledFeatureIds()).toContain("tax-data-update-playbook");
     expect(getEnabledFeatureIds()).toContain("ai-compliance-audit-playbook");
     expect(getEnabledFeatureIds()).toContain("content-operations-playbook");
+    expect(getEnabledFeatureIds()).toContain("operations-page-ui");
     expect(getEnabledFeatureIds()).toContain("cpa-review-checklist");
     expect(getEnabledFeatureIds()).toContain("feedback-roadmap-playbook");
     expect(getEnabledFeatureIds()).toContain("privacy-data-flow-playbook");

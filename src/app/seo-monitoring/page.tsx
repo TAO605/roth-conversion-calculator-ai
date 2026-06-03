@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import {
   buildSearchConsoleExceptionQueue,
   buildSearchConsoleOpportunityMatrix,
@@ -55,7 +55,7 @@ export default function SeoMonitoringPage() {
         <span>/ SEO monitoring</span>
       </nav>
 
-      <header className="rounded-[22px] bg-white/75 p-6 shadow-material backdrop-blur-xl dark:bg-white/10">
+      <header className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-white/10 dark:bg-neutral-950">
         <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Post-launch operations</p>
         <h1 className="mt-3 text-4xl font-bold tracking-normal text-neutral-950 dark:text-white">
           SEO Monitoring Playbook
@@ -75,7 +75,7 @@ export default function SeoMonitoringPage() {
         </div>
       </header>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
@@ -96,7 +96,7 @@ export default function SeoMonitoringPage() {
         <div className="mt-5 grid gap-3">
           {searchConsoleSteps.map((step, index) => (
             <article
-              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
               key={step.label}
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -108,7 +108,7 @@ export default function SeoMonitoringPage() {
                 </span>
               </div>
               <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{step.action}</p>
-              <p className="rounded-[14px] bg-neutral-100 p-3 text-sm leading-6 text-neutral-700 dark:bg-white/10 dark:text-neutral-200">
+              <p className="rounded-md bg-neutral-100 p-3 text-sm leading-6 text-neutral-700 dark:bg-white/10 dark:text-neutral-200">
                 Evidence: {step.evidence}
               </p>
             </article>
@@ -117,7 +117,7 @@ export default function SeoMonitoringPage() {
         <div className="mt-5 grid gap-2 text-sm">
           {searchConsoleSources.map((source) => (
             <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
+              className="rounded-md bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
               href={source.url}
               key={source.url}
               rel="noreferrer"
@@ -129,7 +129,7 @@ export default function SeoMonitoringPage() {
         </div>
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
@@ -151,7 +151,7 @@ export default function SeoMonitoringPage() {
         <div className="mt-5 grid gap-3 md:grid-cols-2">
           {artifactReview.map((item) => (
             <article
-              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
               key={item.artifactFile}
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -162,11 +162,11 @@ export default function SeoMonitoringPage() {
               </div>
               <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{item.check}</p>
               <dl className="grid gap-3 text-sm">
-                <div className="rounded-[14px] bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
+                <div className="rounded-md bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
                   <dt className="font-semibold">Pass signal</dt>
                   <dd className="mt-1 leading-6">{item.passSignal}</dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Use before</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{item.useBefore}</dd>
                 </div>
@@ -176,7 +176,7 @@ export default function SeoMonitoringPage() {
         </div>
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
@@ -198,7 +198,7 @@ export default function SeoMonitoringPage() {
         <div className="mt-5 grid gap-3 md:grid-cols-2">
           {sitemapFreshness.map((item) => (
             <article
-              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
               key={item.path}
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -209,11 +209,11 @@ export default function SeoMonitoringPage() {
               </div>
               <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{item.validation}</p>
               <dl className="grid gap-3 text-sm">
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Minimum lastmod</dt>
                   <dd className="mt-1 font-mono text-neutral-600 dark:text-neutral-300">{item.minimumLastmod}</dd>
                 </div>
-                <div className="rounded-[14px] bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
+                <div className="rounded-md bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
                   <dt className="font-semibold">Evidence</dt>
                   <dd className="mt-1 leading-6">{item.evidence}</dd>
                 </div>
@@ -223,7 +223,7 @@ export default function SeoMonitoringPage() {
         </div>
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
@@ -245,29 +245,29 @@ export default function SeoMonitoringPage() {
         <div className="mt-5 grid gap-3">
           {retryProtocol.map((step) => (
             <article
-              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
               key={step.label}
             >
               <h3 className="font-semibold text-neutral-950 dark:text-white">{step.label}</h3>
               <dl className="grid gap-3 text-sm md:grid-cols-2">
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Trigger</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{step.trigger}</dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Preflight</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{step.preflight}</dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Action</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{step.action}</dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Stop condition</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{step.stopCondition}</dd>
                 </div>
               </dl>
-              <p className="rounded-[14px] bg-emerald-500/10 p-3 text-sm leading-6 text-emerald-800 dark:text-emerald-200">
+              <p className="rounded-md bg-emerald-500/10 p-3 text-sm leading-6 text-emerald-800 dark:text-emerald-200">
                 Record: {step.record}
               </p>
             </article>
@@ -275,7 +275,7 @@ export default function SeoMonitoringPage() {
         </div>
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
@@ -297,31 +297,31 @@ export default function SeoMonitoringPage() {
         <div className="mt-5 grid gap-3">
           {exceptions.map((exception) => (
             <article
-              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
               key={exception.label}
             >
               <h3 className="font-semibold text-neutral-950 dark:text-white">{exception.label}</h3>
               <dl className="grid gap-3 text-sm md:grid-cols-2">
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Observed status</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">
                     {exception.observedStatus}
                   </dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Likely cause</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{exception.likelyCause}</dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Next action</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{exception.nextAction}</dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Retry window</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{exception.retryWindow}</dd>
                 </div>
               </dl>
-              <p className="rounded-[14px] bg-amber-500/10 p-3 text-sm leading-6 text-amber-800 dark:text-amber-200">
+              <p className="rounded-md bg-amber-500/10 p-3 text-sm leading-6 text-amber-800 dark:text-amber-200">
                 Evidence to record: {exception.evidenceToRecord}
               </p>
             </article>
@@ -329,7 +329,7 @@ export default function SeoMonitoringPage() {
         </div>
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
@@ -350,7 +350,7 @@ export default function SeoMonitoringPage() {
         <div className="mt-5 grid gap-3">
           {opportunities.map((opportunity) => (
             <article
-              className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
               key={opportunity.cluster}
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -377,17 +377,17 @@ export default function SeoMonitoringPage() {
                 ))}
               </div>
               <dl className="grid gap-3 text-sm md:grid-cols-3">
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Target surface</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">
                     {opportunity.targetSurface}
                   </dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Action</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{opportunity.action}</dd>
                 </div>
-                <div className="rounded-[14px] bg-neutral-50 p-3 dark:bg-white/10">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
                   <dt className="font-semibold text-neutral-950 dark:text-white">Review gate</dt>
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">
                     {opportunity.reviewGate}
@@ -401,7 +401,7 @@ export default function SeoMonitoringPage() {
 
       <section className="grid gap-5">
         {groups.map((group) => (
-          <article className="rounded-[20px] bg-white/75 p-5 shadow-sm dark:bg-white/10" key={group.id}>
+          <article className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950" key={group.id}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">{group.title}</h2>
@@ -416,7 +416,7 @@ export default function SeoMonitoringPage() {
             <div className="mt-5 grid gap-3">
               {group.checks.map((entry) => (
                 <div
-                  className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+                  className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
                   key={entry.label}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
@@ -426,7 +426,7 @@ export default function SeoMonitoringPage() {
                     </span>
                   </div>
                   <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{entry.action}</p>
-                  <p className="rounded-[14px] bg-amber-500/10 p-3 text-sm leading-6 text-amber-800 dark:text-amber-200">
+                  <p className="rounded-md bg-amber-500/10 p-3 text-sm leading-6 text-amber-800 dark:text-amber-200">
                     Escalation: {entry.escalation}
                   </p>
                 </div>
@@ -436,7 +436,7 @@ export default function SeoMonitoringPage() {
         ))}
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Tool Coverage</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {summary.tools.map((tool) => (

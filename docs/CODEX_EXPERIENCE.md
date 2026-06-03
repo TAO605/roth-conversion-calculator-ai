@@ -782,3 +782,29 @@ Targeted tests passed 4 files / 18 tests; full npm test passed 101 files / 297 t
 **Future trigger words:**
 
 details summary touch target; disclosure too small on mobile; missing expand chevron; advanced assumptions affordance; projection assumptions affordance
+
+### 2026-06-03 - Operations playbooks should not inherit marketing glass surfaces
+
+**Symptom:**
+
+Audit and operations playbook routes still used translucent white panels, large custom radii, material shadows, and backdrop blur after the core calculator had moved to a professional financial-tool surface.
+
+**Root cause:**
+
+The no-AI UI pass initially focused on the homepage calculator and support panels, leaving secondary operations pages with older template-style presentation classes.
+
+**Fix:**
+
+Converted the operations and audit page shells to plain bordered review panels with `rounded-lg` page sections and `rounded-md` nested evidence panels while preserving page copy, breadcrumbs, JSON-LD, and disclaimers.
+
+**Guard:**
+
+Added an operations-page UI regression test that scans the operations routes for old glass, large-radius, translucent, and heavy-shadow classes.
+
+**Validation:**
+
+Run targeted operations UI, release-note, feature-registry, and operations content tests; then run full Vitest, build, Playwright, and production SEO evidence before closing the release.
+
+**Future trigger words:**
+
+operations page glass; audit page looks like landing page; playbook card styling; large rounded operations surface; shadow-material returned

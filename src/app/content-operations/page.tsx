@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import {
   buildContentOperationsGroups,
   getBlogFinalPublicationReview,
@@ -45,7 +45,7 @@ export default function ContentOperationsPage() {
         <span>/ Content operations</span>
       </nav>
 
-      <header className="rounded-[22px] bg-white/75 p-6 shadow-material backdrop-blur-xl dark:bg-white/10">
+      <header className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-white/10 dark:bg-neutral-950">
         <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Editorial operations</p>
         <h1 className="mt-3 text-4xl font-bold tracking-normal text-neutral-950 dark:text-white">
           Content Operations Playbook
@@ -66,7 +66,7 @@ export default function ContentOperationsPage() {
 
       <section className="grid gap-5">
         {groups.map((group) => (
-          <article className="rounded-[20px] bg-white/75 p-5 shadow-sm dark:bg-white/10" key={group.id}>
+          <article className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950" key={group.id}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">{group.title}</h2>
@@ -81,7 +81,7 @@ export default function ContentOperationsPage() {
             <div className="mt-5 grid gap-3 md:grid-cols-2">
               {group.steps.map((entry) => (
                 <div
-                  className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+                  className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
                   key={entry.label}
                 >
                   <div>
@@ -98,26 +98,26 @@ export default function ContentOperationsPage() {
         ))}
       </section>
 
-      <section className="grid gap-5 rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="grid gap-5 rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <div className="grid gap-2">
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Blog publishing gate</p>
           <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Blog Draft SEO Review</h2>
           <p className="max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
             {blogDraftReview.ownershipBoundary}
           </p>
-          <code className="mt-2 overflow-x-auto rounded-[14px] bg-neutral-950 px-4 py-3 text-sm leading-6 text-white">
+          <code className="mt-2 overflow-x-auto rounded-md bg-neutral-950 px-4 py-3 text-sm leading-6 text-white">
             {blogDraftReview.command}
           </code>
-          <code className="overflow-x-auto rounded-[14px] bg-neutral-900 px-4 py-3 text-sm leading-6 text-white">
+          <code className="overflow-x-auto rounded-md bg-neutral-900 px-4 py-3 text-sm leading-6 text-white">
             {blogDraftReview.evidenceCommand}
           </code>
-          <code className="overflow-x-auto rounded-[14px] bg-neutral-800 px-4 py-3 text-sm leading-6 text-white">
+          <code className="overflow-x-auto rounded-md bg-neutral-800 px-4 py-3 text-sm leading-6 text-white">
             {blogDraftReview.readinessCommand}
           </code>
         </div>
 
         <div className="grid gap-3 lg:grid-cols-3">
-          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+          <article className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
             <h3 className="font-semibold text-neutral-950 dark:text-white">Hard checks</h3>
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               {blogDraftReview.hardChecks.map((check) => (
@@ -125,7 +125,7 @@ export default function ContentOperationsPage() {
               ))}
             </ul>
           </article>
-          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+          <article className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
             <h3 className="font-semibold text-neutral-950 dark:text-white">Manual review</h3>
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               {blogDraftReview.manualReview.map((check) => (
@@ -133,7 +133,7 @@ export default function ContentOperationsPage() {
               ))}
             </ul>
           </article>
-          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+          <article className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
             <h3 className="font-semibold text-neutral-950 dark:text-white">AI publication duties</h3>
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               {blogDraftReview.publicationDuties.map((duty) => (
@@ -144,25 +144,25 @@ export default function ContentOperationsPage() {
         </div>
       </section>
 
-      <section className="grid gap-5 rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="grid gap-5 rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <div className="grid gap-2">
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Final release gate</p>
           <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">{blogFinalReview.title}</h2>
           <p className="max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
             {blogFinalReview.goal}
           </p>
-          <code className="mt-2 overflow-x-auto rounded-[14px] bg-neutral-950 px-4 py-3 text-sm leading-6 text-white">
+          <code className="mt-2 overflow-x-auto rounded-md bg-neutral-950 px-4 py-3 text-sm leading-6 text-white">
             {blogFinalReview.validationCommand}
           </code>
-          <code className="overflow-x-auto rounded-[14px] bg-neutral-900 px-4 py-3 text-sm leading-6 text-white">
+          <code className="overflow-x-auto rounded-md bg-neutral-900 px-4 py-3 text-sm leading-6 text-white">
             {blogFinalReview.manifestCommand}
           </code>
-          <code className="overflow-x-auto rounded-[14px] bg-neutral-800 px-4 py-3 text-sm leading-6 text-white">
+          <code className="overflow-x-auto rounded-md bg-neutral-800 px-4 py-3 text-sm leading-6 text-white">
             {blogFinalReview.manifestValidationCommand}
           </code>
         </div>
         <div className="grid gap-3 lg:grid-cols-3">
-          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+          <article className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
             <h3 className="font-semibold text-neutral-950 dark:text-white">Required evidence</h3>
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               {blogFinalReview.requiredEvidence.map((item) => (
@@ -170,7 +170,7 @@ export default function ContentOperationsPage() {
               ))}
             </ul>
           </article>
-          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+          <article className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
             <h3 className="font-semibold text-neutral-950 dark:text-white">Stop conditions</h3>
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               {blogFinalReview.stopConditions.map((item) => (
@@ -178,7 +178,7 @@ export default function ContentOperationsPage() {
               ))}
             </ul>
           </article>
-          <article className="rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5">
+          <article className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
             <h3 className="font-semibold text-neutral-950 dark:text-white">Publish criteria</h3>
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               {blogFinalReview.publishCriteria.map((item) => (
@@ -189,7 +189,7 @@ export default function ContentOperationsPage() {
         </div>
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Operating Outputs</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {summary.outputs.map((output) => (

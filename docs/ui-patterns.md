@@ -135,3 +135,10 @@
 - Primary action buttons use the navy brand color `#0A2463`; secondary buttons use neutral borders and white backgrounds.
 - Form controls use small radius, neutral borders, white backgrounds, and a thin navy focus ring.
 - Primary financial outputs use `font-mono` and fixed result scale so numbers scan like a worksheet.
+
+## Operations Review Panels
+
+- Audit and operations pages should use `rounded-lg border border-neutral-200 bg-white` for page-level review sections.
+- Nested evidence/check panels should use `rounded-md border border-neutral-200 bg-white`.
+- Avoid `backdrop-blur-xl`, `shadow-material`, translucent white panels, and oversized custom radii on operational pages.
+- Keep these pages dense and scannable, with evidence labels, counts, breadcrumbs, and disclaimers visible before any decorative treatment.

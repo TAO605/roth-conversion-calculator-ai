@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { buildLaunchReadinessGroups, getLaunchReadinessSummary } from "@/content/launch-readiness";
 
 export const metadata = {
@@ -27,7 +27,7 @@ export default function LaunchReadinessPage() {
         <span>/ Launch readiness</span>
       </nav>
 
-      <header className="grid gap-5 rounded-[22px] bg-white/75 p-6 shadow-material backdrop-blur-xl dark:bg-white/10">
+      <header className="grid gap-5 rounded-lg border border-neutral-200 bg-white p-6 dark:border-white/10 dark:bg-neutral-950">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Production handoff</p>
           <h1 className="mt-3 text-4xl font-bold tracking-normal text-neutral-950 dark:text-white">
@@ -58,7 +58,7 @@ export default function LaunchReadinessPage() {
 
       <section className="grid gap-5 md:grid-cols-2">
         {groups.map((group) => (
-          <article className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10" key={group.id}>
+          <article className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950" key={group.id}>
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">{group.title}</h2>
               <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-systemBlue">
@@ -82,7 +82,7 @@ export default function LaunchReadinessPage() {
         ))}
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 text-sm leading-7 text-neutral-600 shadow-material dark:bg-white/10 dark:text-neutral-300">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 text-sm leading-7 text-neutral-600 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-300">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Delivery Notes</h2>
         <p className="mt-3">
           Production domain and Google Search Console verification must be completed after the final domain is connected.

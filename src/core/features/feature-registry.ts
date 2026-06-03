@@ -700,6 +700,19 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Disable content-operations-playbook in the feature registry and remove the content-operations route, sitemap entry, homepage link, site-index link, and llms.txt link.",
   },
   {
+    id: "operations-page-ui",
+    label: "Professional operations page UI",
+    version: "1.0.129",
+    layer: "content",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea:
+      "src/app/seo-monitoring, src/app/content-operations, src/app/performance-audit, and related operations playbook routes",
+    rollbackPath:
+      "Restore the previous glass and large-radius operations page container classes, then remove the operations-page UI regression guard.",
+  },
+  {
     id: "ai-compliance-audit-playbook",
     label: "AI compliance audit playbook",
     version: "1.0.46",

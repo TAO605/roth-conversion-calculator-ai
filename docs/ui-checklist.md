@@ -54,3 +54,9 @@
 - [ ] Mobile result actions stay in a stable two-column grid.
 - [ ] Wider result actions stay in a stable four-column grid.
 - [ ] Action labels avoid personalized recommendations or tax-advice language.
+
+## Operations Pages
+
+- [ ] Audit and playbook pages use plain bordered surfaces instead of glass, large-radius, or heavy-shadow containers.
+- [ ] Operations pages keep breadcrumbs, H1, summary badges, evidence sections, and required disclaimers visible.
+- [ ] Operations page UI changes do not alter blog article bodies, tax calculation logic, or structured-data evidence.

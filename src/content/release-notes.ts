@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.129",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Professional operations page surfaces",
+    summary:
+      "Extended the no-AI professional UI pass to audit and operations playbook pages by replacing glass, large-radius, and heavy-shadow surfaces with plain bordered review panels and adding regression guards for the operations page shell.",
+    affectedArea:
+      "SEO monitoring, content operations, performance audit, accessibility audit, AI compliance audit, privacy data flow, production launch, launch readiness, feedback roadmap, tax data update, operations page UI tests, release notes, feature registry, and UI documentation",
+    rollbackPath:
+      "Restore the previous operations page container classes in the affected app routes, then revert the operations-page UI regression test, release note, feature registry entry, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.128",
     date: "2026-06-03",
     type: "patch",

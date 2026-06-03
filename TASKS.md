@@ -78,3 +78,4 @@
 - [done] Stabilize the homepage result action toolbar during lazy loading
 - [done] Compact the mobile Quick Estimate input assumptions
 - [done] Improve mobile calculator input disclosure touch targets
+- [done] Apply professional no-glass UI to operations playbook pages
