@@ -149,3 +149,10 @@
 - Use `rounded-lg border border-neutral-200 bg-white` with `hover:border-systemBlue` for link affordance.
 - Avoid hover lift, material shadows, translucent card backgrounds, and custom large radii on hub pages.
 - Preserve route labels, short descriptions, breadcrumbs, JSON-LD, and disclaimers when changing hub page visuals.
+
+## Priority Guide Review Panels
+
+- Priority YMYL guide pages should use plain review panels: `rounded-lg border border-neutral-200 bg-white`.
+- Nested guide points, assumptions, checklist items, and review notes should use `rounded-md` surfaces.
+- Avoid glass, hover lift, material shadows, translucent white panels, and oversized custom radii on guide pages.
+- Treat guide visuals as trust infrastructure; preserve source links, JSON-LD, breadcrumbs, disclaimers, and professional-review language.

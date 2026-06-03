@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.131",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Professional priority guide surfaces",
+    summary:
+      "Extended the professional no-glass UI system to priority educational and CPA-review guide pages by replacing translucent, large-radius, and heavy-shadow review cards with plain bordered YMYL review panels.",
+    affectedArea:
+      "Calculator assumptions guide, CPA review checklist, Roth conversion priority guide pages, guide page UI regression guards, release notes, feature registry, and UI documentation",
+    rollbackPath:
+      "Restore the previous priority guide page container classes in the affected app routes, then revert the priority-guide UI regression test, release note, feature registry entry, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.130",
     date: "2026-06-03",
     type: "patch",

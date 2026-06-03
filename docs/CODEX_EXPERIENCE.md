@@ -834,3 +834,29 @@ Run targeted content hub UI, release-note, feature-registry, and hub content tes
 **Future trigger words:**
 
 hub cards look like landing page; content index glass; hover lift on SEO hubs; site index shadow-material; glossary translucent cards
+
+### 2026-06-03 - Priority YMYL guide pages need review-panel surfaces
+
+**Symptom:**
+
+Priority educational guide pages and CPA-review pages still used translucent headers, large custom radii, material shadows, and glass-like nested cards after the calculator, operations pages, and content hubs had moved to professional bordered surfaces.
+
+**Root cause:**
+
+Guide pages were generated from an earlier content-page template, so their trust-critical review notes inherited decorative card styling instead of audit-style review panels.
+
+**Fix:**
+
+Converted guide headers, sections, nested points, and review-note callouts to plain bordered review panels while preserving guide copy, source links, JSON-LD, breadcrumbs, and disclaimers.
+
+**Guard:**
+
+Added a priority-guide UI regression test that scans monitored YMYL guide routes for old glass, heavy-shadow, translucent, and custom large-radius classes.
+
+**Validation:**
+
+Run targeted priority guide UI, release-note, feature-registry, and guide content tests; then run full Vitest, build, Playwright, and production SEO evidence before closing the release.
+
+**Future trigger words:**
+
+guide page glass; YMYL guide card styling; CPA checklist translucent; review note shadow-material; priority guide oversized radius

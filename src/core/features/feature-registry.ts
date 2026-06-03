@@ -726,6 +726,19 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Restore the previous translucent and large-radius hub page card classes, then remove the content-hub UI regression guard.",
   },
   {
+    id: "priority-guide-page-ui",
+    label: "Professional priority guide page UI",
+    version: "1.0.131",
+    layer: "content",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea:
+      "src/app/calculator-assumptions-guide, src/app/cpa-review-checklist, and Roth conversion priority guide routes",
+    rollbackPath:
+      "Restore the previous translucent, large-radius, and heavy-shadow guide page container classes, then remove the priority-guide UI regression guard.",
+  },
+  {
     id: "ai-compliance-audit-playbook",
     label: "AI compliance audit playbook",
     version: "1.0.46",

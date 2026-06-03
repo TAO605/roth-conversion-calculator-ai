@@ -66,3 +66,9 @@
 - [ ] Top-level hub cards use plain bordered navigation panels instead of translucent hover-lift cards.
 - [ ] Hub pages preserve breadcrumbs, H1s, route links, JSON-LD, and disclaimers.
 - [ ] Hub page UI changes do not alter blog article bodies or guide/article body copy.
+
+## Priority Guide Pages
+
+- [ ] Priority YMYL guide pages use plain bordered review panels instead of glass, large-radius, or heavy-shadow containers.
+- [ ] Guide page UI changes preserve JSON-LD, breadcrumbs, source links, disclaimer text, and professional-review boundaries.
+- [ ] Guide page UI changes do not alter blog article bodies or tax calculation logic.

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { buildTimelineGuidePhases, getTimelineGuideSummary } from "@/content/timeline-guide";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
@@ -51,7 +51,7 @@ export default function RothConversionTimelinePage() {
         <span>/ Timeline guide</span>
       </nav>
 
-      <header className="rounded-[22px] bg-white/75 p-6 shadow-material backdrop-blur-xl dark:bg-white/10">
+      <header className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-white/10 dark:bg-neutral-950">
         <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Planning sequence</p>
         <h1 className="mt-3 text-4xl font-bold tracking-normal text-neutral-950 dark:text-white">
           Roth Conversion Timeline Guide
@@ -72,7 +72,7 @@ export default function RothConversionTimelinePage() {
 
       <section className="grid gap-5">
         {phases.map((phase) => (
-          <article className="rounded-[20px] bg-white/75 p-5 shadow-sm dark:bg-white/10" key={phase.id}>
+          <article className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950" key={phase.id}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">{phase.title}</h2>
@@ -87,7 +87,7 @@ export default function RothConversionTimelinePage() {
             <div className="mt-5 grid gap-3 md:grid-cols-2">
               {phase.items.map((entry) => (
                 <div
-                  className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+                  className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
                   key={entry.label}
                 >
                   <div>
@@ -104,7 +104,7 @@ export default function RothConversionTimelinePage() {
         ))}
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Review Outputs</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {summary.reviewOutputs.map((output) => (

@@ -80,3 +80,4 @@
 - [done] Improve mobile calculator input disclosure touch targets
 - [done] Apply professional no-glass UI to operations playbook pages
 - [done] Apply professional no-glass UI to top-level content hub pages
+- [done] Apply professional no-glass UI to priority educational guide pages

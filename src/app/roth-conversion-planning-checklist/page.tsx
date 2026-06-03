@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { buildPlanningChecklistGroups, getPlanningChecklistSummary } from "@/content/planning-checklist";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
@@ -51,7 +51,7 @@ export default function RothConversionPlanningChecklistPage() {
         <span>/ Planning checklist</span>
       </nav>
 
-      <header className="rounded-[22px] bg-white/75 p-6 shadow-material backdrop-blur-xl dark:bg-white/10">
+      <header className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-white/10 dark:bg-neutral-950">
         <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Before you calculate</p>
         <h1 className="mt-3 text-4xl font-bold tracking-normal text-neutral-950 dark:text-white">
           Roth Conversion Planning Checklist
@@ -72,7 +72,7 @@ export default function RothConversionPlanningChecklistPage() {
 
       <section className="grid gap-5">
         {groups.map((group) => (
-          <article className="rounded-[20px] bg-white/75 p-5 shadow-sm dark:bg-white/10" key={group.id}>
+          <article className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950" key={group.id}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">{group.title}</h2>
@@ -87,7 +87,7 @@ export default function RothConversionPlanningChecklistPage() {
             <div className="mt-5 grid gap-3 md:grid-cols-2">
               {group.items.map((entry) => (
                 <div
-                  className="grid gap-3 rounded-[16px] border border-neutral-200 bg-white/60 p-4 dark:border-white/10 dark:bg-white/5"
+                  className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
                   key={entry.label}
                 >
                   <div>
@@ -106,7 +106,7 @@ export default function RothConversionPlanningChecklistPage() {
         ))}
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Calculator Inputs Covered</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {summary.calculatorInputs.map((input) => (
