@@ -808,3 +808,29 @@ Run targeted operations UI, release-note, feature-registry, and operations conte
 **Future trigger words:**
 
 operations page glass; audit page looks like landing page; playbook card styling; large rounded operations surface; shadow-material returned
+
+### 2026-06-03 - Content hub cards should behave like navigation panels
+
+**Symptom:**
+
+Top-level hub and index routes still used translucent cards, hover lift, custom large radii, and material shadows after the calculator and operations pages moved to professional bordered surfaces.
+
+**Root cause:**
+
+Content hubs were created as SEO navigation surfaces but inherited landing-card styling that made them feel more decorative than scannable.
+
+**Fix:**
+
+Converted hub cards and index sections to plain bordered panels with restrained hover borders while preserving route links, H1s, JSON-LD, and disclaimers.
+
+**Guard:**
+
+Added a content-hub UI regression test that scans top-level hub routes for old glass, hover-lift, translucent, and custom large-radius classes.
+
+**Validation:**
+
+Run targeted content hub UI, release-note, feature-registry, and hub content tests; then run full Vitest, build, Playwright, and production SEO evidence before closing the release.
+
+**Future trigger words:**
+
+hub cards look like landing page; content index glass; hover lift on SEO hubs; site index shadow-material; glossary translucent cards

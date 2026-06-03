@@ -38,7 +38,7 @@ export default function AgeScenariosIndexPage() {
       <section className="grid gap-4 md:grid-cols-2">
         {ageScenarioPages.map((page) => (
           <Link
-            className="rounded-[20px] bg-white/75 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-material dark:bg-white/10"
+            className="rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-systemBlue dark:border-white/10 dark:bg-neutral-950"
             href={`/age-scenarios/${page.slug}`}
             key={page.slug}
           >
@@ -50,7 +50,7 @@ export default function AgeScenariosIndexPage() {
         ))}
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">How age affects the model</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
           The calculator uses age to model whether an early distribution penalty assumption may apply when taxes are

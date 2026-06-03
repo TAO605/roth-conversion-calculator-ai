@@ -27,7 +27,7 @@ export default function ReleaseNotesPage() {
 
       <section className="grid gap-4">
         {releaseNotes.map((note) => (
-          <article className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10" key={note.version}>
+          <article className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950" key={note.version}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-systemBlue">{note.version}</p>
@@ -62,7 +62,7 @@ export default function ReleaseNotesPage() {
         <div className="grid gap-3">
           {featureRegistry.map((feature) => (
             <article
-              className="rounded-[18px] border border-neutral-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/10"
+              className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
               key={feature.id}
             >
               <div className="flex flex-wrap items-center justify-between gap-3">

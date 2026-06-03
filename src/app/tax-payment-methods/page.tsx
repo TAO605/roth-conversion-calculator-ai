@@ -38,7 +38,7 @@ export default function TaxPaymentMethodsIndexPage() {
       <section className="grid gap-4 md:grid-cols-3">
         {taxPaymentMethodPages.map((page) => (
           <Link
-            className="rounded-[20px] bg-white/75 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-material dark:bg-white/10"
+            className="rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-systemBlue dark:border-white/10 dark:bg-neutral-950"
             href={`/tax-payment-methods/${page.slug}`}
             key={page.slug}
           >

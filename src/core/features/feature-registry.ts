@@ -713,6 +713,19 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Restore the previous glass and large-radius operations page container classes, then remove the operations-page UI regression guard.",
   },
   {
+    id: "content-hub-page-ui",
+    label: "Professional content hub page UI",
+    version: "1.0.130",
+    layer: "content",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea:
+      "src/app/site-index, src/app/release-notes, and top-level content hub routes",
+    rollbackPath:
+      "Restore the previous translucent and large-radius hub page card classes, then remove the content-hub UI regression guard.",
+  },
+  {
     id: "ai-compliance-audit-playbook",
     label: "AI compliance audit playbook",
     version: "1.0.46",

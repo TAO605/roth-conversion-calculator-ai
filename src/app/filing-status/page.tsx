@@ -38,7 +38,7 @@ export default function FilingStatusIndexPage() {
       <section className="grid gap-4 md:grid-cols-2">
         {filingStatusPages.map((page) => (
           <Link
-            className="rounded-[20px] bg-white/75 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-material dark:bg-white/10"
+            className="rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-systemBlue dark:border-white/10 dark:bg-neutral-950"
             href={`/filing-status/${page.slug}`}
             key={page.slug}
           >
@@ -50,7 +50,7 @@ export default function FilingStatusIndexPage() {
         ))}
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Why filing status matters</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
           A Roth conversion adds taxable income in the year of conversion. Filing status affects the federal bracket

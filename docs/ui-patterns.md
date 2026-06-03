@@ -142,3 +142,10 @@
 - Nested evidence/check panels should use `rounded-md border border-neutral-200 bg-white`.
 - Avoid `backdrop-blur-xl`, `shadow-material`, translucent white panels, and oversized custom radii on operational pages.
 - Keep these pages dense and scannable, with evidence labels, counts, breadcrumbs, and disclaimers visible before any decorative treatment.
+
+## Content Hub Navigation Panels
+
+- Top-level hub pages should treat cards as navigation panels, not marketing cards.
+- Use `rounded-lg border border-neutral-200 bg-white` with `hover:border-systemBlue` for link affordance.
+- Avoid hover lift, material shadows, translucent card backgrounds, and custom large radii on hub pages.
+- Preserve route labels, short descriptions, breadcrumbs, JSON-LD, and disclaimers when changing hub page visuals.

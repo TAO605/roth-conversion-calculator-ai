@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.130",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Professional content hub surfaces",
+    summary:
+      "Extended the professional no-glass UI system to top-level index and content hub pages by replacing translucent, large-radius, and hover-shadow link cards with plain bordered navigation panels.",
+    affectedArea:
+      "Site index, release notes, calculator hub, state hub, glossary hub, age scenarios, examples, filing status, basis, multi-year planning, tax interactions, tax payment methods, content hub UI regression guards, release notes, feature registry, and UI documentation",
+    rollbackPath:
+      "Restore the previous hub page card classes in the affected app routes, then revert the content-hub UI regression test, release note, feature registry entry, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.129",
     date: "2026-06-03",
     type: "patch",

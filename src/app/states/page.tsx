@@ -21,7 +21,7 @@ export default function StatesIndexPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {statePages.map((page) => (
           <Link
-            className="rounded-[18px] bg-white/70 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-material dark:bg-white/10"
+            className="rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-systemBlue dark:border-white/10 dark:bg-neutral-950"
             href={`/states/${page.slug}`}
             key={page.slug}
           >

@@ -60,3 +60,9 @@
 - [ ] Audit and playbook pages use plain bordered surfaces instead of glass, large-radius, or heavy-shadow containers.
 - [ ] Operations pages keep breadcrumbs, H1, summary badges, evidence sections, and required disclaimers visible.
 - [ ] Operations page UI changes do not alter blog article bodies, tax calculation logic, or structured-data evidence.
+
+## Content Hub Pages
+
+- [ ] Top-level hub cards use plain bordered navigation panels instead of translucent hover-lift cards.
+- [ ] Hub pages preserve breadcrumbs, H1s, route links, JSON-LD, and disclaimers.
+- [ ] Hub page UI changes do not alter blog article bodies or guide/article body copy.

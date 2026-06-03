@@ -38,7 +38,7 @@ export default function ExamplesIndexPage() {
       <section className="grid gap-4 md:grid-cols-3">
         {exampleScenarioPages.map((page) => (
           <Link
-            className="rounded-[20px] bg-white/75 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-material dark:bg-white/10"
+            className="rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-systemBlue dark:border-white/10 dark:bg-neutral-950"
             href={`/examples/${page.slug}`}
             key={page.slug}
           >
@@ -50,7 +50,7 @@ export default function ExamplesIndexPage() {
         ))}
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">How to use examples</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
           Examples are not recommended actions. They are fixed input sets that make the calculator easier to learn and
