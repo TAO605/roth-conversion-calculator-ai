@@ -58,6 +58,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
     rollbackPath: "Hide the state shortcut selector and keep manual state tax input.",
   },
   {
+    id: "calculator-input-layout",
+    label: "Calculator input layout",
+    version: "1.0.127",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/calculator-input",
+    rollbackPath:
+      "Restore retirement age and expected annual return to the always-visible Quick Estimate field list and remove the projection assumptions disclosure.",
+  },
+  {
     id: "theme-toggle",
     label: "Light and dark mode toggle",
     version: "1.0.4",

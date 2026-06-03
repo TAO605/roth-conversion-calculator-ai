@@ -80,21 +80,6 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
             onChange={(event) => update("stateMarginalTaxRate", numberValue(event.target.value) / 100)}
           />
           <TextField
-            label="Retirement age"
-            type="number"
-            inputMode="numeric"
-            value={value.retirementAge}
-            error={errors.retirementAge}
-            onChange={(event) => update("retirementAge", numberValue(event.target.value))}
-          />
-          <TextField
-            label="Expected annual return"
-            type="number"
-            inputMode="decimal"
-            value={percentDisplayValue(value.expectedAnnualReturn)}
-            onChange={(event) => update("expectedAnnualReturn", numberValue(event.target.value) / 100)}
-          />
-          <TextField
             label="Traditional IRA balance"
             type="number"
             inputMode="decimal"
@@ -103,6 +88,31 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
             description="Used with after-tax basis in advanced assumptions."
             onChange={(event) => update("traditionalIraBalance", numberValue(event.target.value))}
           />
+          <details
+            className="rounded border border-neutral-200 bg-white p-3 shadow-none dark:border-white/10 dark:bg-neutral-950"
+            data-testid="projection-assumptions"
+          >
+            <summary className="cursor-pointer text-sm font-semibold text-neutral-950 dark:text-white">
+              Projection assumptions
+            </summary>
+            <div className="mt-3 grid gap-4" data-testid="projection-assumption-fields">
+              <TextField
+                label="Retirement age"
+                type="number"
+                inputMode="numeric"
+                value={value.retirementAge}
+                error={errors.retirementAge}
+                onChange={(event) => update("retirementAge", numberValue(event.target.value))}
+              />
+              <TextField
+                label="Expected annual return"
+                type="number"
+                inputMode="decimal"
+                value={percentDisplayValue(value.expectedAnnualReturn)}
+                onChange={(event) => update("expectedAnnualReturn", numberValue(event.target.value) / 100)}
+              />
+            </div>
+          </details>
         </div>
       </section>
 

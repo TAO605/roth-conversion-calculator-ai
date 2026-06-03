@@ -730,3 +730,29 @@ Targeted tests passed 4 files / 16 tests; full npm test passed 101 files / 295 t
 **Future trigger words:**
 
 lazy-loaded button layout shift; mobile action toolbar jumps; dynamic import returns null in UI actions
+
+### 2026-06-03 - Keep projection assumptions collapsible in mobile calculator inputs
+
+**Symptom:**
+
+Quick Estimate exposed projection-only fields together with core tax estimate fields, increasing mobile input density before users reached results.
+
+**Root cause:**
+
+Retirement age and expected annual return are important assumptions but not always needed for the first tax estimate read, so showing them with core income and conversion fields made the first mobile form longer.
+
+**Fix:**
+
+Moved retirement age and expected annual return into a collapsed Projection assumptions disclosure inside Quick Estimate while preserving defaults and editability.
+
+**Guard:**
+
+Updated calculator-input-layout tests to require the collapsed projection assumptions disclosure and field availability; ran targeted tests, full Vitest, build, and homepage Playwright E2E.
+
+**Validation:**
+
+Targeted tests passed 4 files / 17 tests; full npm test passed 101 files / 296 tests; npm run build passed with 130 static pages; Playwright homepage passed on PLAYWRIGHT_PORT=3117.
+
+**Future trigger words:**
+
+mobile input density; Quick Estimate too long; projection assumptions; retirement age field placement; expected annual return field placement

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.127",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Compact mobile input assumptions",
+    summary:
+      "Refined the homepage Quick Estimate input flow by moving retirement age and expected annual return into a collapsed Projection assumptions section, keeping the assumptions available while reducing default mobile input density.",
+    affectedArea:
+      "Calculator input layout, mobile first-screen density, projection assumptions, input layout regression guards, release notes, feature registry, UI documentation, and engineering progress tracking",
+    rollbackPath:
+      "Move retirement age and expected annual return back into the always-visible Quick Estimate field list, then revert the related calculator input layout tests, release note, feature registry entry, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.126",
     date: "2026-06-03",
     type: "patch",

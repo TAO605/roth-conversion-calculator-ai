@@ -9,7 +9,8 @@
 
 ## Quick Estimate Input Split
 
-- Put the most common planning fields in a `Quick Estimate` block: conversion amount, current taxable income, filing status, state marginal tax rate, retirement age, expected annual return, and traditional IRA balance.
+- Put the most common first-pass planning fields in the default-visible `Quick Estimate` block: conversion amount, current taxable income, filing status, state marginal tax rate, and traditional IRA balance.
+- Keep projection-only assumptions such as retirement age and expected annual return inside a collapsed `Projection assumptions` disclosure within Quick Estimate so defaults remain active but mobile first-screen density stays lower.
 - Keep less frequent or higher-complexity assumptions in a collapsed `Advanced assumptions` section: after-tax basis, current age, retirement marginal tax rate, tax payment method, IRA withholding, penalty exception, and sample presets.
 - Do not remove advanced fields; hide complexity progressively so the calculator remains complete and auditable.
 

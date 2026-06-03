@@ -20,6 +20,7 @@
 ## Calculator Inputs
 
 - [ ] Quick Estimate is visible before advanced assumptions.
+- [ ] Quick Estimate keeps projection-only assumptions behind a collapsed disclosure on first load.
 - [ ] Advanced assumptions are collapsed by default.
 - [ ] All original calculation inputs remain available.
 - [ ] Mobile layout has no horizontal overflow.

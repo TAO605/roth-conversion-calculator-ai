@@ -36,6 +36,7 @@ describe("feature registry", () => {
 
   it("returns only enabled feature ids", () => {
     expect(getEnabledFeatureIds()).toContain("scenario-history");
+    expect(getEnabledFeatureIds()).toContain("calculator-input-layout");
     expect(getEnabledFeatureIds()).toContain("tax-data-freshness");
     expect(getEnabledFeatureIds()).toContain("ai-compliance-gateway");
     expect(getEnabledFeatureIds()).toContain("seo-structured-content");
