@@ -41,15 +41,15 @@ export default function LaunchReadinessPage() {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
-          <div className="rounded-[18px] bg-neutral-950 p-4 text-white dark:bg-white dark:text-neutral-950">
+          <div className="rounded-md border border-neutral-900 bg-neutral-950 p-4 text-white dark:border-white/10 dark:bg-white dark:text-neutral-950">
             <p className="text-sm opacity-70">Total items</p>
             <p className="mt-2 text-3xl font-bold">{summary.total}</p>
           </div>
-          <div className="rounded-[18px] bg-emerald-500/10 p-4 text-emerald-700 dark:text-emerald-300">
+          <div className="rounded-md border border-emerald-100 bg-emerald-50 p-4 text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-300">
             <p className="text-sm font-medium">Complete</p>
             <p className="mt-2 text-3xl font-bold">{summary.completed}</p>
           </div>
-          <div className="rounded-[18px] bg-amber-500/10 p-4 text-amber-700 dark:text-amber-300">
+          <div className="rounded-md border border-amber-100 bg-amber-50 p-4 text-amber-700 dark:border-amber-400/20 dark:bg-amber-500/10 dark:text-amber-300">
             <p className="text-sm font-medium">Pending</p>
             <p className="mt-2 text-3xl font-bold">{summary.pending}</p>
           </div>

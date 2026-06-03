@@ -140,6 +140,7 @@
 
 - Audit and operations pages should use `rounded-lg border border-neutral-200 bg-white` for page-level review sections.
 - Nested evidence/check panels should use `rounded-md border border-neutral-200 bg-white`.
+- Summary and status counters inside operations pages should use `rounded-md` bordered status panels, even when the fill color communicates complete/pending/total state.
 - Avoid `backdrop-blur-xl`, `shadow-material`, translucent white panels, and oversized custom radii on operational pages.
 - Keep these pages dense and scannable, with evidence labels, counts, breadcrumbs, and disclaimers visible before any decorative treatment.
 

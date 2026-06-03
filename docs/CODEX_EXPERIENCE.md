@@ -912,3 +912,29 @@ Run targeted shared feature UI, release-note, feature-registry, theme, scenario 
 **Future trigger words:**
 
 shared component glass; FAQ translucent cards; table wrapper bg-white/60; theme toggle backdrop blur; scenario history oversized radius
+
+### 2026-06-03 - Operations guards must include status counters
+
+**Symptom:**
+
+The Launch Readiness page still had oversized custom-radius status counters after the operations page surface cleanup, even though the route was already part of the operations UI guard.
+
+**Root cause:**
+
+The operations UI guard blocked several old classes but omitted `rounded-[18px]`, so status counters could keep template-era geometry while page-level panels were cleaned up.
+
+**Fix:**
+
+Converted Launch Readiness total, complete, and pending counters to small-radius bordered status panels and tightened the operations UI guard to block `rounded-[18px]`.
+
+**Guard:**
+
+Updated `tests/core/operations-page-ui.test.ts` so operations routes fail when custom `rounded-[18px]` status cards return.
+
+**Validation:**
+
+Run operations UI, launch readiness, release-note, feature-registry, full Vitest, build, homepage E2E, and production SEO evidence before closing the release.
+
+**Future trigger words:**
+
+launch readiness status card; operations counter oversized radius; rounded-[18px] operations; status block template surface

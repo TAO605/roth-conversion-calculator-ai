@@ -7,9 +7,9 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.133",
+      version: "1.0.134",
       type: "patch",
-      title: "Professional shared feature surfaces",
+      title: "Launch readiness status surfaces",
     });
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });

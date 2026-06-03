@@ -59,6 +59,7 @@
 
 - [ ] Audit and playbook pages use plain bordered surfaces instead of glass, large-radius, or heavy-shadow containers.
 - [ ] Operations pages keep breadcrumbs, H1, summary badges, evidence sections, and required disclaimers visible.
+- [ ] Operations summary/status blocks use small-radius bordered panels, not oversized custom-radius status cards.
 - [ ] Operations page UI changes do not alter blog article bodies, tax calculation logic, or structured-data evidence.
 
 ## Content Hub Pages

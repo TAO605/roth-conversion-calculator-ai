@@ -27,6 +27,7 @@ describe("operations page professional UI", () => {
     expect(source).not.toContain("shadow-material");
     expect(source).not.toContain("rounded-[22px]");
     expect(source).not.toContain("rounded-[20px]");
+    expect(source).not.toContain("rounded-[18px]");
     expect(source).not.toContain("rounded-[16px]");
     expect(source).not.toContain("rounded-[14px]");
     expect(source).not.toContain("bg-white/75");

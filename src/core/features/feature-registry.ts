@@ -702,7 +702,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "operations-page-ui",
     label: "Professional operations page UI",
-    version: "1.0.129",
+    version: "1.0.134",
     layer: "content",
     enabled: true,
     locked: false,

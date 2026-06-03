@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.134",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Launch readiness status surfaces",
+    summary:
+      "Tightened the operations page UI guard by converting Launch Readiness summary status blocks from oversized custom-radius surfaces to restrained bordered status panels.",
+    affectedArea:
+      "Launch readiness checklist, operations page UI regression guard, release notes, feature registry, task tracking, progress evidence, and UI documentation",
+    rollbackPath:
+      "Restore the previous Launch Readiness summary status block classes, then revert the operations UI guard update, release note, feature registry version, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.133",
     date: "2026-06-03",
     type: "patch",
