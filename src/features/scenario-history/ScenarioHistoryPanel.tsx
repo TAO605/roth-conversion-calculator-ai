@@ -37,7 +37,7 @@ export function ScenarioHistoryPanel({
   };
 
   return (
-    <section className="rounded-[18px] border border-neutral-200 bg-white/55 p-4 dark:border-white/10 dark:bg-white/5">
+    <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h3 className="text-base font-semibold text-neutral-950 dark:text-white">Saved scenarios</h3>
@@ -55,7 +55,7 @@ export function ScenarioHistoryPanel({
         <div className="mt-4 grid gap-2">
           {scenarios.map((scenario) => (
             <div
-              className="flex flex-wrap items-center justify-between gap-3 rounded-[14px] border border-neutral-200 bg-white/70 px-3 py-2 dark:border-white/10 dark:bg-white/10"
+              className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-neutral-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-neutral-950"
               key={scenario.id}
             >
               <div>
@@ -86,7 +86,7 @@ export function ScenarioHistoryPanel({
           ))}
         </div>
       ) : (
-        <p className="mt-4 rounded-[14px] bg-neutral-100 px-3 py-3 text-sm text-neutral-600 dark:bg-white/10 dark:text-neutral-300">
+        <p className="mt-4 rounded-md border border-neutral-200 bg-white px-3 py-3 text-sm text-neutral-600 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-300">
           No saved scenarios yet.
         </p>
       )}

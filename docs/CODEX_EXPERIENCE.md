@@ -886,3 +886,29 @@ Run targeted dynamic detail UI, release-note, feature-registry, and relevant con
 **Future trigger words:**
 
 dynamic detail glass; SEO detail page shadow-material; bracket page translucent table; state page oversized radius; keyword page landing-card styling
+
+### 2026-06-03 - Shared feature components multiply surface regressions
+
+**Symptom:**
+
+Reusable feature components still carried translucent table wrappers, glass-like FAQ cards, oversized radii, backdrop blur, and light material shadows after page-level surfaces had been cleaned up.
+
+**Root cause:**
+
+Shared components were outside the page-route UI guards, so their old template classes continued to appear across homepage, methodology, and result surfaces.
+
+**Fix:**
+
+Converted shared table wrappers, FAQ items, bracket impact cards, tax data freshness notes, scenario history rows, and theme toggle surfaces to plain bordered UI while preserving interactions, labels, links, storage behavior, and calculated values.
+
+**Guard:**
+
+Added a shared-feature UI regression test that scans reusable feature components for old glass, heavy-shadow, translucent, hover-lift, and custom large-radius classes.
+
+**Validation:**
+
+Run targeted shared feature UI, release-note, feature-registry, theme, scenario history, tax-data freshness, homepage performance, and homepage E2E tests; then run full Vitest, build, and production SEO evidence before closing the release.
+
+**Future trigger words:**
+
+shared component glass; FAQ translucent cards; table wrapper bg-white/60; theme toggle backdrop blur; scenario history oversized radius

@@ -752,6 +752,19 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Restore the previous translucent, large-radius, and heavy-shadow dynamic detail page container classes, then remove the dynamic-detail UI regression guard.",
   },
   {
+    id: "shared-feature-ui",
+    label: "Professional shared feature component UI",
+    version: "1.0.133",
+    layer: "content",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea:
+      "src/features shared calculator, methodology, FAQ, scenario history, theme, and tax-data surfaces",
+    rollbackPath:
+      "Restore the previous translucent, glass, large-radius, and heavy-shadow shared feature component classes, then remove the shared-feature UI regression guard.",
+  },
+  {
     id: "ai-compliance-audit-playbook",
     label: "AI compliance audit playbook",
     version: "1.0.46",

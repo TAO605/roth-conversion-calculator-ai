@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.133",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Professional shared feature surfaces",
+    summary:
+      "Extended the professional no-glass UI system to shared calculator and methodology feature components by replacing translucent table wrappers, FAQ cards, scenario panels, and utility controls with plain bordered surfaces.",
+    affectedArea:
+      "Shared feature components, homepage FAQ, methodology tax table, bracket impact, sensitivity tables, scenario history, tax data freshness, theme toggle, shared feature UI regression guards, release notes, feature registry, and UI documentation",
+    rollbackPath:
+      "Restore the previous shared feature component surface classes, then revert the shared-feature UI regression test, release note, feature registry entry, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.132",
     date: "2026-06-03",
     type: "patch",

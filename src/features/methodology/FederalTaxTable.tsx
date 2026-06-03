@@ -19,7 +19,7 @@ export function FederalTaxTable() {
       </p>
       <div className="grid gap-4">
         {(Object.keys(FEDERAL_TAX_BRACKETS_2026) as FilingStatus[]).map((status) => (
-          <div className="overflow-hidden rounded-[16px] bg-white/70 dark:bg-white/10" key={status}>
+          <div className="overflow-hidden rounded-md border border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-950" key={status}>
             <h3 className="border-b border-neutral-200 px-4 py-3 font-semibold dark:border-white/10">{labels[status]}</h3>
             <div className="overflow-x-auto">
               <table className="w-full min-w-[420px] text-left text-sm">

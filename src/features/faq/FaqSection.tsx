@@ -6,7 +6,7 @@ export function FaqSection() {
       <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Roth Conversion FAQ</h2>
       <div className="grid gap-3 md:grid-cols-2">
         {faqItems.map((faq) => (
-          <details className="rounded-[16px] bg-white/70 p-4 dark:bg-white/10" key={faq.question}>
+          <details className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950" key={faq.question}>
             <summary className="cursor-pointer text-base font-semibold text-neutral-950 dark:text-white">
               {faq.question}
             </summary>

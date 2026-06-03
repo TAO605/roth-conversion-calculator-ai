@@ -163,3 +163,10 @@
 - Nested metric blocks, table wrappers, and link chips should use `rounded-md` instead of custom oversized radii.
 - Avoid glass, hover lift, material shadows, translucent white panels, and oversized custom radii on dynamic SEO/detail pages.
 - Treat dynamic detail pages as route-specific educational worksheets; preserve JSON-LD breadcrumbs, canonical metadata, body copy, disclaimers, and CTA targets.
+
+## Shared Feature Surfaces
+
+- Shared feature components should use `rounded-md border border-neutral-200 bg-white` for table wrappers, FAQ items, rows, and compact utility panels.
+- Use `rounded-lg border border-neutral-200 bg-white` only for larger shared section wrappers.
+- Avoid `backdrop-blur-xl`, `shadow-material`, translucent white backgrounds, and custom oversized radii inside reusable feature components because they multiply across homepage, methodology, and result surfaces.
+- Preserve component semantics and behavior first: native `details`, storage-backed scenario actions, links, button labels, and tax-result values should not change during a surface pass.

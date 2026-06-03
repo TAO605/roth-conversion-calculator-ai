@@ -22,17 +22,17 @@ export function TaxBracketImpact({ result }: { result: RothConversionResult }) {
         </p>
       </div>
       <div className="grid gap-3 md:grid-cols-3">
-        <div className="rounded-[16px] bg-white/65 p-4 dark:bg-white/10">
+        <div className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-neutral-500">Before conversion</p>
           <p className="mt-2 text-3xl font-bold text-neutral-950 dark:text-white">{formatPercent(impact.beforeRate)}</p>
           <p className="mt-1 text-sm text-neutral-500">Bracket top: {bracketTopLabel(impact.beforeBracketTop)}</p>
         </div>
-        <div className="rounded-[16px] bg-white/65 p-4 dark:bg-white/10">
+        <div className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-neutral-500">After conversion</p>
           <p className="mt-2 text-3xl font-bold text-neutral-950 dark:text-white">{formatPercent(impact.afterRate)}</p>
           <p className="mt-1 text-sm text-neutral-500">Bracket top: {bracketTopLabel(impact.afterBracketTop)}</p>
         </div>
-        <div className="rounded-[16px] bg-blue-500/10 p-4">
+        <div className="rounded-md border border-blue-100 bg-blue-50 p-4 dark:border-blue-400/20 dark:bg-blue-500/10">
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-systemBlue">Crosses bracket?</p>
           <p className="mt-2 text-3xl font-bold text-neutral-950 dark:text-white">
             {impact.crossesBracket ? "Yes" : "No"}
@@ -42,7 +42,7 @@ export function TaxBracketImpact({ result }: { result: RothConversionResult }) {
           </p>
         </div>
       </div>
-      <div className="rounded-[16px] bg-white/65 p-4 text-sm leading-6 text-neutral-600 dark:bg-white/10 dark:text-neutral-300">
+      <div className="rounded-md border border-neutral-200 bg-white p-4 text-sm leading-6 text-neutral-600 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-300">
         Room before conversion in current bracket:{" "}
         <strong className="text-neutral-950 dark:text-white">
           {roomLabel(impact.roomInCurrentBracketBeforeConversion)}

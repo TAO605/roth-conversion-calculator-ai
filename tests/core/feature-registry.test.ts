@@ -78,6 +78,7 @@ describe("feature registry", () => {
     expect(getEnabledFeatureIds()).toContain("content-hub-page-ui");
     expect(getEnabledFeatureIds()).toContain("priority-guide-page-ui");
     expect(getEnabledFeatureIds()).toContain("dynamic-detail-page-ui");
+    expect(getEnabledFeatureIds()).toContain("shared-feature-ui");
     expect(getEnabledFeatureIds()).toContain("cpa-review-checklist");
     expect(getEnabledFeatureIds()).toContain("feedback-roadmap-playbook");
     expect(getEnabledFeatureIds()).toContain("privacy-data-flow-playbook");

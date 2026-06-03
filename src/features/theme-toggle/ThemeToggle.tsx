@@ -28,7 +28,7 @@ export function ThemeToggle() {
   return (
     <button
       aria-label={`Switch to ${nextModeLabel} mode`}
-      className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-full border border-neutral-200 bg-white/70 text-neutral-700 shadow-sm backdrop-blur-xl transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-systemBlue focus:ring-offset-2 dark:border-white/10 dark:bg-white/10 dark:text-neutral-100 dark:hover:bg-white/15 dark:focus:ring-offset-neutral-950"
+      className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 transition hover:border-systemBlue focus:outline-none focus:ring-2 focus:ring-systemBlue focus:ring-offset-2 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-100 dark:hover:border-systemBlue dark:focus:ring-offset-neutral-950"
       onClick={() => setTheme(toggleThemePreference())}
       type="button"
     >

@@ -14,7 +14,7 @@ export function FederalBracketCapacityTable({ input }: { input: RothConversionIn
           basis ratio you entered and is educational only.
         </p>
       </div>
-      <div className="overflow-x-auto rounded-[16px] border border-neutral-200 bg-white/60 dark:border-white/10 dark:bg-white/5">
+      <div className="overflow-x-auto rounded-md border border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-950">
         <table className="min-w-full border-collapse text-left text-sm">
           <thead className="text-xs uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">
             <tr>

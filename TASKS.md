@@ -82,3 +82,4 @@
 - [done] Apply professional no-glass UI to top-level content hub pages
 - [done] Apply professional no-glass UI to priority educational guide pages
 - [done] Apply professional no-glass UI to non-blog dynamic detail pages
+- [done] Apply professional no-glass UI to shared feature components

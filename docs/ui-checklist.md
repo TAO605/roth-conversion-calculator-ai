@@ -79,8 +79,20 @@
 - [ ] Dynamic detail page UI changes preserve JSON-LD, breadcrumbs, CTA targets, disclaimer text, and existing body copy.
 - [ ] Dynamic detail page UI changes do not alter blog article bodies or tax calculation logic.
 
+## Shared Feature Components
+
+- [ ] Shared feature components use plain bordered surfaces instead of glass, blur, large-radius, translucent, or heavy-shadow containers.
+- [ ] Shared table wrappers, FAQ items, scenario panels, and utility controls preserve existing semantics, labels, and interaction behavior.
+- [ ] Shared feature UI changes do not alter tax calculation logic, storage behavior, blog article bodies, or SEO evidence scripts.
+
 ## Acceptance Checks For P9 Dynamic Detail Page Surfaces
 
 - Keyword landing, age scenario, basis, example, filing status, glossary, state, federal bracket, multi-year planning, tax interaction, and tax payment method detail pages no longer use `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, `bg-white/75`, `bg-white/70`, or `bg-white/60`.
 - Dynamic detail panels use `rounded-lg border border-neutral-200 bg-white`; nested metric, table, and link surfaces use `rounded-md` instead of custom oversized radii.
 - Existing dynamic page tests, release-note tests, feature-registry tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
+
+## Acceptance Checks For P10 Shared Feature Component Surfaces
+
+- Shared feature components no longer use `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, `bg-white/75`, `bg-white/70`, `bg-white/65`, `bg-white/60`, or `bg-white/55`.
+- Table wrappers, FAQ items, bracket impact cards, tax data freshness notes, scenario history rows, and theme toggle surfaces use restrained bordered surfaces.
+- Existing shared feature tests, homepage E2E, release-note tests, feature-registry tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
