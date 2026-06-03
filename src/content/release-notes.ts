@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.126",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Stable result action toolbar",
+    summary:
+      "Refined the homepage result action toolbar so dynamically loaded report and CPA packet actions keep stable disabled placeholders and the mobile-to-desktop toolbar stays on a predictable two-to-four column grid.",
+    affectedArea:
+      "Homepage result actions, lazy action fallbacks, mobile calculator detail polish, layout-shift regression guards, release notes, feature registry, and UI documentation",
+    rollbackPath:
+      "Restore the result action toolbar classes and dynamic button loading fallbacks in HomeCalculatorClient, then revert the related result action layout test, release note, feature version, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.125",
     date: "2026-06-03",
     type: "patch",

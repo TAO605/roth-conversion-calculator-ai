@@ -15,12 +15,21 @@ describe("result actions layout", () => {
     expect(actionsIndex).toBeGreaterThan(-1);
     expect(summaryIndex).toBeGreaterThan(-1);
     expect(actionsIndex).toBeGreaterThan(summaryIndex);
-    expect(source).toContain("mt-4 grid w-full min-w-0 grid-cols-2");
-    expect(source).toContain("xl:flex");
+    expect(source).toContain("mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-4");
     expect(source).toContain("[&>button]:w-full");
+    expect(source).not.toContain("xl:flex");
     expect(shareIndex).toBeGreaterThan(actionsIndex);
     expect(reportIndex).toBeGreaterThan(shareIndex);
     expect(cpaIndex).toBeGreaterThan(reportIndex);
     expect(resetIndex).toBeGreaterThan(cpaIndex);
+  });
+
+  it("keeps dynamically loaded result action buttons from shifting the toolbar", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
+
+    expect(source).toContain("function LazyActionButtonFallback");
+    expect(source).toContain('<LazyActionButtonFallback label="Loading report..." />');
+    expect(source).toContain('<LazyActionButtonFallback label="Loading CPA packet..." />');
+    expect(source).not.toContain("{ loading: () => null },");
   });
 });

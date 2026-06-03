@@ -704,3 +704,29 @@ Targeted SEO metadata tests, full `npm test`, and `npm run build` passed before 
 **Future trigger words:**
 
 Google title still says AI, Open Graph AI title, Twitter card AI title, RSS title AI, Organization JSON-LD brand, WebPage JSON-LD name.
+
+### 2026-06-03 - Stable placeholders for lazy action buttons
+
+**Symptom:**
+
+Homepage result action toolbar could change width/count while dynamically imported report and CPA packet buttons loaded.
+
+**Root cause:**
+
+Dynamic action button imports returned null loading states while the toolbar used a layout that changed shape after hydration.
+
+**Fix:**
+
+Added disabled size-stable LazyActionButtonFallback placeholders and changed result actions to a stable two-to-four column grid.
+
+**Guard:**
+
+Added result-actions-layout regression checks for placeholders and stable grid classes; ran targeted tests, full Vitest, build, and homepage Playwright E2E.
+
+**Validation:**
+
+Targeted tests passed 4 files / 16 tests; full npm test passed 101 files / 295 tests; npm run build passed with 130 static pages; Playwright homepage passed on PLAYWRIGHT_PORT=3116.
+
+**Future trigger words:**
+
+lazy-loaded button layout shift; mobile action toolbar jumps; dynamic import returns null in UI actions

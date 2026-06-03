@@ -226,14 +226,14 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "homepage-lazy-loading",
     label: "Homepage lazy loading for non-critical modules",
-    version: "1.0.123",
+    version: "1.0.126",
     layer: "common",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/app/page.tsx and src/app/HomeCalculatorClient.tsx",
     rollbackPath:
-      "Restore the previous homepage hero, calculator split, shared primitive visual classes, and result summary styling while keeping the client island boundary intact.",
+      "Restore the previous homepage hero, calculator split, shared primitive visual classes, result summary styling, and result action loading behavior while keeping the client island boundary intact.",
   },
   {
     id: "glossary-hub",

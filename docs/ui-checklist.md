@@ -43,3 +43,11 @@
 - [ ] Scope badges appear before primary result numbers.
 - [ ] Scope badges include tax year, educational estimate, based on inputs, and not tax advice.
 - [ ] Scope badges do not claim guaranteed accuracy.
+
+## Result Actions
+
+- [ ] Result actions appear after the primary result estimates.
+- [ ] Lazy-loaded report and CPA packet buttons use disabled placeholders instead of disappearing while loading.
+- [ ] Mobile result actions stay in a stable two-column grid.
+- [ ] Wider result actions stay in a stable four-column grid.
+- [ ] Action labels avoid personalized recommendations or tax-advice language.

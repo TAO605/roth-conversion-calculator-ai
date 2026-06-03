@@ -47,6 +47,18 @@ function LazyPanelFallback({ className = "min-h-24", label = "Loading module..."
   );
 }
 
+function LazyActionButtonFallback({ label }: { label: string }) {
+  return (
+    <button
+      className="inline-flex min-h-11 w-full items-center justify-center rounded border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-400 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-500"
+      disabled
+      type="button"
+    >
+      {label}
+    </button>
+  );
+}
+
 const ProjectionChart = dynamic<{ projection: RothConversionResult["projection"] }>(
   () => import("@/features/charts/ProjectionChart").then((module) => module.ProjectionChart),
   { loading: () => <LazyPanelFallback className="min-h-[17rem]" label="Loading projection..." /> },
@@ -54,7 +66,7 @@ const ProjectionChart = dynamic<{ projection: RothConversionResult["projection"]
 
 const PdfReportButton = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
   () => import("@/features/pdf-report/PdfReportButton").then((module) => module.PdfReportButton),
-  { loading: () => null },
+  { loading: () => <LazyActionButtonFallback label="Loading report..." /> },
 );
 
 const CopyProfessionalHandoffButton = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
@@ -62,7 +74,7 @@ const CopyProfessionalHandoffButton = dynamic<{ input: RothConversionInput; resu
     import("@/features/professional-handoff/CopyProfessionalHandoffButton").then(
       (module) => module.CopyProfessionalHandoffButton,
     ),
-  { loading: () => null },
+  { loading: () => <LazyActionButtonFallback label="Loading CPA packet..." /> },
 );
 
 const AiExplainer = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
@@ -132,7 +144,7 @@ export function HomeCalculatorClient() {
             <ResultSummary result={result} />
             <div
               aria-label="Result actions"
-              className="mt-4 grid w-full min-w-0 grid-cols-2 gap-2 xl:flex xl:flex-wrap xl:justify-end [&>button]:w-full xl:[&>button]:w-auto"
+              className="mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-4 [&>button]:w-full"
             >
               <ShareResultButton input={input} />
               <PdfReportButton input={input} result={result} />

@@ -75,3 +75,4 @@
 - [done] Add V1.3 no-AI professional homepage calculator UI pass
 - [done] Align SEO metadata and structured-data brand with no-AI calculator positioning
 - [done] Apply professional no-glass UI to supporting calculator panels
+- [done] Stabilize the homepage result action toolbar during lazy loading
