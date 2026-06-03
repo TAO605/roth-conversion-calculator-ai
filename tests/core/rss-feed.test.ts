@@ -11,7 +11,7 @@ describe("RSS feed", () => {
 
     expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
     expect(xml).toContain("<rss version=\"2.0\"");
-    expect(xml).toContain("<title>AI Roth Conversion Calculator</title>");
+    expect(xml).toContain("<title>Roth Conversion Calculator</title>");
     expect(xml).toContain("<link>https://www.roth-conversion-calculator-ai.shop/blog</link>");
 
     for (const post of blogPosts) {

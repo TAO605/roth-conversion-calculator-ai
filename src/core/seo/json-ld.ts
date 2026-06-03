@@ -70,7 +70,7 @@ export function homepageWebPageJsonLd() {
     "@type": "WebPage",
     "@id": `${siteConfig.siteUrl}/#webpage`,
     url: siteConfig.siteUrl,
-    name: "AI Roth Conversion Calculator 2026",
+    name: "Roth Conversion Calculator 2026",
     description:
       "Educational Roth conversion calculator for modeling tax cost, break-even years, tax payment assumptions, and review items for professional discussion.",
     inLanguage: "en-US",

@@ -73,3 +73,4 @@
 - [done] Classify non-blocking Lighthouse Chrome temp cleanup warnings
 - [done] Surface Lighthouse warning classification in performance audit playbook
 - [done] Add V1.3 no-AI professional homepage calculator UI pass
+- [done] Align SEO metadata and structured-data brand with no-AI calculator positioning

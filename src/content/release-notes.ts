@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.124",
+    date: "2026-06-03",
+    type: "patch",
+    title: "No-AI SEO metadata branding",
+    summary:
+      "Aligned homepage metadata, Open Graph, Twitter card, RSS site name, and homepage WebPage JSON-LD with the professional Roth Conversion Calculator brand while preserving the optional educational AI explainer feature.",
+    affectedArea:
+      "Root metadata, social previews, site configuration, RSS feed title, homepage WebPage JSON-LD, structured-data guards, and no-AI SEO regression tests",
+    rollbackPath:
+      "Restore the previous AI-first metadata strings in src/app/layout.tsx, src/core/seo/site-config.ts, and src/core/seo/json-ld.ts, then revert the related SEO tests, release note, feature version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.123",
     date: "2026-06-02",
     type: "patch",

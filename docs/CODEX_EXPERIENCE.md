@@ -678,3 +678,29 @@ Targeted UI/release/feature tests, full `npm test`, `npm run build`, Vercel prod
 **Future trigger words:**
 
 no-AI UI, AI metadata remains, SEO title debranding, structured data site name, visible hero versus JSON-LD.
+
+## 2026-06-03 - No-AI Branding Needs Dedicated Metadata Guards
+
+**Symptom:**
+
+After the visible homepage UI was debranded, production HTML could still expose the old AI-first brand through `<title>`, Open Graph, Twitter card, RSS title, Organization JSON-LD, WebSite JSON-LD, and homepage WebPage JSON-LD.
+
+**Root cause:**
+
+Search snippets and structured-data names are driven by shared SEO configuration and layout metadata, not by the visible H1 alone.
+
+**Fix:**
+
+Updated root metadata, social metadata, `siteConfig.siteName`, RSS-derived site naming, and homepage WebPage JSON-LD to the professional `Roth Conversion Calculator` brand while preserving the optional AI explainer feature.
+
+**Guard:**
+
+`tests/core/seo-no-ai-branding.test.ts` blocks the old `AI Roth Conversion Calculator` brand from global metadata and homepage structured data.
+
+**Validation:**
+
+Targeted SEO metadata tests, full `npm test`, and `npm run build` passed before deployment.
+
+**Future trigger words:**
+
+Google title still says AI, Open Graph AI title, Twitter card AI title, RSS title AI, Organization JSON-LD brand, WebPage JSON-LD name.

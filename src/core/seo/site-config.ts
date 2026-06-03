@@ -8,5 +8,5 @@ export function normalizeSiteUrl(value: string | undefined): string {
 
 export const siteConfig = {
   siteUrl: normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
-  siteName: "AI Roth Conversion Calculator",
+  siteName: "Roth Conversion Calculator",
 };

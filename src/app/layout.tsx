@@ -10,11 +10,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "AI Roth Conversion Calculator 2026 | Estimate Taxes & Break-Even",
+    default: "Roth Conversion Calculator 2026 | Estimate Taxes & Break-Even",
     template: "%s | Roth Conversion Calculator",
   },
   description:
-    "Free AI Roth conversion calculator for 2026. Estimate federal tax, state tax, potential penalties, break-even years, and get plain-English AI explanations.",
+    "Free Roth conversion calculator for 2026. Estimate federal tax, state tax, potential penalties, break-even years, and review plain-English educational explanations.",
   metadataBase: new URL(siteConfig.siteUrl),
   manifest: "/manifest.webmanifest",
   appleWebApp: {
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "AI Roth Conversion Calculator 2026",
+    title: "Roth Conversion Calculator 2026",
     description:
-      "Estimate Roth conversion taxes, potential penalties, break-even years, and use AI to understand the result.",
+      "Estimate Roth conversion taxes, potential penalties, break-even years, and review the result with educational explanations.",
     url: siteConfig.siteUrl,
     siteName: siteConfig.siteName,
     type: "website",
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Roth Conversion Calculator 2026",
+    title: "Roth Conversion Calculator 2026",
     description:
-      "Estimate Roth conversion taxes, potential penalties, break-even years, and use AI to understand the result.",
+      "Estimate Roth conversion taxes, potential penalties, break-even years, and review the result with educational explanations.",
     images: ["/social-preview.svg"],
   },
   verification: buildGoogleSiteVerification(),

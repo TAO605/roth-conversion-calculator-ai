@@ -159,14 +159,14 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "seo-structured-content",
     label: "Article, breadcrumb, and long-tail content matrix",
-    version: "1.0.101",
+    version: "1.0.124",
     layer: "content",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/core/seo, src/content/blog, src/app/blog, src/app/states",
     rollbackPath:
-      "Remove the homepage WebSite/WebPage JSON-LD additions, Article/Breadcrumb JSON-LD scripts, and related structured-content tests.",
+      "Restore previous SEO metadata and siteName values, then remove the homepage WebSite/WebPage JSON-LD additions, Article/Breadcrumb JSON-LD scripts, and related structured-content tests if needed.",
   },
   {
     id: "production-readiness",
