@@ -68,14 +68,14 @@ export default async function StateCalculatorPage({ params }: StatePageProps) {
         <p className="mt-4 text-lg leading-8 text-neutral-600 dark:text-neutral-300">{page.description}</p>
       </header>
 
-      <section className="grid gap-4 rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="grid gap-4 rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">State tax assumption</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-[16px] bg-blue-500/10 p-4">
+          <div className="rounded-md border border-blue-100 bg-blue-50 p-4 dark:border-blue-400/20 dark:bg-blue-500/10">
             <p className="text-xs font-semibold uppercase tracking-[0.1em] text-systemBlue">Example rate</p>
             <p className="mt-2 text-3xl font-bold">{formatPercent(page.stateTaxRateExample)}</p>
           </div>
-          <div className="rounded-[16px] bg-white/70 p-4 dark:bg-white/10">
+          <div className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
             <p className="text-sm leading-6">{page.stateTaxSummary}</p>
           </div>
         </div>
@@ -88,14 +88,14 @@ export default async function StateCalculatorPage({ params }: StatePageProps) {
         ))}
       </article>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold">Use the calculator</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
           Open the main calculator, choose {page.stateName} in the state tax shortcut, and adjust the rate if your
           actual marginal rate is different.
         </p>
         <Link
-          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-[14px] bg-systemBlue px-4 py-2 text-sm font-semibold text-white"
+          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-systemBlue px-4 py-2 text-sm font-semibold text-white"
           href={buildStateCalculatorHref(page)}
         >
           Use this state rate

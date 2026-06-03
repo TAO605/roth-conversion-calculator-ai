@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.132",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Professional dynamic detail surfaces",
+    summary:
+      "Extended the professional no-glass UI system to non-blog dynamic detail pages by replacing translucent, large-radius, and heavy-shadow content panels with plain bordered review surfaces.",
+    affectedArea:
+      "Keyword landing, age scenario, basis, example, filing status, glossary, state, federal bracket, multi-year planning, tax interaction, tax payment method detail pages, dynamic detail UI regression guards, release notes, feature registry, and UI documentation",
+    rollbackPath:
+      "Restore the previous dynamic detail page container classes in the affected app routes, then revert the dynamic-detail UI regression test, release note, feature registry entry, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.131",
     date: "2026-06-03",
     type: "patch",

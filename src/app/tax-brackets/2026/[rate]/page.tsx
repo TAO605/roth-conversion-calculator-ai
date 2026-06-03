@@ -71,10 +71,10 @@ export default async function TaxBracketRatePage({ params }: TaxBracketRatePageP
         <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">{page.description}</p>
       </header>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Taxable income range</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">{page.summary}</p>
-        <div className="mt-4 overflow-x-auto rounded-[16px] border border-neutral-200 bg-white/60 dark:border-white/10 dark:bg-white/5">
+        <div className="mt-4 overflow-x-auto rounded-md border border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-950">
           <table className="min-w-full border-collapse text-left text-sm">
             <thead className="text-xs uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">
               <tr>
@@ -96,14 +96,14 @@ export default async function TaxBracketRatePage({ params }: TaxBracketRatePageP
         </div>
       </section>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Use the calculator</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
           Open the calculator to estimate how a Roth conversion amount may pass through this bracket after adding to
           current taxable income.
         </p>
         <Link
-          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-[14px] bg-systemBlue px-4 py-2 text-sm font-semibold text-white"
+          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-systemBlue px-4 py-2 text-sm font-semibold text-white"
           href={buildBracketRateCalculatorHref(page)}
         >
           Open the calculator

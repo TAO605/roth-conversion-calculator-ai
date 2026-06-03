@@ -72,3 +72,15 @@
 - [ ] Priority YMYL guide pages use plain bordered review panels instead of glass, large-radius, or heavy-shadow containers.
 - [ ] Guide page UI changes preserve JSON-LD, breadcrumbs, source links, disclaimer text, and professional-review boundaries.
 - [ ] Guide page UI changes do not alter blog article bodies or tax calculation logic.
+
+## Dynamic Detail Pages
+
+- [ ] Non-blog dynamic detail pages use plain bordered review panels instead of glass, large-radius, or heavy-shadow containers.
+- [ ] Dynamic detail page UI changes preserve JSON-LD, breadcrumbs, CTA targets, disclaimer text, and existing body copy.
+- [ ] Dynamic detail page UI changes do not alter blog article bodies or tax calculation logic.
+
+## Acceptance Checks For P9 Dynamic Detail Page Surfaces
+
+- Keyword landing, age scenario, basis, example, filing status, glossary, state, federal bracket, multi-year planning, tax interaction, and tax payment method detail pages no longer use `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, `bg-white/75`, `bg-white/70`, or `bg-white/60`.
+- Dynamic detail panels use `rounded-lg border border-neutral-200 bg-white`; nested metric, table, and link surfaces use `rounded-md` instead of custom oversized radii.
+- Existing dynamic page tests, release-note tests, feature-registry tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

@@ -739,6 +739,19 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Restore the previous translucent, large-radius, and heavy-shadow guide page container classes, then remove the priority-guide UI regression guard.",
   },
   {
+    id: "dynamic-detail-page-ui",
+    label: "Professional dynamic detail page UI",
+    version: "1.0.132",
+    layer: "content",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea:
+      "src/app/(keyword-pages), dynamic content detail routes, and 2026 federal bracket detail routes",
+    rollbackPath:
+      "Restore the previous translucent, large-radius, and heavy-shadow dynamic detail page container classes, then remove the dynamic-detail UI regression guard.",
+  },
+  {
     id: "ai-compliance-audit-playbook",
     label: "AI compliance audit playbook",
     version: "1.0.46",

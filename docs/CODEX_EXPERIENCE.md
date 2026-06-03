@@ -860,3 +860,29 @@ Run targeted priority guide UI, release-note, feature-registry, and guide conten
 **Future trigger words:**
 
 guide page glass; YMYL guide card styling; CPA checklist translucent; review note shadow-material; priority guide oversized radius
+
+### 2026-06-03 - Dynamic detail pages should not inherit landing-card styling
+
+**Symptom:**
+
+Non-blog dynamic detail pages still used translucent panels, custom large radii, and material shadows after hub and priority guide routes had moved to professional bordered surfaces.
+
+**Root cause:**
+
+Dynamic SEO/detail routes were generated from earlier landing-card templates, so route-specific worksheet sections and calculator CTAs inherited decorative surfaces.
+
+**Fix:**
+
+Converted keyword, age scenario, basis, example, filing status, glossary, state, federal bracket, multi-year planning, tax interaction, and tax payment method detail panels to plain bordered surfaces while preserving body copy, JSON-LD, breadcrumbs, disclaimers, and CTA targets.
+
+**Guard:**
+
+Added a dynamic-detail UI regression test that scans non-blog dynamic detail routes for old glass, heavy-shadow, translucent, hover-lift, and custom large-radius classes.
+
+**Validation:**
+
+Run targeted dynamic detail UI, release-note, feature-registry, and relevant content tests; then run full Vitest, build, Playwright, and production SEO evidence before closing the release.
+
+**Future trigger words:**
+
+dynamic detail glass; SEO detail page shadow-material; bracket page translucent table; state page oversized radius; keyword page landing-card styling

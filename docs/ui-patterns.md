@@ -156,3 +156,10 @@
 - Nested guide points, assumptions, checklist items, and review notes should use `rounded-md` surfaces.
 - Avoid glass, hover lift, material shadows, translucent white panels, and oversized custom radii on guide pages.
 - Treat guide visuals as trust infrastructure; preserve source links, JSON-LD, breadcrumbs, disclaimers, and professional-review language.
+
+## Dynamic Detail Review Panels
+
+- Non-blog dynamic detail pages should use plain review panels: `rounded-lg border border-neutral-200 bg-white`.
+- Nested metric blocks, table wrappers, and link chips should use `rounded-md` instead of custom oversized radii.
+- Avoid glass, hover lift, material shadows, translucent white panels, and oversized custom radii on dynamic SEO/detail pages.
+- Treat dynamic detail pages as route-specific educational worksheets; preserve JSON-LD breadcrumbs, canonical metadata, body copy, disclaimers, and CTA targets.

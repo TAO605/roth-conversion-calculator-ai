@@ -70,7 +70,7 @@ export default async function KeywordLandingPage({ params }: KeywordLandingPageP
         <p className="mt-4 text-lg leading-8 text-neutral-600 dark:text-neutral-300">{page.description}</p>
       </header>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Search intent</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">{page.intent}</p>
       </section>
@@ -81,14 +81,14 @@ export default async function KeywordLandingPage({ params }: KeywordLandingPageP
         ))}
       </article>
 
-      <section className="rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Use the calculator</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
           Open the live calculator, enter your own assumptions, and use the output only as an educational worksheet for
           professional review.
         </p>
         <Link
-          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-[14px] bg-systemBlue px-4 py-2 text-sm font-semibold text-white"
+          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-systemBlue px-4 py-2 text-sm font-semibold text-white"
           href={buildKeywordLandingCalculatorHref(page)}
         >
           {page.primaryCta}
