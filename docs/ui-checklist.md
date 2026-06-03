@@ -21,6 +21,8 @@
 
 - [ ] Quick Estimate is visible before advanced assumptions.
 - [ ] Quick Estimate keeps projection-only assumptions behind a collapsed disclosure on first load.
+- [ ] Projection and advanced disclosure summaries have mobile-friendly touch targets.
+- [ ] Disclosure summaries have a visible expand affordance and preserve native details/summary behavior.
 - [ ] Advanced assumptions are collapsed by default.
 - [ ] All original calculation inputs remain available.
 - [ ] Mobile layout has no horizontal overflow.

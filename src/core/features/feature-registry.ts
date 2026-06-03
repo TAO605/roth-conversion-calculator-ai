@@ -60,14 +60,14 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "calculator-input-layout",
     label: "Calculator input layout",
-    version: "1.0.127",
+    version: "1.0.128",
     layer: "feature",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/features/calculator-input",
     rollbackPath:
-      "Restore retirement age and expected annual return to the always-visible Quick Estimate field list and remove the projection assumptions disclosure.",
+      "Restore retirement age and expected annual return to the always-visible Quick Estimate field list and remove the enhanced disclosure summary treatment.",
   },
   {
     id: "theme-toggle",

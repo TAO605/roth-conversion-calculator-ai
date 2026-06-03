@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { SelectField, TextField } from "@/common/ui/field";
 import type { FilingStatus, RothConversionInput, TaxPaymentMethod } from "@/core/calculator/types";
 import { validateCalculatorInput } from "@/core/calculator/validation";
@@ -22,6 +23,19 @@ function percentDisplayValue(value: number): string {
   }
 
   return Number(percent.toFixed(4)).toString();
+}
+
+function DisclosureSummary({ children }: { children: string }) {
+  return (
+    <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-neutral-950 marker:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A2463] focus-visible:ring-offset-2 dark:text-white dark:focus-visible:ring-offset-neutral-950 [&::-webkit-details-marker]:hidden">
+      <span>{children}</span>
+      <ChevronDown
+        aria-hidden="true"
+        className="shrink-0 text-neutral-500 transition-transform group-open:rotate-180 dark:text-neutral-400"
+        size={16}
+      />
+    </summary>
+  );
 }
 
 export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
@@ -89,12 +103,10 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
             onChange={(event) => update("traditionalIraBalance", numberValue(event.target.value))}
           />
           <details
-            className="rounded border border-neutral-200 bg-white p-3 shadow-none dark:border-white/10 dark:bg-neutral-950"
+            className="group rounded border border-neutral-200 bg-white px-3 py-1 shadow-none dark:border-white/10 dark:bg-neutral-950"
             data-testid="projection-assumptions"
           >
-            <summary className="cursor-pointer text-sm font-semibold text-neutral-950 dark:text-white">
-              Projection assumptions
-            </summary>
+            <DisclosureSummary>Projection assumptions</DisclosureSummary>
             <div className="mt-3 grid gap-4" data-testid="projection-assumption-fields">
               <TextField
                 label="Retirement age"
@@ -116,10 +128,11 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
         </div>
       </section>
 
-      <details className="rounded border border-neutral-200 bg-white p-4 shadow-none dark:border-white/10 dark:bg-neutral-950" data-testid="advanced-inputs">
-        <summary className="cursor-pointer text-sm font-semibold text-neutral-950 dark:text-white">
-          Advanced assumptions
-        </summary>
+      <details
+        className="group rounded border border-neutral-200 bg-white px-4 py-2 shadow-none dark:border-white/10 dark:bg-neutral-950"
+        data-testid="advanced-inputs"
+      >
+        <DisclosureSummary>Advanced assumptions</DisclosureSummary>
         <div className="mt-4 grid gap-4">
           <TextField
             label="After-tax basis"

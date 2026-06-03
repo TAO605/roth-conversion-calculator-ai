@@ -13,6 +13,7 @@
 - Keep projection-only assumptions such as retirement age and expected annual return inside a collapsed `Projection assumptions` disclosure within Quick Estimate so defaults remain active but mobile first-screen density stays lower.
 - Keep less frequent or higher-complexity assumptions in a collapsed `Advanced assumptions` section: after-tax basis, current age, retirement marginal tax rate, tax payment method, IRA withholding, penalty exception, and sample presets.
 - Do not remove advanced fields; hide complexity progressively so the calculator remains complete and auditable.
+- Use native `details`/`summary` for input disclosures, with at least 44px summary rows and a visible chevron affordance for mobile touch clarity.
 
 ## Result-Adjacent Tax Impact Warnings
 

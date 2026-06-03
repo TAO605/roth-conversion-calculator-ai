@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.128",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Mobile input disclosure touch targets",
+    summary:
+      "Improved the calculator input disclosures by giving Projection assumptions and Advanced assumptions larger mobile touch targets, clear chevron affordances, and native details/summary behavior for keyboard and screen-reader compatibility.",
+    affectedArea:
+      "Calculator input disclosures, mobile touch targets, projection assumptions, advanced assumptions, input layout regression guards, release notes, feature registry, and UI documentation",
+    rollbackPath:
+      "Restore the previous plain summary elements in CalculatorInput, remove the chevron disclosure summary helper, then revert the related calculator input layout tests, release note, feature version, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.127",
     date: "2026-06-03",
     type: "patch",

@@ -756,3 +756,29 @@ Targeted tests passed 4 files / 17 tests; full npm test passed 101 files / 296 t
 **Future trigger words:**
 
 mobile input density; Quick Estimate too long; projection assumptions; retirement age field placement; expected annual return field placement
+
+### 2026-06-03 - Native details summaries need mobile touch affordances
+
+**Symptom:**
+
+Projection and advanced calculator disclosures were native and functional but had small plain summary rows that were easy to miss on mobile.
+
+**Root cause:**
+
+The previous details/summary implementation preserved accessibility but did not style the summary as a full-width mobile touch target or provide a visible expand affordance.
+
+**Fix:**
+
+Added a shared DisclosureSummary with min-h-11, hidden default markers, visible ChevronDown affordance, and group-open rotation while preserving native details/summary behavior.
+
+**Guard:**
+
+Updated calculator-input-layout tests to require mobile touch target classes, ChevronDown, marker hiding, and open-state rotation; ran targeted tests, full Vitest, build, and homepage Playwright E2E.
+
+**Validation:**
+
+Targeted tests passed 4 files / 18 tests; full npm test passed 101 files / 297 tests; npm run build passed with 130 static pages; Playwright homepage passed on PLAYWRIGHT_PORT=3118.
+
+**Future trigger words:**
+
+details summary touch target; disclosure too small on mobile; missing expand chevron; advanced assumptions affordance; projection assumptions affordance

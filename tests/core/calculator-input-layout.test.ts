@@ -1,6 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
 import { CalculatorInput } from "@/features/calculator-input/CalculatorInput";
 import type { RothConversionInput } from "@/core/calculator/types";
 
@@ -64,5 +66,19 @@ describe("calculator input layout", () => {
     expect(sourceFields.children).toHaveLength(6);
     expect(projectionAssumptions.querySelectorAll("input")).toHaveLength(2);
     expect(projectionAssumptions.open).toBe(false);
+  });
+
+  it("keeps collapsible input summaries large enough for mobile touch targets", () => {
+    render(React.createElement(CalculatorInput, { value, onChange: vi.fn() }));
+
+    const projectionSummary = screen.getByText("Projection assumptions").closest("summary");
+    const advancedSummary = screen.getByText("Advanced assumptions").closest("summary");
+    const source = fs.readFileSync(path.join(process.cwd(), "src/features/calculator-input/CalculatorInput.tsx"), "utf8");
+
+    expect(projectionSummary?.className).toContain("min-h-11");
+    expect(advancedSummary?.className).toContain("min-h-11");
+    expect(source).toContain("ChevronDown");
+    expect(source).toContain("group-open:rotate-180");
+    expect(source).toContain("[&::-webkit-details-marker]:hidden");
   });
 });
