@@ -19,11 +19,11 @@ export default function BlogIndexPage() {
           Plain-English articles that explain Roth conversion concepts without replacing professional tax advice.
         </p>
       </div>
-      <section className="grid gap-4 rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="grid gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Topics</h2>
         <div className="grid gap-3 md:grid-cols-2">
           {topicGroups.map((group) => (
-            <div className="rounded-[16px] bg-white/70 p-4 dark:bg-white/10" key={group.tag}>
+            <div className="rounded-md border border-neutral-200 bg-neutral-50 p-4 dark:border-white/10 dark:bg-neutral-900" key={group.tag}>
               <h3 className="font-semibold text-neutral-950 dark:text-white">{group.label}</h3>
               <div className="mt-3 grid gap-2">
                 {group.posts.map((post) => (
@@ -39,7 +39,7 @@ export default function BlogIndexPage() {
       <div className="grid gap-4 md:grid-cols-2">
         {blogPosts.map((post) => (
           <Link
-            className="rounded-[18px] bg-white/70 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-material dark:bg-white/10"
+            className="rounded-lg border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-systemBlue/40 hover:bg-neutral-50 dark:border-white/10 dark:bg-neutral-950 dark:hover:border-systemBlue/50 dark:hover:bg-neutral-900"
             href={`/blog/${post.slug}`}
             key={post.slug}
           >

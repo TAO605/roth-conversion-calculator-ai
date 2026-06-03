@@ -171,3 +171,10 @@
 - Use `rounded-lg border border-neutral-200 bg-white` only for larger shared section wrappers.
 - Avoid `backdrop-blur-xl`, `shadow-material`, translucent white backgrounds, and custom oversized radii inside reusable feature components because they multiply across homepage, methodology, and result surfaces.
 - Preserve component semantics and behavior first: native `details`, storage-backed scenario actions, links, button labels, and tax-result values should not change during a surface pass.
+
+## Blog Shell Surfaces
+
+- Blog index and article shell surfaces should look like editorial infrastructure, not landing-page cards.
+- Use `rounded-lg border border-neutral-200 bg-white` for topic groups, post links, calculator CTA, and related-guide panels.
+- Use `rounded-md border border-neutral-200 bg-neutral-50` for compact article metadata and nested topic blocks.
+- Preserve article body text, publication metadata, Article JSON-LD, Breadcrumb JSON-LD, required disclaimer text, and blog publication validators during shell-only UI changes.

@@ -71,7 +71,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
       <p className="text-sm font-semibold text-systemBlue">Last updated {post.lastUpdated}</p>
       <h1 className="mt-3 text-4xl font-bold text-neutral-950 dark:text-white">{post.title}</h1>
       <p className="mt-4 text-neutral-600 dark:text-neutral-300">{post.description}</p>
-      <div className="mt-6 rounded-[16px] bg-white/70 p-4 text-sm dark:bg-white/10">
+      <div className="mt-6 rounded-md border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-700 dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-200">
         Author: {post.author}. Reviewer: {post.reviewer}.
       </div>
       <article className="mt-8 grid gap-5 text-base leading-8 text-neutral-700 dark:text-neutral-200">
@@ -80,13 +80,13 @@ export default async function BlogPage({ params }: BlogPageProps) {
         ))}
       </article>
 
-      <section className="mt-10 rounded-[20px] bg-white/75 p-5 shadow-material dark:bg-white/10">
+      <section className="mt-10 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Open the calculator</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
           Use the Roth Conversion Calculator to model the concepts in this guide with your own educational assumptions.
         </p>
         <Link
-          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-[14px] bg-systemBlue px-4 py-2 text-sm font-semibold text-white"
+          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-systemBlue px-4 py-2 text-sm font-semibold text-white"
           href="/#calculator"
         >
           Open the calculator
@@ -98,7 +98,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         <div className="mt-4 grid gap-3">
           {relatedPosts.map((relatedPost) => (
             <Link
-              className="rounded-[16px] bg-white/70 p-4 transition hover:-translate-y-0.5 hover:shadow-material dark:bg-white/10"
+              className="rounded-lg border border-neutral-200 bg-white p-4 shadow-sm transition hover:border-systemBlue/40 hover:bg-neutral-50 dark:border-white/10 dark:bg-neutral-950 dark:hover:border-systemBlue/50 dark:hover:bg-neutral-900"
               href={`/blog/${relatedPost.slug}`}
               key={relatedPost.slug}
             >

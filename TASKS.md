@@ -84,3 +84,4 @@
 - [done] Apply professional no-glass UI to non-blog dynamic detail pages
 - [done] Apply professional no-glass UI to shared feature components
 - [done] Tighten launch readiness status surfaces and operations UI guard
+- [done] Apply professional no-glass UI to blog shell pages without editing article bodies

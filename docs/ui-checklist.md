@@ -86,6 +86,12 @@
 - [ ] Shared table wrappers, FAQ items, scenario panels, and utility controls preserve existing semantics, labels, and interaction behavior.
 - [ ] Shared feature UI changes do not alter tax calculation logic, storage behavior, blog article bodies, or SEO evidence scripts.
 
+## Blog Shell Pages
+
+- [ ] Blog index topic groups, post cards, article author metadata, calculator CTA, and related-guide links use plain bordered surfaces.
+- [ ] Blog shell UI changes preserve article body text, Article JSON-LD, Breadcrumb JSON-LD, canonical metadata, and required disclaimer text.
+- [ ] Blog shell UI changes do not alter tax calculation logic, blog publication validators, or user-owned article writing workflow.
+
 ## Acceptance Checks For P9 Dynamic Detail Page Surfaces
 
 - Keyword landing, age scenario, basis, example, filing status, glossary, state, federal bracket, multi-year planning, tax interaction, and tax payment method detail pages no longer use `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, `bg-white/75`, `bg-white/70`, or `bg-white/60`.
@@ -97,3 +103,9 @@
 - Shared feature components no longer use `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, `bg-white/75`, `bg-white/70`, `bg-white/65`, `bg-white/60`, or `bg-white/55`.
 - Table wrappers, FAQ items, bracket impact cards, tax data freshness notes, scenario history rows, and theme toggle surfaces use restrained bordered surfaces.
 - Existing shared feature tests, homepage E2E, release-note tests, feature-registry tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
+
+## Acceptance Checks For P11 Blog Shell Surfaces
+
+- Blog index and blog article shell pages no longer use `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, `bg-white/75`, `bg-white/70`, or `bg-white/60`.
+- Topic groups, article metadata, calculator CTA, and related-guide links use `rounded-lg` or `rounded-md` bordered surfaces.
+- Existing blog content tests, blog discovery evidence, release-note tests, feature-registry tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

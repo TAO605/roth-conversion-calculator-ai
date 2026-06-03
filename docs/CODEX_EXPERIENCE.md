@@ -938,3 +938,29 @@ Run operations UI, launch readiness, release-note, feature-registry, full Vitest
 **Future trigger words:**
 
 launch readiness status card; operations counter oversized radius; rounded-[18px] operations; status block template surface
+
+### 2026-06-03 - Blog shell UI must be separated from article authorship
+
+**Symptom:**
+
+The blog index and article shell still used translucent cards, custom large radii, hover lift, and material shadows after the rest of the non-blog UI had moved to professional bordered surfaces.
+
+**Root cause:**
+
+Blog article bodies were correctly treated as user-owned writing, but the surrounding blog shell was left outside the UI cleanup guards, so old template classes remained in topic groups, metadata panels, calculator CTA, and related-guide links.
+
+**Fix:**
+
+Converted blog shell surfaces to plain bordered editorial panels while leaving `post.body`, Article JSON-LD, Breadcrumb JSON-LD, canonical metadata, and disclaimer text unchanged.
+
+**Guard:**
+
+Added `tests/core/blog-shell-ui.test.ts` to scan blog shell routes for old glass, heavy-shadow, translucent, hover-lift, and custom large-radius classes.
+
+**Validation:**
+
+Run blog shell UI, blog content, blog discovery evidence, release-note, feature-registry, full Vitest, build, homepage E2E, and production SEO evidence before closing the release.
+
+**Future trigger words:**
+
+blog shell glass; blog card shadow-material; related guide hover lift; article metadata bg-white/70; blog topic oversized radius

@@ -205,13 +205,14 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "blog-internal-linking",
     label: "Blog topic hub and related guide links",
-    version: "1.0.16",
+    version: "1.0.135",
     layer: "content",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/content/blog and src/app/blog",
-    rollbackPath: "Remove topic groups, related guide rendering, and calculator CTA from blog pages.",
+    rollbackPath:
+      "Restore the previous blog shell surface classes or remove topic groups, related guide rendering, and calculator CTA from blog pages.",
   },
   {
     id: "search-console-verification",

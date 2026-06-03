@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.135",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Professional blog shell surfaces",
+    summary:
+      "Extended the professional no-glass UI system to the blog index and article shell by replacing translucent topic, author, calculator CTA, and related-guide cards with restrained bordered surfaces while leaving article body content unchanged.",
+    affectedArea:
+      "Blog index page, blog article shell, related guide links, calculator CTA, blog shell UI regression guard, release notes, feature registry, task tracking, progress evidence, and UI documentation",
+    rollbackPath:
+      "Restore the previous blog shell surface classes, then revert the blog-shell UI regression test, release note, feature registry entry, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.134",
     date: "2026-06-03",
     type: "patch",
