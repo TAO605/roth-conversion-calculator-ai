@@ -60,7 +60,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "calculator-input-layout",
     label: "Calculator input layout",
-    version: "1.0.128",
+    version: "1.0.147",
     layer: "feature",
     enabled: true,
     locked: false,
@@ -828,7 +828,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "seo-monitoring-playbook",
     label: "SEO monitoring playbook",
-    version: "1.0.146",
+    version: "1.0.147",
     layer: "content",
     enabled: true,
     locked: false,

@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
@@ -80,5 +80,26 @@ describe("calculator input layout", () => {
     expect(source).toContain("ChevronDown");
     expect(source).toContain("group-open:rotate-180");
     expect(source).toContain("[&::-webkit-details-marker]:hidden");
+  });
+
+  it("uses functional updates so rapid input changes do not overwrite earlier fields", () => {
+    const onChange = vi.fn();
+
+    render(React.createElement(CalculatorInput, { value, onChange }));
+
+    fireEvent.change(screen.getByRole("spinbutton", { name: /Conversion amount/i }), {
+      target: { value: "90000" },
+    });
+    expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
+    expect(onChange.mock.lastCall?.[0](value)).toMatchObject({ conversionAmount: 90000 });
+
+    fireEvent.change(screen.getByRole("spinbutton", { name: /Current taxable income/i }), {
+      target: { value: "110000" },
+    });
+    expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
+    expect(onChange.mock.lastCall?.[0]({ ...value, conversionAmount: 90000 })).toMatchObject({
+      conversionAmount: 90000,
+      currentTaxableIncome: 110000,
+    });
   });
 });

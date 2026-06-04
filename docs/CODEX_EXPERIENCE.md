@@ -1250,3 +1250,55 @@ Run manifest generation, manifest validation, SEO monitoring tests, release-note
 **Future trigger words:**
 
 manifest eventName invalid; gitHubWorkflow missing; gitHubRunAttempt missing; runAttemptRetained missing; workflow event metadata unverified
+
+### 2026-06-04 - SEO evidence artifacts need repository provenance checks
+
+**Symptom:**
+
+The production SEO evidence manifest could prove a GitHub run URL, commit URL, workflow, and run attempt, but it did not explicitly prove which repository generated the artifact.
+
+**Root cause:**
+
+Repository identity was only implicit in generated URLs. The manifest lacked a retained `gitHubRepository` field and the validator had no expected-repository contract.
+
+**Fix:**
+
+Added `gitHubRepository` to the manifest generator, validated it against `TAO605/roth-conversion-calculator-ai`, and retained `gitHubRepositoryRetained: true` in the manifest validation result.
+
+**Guard:**
+
+Updated SEO evidence and SEO monitoring tests so repository provenance remains visible in automation and artifact review instructions.
+
+**Validation:**
+
+Run manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+manifest repository missing; gitHubRepositoryRetained missing; wrong repository artifact; SEO evidence from wrong repo; repository provenance unverified
+
+### 2026-06-04 - Calculator inputs need functional updates for rapid entry
+
+**Symptom:**
+
+The mobile Playwright readiness flow filled conversion amount, taxable income, and state rate quickly, but the conversion amount later returned to its default while the later fields remained changed.
+
+**Root cause:**
+
+`CalculatorInput.update()` merged changes with the render-time `value` prop. Rapid consecutive input events could reuse an older snapshot and overwrite a field that had just changed.
+
+**Fix:**
+
+Changed calculator input and preset updates to use React functional state updates so each field merges with the latest current input state.
+
+**Guard:**
+
+Added unit coverage for functional input updaters and kept the Playwright workflow asserting the final calculation breakdown after rapid entry.
+
+**Validation:**
+
+Run calculator input tests, state shortcut tests, E2E, full Vitest, build, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+rapid input overwrites field; mobile calculator fill reset; conversion amount returns to default; stale input snapshot; E2E amount mismatch

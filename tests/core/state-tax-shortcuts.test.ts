@@ -31,9 +31,13 @@ describe("state tax shortcuts", () => {
     const stateShortcut = screen.getByRole("combobox", { name: /state shortcut/i });
 
     fireEvent.change(stateShortcut, { target: { value: "california" } });
-    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ stateMarginalTaxRate: 0.093 }));
+    expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
+    expect(onChange.mock.lastCall?.[0](input)).toMatchObject({ stateMarginalTaxRate: 0.093 });
 
     fireEvent.change(stateShortcut, { target: { value: "texas" } });
-    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ stateMarginalTaxRate: 0 }));
+    expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
+    expect(onChange.mock.lastCall?.[0]({ ...input, stateMarginalTaxRate: 0.093 })).toMatchObject({
+      stateMarginalTaxRate: 0,
+    });
   });
 });

@@ -96,3 +96,5 @@
 - [done] Validate SEO evidence manifest generated timestamp
 - [done] Validate SEO evidence GitHub provenance consistency
 - [done] Validate SEO evidence workflow event metadata
+- [done] Validate SEO evidence GitHub repository provenance
+- [done] Stabilize rapid calculator input state updates

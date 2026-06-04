@@ -5,6 +5,7 @@ import path from "node:path";
 const DEFAULT_MANIFEST_PATH = "seo-evidence-manifest.json";
 const EXPECTED_ARTIFACT_NAME = "production-seo-evidence";
 const EXPECTED_ARTIFACT_SCHEMA_VERSION = "2026-06-04.1";
+const EXPECTED_GITHUB_REPOSITORY = "TAO605/roth-conversion-calculator-ai";
 const EXPECTED_SOURCE_FILES = [
   "seo-smoke-result.json",
   "gsc-evidence-result.json",
@@ -109,6 +110,10 @@ function validateSeoEvidenceManifest(manifestPath) {
   assert(ALLOWED_EVENT_NAMES.has(manifest.eventName), "SEO evidence manifest eventName is not an allowed value");
   assert(manifest.retentionDays === 30, "SEO evidence manifest retentionDays must be 30");
   assert(
+    manifest.gitHubRepository === "" || manifest.gitHubRepository === EXPECTED_GITHUB_REPOSITORY,
+    "SEO evidence manifest gitHubRepository changed unexpectedly",
+  );
+  assert(
     manifest.gitHubRunUrl === "" || GITHUB_RUN_URL_PATTERN.test(manifest.gitHubRunUrl),
     "SEO evidence manifest gitHubRunUrl must be empty locally or a GitHub Actions run URL",
   );
@@ -163,6 +168,7 @@ function validateSeoEvidenceManifest(manifestPath) {
     gitHubProvenanceConsistent:
       (manifest.gitHubRunId === "" || manifest.gitHubRunUrl.endsWith(`/actions/runs/${manifest.gitHubRunId}`)) &&
       (manifest.gitHubSha === "" || manifest.gitHubCommitUrl.toLowerCase().endsWith(`/commit/${manifest.gitHubSha.toLowerCase()}`)),
+    gitHubRepositoryRetained: manifest.gitHubRunId === "" || manifest.gitHubRepository === EXPECTED_GITHUB_REPOSITORY,
     gitHubWorkflowRetained: manifest.gitHubRunId === "" || manifest.gitHubWorkflow.length > 0,
     runAttemptRetained: manifest.gitHubRunId === "" || GITHUB_RUN_ID_PATTERN.test(manifest.gitHubRunAttempt),
     manifestFileCount: manifest.files.length,

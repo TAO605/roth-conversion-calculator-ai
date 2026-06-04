@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.147",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO evidence repository provenance validation",
+    summary:
+      "Added manifest repository provenance checks so retained production SEO evidence artifacts identify and validate the GitHub repository that generated them, and hardened calculator input state updates for rapid mobile entry.",
+    affectedArea:
+      "SEO evidence manifest generation, manifest checksum validator, SEO monitoring artifact review copy, calculator input state updates, release notes, feature registry, task tracking, progress evidence, E2E guard, and operations documentation",
+    rollbackPath:
+      "Remove gitHubRepository from the manifest generator and repository checks from the manifest validator, restore snapshot-style calculator input updates, then revert the release note, feature registry versions, task, progress, E2E guard, and documentation updates.",
+  },
+  {
     version: "1.0.146",
     date: "2026-06-04",
     type: "patch",

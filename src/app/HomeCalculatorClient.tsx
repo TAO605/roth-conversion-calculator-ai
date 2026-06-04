@@ -94,6 +94,7 @@ const CalculatorAnalyticsBeacon = dynamic<{ input: RothConversionInput; result: 
 
 export function HomeCalculatorClient() {
   const [input, setInput] = useState<RothConversionInput>(initialInput);
+  const [hasLoadedPersistedInput, setHasLoadedPersistedInput] = useState(false);
   const result = useMemo(() => calculateRothConversion(input), [input]);
 
   useEffect(() => {
@@ -104,11 +105,15 @@ export function HomeCalculatorClient() {
     if (restored) {
       setInput((current) => mergeCalculatorInput(current, restored));
     }
+
+    setHasLoadedPersistedInput(true);
   }, []);
 
   useEffect(() => {
-    saveCalculatorInput(input);
-  }, [input]);
+    if (hasLoadedPersistedInput) {
+      saveCalculatorInput(input);
+    }
+  }, [hasLoadedPersistedInput, input]);
 
   return (
     <>

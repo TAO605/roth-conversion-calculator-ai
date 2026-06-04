@@ -170,6 +170,7 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("manifestValidationResultRetained: true");
     expect(combined).toContain("generatedAtRetained: true");
     expect(combined).toContain("gitHubProvenanceConsistent: true");
+    expect(combined).toContain("gitHubRepositoryRetained: true");
     expect(combined).toContain("gitHubWorkflowRetained: true");
     expect(combined).toContain("runAttemptRetained: true");
     expect(combined).toContain("sha256CheckedCount: 7");

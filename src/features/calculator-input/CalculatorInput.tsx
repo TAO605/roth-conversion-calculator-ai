@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
+import type { Dispatch, SetStateAction } from "react";
 import { SelectField, TextField } from "@/common/ui/field";
 import type { FilingStatus, RothConversionInput, TaxPaymentMethod } from "@/core/calculator/types";
 import { validateCalculatorInput } from "@/core/calculator/validation";
@@ -8,7 +9,7 @@ import { PresetPanel } from "@/features/calculator-input/PresetPanel";
 
 interface CalculatorInputProps {
   value: RothConversionInput;
-  onChange: (value: RothConversionInput) => void;
+  onChange: Dispatch<SetStateAction<RothConversionInput>>;
 }
 
 function numberValue(value: string): number {
@@ -42,7 +43,7 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
   const errors = validateCalculatorInput(value);
 
   const update = <K extends keyof RothConversionInput>(key: K, nextValue: RothConversionInput[K]) => {
-    onChange({ ...value, [key]: nextValue });
+    onChange((current) => ({ ...current, [key]: nextValue }));
   };
 
   return (

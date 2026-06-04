@@ -1,12 +1,13 @@
 "use client";
 
 import { Button } from "@/common/ui/button";
+import type { Dispatch, SetStateAction } from "react";
 import type { RothConversionInput } from "@/core/calculator/types";
 import { applyScenarioPreset, getScenarioPresets, getStateTaxPresets } from "@/core/calculator/presets";
 
 interface PresetPanelProps {
   value: RothConversionInput;
-  onChange: (value: RothConversionInput) => void;
+  onChange: Dispatch<SetStateAction<RothConversionInput>>;
 }
 
 export function PresetPanel({ value, onChange }: PresetPanelProps) {
@@ -25,7 +26,7 @@ export function PresetPanel({ value, onChange }: PresetPanelProps) {
         {scenarioPresets.map((preset) => (
           <Button
             key={preset.id}
-            onClick={() => onChange(applyScenarioPreset(value, preset.id))}
+            onClick={() => onChange((current) => applyScenarioPreset(current, preset.id))}
             title={`${preset.description} ${preset.disclaimer}`}
             type="button"
             variant="secondary"
@@ -42,7 +43,7 @@ export function PresetPanel({ value, onChange }: PresetPanelProps) {
           onChange={(event) => {
             const preset = statePresets.find((item) => item.slug === event.target.value);
             if (preset) {
-              onChange({ ...value, stateMarginalTaxRate: preset.rate });
+              onChange((current) => ({ ...current, stateMarginalTaxRate: preset.rate }));
             }
           }}
           value=""

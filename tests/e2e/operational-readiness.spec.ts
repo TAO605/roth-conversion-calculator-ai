@@ -1,11 +1,30 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Locator, test } from "@playwright/test";
+
+async function fillAndConfirm(locator: Locator, value: string) {
+  await locator.click();
+  await locator.press(process.platform === "darwin" ? "Meta+A" : "Control+A");
+  await locator.pressSequentially(value);
+
+  try {
+    await expect(locator).toHaveValue(value, { timeout: 1000 });
+  } catch {
+    await locator.click();
+    await locator.press(process.platform === "darwin" ? "Meta+A" : "Control+A");
+    await locator.pressSequentially(value);
+    await expect(locator).toHaveValue(value);
+  }
+}
 
 test("calculator workflow renders advanced analysis modules", async ({ page }) => {
   await page.goto("/");
 
-  await page.getByLabel("Conversion amount").fill("90000");
-  await page.getByLabel("Current taxable income").fill("110000");
-  await page.getByLabel("State marginal tax rate").fill("5");
+  const conversionAmount = page.getByRole("spinbutton", { name: /Conversion amount/i });
+  const taxableIncome = page.getByRole("spinbutton", { name: /Current taxable income/i });
+  const stateTaxRate = page.getByRole("spinbutton", { name: /State marginal tax rate/i });
+
+  await fillAndConfirm(conversionAmount, "90000");
+  await fillAndConfirm(taxableIncome, "110000");
+  await fillAndConfirm(stateTaxRate, "5");
 
   await expect(page.getByText("Estimated upfront tax")).toBeVisible();
   await page.getByText("Advanced calculation details").click();

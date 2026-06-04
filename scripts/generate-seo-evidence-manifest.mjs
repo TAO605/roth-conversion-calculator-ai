@@ -84,6 +84,7 @@ function run() {
     files,
     generatedAt: new Date().toISOString(),
     gitHubCommitUrl: gitHubCommitUrl(),
+    gitHubRepository: process.env.GITHUB_REPOSITORY || "",
     gitHubRunAttempt: process.env.GITHUB_RUN_ATTEMPT || "",
     gitHubRunId: process.env.GITHUB_RUN_ID || "",
     gitHubRunUrl: gitHubRunUrl(),
