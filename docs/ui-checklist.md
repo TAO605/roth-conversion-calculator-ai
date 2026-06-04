@@ -157,4 +157,5 @@
 - `seo-evidence-manifest.json` lists the retained validation result as `postManifestValidation: true`.
 - `/seo-monitoring` includes a separate artifact review item for `seo-evidence-manifest-validation-result.json`.
 - `seo-evidence-manifest.json` records direct `gitHubRunUrl` and `gitHubCommitUrl` provenance links when generated inside GitHub Actions.
+- `seo-evidence-manifest.json` records `artifactSchemaVersion` so artifact contract changes are machine-readable.
 - Existing SEO evidence workflow tests, SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

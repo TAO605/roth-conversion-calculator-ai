@@ -196,3 +196,4 @@
 - Add a validator command for checksum manifests and run it in CI before artifact upload; a checksum that is only recorded but never checked is a weaker operational guard.
 - Retain the checksum validator output as `seo-evidence-manifest-validation-result.json` and mark it in the manifest as `postManifestValidation: true`, because it is generated after the manifest it validates.
 - Include direct `gitHubRunUrl` and `gitHubCommitUrl` fields in retained SEO evidence manifests so downloaded artifacts can be traced back to the exact Actions run and commit without external lookup.
+- Version retained SEO evidence artifact contracts with `artifactSchemaVersion` before adding more fields, so validators and reviewers can distinguish manifest shape changes from evidence failures.

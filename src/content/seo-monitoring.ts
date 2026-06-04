@@ -536,8 +536,8 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
     {
       label: "Confirm manifest traceability",
       artifactFile: "seo-evidence-manifest.json",
-      check: "Confirm the manifest records artifactName, gitHubRunId, gitHubRunUrl, gitHubSha, gitHubCommitUrl, gitHubWorkflow, retentionDays, retained file names, byte sizes, and sha256 checksums for each source evidence file. Re-run npm run seo:evidence-manifest-validate after downloading the artifact.",
-      passSignal: "The manifest includes direct GitHub run and commit provenance URLs, includes sha256 for every retained source evidence file, includes seo-evidence-manifest.json with selfDescribing: true, includes seo-evidence-manifest-validation-result.json with postManifestValidation: true, records the same run SHA as the workflow, and the checksum validator returns ok: true.",
+      check: "Confirm the manifest records artifactName, artifactSchemaVersion, gitHubRunId, gitHubRunUrl, gitHubSha, gitHubCommitUrl, gitHubWorkflow, retentionDays, retained file names, byte sizes, and sha256 checksums for each source evidence file. Re-run npm run seo:evidence-manifest-validate after downloading the artifact.",
+      passSignal: "The manifest includes artifactSchemaVersion, direct GitHub run and commit provenance URLs, sha256 for every retained source evidence file, includes seo-evidence-manifest.json with selfDescribing: true, includes seo-evidence-manifest-validation-result.json with postManifestValidation: true, records the same run SHA as the workflow, and the checksum validator returns ok: true.",
       useBefore: "Use before treating the downloaded artifact as the durable proof package for that deployment.",
     },
     {

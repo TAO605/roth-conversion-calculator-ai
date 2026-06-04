@@ -1146,3 +1146,29 @@ Run simulated GitHub Actions manifest generation, manifest validation, SEO monit
 **Future trigger words:**
 
 artifact provenance unclear; manifest missing run URL; manifest missing commit URL; downloaded SEO evidence cannot link back to Actions; gitHubRunUrl missing; gitHubCommitUrl missing
+
+### 2026-06-04 - SEO evidence manifests need schema versions
+
+**Symptom:**
+
+The production SEO evidence manifest kept gaining useful fields, but the artifact contract had no explicit machine-readable version.
+
+**Root cause:**
+
+Manifest evolution was tracked in release notes and tests, but downloaded artifacts did not identify which manifest shape they conformed to.
+
+**Fix:**
+
+Added `artifactSchemaVersion` to `seo-evidence-manifest.json` and required the expected value in the manifest validator.
+
+**Guard:**
+
+Updated SEO evidence and SEO monitoring tests so the schema version remains visible in both automation and artifact review instructions.
+
+**Validation:**
+
+Run manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+manifest schema unclear; artifact contract changed; artifactSchemaVersion missing; evidence manifest version drift; proof package schema mismatch

@@ -155,6 +155,7 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("professionalUiScannedFileCount");
     expect(combined).toContain("violationCount: 0");
     expect(combined).toContain("sha256");
+    expect(combined).toContain("artifactSchemaVersion");
     expect(combined).toContain("gitHubRunUrl");
     expect(combined).toContain("gitHubCommitUrl");
     expect(combined).toContain("seo:evidence-manifest-validate");

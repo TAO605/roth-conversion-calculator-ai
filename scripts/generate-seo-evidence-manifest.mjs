@@ -12,6 +12,7 @@ const DEFAULT_FILES = [
   "seo-evidence-manifest.json",
   "seo-evidence-manifest-validation-result.json",
 ];
+const ARTIFACT_SCHEMA_VERSION = "2026-06-04.1";
 
 function fileRecord(filePath) {
   if (filePath === "seo-evidence-manifest.json") {
@@ -77,6 +78,7 @@ function run() {
 
   const manifest = {
     artifactName: "production-seo-evidence",
+    artifactSchemaVersion: ARTIFACT_SCHEMA_VERSION,
     baseUrl: smoke.baseUrl,
     eventName: process.env.GITHUB_EVENT_NAME || "local",
     files,

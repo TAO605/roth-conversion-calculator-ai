@@ -92,3 +92,4 @@
 - [done] Add SEO evidence manifest checksum validator
 - [done] Retain SEO evidence manifest checksum validation result
 - [done] Add GitHub run and commit provenance URLs to SEO evidence manifest
+- [done] Add schema version to SEO evidence manifest

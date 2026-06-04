@@ -4,6 +4,7 @@ import path from "node:path";
 
 const DEFAULT_MANIFEST_PATH = "seo-evidence-manifest.json";
 const EXPECTED_ARTIFACT_NAME = "production-seo-evidence";
+const EXPECTED_ARTIFACT_SCHEMA_VERSION = "2026-06-04.1";
 const EXPECTED_SOURCE_FILES = [
   "seo-smoke-result.json",
   "gsc-evidence-result.json",
@@ -62,6 +63,10 @@ function validateSeoEvidenceManifest(manifestPath) {
 
   assert(manifest.ok === true, "SEO evidence manifest must be ok");
   assert(manifest.artifactName === EXPECTED_ARTIFACT_NAME, "SEO evidence manifest artifactName changed unexpectedly");
+  assert(
+    manifest.artifactSchemaVersion === EXPECTED_ARTIFACT_SCHEMA_VERSION,
+    "SEO evidence manifest artifactSchemaVersion changed unexpectedly",
+  );
   assert(manifest.baseUrl === "https://www.roth-conversion-calculator-ai.shop", "SEO evidence manifest baseUrl changed unexpectedly");
   assert(manifest.retentionDays === 30, "SEO evidence manifest retentionDays must be 30");
   assert(
@@ -111,6 +116,7 @@ function validateSeoEvidenceManifest(manifestPath) {
 
   return {
     artifactName: manifest.artifactName,
+    artifactSchemaVersion: manifest.artifactSchemaVersion,
     checkedFileCount: EXPECTED_SOURCE_FILES.length,
     manifestFileCount: manifest.files.length,
     manifestValidationResultRetained: true,
