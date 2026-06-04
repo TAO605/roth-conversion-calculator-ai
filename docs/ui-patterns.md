@@ -193,3 +193,4 @@
 - Treat `seo-evidence-manifest.json` as both an inventory and an integrity index for downloaded production SEO evidence.
 - Each retained source evidence file should include `bytes` and `sha256`; the manifest self-entry should stay `selfDescribing: true` because the file cannot hash its final generated content before it exists.
 - Operations copy should tell reviewers to compare file presence, byte size, checksum, run SHA, workflow name, and retention window before using an artifact for Search Console retry notes or incident review.
+- Add a validator command for checksum manifests and run it in CI before artifact upload; a checksum that is only recorded but never checked is a weaker operational guard.

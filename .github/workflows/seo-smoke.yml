@@ -84,6 +84,11 @@ jobs:
           set -o pipefail
           node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json
 
+      - name: Validate SEO evidence manifest checksums
+        run: |
+          set -o pipefail
+          node scripts/validate-seo-evidence-manifest.mjs
+
       - name: Upload SEO evidence
         uses: actions/upload-artifact@v7
         if: always()

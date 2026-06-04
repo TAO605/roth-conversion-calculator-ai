@@ -143,3 +143,10 @@
 - The manifest self-entry remains `selfDescribing: true` instead of hashing itself.
 - `/seo-monitoring` tells reviewers to verify retained file names, byte sizes, `sha256` checksums, run identity, and retention metadata before using an artifact for Search Console or incident work.
 - Existing SEO evidence workflow tests, SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
+
+## Acceptance Checks For P16 SEO Evidence Manifest Checksum Validator
+
+- `npm run seo:evidence-manifest-validate` verifies downloaded `production-seo-evidence` file byte counts and `sha256` hashes against `seo-evidence-manifest.json`.
+- GitHub Actions runs the manifest checksum validator after manifest generation and before artifact upload.
+- `/seo-monitoring` tells reviewers to re-run the checksum validator after downloading a production evidence artifact.
+- Existing SEO evidence workflow tests, SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

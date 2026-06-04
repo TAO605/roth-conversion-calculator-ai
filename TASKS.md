@@ -89,3 +89,4 @@
 - [done] Retain professional UI guard evidence in production SEO artifacts
 - [done] Surface professional UI evidence in SEO monitoring artifact review
 - [done] Add sha256 checksums to SEO evidence manifest
+- [done] Add SEO evidence manifest checksum validator

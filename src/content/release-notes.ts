@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.140",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO evidence checksum validator",
+    summary:
+      "Added a manifest validation command and CI step that verifies retained production SEO evidence byte counts and sha256 checksums before the proof package is uploaded.",
+    affectedArea:
+      "SEO evidence manifest validator, SEO Smoke workflow, SEO monitoring artifact review copy, release notes, feature registry, task tracking, progress evidence, and operations documentation",
+    rollbackPath:
+      "Remove the SEO evidence manifest validator script, package command, workflow step, monitoring copy, release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.139",
     date: "2026-06-04",
     type: "patch",

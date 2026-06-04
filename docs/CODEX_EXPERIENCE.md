@@ -1068,3 +1068,29 @@ Run manifest generation, SEO evidence validation, SEO monitoring tests, release-
 **Future trigger words:**
 
 manifest lacks checksum; artifact integrity unclear; production SEO evidence hash missing; downloaded evidence package tamper check; sha256 missing
+
+### 2026-06-04 - Evidence checksums need an executable validator
+
+**Symptom:**
+
+The production SEO evidence manifest recorded `sha256` values, but CI did not yet execute a checksum validator against the retained files before uploading the artifact.
+
+**Root cause:**
+
+Adding hashes made the manifest stronger as a record, but the workflow still treated checksum review as a manual activity instead of an automated gate.
+
+**Fix:**
+
+Added `scripts/validate-seo-evidence-manifest.mjs`, exposed it as `npm run seo:evidence-manifest-validate`, and ran it in SEO Smoke after manifest generation and before artifact upload.
+
+**Guard:**
+
+Updated SEO evidence workflow tests and SEO monitoring tests so the validator command, workflow step, byte-count checks, `sha256` checks, and downloaded-artifact review copy stay wired together.
+
+**Validation:**
+
+Run manifest generation, manifest validation, SEO evidence validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, homepage E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+checksum recorded but not verified; manifest validator missing; production SEO artifact hash mismatch; seo:evidence-manifest-validate missing; artifact upload before checksum validation
