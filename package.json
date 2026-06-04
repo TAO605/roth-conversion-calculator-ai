@@ -11,6 +11,7 @@
     "test:e2e": "playwright test",
     "seo:smoke": "node scripts/seo-smoke.mjs",
     "seo:gsc-evidence": "node scripts/gsc-evidence.mjs",
+    "seo:dns-evidence": "node scripts/dns-evidence.mjs",
     "seo:performance": "node scripts/performance-evidence.mjs",
     "seo:structured-data": "node scripts/structured-data-evidence.mjs",
     "seo:blog-discovery": "node scripts/blog-discovery-evidence.mjs",

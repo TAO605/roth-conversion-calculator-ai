@@ -1328,3 +1328,29 @@ Run manifest generation, manifest validation, SEO monitoring tests, release-note
 **Future trigger words:**
 
 manifest GitHub server changed; gitHubServerUrlRetained missing; wrong GitHub host; artifact server provenance unverified; unexpected GitHub server URL
+
+### 2026-06-04 - DNS screenshots need retained production evidence
+
+**Symptom:**
+
+Domain-provider screenshots showed Vercel CNAME records and Google TXT verification, but the durable SEO evidence artifact did not prove the live apex redirect or canonical www response.
+
+**Root cause:**
+
+DNS health was manually checked with resolver and curl commands outside the retained `production-seo-evidence` package.
+
+**Fix:**
+
+Added `dns-evidence-result.json` to the SEO Smoke artifact contract, validating Vercel CNAME retention, apex-to-www 308 redirect, and canonical www 200 response.
+
+**Guard:**
+
+Updated SEO evidence, manifest, workflow, and SEO monitoring tests so DNS evidence remains generated, uploaded, validated, checksummed, and visible in the artifact review checklist.
+
+**Validation:**
+
+Run DNS evidence, SEO evidence validation, manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+DNS screenshot only; Vercel domain warning; apex redirect unknown; www host down; dns-evidence missing; expectedCnameRetained missing

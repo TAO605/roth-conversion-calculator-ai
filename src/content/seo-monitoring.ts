@@ -520,10 +520,19 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       useBefore: "Use before deciding whether an indexing delay is site-side or Search Console-side.",
     },
     {
+      label: "Confirm DNS and canonical host routing",
+      artifactFile: "dns-evidence-result.json",
+      check:
+        "Review DNS and HTTPS evidence for the apex host and canonical www host after domain-provider changes or Vercel domain warnings.",
+      passSignal:
+        "The DNS evidence has ok: true, expectedCnameRetained: true, apexRedirectsToCanonical: true, wwwReturnsOk: true, apex HTTPS status 308, and canonical www HTTPS status 200.",
+      useBefore: "Use before changing DNS records, resubmitting sitemap.xml, or diagnosing Search Console host verification warnings.",
+    },
+    {
       label: "Confirm validator summary",
       artifactFile: "seo-evidence-validation-result.json",
-      check: "Confirm the retained validator result reports ok: true after checking smoke, GSC, performance, structured data, blog discovery, and professional UI evidence together.",
-      passSignal: "The validation summary records the expected host, checked file count, professionalUiScannedFileCount, and no contract failures.",
+      check: "Confirm the retained validator result reports ok: true after checking smoke, GSC, DNS, performance, structured data, blog discovery, and professional UI evidence together.",
+      passSignal: "The validation summary records the expected host, dnsCanonicalOk: true, professionalUiScannedFileCount, and no contract failures.",
       useBefore: "Use before attaching the artifact to incident review or a GSC retry note.",
     },
     {
@@ -545,7 +554,7 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       artifactFile: "seo-evidence-manifest-validation-result.json",
       check: "Open the retained manifest checksum validation result after downloading the production-seo-evidence artifact.",
       passSignal:
-        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 7, sha256CheckedCount: 7, manifestFileCount: 9, and manifestValidationResultRetained: true.",
+        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 8, sha256CheckedCount: 8, manifestFileCount: 10, and manifestValidationResultRetained: true.",
       useBefore: "Use before relying on the manifest checksum contract in Search Console retry notes or incident review.",
     },
   ];

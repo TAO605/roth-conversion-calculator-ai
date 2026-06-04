@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.149",
+    date: "2026-06-04",
+    type: "patch",
+    title: "Production DNS evidence artifact",
+    summary:
+      "Added retained DNS and canonical-host evidence so production SEO proof packages verify the apex redirect, canonical www status, and Vercel CNAME routing after domain changes.",
+    affectedArea:
+      "SEO Smoke workflow, DNS evidence script, SEO evidence validator, manifest schema, SEO monitoring artifact review copy, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the DNS evidence script and artifact wiring, restore the previous manifest schema version, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.148",
     date: "2026-06-04",
     type: "patch",

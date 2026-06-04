@@ -122,6 +122,7 @@
 ## SEO Evidence Artifact Validation
 
 - Treat the uploaded `production-seo-evidence` artifact as a structured contract, not just saved console output.
+- Domain-provider screenshots are useful context, but production DNS health should be preserved as machine-readable evidence: keep apex redirect, canonical www status, and Vercel CNAME checks in `dns-evidence-result.json`.
 - Validate artifact JSON before upload so parse errors, missing priority URLs, stale `lastmodFresh`, noindex drift, or host mismatches fail CI while the run context is still visible.
 - Keep validator defaults aligned with workflow output filenames: `seo-smoke-result.json` and `gsc-evidence-result.json`.
 - Retain `seo-evidence-validation-result.json` in the artifact so downloaded evidence packages include the validator's machine-readable summary.

@@ -154,6 +154,7 @@
 ## Acceptance Checks For P17 Retained Manifest Checksum Validation Result
 
 - GitHub Actions retains `seo-evidence-manifest-validation-result.json` inside `production-seo-evidence`.
+- GitHub Actions retains `dns-evidence-result.json` inside `production-seo-evidence`; before DNS edits or Search Console host troubleshooting, confirm `expectedCnameRetained: true`, `apexRedirectsToCanonical: true`, and `wwwReturnsOk: true`.
 - `seo-evidence-manifest.json` lists the retained validation result as `postManifestValidation: true`.
 - `/seo-monitoring` includes a separate artifact review item for `seo-evidence-manifest-validation-result.json`.
 - `seo-evidence-manifest.json` records direct `gitHubRunUrl` and `gitHubCommitUrl` provenance links when generated inside GitHub Actions.

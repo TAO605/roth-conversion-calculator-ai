@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const DEFAULT_SMOKE_PATH = "seo-smoke-result.json";
 const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
+const DEFAULT_DNS_PATH = "dns-evidence-result.json";
 const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
@@ -14,10 +15,11 @@ const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
 const STATIC_STRUCTURED_DATA_PAGE_COUNT = 20;
 const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
-const performancePath = process.argv[4] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[5] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[6] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[7] || DEFAULT_PROFESSIONAL_UI_PATH;
+const dnsPath = process.argv[4] || DEFAULT_DNS_PATH;
+const performancePath = process.argv[5] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[6] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[7] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[8] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -93,6 +95,24 @@ function validateGscEvidence(gsc, expectedBaseUrl) {
       assert(result.lastmodFresh === true, `${pathname} must have lastmodFresh: true`);
     }
   }
+}
+
+function validateDnsEvidence(dnsEvidence, expectedBaseUrl) {
+  assert(dnsEvidence.ok === true, "DNS evidence must be ok");
+  assert(dnsEvidence.canonicalUrl === `${expectedBaseUrl}/`, "DNS evidence canonicalUrl must match SEO smoke baseUrl");
+  assert(dnsEvidence.apexHost === "roth-conversion-calculator-ai.shop", "DNS evidence apexHost changed unexpectedly");
+  assert(dnsEvidence.wwwHost === "www.roth-conversion-calculator-ai.shop", "DNS evidence wwwHost changed unexpectedly");
+  assert(dnsEvidence.expectedCname === "cname.vercel-dns.com", "DNS evidence expected CNAME changed unexpectedly");
+  assert(dnsEvidence.expectedCnameRetained === true, "DNS evidence must retain the expected Vercel CNAME");
+  assert(dnsEvidence.apexRedirectsToCanonical === true, "DNS evidence must confirm apex redirects to canonical www");
+  assert(dnsEvidence.wwwReturnsOk === true, "DNS evidence must confirm canonical www returns 200");
+  assert(dnsEvidence.apexHttps?.status === 308, "DNS evidence apex HTTPS status must be 308");
+  assert(dnsEvidence.apexHttps?.location === `${expectedBaseUrl}/`, "DNS evidence apex redirect location must match canonical");
+  assert(dnsEvidence.wwwHttps?.status === 200, "DNS evidence canonical www HTTPS status must be 200");
+  assert(Array.isArray(dnsEvidence.apexRecords?.a), "DNS evidence apex A records must be retained");
+  assert(Array.isArray(dnsEvidence.apexRecords?.cname), "DNS evidence apex CNAME records must be retained");
+  assert(Array.isArray(dnsEvidence.wwwRecords?.a), "DNS evidence www A records must be retained");
+  assert(Array.isArray(dnsEvidence.wwwRecords?.cname), "DNS evidence www CNAME records must be retained");
 }
 
 function validatePerformanceEvidence(performance, expectedBaseUrl) {
@@ -243,6 +263,7 @@ function validateProfessionalUiEvidence(professionalUi) {
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
+  const dnsEvidence = readJson(dnsPath);
   const performance = readJson(performancePath);
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
@@ -250,6 +271,7 @@ function run() {
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
+  validateDnsEvidence(dnsEvidence, smoke.baseUrl);
   validatePerformanceEvidence(performance, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
@@ -258,9 +280,10 @@ function run() {
   console.log(
     JSON.stringify(
       {
-        artifactFiles: [smokePath, gscPath, performancePath, structuredDataPath, blogDiscoveryPath, professionalUiPath],
+        artifactFiles: [smokePath, gscPath, dnsPath, performancePath, structuredDataPath, blogDiscoveryPath, professionalUiPath],
         baseUrl: smoke.baseUrl,
         blogDiscoveryCount: blogDiscovery.blogPostCount,
+        dnsCanonicalOk: dnsEvidence.apexRedirectsToCanonical === true && dnsEvidence.wwwReturnsOk === true,
         gscPriorityUrlCount: gsc.priorityUrlCount,
         ok: true,
         performanceScore: performance.categories.performance,
