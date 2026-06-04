@@ -195,3 +195,4 @@
 - Operations copy should tell reviewers to compare file presence, byte size, checksum, run SHA, workflow name, and retention window before using an artifact for Search Console retry notes or incident review.
 - Add a validator command for checksum manifests and run it in CI before artifact upload; a checksum that is only recorded but never checked is a weaker operational guard.
 - Retain the checksum validator output as `seo-evidence-manifest-validation-result.json` and mark it in the manifest as `postManifestValidation: true`, because it is generated after the manifest it validates.
+- Include direct `gitHubRunUrl` and `gitHubCommitUrl` fields in retained SEO evidence manifests so downloaded artifacts can be traced back to the exact Actions run and commit without external lookup.

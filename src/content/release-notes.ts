@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.142",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO evidence provenance URLs",
+    summary:
+      "Added direct GitHub Actions run and commit URLs to the production SEO evidence manifest so downloaded proof packages remain traceable without opening the Actions UI first.",
+    affectedArea:
+      "SEO evidence manifest generation, manifest checksum validator, release notes, feature registry, task tracking, progress evidence, and operations documentation",
+    rollbackPath:
+      "Remove the GitHub run and commit URL fields from the manifest generator and validator, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.141",
     date: "2026-06-04",
     type: "patch",

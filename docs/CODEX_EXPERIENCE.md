@@ -1120,3 +1120,29 @@ Run manifest generation, manifest validation, SEO evidence validation, SEO monit
 **Future trigger words:**
 
 manifest validation result missing; checksum validator only in logs; postManifestValidation missing; retained checksum evidence missing
+
+### 2026-06-04 - SEO evidence artifacts need direct provenance links
+
+**Symptom:**
+
+Downloaded production SEO evidence artifacts retained run IDs and commit SHAs, but reviewers still needed to reconstruct the exact GitHub Actions and commit URLs manually.
+
+**Root cause:**
+
+The manifest treated GitHub identity as raw metadata rather than review-ready provenance links.
+
+**Fix:**
+
+Added `gitHubRunUrl` and `gitHubCommitUrl` to `seo-evidence-manifest.json` and URL-shape checks to the manifest validator.
+
+**Guard:**
+
+Updated SEO evidence manifest tests and `/seo-monitoring` artifact review tests so provenance URL fields remain present and validated.
+
+**Validation:**
+
+Run simulated GitHub Actions manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, homepage E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+artifact provenance unclear; manifest missing run URL; manifest missing commit URL; downloaded SEO evidence cannot link back to Actions; gitHubRunUrl missing; gitHubCommitUrl missing

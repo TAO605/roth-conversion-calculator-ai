@@ -118,6 +118,10 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("postManifestValidation");
     expect(manifestScript).toContain("GITHUB_RUN_ID");
     expect(manifestScript).toContain("GITHUB_SHA");
+    expect(manifestScript).toContain("gitHubRunUrl");
+    expect(manifestScript).toContain("gitHubCommitUrl");
+    expect(manifestScript).toContain("/actions/runs/");
+    expect(manifestScript).toContain("/commit/");
     expect(manifestScript).toContain('import crypto from "node:crypto"');
     expect(manifestScript).toContain("sha256");
     expect(manifestScript).toContain('crypto.createHash("sha256")');
@@ -132,6 +136,10 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestValidator).toContain("byte count mismatch");
     expect(manifestValidator).toContain("selfDescribing");
     expect(manifestValidator).toContain("manifestValidationResultRetained");
+    expect(manifestValidator).toContain("GITHUB_RUN_URL_PATTERN");
+    expect(manifestValidator).toContain("GITHUB_COMMIT_URL_PATTERN");
+    expect(manifestValidator).toContain("runUrlRetained");
+    expect(manifestValidator).toContain("commitUrlRetained");
   });
 
   it("keeps the uploaded artifact files aligned with validator defaults", () => {

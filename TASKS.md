@@ -91,3 +91,4 @@
 - [done] Add sha256 checksums to SEO evidence manifest
 - [done] Add SEO evidence manifest checksum validator
 - [done] Retain SEO evidence manifest checksum validation result
+- [done] Add GitHub run and commit provenance URLs to SEO evidence manifest

@@ -54,6 +54,22 @@ function readJson(filePath) {
   return JSON.parse(readText(filePath));
 }
 
+function gitHubRunUrl() {
+  const serverUrl = process.env.GITHUB_SERVER_URL || "https://github.com";
+  const repository = process.env.GITHUB_REPOSITORY || "";
+  const runId = process.env.GITHUB_RUN_ID || "";
+
+  return repository && runId ? `${serverUrl}/${repository}/actions/runs/${runId}` : "";
+}
+
+function gitHubCommitUrl() {
+  const serverUrl = process.env.GITHUB_SERVER_URL || "https://github.com";
+  const repository = process.env.GITHUB_REPOSITORY || "";
+  const sha = process.env.GITHUB_SHA || "";
+
+  return repository && sha ? `${serverUrl}/${repository}/commit/${sha}` : "";
+}
+
 function run() {
   const smoke = readJson("seo-smoke-result.json");
   const validation = readJson("seo-evidence-validation-result.json");
@@ -65,8 +81,10 @@ function run() {
     eventName: process.env.GITHUB_EVENT_NAME || "local",
     files,
     generatedAt: new Date().toISOString(),
+    gitHubCommitUrl: gitHubCommitUrl(),
     gitHubRunAttempt: process.env.GITHUB_RUN_ATTEMPT || "",
     gitHubRunId: process.env.GITHUB_RUN_ID || "",
+    gitHubRunUrl: gitHubRunUrl(),
     gitHubServerUrl: process.env.GITHUB_SERVER_URL || "https://github.com",
     gitHubSha: process.env.GITHUB_SHA || "",
     gitHubWorkflow: process.env.GITHUB_WORKFLOW || "",

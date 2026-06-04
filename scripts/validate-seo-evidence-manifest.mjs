@@ -15,6 +15,8 @@ const EXPECTED_SOURCE_FILES = [
 ];
 const SELF_FILE = "seo-evidence-manifest.json";
 const MANIFEST_VALIDATION_RESULT_FILE = "seo-evidence-manifest-validation-result.json";
+const GITHUB_RUN_URL_PATTERN = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/actions\/runs\/\d+$/;
+const GITHUB_COMMIT_URL_PATTERN = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/commit\/[a-f0-9]{40}$/i;
 
 function assert(condition, message) {
   if (!condition) {
@@ -62,6 +64,14 @@ function validateSeoEvidenceManifest(manifestPath) {
   assert(manifest.artifactName === EXPECTED_ARTIFACT_NAME, "SEO evidence manifest artifactName changed unexpectedly");
   assert(manifest.baseUrl === "https://www.roth-conversion-calculator-ai.shop", "SEO evidence manifest baseUrl changed unexpectedly");
   assert(manifest.retentionDays === 30, "SEO evidence manifest retentionDays must be 30");
+  assert(
+    manifest.gitHubRunUrl === "" || GITHUB_RUN_URL_PATTERN.test(manifest.gitHubRunUrl),
+    "SEO evidence manifest gitHubRunUrl must be empty locally or a GitHub Actions run URL",
+  );
+  assert(
+    manifest.gitHubCommitUrl === "" || GITHUB_COMMIT_URL_PATTERN.test(manifest.gitHubCommitUrl),
+    "SEO evidence manifest gitHubCommitUrl must be empty locally or a GitHub commit URL",
+  );
   assert(Array.isArray(manifest.files), "SEO evidence manifest files must be an array");
 
   const records = new Map(manifest.files.map((file) => [file.name, file]));
@@ -105,6 +115,8 @@ function validateSeoEvidenceManifest(manifestPath) {
     manifestFileCount: manifest.files.length,
     manifestValidationResultRetained: true,
     ok: true,
+    runUrlRetained: manifest.gitHubRunUrl !== "",
+    commitUrlRetained: manifest.gitHubCommitUrl !== "",
     selfDescribing: true,
     sha256CheckedCount: EXPECTED_SOURCE_FILES.length,
   };
