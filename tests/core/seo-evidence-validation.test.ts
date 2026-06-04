@@ -147,6 +147,12 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestValidator).toContain("GITHUB_COMMIT_URL_PATTERN");
     expect(manifestValidator).toContain("GITHUB_SHA_PATTERN");
     expect(manifestValidator).toContain("GITHUB_RUN_ID_PATTERN");
+    expect(manifestValidator).toContain("ALLOWED_EVENT_NAMES");
+    expect(manifestValidator).toContain("eventName is not an allowed value");
+    expect(manifestValidator).toContain("gitHubWorkflowRetained");
+    expect(manifestValidator).toContain("runAttemptRetained");
+    expect(manifestValidator).toContain("gitHubWorkflow must be retained");
+    expect(manifestValidator).toContain("gitHubRunAttempt must be numeric");
     expect(manifestValidator).toContain("validateGitHubProvenance");
     expect(manifestValidator).toContain("gitHubProvenanceConsistent");
     expect(manifestValidator).toContain("gitHubCommitUrl must match gitHubSha");

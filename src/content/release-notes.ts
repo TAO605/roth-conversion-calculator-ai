@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.146",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO evidence workflow event validation",
+    summary:
+      "Added manifest workflow event checks so retained production SEO evidence artifacts validate their event name, workflow name, and run attempt.",
+    affectedArea:
+      "SEO evidence manifest checksum validator, SEO monitoring artifact review copy, release notes, feature registry, task tracking, progress evidence, and operations documentation",
+    rollbackPath:
+      "Remove workflow event and run-attempt checks from the manifest validator, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.145",
     date: "2026-06-04",
     type: "patch",

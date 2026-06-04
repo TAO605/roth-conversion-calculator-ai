@@ -1224,3 +1224,29 @@ Run manifest generation, manifest validation, SEO monitoring tests, release-note
 **Future trigger words:**
 
 manifest provenance mismatch; run URL does not match run ID; commit URL does not match SHA; gitHubProvenanceConsistent missing; evidence artifact links wrong commit
+
+### 2026-06-04 - SEO evidence artifacts need workflow event metadata checks
+
+**Symptom:**
+
+The production SEO evidence manifest retained event and workflow fields, but the validator did not prove the event name, workflow name, or run attempt were usable.
+
+**Root cause:**
+
+Workflow provenance was split across raw metadata fields without a validator contract for allowed event names or Actions attempt identity.
+
+**Fix:**
+
+Restricted `eventName` to known generation contexts and required `gitHubWorkflow` plus numeric `gitHubRunAttempt` for GitHub Actions artifacts.
+
+**Guard:**
+
+Updated SEO evidence and SEO monitoring tests so workflow event metadata stays visible in automation and artifact review instructions.
+
+**Validation:**
+
+Run manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+manifest eventName invalid; gitHubWorkflow missing; gitHubRunAttempt missing; runAttemptRetained missing; workflow event metadata unverified

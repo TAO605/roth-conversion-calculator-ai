@@ -160,4 +160,5 @@
 - `seo-evidence-manifest.json` records `artifactSchemaVersion` so artifact contract changes are machine-readable.
 - `seo-evidence-manifest-validation-result.json` records `generatedAtRetained: true` after validating the manifest `generatedAt` ISO timestamp.
 - `seo-evidence-manifest-validation-result.json` records `gitHubProvenanceConsistent: true` after confirming the run URL matches `gitHubRunId` and the commit URL matches `gitHubSha`.
+- `seo-evidence-manifest-validation-result.json` records `gitHubWorkflowRetained: true` and `runAttemptRetained: true` for GitHub Actions artifacts after validating `eventName`, `gitHubWorkflow`, and numeric `gitHubRunAttempt`.
 - Existing SEO evidence workflow tests, SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

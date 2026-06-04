@@ -21,6 +21,7 @@ const GITHUB_COMMIT_URL_PATTERN = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/com
 const ISO_TIMESTAMP_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 const GITHUB_SHA_PATTERN = /^[a-f0-9]{40}$/i;
 const GITHUB_RUN_ID_PATTERN = /^\d+$/;
+const ALLOWED_EVENT_NAMES = new Set(["local", "push", "schedule", "workflow_dispatch"]);
 
 function assert(condition, message) {
   if (!condition) {
@@ -61,6 +62,8 @@ function hashFile(filePath) {
 }
 
 function validateGitHubProvenance(manifest) {
+  const hasGitHubRun = manifest.gitHubRunId !== "" || manifest.gitHubRunUrl !== "";
+
   if (manifest.gitHubRunId !== "" || manifest.gitHubRunUrl !== "") {
     assert(GITHUB_RUN_ID_PATTERN.test(manifest.gitHubRunId), "SEO evidence manifest gitHubRunId must be numeric when retained");
     assert(
@@ -74,6 +77,14 @@ function validateGitHubProvenance(manifest) {
     assert(
       manifest.gitHubCommitUrl.toLowerCase().endsWith(`/commit/${manifest.gitHubSha.toLowerCase()}`),
       "SEO evidence manifest gitHubCommitUrl must match gitHubSha",
+    );
+  }
+
+  if (hasGitHubRun) {
+    assert(typeof manifest.gitHubWorkflow === "string" && manifest.gitHubWorkflow.length > 0, "SEO evidence manifest gitHubWorkflow must be retained for GitHub Actions runs");
+    assert(
+      GITHUB_RUN_ID_PATTERN.test(manifest.gitHubRunAttempt),
+      "SEO evidence manifest gitHubRunAttempt must be numeric for GitHub Actions runs",
     );
   }
 }
@@ -95,6 +106,7 @@ function validateSeoEvidenceManifest(manifestPath) {
     "SEO evidence manifest generatedAt must be an ISO timestamp",
   );
   assert(manifest.baseUrl === "https://www.roth-conversion-calculator-ai.shop", "SEO evidence manifest baseUrl changed unexpectedly");
+  assert(ALLOWED_EVENT_NAMES.has(manifest.eventName), "SEO evidence manifest eventName is not an allowed value");
   assert(manifest.retentionDays === 30, "SEO evidence manifest retentionDays must be 30");
   assert(
     manifest.gitHubRunUrl === "" || GITHUB_RUN_URL_PATTERN.test(manifest.gitHubRunUrl),
@@ -151,6 +163,8 @@ function validateSeoEvidenceManifest(manifestPath) {
     gitHubProvenanceConsistent:
       (manifest.gitHubRunId === "" || manifest.gitHubRunUrl.endsWith(`/actions/runs/${manifest.gitHubRunId}`)) &&
       (manifest.gitHubSha === "" || manifest.gitHubCommitUrl.toLowerCase().endsWith(`/commit/${manifest.gitHubSha.toLowerCase()}`)),
+    gitHubWorkflowRetained: manifest.gitHubRunId === "" || manifest.gitHubWorkflow.length > 0,
+    runAttemptRetained: manifest.gitHubRunId === "" || GITHUB_RUN_ID_PATTERN.test(manifest.gitHubRunAttempt),
     manifestFileCount: manifest.files.length,
     manifestValidationResultRetained: true,
     ok: true,
