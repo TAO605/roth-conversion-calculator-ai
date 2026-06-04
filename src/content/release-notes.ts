@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.141",
+    date: "2026-06-04",
+    type: "patch",
+    title: "Retained checksum validation evidence",
+    summary:
+      "Retained the SEO evidence manifest checksum validator output inside the production SEO evidence artifact so downloaded proof packages include both the manifest and the manifest-validation result.",
+    affectedArea:
+      "SEO Smoke workflow, SEO evidence manifest, manifest checksum validator, SEO monitoring artifact review copy, release notes, feature registry, task tracking, progress evidence, and operations documentation",
+    rollbackPath:
+      "Remove the retained manifest validation result from the workflow upload, manifest metadata, monitoring checklist, release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.140",
     date: "2026-06-04",
     type: "patch",

@@ -1094,3 +1094,29 @@ Run manifest generation, manifest validation, SEO evidence validation, SEO monit
 **Future trigger words:**
 
 checksum recorded but not verified; manifest validator missing; production SEO artifact hash mismatch; seo:evidence-manifest-validate missing; artifact upload before checksum validation
+
+### 2026-06-04 - Manifest validation output should be retained with the artifact
+
+**Symptom:**
+
+CI validated the SEO evidence manifest checksums, but the validator result itself only lived in workflow logs.
+
+**Root cause:**
+
+The workflow uploaded source evidence, the main evidence validator, and the manifest, but did not retain the manifest checksum validator output as a JSON artifact file.
+
+**Fix:**
+
+Retained `seo-evidence-manifest-validation-result.json` in `production-seo-evidence` and listed it in the manifest as `postManifestValidation: true`.
+
+**Guard:**
+
+Updated workflow and monitoring tests so the artifact upload path, manifest metadata, and `/seo-monitoring` review checklist all include the retained manifest validation result.
+
+**Validation:**
+
+Run manifest generation, manifest validation, SEO evidence validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, homepage E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+manifest validation result missing; checksum validator only in logs; postManifestValidation missing; retained checksum evidence missing

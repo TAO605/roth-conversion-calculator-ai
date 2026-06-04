@@ -110,10 +110,12 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("Generate SEO evidence manifest");
     expect(workflow).toContain("node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json");
     expect(workflow).toContain("Validate SEO evidence manifest checksums");
-    expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs");
+    expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
     expect(manifestScript).toContain("structured-data-evidence-result.json");
     expect(manifestScript).toContain("performance-evidence-result.json");
     expect(manifestScript).toContain("blog-discovery-evidence-result.json");
+    expect(manifestScript).toContain("seo-evidence-manifest-validation-result.json");
+    expect(manifestScript).toContain("postManifestValidation");
     expect(manifestScript).toContain("GITHUB_RUN_ID");
     expect(manifestScript).toContain("GITHUB_SHA");
     expect(manifestScript).toContain('import crypto from "node:crypto"');
@@ -129,6 +131,7 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestValidator).toContain("sha256 mismatch");
     expect(manifestValidator).toContain("byte count mismatch");
     expect(manifestValidator).toContain("selfDescribing");
+    expect(manifestValidator).toContain("manifestValidationResultRetained");
   });
 
   it("keeps the uploaded artifact files aligned with validator defaults", () => {
@@ -141,7 +144,7 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("node scripts/blog-discovery-evidence.mjs | tee blog-discovery-evidence-result.json");
     expect(workflow).toContain("node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json");
     expect(workflow).toContain("node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json");
-    expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs");
+    expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
     expect(workflow).toContain("seo-smoke-result.json");
     expect(workflow).toContain("gsc-evidence-result.json");
     expect(workflow).toContain("performance-evidence-result.json");
@@ -149,6 +152,7 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("blog-discovery-evidence-result.json");
     expect(workflow).toContain("seo-evidence-validation-result.json");
     expect(workflow).toContain("seo-evidence-manifest.json");
+    expect(workflow).toContain("seo-evidence-manifest-validation-result.json");
     expect(workflow).toContain("name: production-seo-evidence");
     expect(workflow).toContain("retention-days: 30");
   });
@@ -171,9 +175,10 @@ describe("SEO evidence artifact validation", () => {
 
     expect(packageJson.scripts["seo:evidence-manifest-validate"]).toBe("node scripts/validate-seo-evidence-manifest.mjs");
     expect(workflow).toContain("Validate SEO evidence manifest checksums");
-    expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs");
+    expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
     expect(manifestValidator).toContain("EXPECTED_SOURCE_FILES");
     expect(manifestValidator).toContain("sha256CheckedCount");
+    expect(manifestValidator).toContain("manifestValidationResultRetained");
     expect(manifestValidator).toContain("crypto.createHash");
     expect(manifestValidator).toContain("sha256 mismatch");
     expect(manifestValidator).toContain("byte count mismatch");

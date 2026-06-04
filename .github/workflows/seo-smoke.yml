@@ -87,7 +87,7 @@ jobs:
       - name: Validate SEO evidence manifest checksums
         run: |
           set -o pipefail
-          node scripts/validate-seo-evidence-manifest.mjs
+          node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json
 
       - name: Upload SEO evidence
         uses: actions/upload-artifact@v7
@@ -103,4 +103,5 @@ jobs:
             professional-ui-evidence-result.json
             seo-evidence-validation-result.json
             seo-evidence-manifest.json
+            seo-evidence-manifest-validation-result.json
           retention-days: 30

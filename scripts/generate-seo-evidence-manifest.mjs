@@ -10,6 +10,7 @@ const DEFAULT_FILES = [
   "professional-ui-evidence-result.json",
   "seo-evidence-validation-result.json",
   "seo-evidence-manifest.json",
+  "seo-evidence-manifest-validation-result.json",
 ];
 
 function fileRecord(filePath) {
@@ -19,6 +20,15 @@ function fileRecord(filePath) {
       generatedBy: "scripts/generate-seo-evidence-manifest.mjs",
       name: filePath,
       selfDescribing: true,
+    };
+  }
+
+  if (filePath === "seo-evidence-manifest-validation-result.json") {
+    return {
+      bytes: null,
+      generatedBy: "scripts/validate-seo-evidence-manifest.mjs",
+      name: filePath,
+      postManifestValidation: true,
     };
   }
 

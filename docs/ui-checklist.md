@@ -150,3 +150,10 @@
 - GitHub Actions runs the manifest checksum validator after manifest generation and before artifact upload.
 - `/seo-monitoring` tells reviewers to re-run the checksum validator after downloading a production evidence artifact.
 - Existing SEO evidence workflow tests, SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
+
+## Acceptance Checks For P17 Retained Manifest Checksum Validation Result
+
+- GitHub Actions retains `seo-evidence-manifest-validation-result.json` inside `production-seo-evidence`.
+- `seo-evidence-manifest.json` lists the retained validation result as `postManifestValidation: true`.
+- `/seo-monitoring` includes a separate artifact review item for `seo-evidence-manifest-validation-result.json`.
+- Existing SEO evidence workflow tests, SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

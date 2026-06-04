@@ -147,15 +147,19 @@ describe("SEO monitoring playbook", () => {
         "professional-ui-evidence-result.json",
         "seo-evidence-validation-result.json",
         "seo-evidence-manifest.json",
+        "seo-evidence-manifest-validation-result.json",
       ]),
     );
-    expect(review.length).toBe(5);
+    expect(review.length).toBe(6);
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("professionalUiScannedFileCount");
     expect(combined).toContain("violationCount: 0");
     expect(combined).toContain("sha256");
     expect(combined).toContain("seo:evidence-manifest-validate");
     expect(combined).toContain("ok: true");
+    expect(combined).toContain("postManifestValidation: true");
+    expect(combined).toContain("manifestValidationResultRetained: true");
+    expect(combined).toContain("sha256CheckedCount: 7");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");
     expect(combined).toContain("URL Inspection");

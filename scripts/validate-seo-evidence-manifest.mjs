@@ -14,6 +14,7 @@ const EXPECTED_SOURCE_FILES = [
   "seo-evidence-validation-result.json",
 ];
 const SELF_FILE = "seo-evidence-manifest.json";
+const MANIFEST_VALIDATION_RESULT_FILE = "seo-evidence-manifest-validation-result.json";
 
 function assert(condition, message) {
   if (!condition) {
@@ -82,10 +83,27 @@ function validateSeoEvidenceManifest(manifestPath) {
   assert(selfRecord.bytes === null, "SEO evidence manifest self entry must not record a byte count");
   assert(selfRecord.sha256 === undefined, "SEO evidence manifest self entry must not hash itself");
 
+  const manifestValidationRecord = records.get(MANIFEST_VALIDATION_RESULT_FILE);
+  assert(manifestValidationRecord, "SEO evidence manifest must include its manifest-validation result entry");
+  assert(
+    manifestValidationRecord.postManifestValidation === true,
+    "SEO evidence manifest validation result entry must be marked postManifestValidation",
+  );
+  assert(
+    manifestValidationRecord.generatedBy === "scripts/validate-seo-evidence-manifest.mjs",
+    "SEO evidence manifest validation result entry must record its generator",
+  );
+  assert(manifestValidationRecord.bytes === null, "SEO evidence manifest validation result entry must not record a byte count");
+  assert(
+    manifestValidationRecord.sha256 === undefined,
+    "SEO evidence manifest validation result entry must not record a pre-validation sha256",
+  );
+
   return {
     artifactName: manifest.artifactName,
     checkedFileCount: EXPECTED_SOURCE_FILES.length,
     manifestFileCount: manifest.files.length,
+    manifestValidationResultRetained: true,
     ok: true,
     selfDescribing: true,
     sha256CheckedCount: EXPECTED_SOURCE_FILES.length,

@@ -537,8 +537,16 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       label: "Confirm manifest traceability",
       artifactFile: "seo-evidence-manifest.json",
       check: "Confirm the manifest records artifactName, gitHubRunId, gitHubSha, gitHubWorkflow, retentionDays, retained file names, byte sizes, and sha256 checksums for each source evidence file. Re-run npm run seo:evidence-manifest-validate after downloading the artifact.",
-      passSignal: "The manifest includes sha256 for every retained source evidence file, includes seo-evidence-manifest.json with selfDescribing: true, records the same run SHA as the workflow, and the checksum validator returns ok: true.",
+      passSignal: "The manifest includes sha256 for every retained source evidence file, includes seo-evidence-manifest.json with selfDescribing: true, includes seo-evidence-manifest-validation-result.json with postManifestValidation: true, records the same run SHA as the workflow, and the checksum validator returns ok: true.",
       useBefore: "Use before treating the downloaded artifact as the durable proof package for that deployment.",
+    },
+    {
+      label: "Confirm manifest checksum validation result",
+      artifactFile: "seo-evidence-manifest-validation-result.json",
+      check: "Open the retained manifest checksum validation result after downloading the production-seo-evidence artifact.",
+      passSignal:
+        "The validation result has ok: true, checkedFileCount: 7, sha256CheckedCount: 7, manifestFileCount: 9, and manifestValidationResultRetained: true.",
+      useBefore: "Use before relying on the manifest checksum contract in Search Console retry notes or incident review.",
     },
   ];
 }

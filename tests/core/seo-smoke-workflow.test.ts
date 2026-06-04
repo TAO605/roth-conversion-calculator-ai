@@ -35,7 +35,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json");
     expect(workflow).toContain("Generate SEO evidence manifest");
     expect(workflow).toContain("node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json");
-    expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs");
+    expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
     expect(workflow).toContain("uses: actions/upload-artifact@v7");
     expect(workflow).not.toContain("FORCE_JAVASCRIPT_ACTIONS_TO_NODE24");
     expect(workflow).not.toContain("actions/checkout@v4");
@@ -49,6 +49,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("blog-discovery-evidence-result.json");
     expect(workflow).toContain("seo-evidence-validation-result.json");
     expect(workflow).toContain("seo-evidence-manifest.json");
+    expect(workflow).toContain("seo-evidence-manifest-validation-result.json");
     expect(workflow).toContain("retention-days: 30");
   });
 });
