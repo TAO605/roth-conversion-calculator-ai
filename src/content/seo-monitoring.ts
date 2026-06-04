@@ -522,9 +522,16 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
     {
       label: "Confirm validator summary",
       artifactFile: "seo-evidence-validation-result.json",
-      check: "Confirm the retained validator result reports ok: true after checking the smoke and GSC JSON files together.",
-      passSignal: "The validation summary records the expected host, checked file count, and no contract failures.",
+      check: "Confirm the retained validator result reports ok: true after checking smoke, GSC, performance, structured data, blog discovery, and professional UI evidence together.",
+      passSignal: "The validation summary records the expected host, checked file count, professionalUiScannedFileCount, and no contract failures.",
       useBefore: "Use before attaching the artifact to incident review or a GSC retry note.",
+    },
+    {
+      label: "Confirm professional UI source guard",
+      artifactFile: "professional-ui-evidence-result.json",
+      check: "Confirm the retained UI source guard scanned src/app and src/features for old glass-template surface classes.",
+      passSignal: "The professional UI evidence has ok: true, scannedFileCount above zero, violationCount: 0, and an empty violations array.",
+      useBefore: "Use before approving UI, route, or component changes as compliant with the no-glass professional surface system.",
     },
     {
       label: "Confirm manifest traceability",

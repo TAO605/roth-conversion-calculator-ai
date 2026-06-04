@@ -1016,3 +1016,29 @@ Run professional UI evidence, evidence validator, manifest generation, workflow 
 **Future trigger words:**
 
 UI guard not in artifact; professional UI evidence missing; production-seo-evidence lacks source guard; validator missing UI evidence; manifest missing professional UI result
+
+### 2026-06-04 - Visible operations copy must track artifact contract changes
+
+**Symptom:**
+
+The production SEO artifact expanded to include `professional-ui-evidence-result.json`, but the `/seo-monitoring` artifact review checklist still described only the older evidence files.
+
+**Root cause:**
+
+Automation and artifact retention changed faster than the human-facing operations playbook, leaving reviewers without visible instructions for the new source-level UI evidence.
+
+**Fix:**
+
+Updated the SEO monitoring artifact checklist to include the professional UI source guard file and its pass signals, including `ok: true`, scanned source roots, `violationCount: 0`, and empty violations.
+
+**Guard:**
+
+Updated `tests/core/seo-monitoring.test.ts` so the checklist must include `professional-ui-evidence-result.json`, `professionalUiScannedFileCount`, and `violationCount: 0`.
+
+**Validation:**
+
+Run SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, homepage E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+artifact checklist stale; SEO monitoring missing new evidence file; professional UI evidence review missing; operations page artifact contract drift

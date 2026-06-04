@@ -144,12 +144,15 @@ describe("SEO monitoring playbook", () => {
       expect.arrayContaining([
         "seo-smoke-result.json",
         "gsc-evidence-result.json",
+        "professional-ui-evidence-result.json",
         "seo-evidence-validation-result.json",
         "seo-evidence-manifest.json",
       ]),
     );
-    expect(review.length).toBe(4);
+    expect(review.length).toBe(5);
     expect(combined).toContain("production-seo-evidence");
+    expect(combined).toContain("professionalUiScannedFileCount");
+    expect(combined).toContain("violationCount: 0");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");
     expect(combined).toContain("URL Inspection");

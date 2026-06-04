@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.138",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO monitoring UI evidence review",
+    summary:
+      "Updated the SEO monitoring artifact review checklist so the visible operations playbook explains how to verify the retained professional UI source-guard evidence inside production SEO artifacts.",
+    affectedArea:
+      "SEO monitoring content, artifact review checklist, release notes, feature registry, task tracking, progress evidence, and UI documentation",
+    rollbackPath:
+      "Remove the professional UI evidence checklist item from SEO monitoring, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.137",
     date: "2026-06-04",
     type: "patch",

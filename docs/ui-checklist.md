@@ -129,3 +129,10 @@
 - GitHub Actions uploads `professional-ui-evidence-result.json` inside `production-seo-evidence`.
 - `scripts/validate-seo-evidence.mjs` and `scripts/generate-seo-evidence-manifest.mjs` require and list the professional UI evidence file.
 - Existing global UI guard tests, release-note tests, feature-registry tests, workflow tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
+
+## Acceptance Checks For P14 SEO Monitoring UI Evidence Review
+
+- `/seo-monitoring` artifact review checklist includes `professional-ui-evidence-result.json`.
+- The checklist explains `ok: true`, `scannedFileCount`, `violationCount: 0`, and empty `violations` as the pass signal for the professional UI source guard.
+- The validator checklist copy references `professionalUiScannedFileCount` so human review matches the retained JSON contract.
+- Existing SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

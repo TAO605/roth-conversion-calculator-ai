@@ -184,5 +184,6 @@
 - Treat the no-glass professional surface system as a source-level invariant for `src/app` and `src/features`.
 - The global guard should catch old template classes before route-specific tests need to know about every new page.
 - Retain the same source-guard result in `production-seo-evidence` as `professional-ui-evidence-result.json` so production review can inspect UI source health alongside SEO, GSC, structured data, blog discovery, and Lighthouse evidence.
+- When `/seo-monitoring` describes the evidence artifact, include the professional UI file and its pass signal: `ok: true`, scanned app/feature files, `violationCount: 0`, and no violations.
 - Page-specific guards can still enforce semantic requirements, but the global guard owns the shared forbidden-class baseline.
 - If the visual system changes intentionally, update `DESIGN.md`, this pattern note, and the guard in the same release.
