@@ -94,3 +94,4 @@
 - [done] Add GitHub run and commit provenance URLs to SEO evidence manifest
 - [done] Add schema version to SEO evidence manifest
 - [done] Validate SEO evidence manifest generated timestamp
+- [done] Validate SEO evidence GitHub provenance consistency

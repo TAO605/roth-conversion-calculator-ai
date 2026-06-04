@@ -198,3 +198,4 @@
 - Include direct `gitHubRunUrl` and `gitHubCommitUrl` fields in retained SEO evidence manifests so downloaded artifacts can be traced back to the exact Actions run and commit without external lookup.
 - Version retained SEO evidence artifact contracts with `artifactSchemaVersion` before adding more fields, so validators and reviewers can distinguish manifest shape changes from evidence failures.
 - Validate the manifest `generatedAt` field as an ISO timestamp and retain `generatedAtRetained: true` in the validator output so artifact creation time is machine-checkable.
+- Validate that `gitHubRunUrl` ends with the retained `gitHubRunId` and `gitHubCommitUrl` ends with the retained `gitHubSha`; retain `gitHubProvenanceConsistent: true` so provenance links cannot drift away from their raw IDs.

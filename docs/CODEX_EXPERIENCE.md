@@ -1198,3 +1198,29 @@ Run manifest generation, manifest validation, SEO monitoring tests, release-note
 **Future trigger words:**
 
 manifest generatedAt missing; artifact creation time unclear; SEO evidence timestamp drift; generatedAtRetained missing; proof package generated time unverified
+
+### 2026-06-04 - SEO evidence provenance URLs must match raw GitHub IDs
+
+**Symptom:**
+
+The production SEO evidence manifest retained both raw GitHub identifiers and direct URLs, but the validator only checked URL shape.
+
+**Root cause:**
+
+Run and commit provenance fields were treated as independently valid fields instead of a single consistency contract.
+
+**Fix:**
+
+Validated that `gitHubRunUrl` ends with `gitHubRunId` and `gitHubCommitUrl` ends with `gitHubSha`, then retained `gitHubProvenanceConsistent: true`.
+
+**Guard:**
+
+Updated SEO evidence and SEO monitoring tests so provenance consistency remains visible in automation and artifact review instructions.
+
+**Validation:**
+
+Run manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+manifest provenance mismatch; run URL does not match run ID; commit URL does not match SHA; gitHubProvenanceConsistent missing; evidence artifact links wrong commit

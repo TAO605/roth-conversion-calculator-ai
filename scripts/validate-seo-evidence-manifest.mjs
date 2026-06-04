@@ -19,6 +19,8 @@ const MANIFEST_VALIDATION_RESULT_FILE = "seo-evidence-manifest-validation-result
 const GITHUB_RUN_URL_PATTERN = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/actions\/runs\/\d+$/;
 const GITHUB_COMMIT_URL_PATTERN = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/commit\/[a-f0-9]{40}$/i;
 const ISO_TIMESTAMP_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+const GITHUB_SHA_PATTERN = /^[a-f0-9]{40}$/i;
+const GITHUB_RUN_ID_PATTERN = /^\d+$/;
 
 function assert(condition, message) {
   if (!condition) {
@@ -58,6 +60,24 @@ function hashFile(filePath) {
   };
 }
 
+function validateGitHubProvenance(manifest) {
+  if (manifest.gitHubRunId !== "" || manifest.gitHubRunUrl !== "") {
+    assert(GITHUB_RUN_ID_PATTERN.test(manifest.gitHubRunId), "SEO evidence manifest gitHubRunId must be numeric when retained");
+    assert(
+      manifest.gitHubRunUrl.endsWith(`/actions/runs/${manifest.gitHubRunId}`),
+      "SEO evidence manifest gitHubRunUrl must match gitHubRunId",
+    );
+  }
+
+  if (manifest.gitHubSha !== "" || manifest.gitHubCommitUrl !== "") {
+    assert(GITHUB_SHA_PATTERN.test(manifest.gitHubSha), "SEO evidence manifest gitHubSha must be a 40-character commit SHA when retained");
+    assert(
+      manifest.gitHubCommitUrl.toLowerCase().endsWith(`/commit/${manifest.gitHubSha.toLowerCase()}`),
+      "SEO evidence manifest gitHubCommitUrl must match gitHubSha",
+    );
+  }
+}
+
 function validateSeoEvidenceManifest(manifestPath) {
   const manifest = readJson(manifestPath);
   const manifestDir = path.dirname(path.resolve(manifestPath));
@@ -84,6 +104,7 @@ function validateSeoEvidenceManifest(manifestPath) {
     manifest.gitHubCommitUrl === "" || GITHUB_COMMIT_URL_PATTERN.test(manifest.gitHubCommitUrl),
     "SEO evidence manifest gitHubCommitUrl must be empty locally or a GitHub commit URL",
   );
+  validateGitHubProvenance(manifest);
   assert(Array.isArray(manifest.files), "SEO evidence manifest files must be an array");
 
   const records = new Map(manifest.files.map((file) => [file.name, file]));
@@ -127,6 +148,9 @@ function validateSeoEvidenceManifest(manifestPath) {
     checkedFileCount: EXPECTED_SOURCE_FILES.length,
     generatedAt: manifest.generatedAt,
     generatedAtRetained: true,
+    gitHubProvenanceConsistent:
+      (manifest.gitHubRunId === "" || manifest.gitHubRunUrl.endsWith(`/actions/runs/${manifest.gitHubRunId}`)) &&
+      (manifest.gitHubSha === "" || manifest.gitHubCommitUrl.toLowerCase().endsWith(`/commit/${manifest.gitHubSha.toLowerCase()}`)),
     manifestFileCount: manifest.files.length,
     manifestValidationResultRetained: true,
     ok: true,

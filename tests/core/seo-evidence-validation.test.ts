@@ -145,6 +145,12 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestValidator).toContain("manifestValidationResultRetained");
     expect(manifestValidator).toContain("GITHUB_RUN_URL_PATTERN");
     expect(manifestValidator).toContain("GITHUB_COMMIT_URL_PATTERN");
+    expect(manifestValidator).toContain("GITHUB_SHA_PATTERN");
+    expect(manifestValidator).toContain("GITHUB_RUN_ID_PATTERN");
+    expect(manifestValidator).toContain("validateGitHubProvenance");
+    expect(manifestValidator).toContain("gitHubProvenanceConsistent");
+    expect(manifestValidator).toContain("gitHubCommitUrl must match gitHubSha");
+    expect(manifestValidator).toContain("gitHubRunUrl must match gitHubRunId");
     expect(manifestValidator).toContain("runUrlRetained");
     expect(manifestValidator).toContain("commitUrlRetained");
   });

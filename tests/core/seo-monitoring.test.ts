@@ -159,11 +159,14 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("generatedAt");
     expect(combined).toContain("gitHubRunUrl");
     expect(combined).toContain("gitHubCommitUrl");
+    expect(combined).toContain("gitHubRunId");
+    expect(combined).toContain("gitHubSha");
     expect(combined).toContain("seo:evidence-manifest-validate");
     expect(combined).toContain("ok: true");
     expect(combined).toContain("postManifestValidation: true");
     expect(combined).toContain("manifestValidationResultRetained: true");
     expect(combined).toContain("generatedAtRetained: true");
+    expect(combined).toContain("gitHubProvenanceConsistent: true");
     expect(combined).toContain("sha256CheckedCount: 7");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");

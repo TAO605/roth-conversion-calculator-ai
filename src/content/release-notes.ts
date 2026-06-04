@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.145",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO evidence provenance consistency validation",
+    summary:
+      "Added manifest provenance consistency checks so retained GitHub run URLs match their run IDs and retained commit URLs match their commit SHAs.",
+    affectedArea:
+      "SEO evidence manifest checksum validator, SEO monitoring artifact review copy, release notes, feature registry, task tracking, progress evidence, and operations documentation",
+    rollbackPath:
+      "Remove GitHub provenance consistency checks from the manifest validator, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.144",
     date: "2026-06-04",
     type: "patch",
