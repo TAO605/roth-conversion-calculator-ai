@@ -98,3 +98,4 @@
 - [done] Validate SEO evidence workflow event metadata
 - [done] Validate SEO evidence GitHub repository provenance
 - [done] Stabilize rapid calculator input state updates
+- [done] Validate SEO evidence GitHub server provenance

@@ -201,3 +201,4 @@
 - Validate that `gitHubRunUrl` ends with the retained `gitHubRunId` and `gitHubCommitUrl` ends with the retained `gitHubSha`; retain `gitHubProvenanceConsistent: true` so provenance links cannot drift away from their raw IDs.
 - Restrict manifest `eventName` to known generation contexts and require `gitHubWorkflow` plus numeric `gitHubRunAttempt` for Actions artifacts; retain `gitHubWorkflowRetained: true` and `runAttemptRetained: true`.
 - Retain and validate `gitHubRepository` for Actions artifacts so downloaded production SEO evidence proves it came from `TAO605/roth-conversion-calculator-ai`, not only from a plausible GitHub run URL.
+- Retain and validate `gitHubServerUrl` as `https://github.com` so downloaded production SEO evidence cannot silently shift to an unexpected GitHub host while preserving plausible repository and run metadata.

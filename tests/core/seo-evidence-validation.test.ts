@@ -120,6 +120,7 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("GITHUB_SHA");
     expect(manifestScript).toContain("GITHUB_REPOSITORY");
     expect(manifestScript).toContain("gitHubRepository");
+    expect(manifestScript).toContain("gitHubServerUrl");
     expect(manifestScript).toContain("gitHubRunUrl");
     expect(manifestScript).toContain("gitHubCommitUrl");
     expect(manifestScript).toContain("/actions/runs/");
@@ -151,8 +152,11 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestValidator).toContain("GITHUB_RUN_ID_PATTERN");
     expect(manifestValidator).toContain("ALLOWED_EVENT_NAMES");
     expect(manifestValidator).toContain("EXPECTED_GITHUB_REPOSITORY");
+    expect(manifestValidator).toContain("EXPECTED_GITHUB_SERVER_URL");
     expect(manifestValidator).toContain("gitHubRepository changed unexpectedly");
     expect(manifestValidator).toContain("gitHubRepositoryRetained");
+    expect(manifestValidator).toContain("gitHubServerUrl changed unexpectedly");
+    expect(manifestValidator).toContain("gitHubServerUrlRetained");
     expect(manifestValidator).toContain("eventName is not an allowed value");
     expect(manifestValidator).toContain("gitHubWorkflowRetained");
     expect(manifestValidator).toContain("runAttemptRetained");

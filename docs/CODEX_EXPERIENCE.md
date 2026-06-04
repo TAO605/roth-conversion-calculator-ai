@@ -1302,3 +1302,29 @@ Run calculator input tests, state shortcut tests, E2E, full Vitest, build, produ
 **Future trigger words:**
 
 rapid input overwrites field; mobile calculator fill reset; conversion amount returns to default; stale input snapshot; E2E amount mismatch
+
+### 2026-06-04 - SEO evidence artifacts need GitHub server host checks
+
+**Symptom:**
+
+The production SEO evidence manifest retained `gitHubServerUrl`, but the validator did not explicitly prove it was the expected GitHub host.
+
+**Root cause:**
+
+Artifact provenance checks validated repository, run, commit, workflow, and attempt metadata before treating the GitHub server URL as part of the same identity contract.
+
+**Fix:**
+
+Validated `gitHubServerUrl` as `https://github.com` and retained `gitHubServerUrlRetained: true` in the manifest validation result.
+
+**Guard:**
+
+Updated SEO evidence and SEO monitoring tests so server-host provenance remains visible in automation and artifact review instructions.
+
+**Validation:**
+
+Run manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+manifest GitHub server changed; gitHubServerUrlRetained missing; wrong GitHub host; artifact server provenance unverified; unexpected GitHub server URL

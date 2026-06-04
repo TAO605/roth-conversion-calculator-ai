@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.148",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO evidence GitHub server provenance validation",
+    summary:
+      "Added manifest GitHub server URL validation so retained production SEO evidence artifacts prove they were generated against the expected GitHub host.",
+    affectedArea:
+      "SEO evidence manifest checksum validator, SEO monitoring artifact review copy, release notes, feature registry, task tracking, progress evidence, and operations documentation",
+    rollbackPath:
+      "Remove gitHubServerUrl validation from the manifest validator, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.147",
     date: "2026-06-04",
     type: "patch",
