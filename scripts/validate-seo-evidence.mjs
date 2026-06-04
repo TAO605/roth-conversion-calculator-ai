@@ -7,6 +7,7 @@ const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
 const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
+const DEFAULT_PROFESSIONAL_UI_PATH = "professional-ui-evidence-result.json";
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
 const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
@@ -16,6 +17,7 @@ const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
 const performancePath = process.argv[4] || DEFAULT_PERFORMANCE_PATH;
 const structuredDataPath = process.argv[5] || DEFAULT_STRUCTURED_DATA_PATH;
 const blogDiscoveryPath = process.argv[6] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[7] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -220,28 +222,49 @@ function validateBlogDiscoveryEvidence(blogDiscovery, expectedBaseUrl) {
   assert(blogDiscovery.checks.llms.expectedMinimum === expectedLlmsMinimum, "llms.txt expectedMinimum must match current blog count");
 }
 
+function validateProfessionalUiEvidence(professionalUi) {
+  assert(professionalUi.ok === true, "Professional UI evidence must be ok");
+  assert(
+    professionalUi.evidenceType === "professional-ui-source-guard",
+    "Professional UI evidence must identify the source guard",
+  );
+  assert(Array.isArray(professionalUi.scannedRoots), "Professional UI evidence must include scannedRoots");
+  assert(professionalUi.scannedRoots.includes("src/app"), "Professional UI evidence must scan src/app");
+  assert(professionalUi.scannedRoots.includes("src/features"), "Professional UI evidence must scan src/features");
+  assert(professionalUi.scannedFileCount > 0, "Professional UI evidence must scan source files");
+  assert(Array.isArray(professionalUi.forbiddenClasses), "Professional UI evidence must include forbiddenClasses");
+  assert(professionalUi.forbiddenClasses.includes("backdrop-blur-xl"), "Professional UI evidence must block backdrop blur");
+  assert(professionalUi.forbiddenClasses.includes("shadow-material"), "Professional UI evidence must block material shadows");
+  assert(professionalUi.forbiddenClasses.includes("hover:-translate-y"), "Professional UI evidence must block hover lift");
+  assert(professionalUi.violationCount === 0, "Professional UI evidence must have zero violations");
+  assert(Array.isArray(professionalUi.violations) && professionalUi.violations.length === 0, "Professional UI evidence violations must be empty");
+}
+
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
   const performance = readJson(performancePath);
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
+  const professionalUi = readJson(professionalUiPath);
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
   validatePerformanceEvidence(performance, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
+  validateProfessionalUiEvidence(professionalUi);
 
   console.log(
     JSON.stringify(
       {
-        artifactFiles: [smokePath, gscPath, performancePath, structuredDataPath, blogDiscoveryPath],
+        artifactFiles: [smokePath, gscPath, performancePath, structuredDataPath, blogDiscoveryPath, professionalUiPath],
         baseUrl: smoke.baseUrl,
         blogDiscoveryCount: blogDiscovery.blogPostCount,
         gscPriorityUrlCount: gsc.priorityUrlCount,
         ok: true,
         performanceScore: performance.categories.performance,
+        professionalUiScannedFileCount: professionalUi.scannedFileCount,
         smokeCheckCount: smoke.results.length,
         structuredDataTypeCount: structuredData.types.length,
       },

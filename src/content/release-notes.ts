@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.137",
+    date: "2026-06-04",
+    type: "patch",
+    title: "Professional UI evidence artifact",
+    summary:
+      "Added a production evidence command and CI artifact coverage for the global professional UI source guard so each SEO evidence package retains proof that app and feature code stayed free of old glass-template surface classes.",
+    affectedArea:
+      "Professional UI source guard evidence script, SEO Smoke workflow, SEO evidence validator, evidence manifest, release notes, feature registry, task tracking, progress evidence, and UI documentation",
+    rollbackPath:
+      "Remove the professional UI evidence command from the workflow, validator, manifest, package script, and tests, then revert the release note, feature registry version, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.136",
     date: "2026-06-03",
     type: "patch",

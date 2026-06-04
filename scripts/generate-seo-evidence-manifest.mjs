@@ -6,6 +6,7 @@ const DEFAULT_FILES = [
   "performance-evidence-result.json",
   "structured-data-evidence-result.json",
   "blog-discovery-evidence-result.json",
+  "professional-ui-evidence-result.json",
   "seo-evidence-validation-result.json",
   "seo-evidence-manifest.json",
 ];

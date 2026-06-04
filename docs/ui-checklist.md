@@ -96,6 +96,7 @@
 
 - [ ] App and feature source stays free of old glass-template classes: `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, and translucent white surface classes.
 - [ ] New route or feature UI work either follows the plain bordered surface system or updates the design docs and guard intentionally.
+- [ ] Production SEO artifacts retain `professional-ui-evidence-result.json` so source-level UI guard status can be reviewed without rerunning local tests.
 - [ ] Global UI guard changes do not alter page content, tax calculation logic, structured-data output, or blog article bodies.
 
 ## Acceptance Checks For P9 Dynamic Detail Page Surfaces
@@ -121,3 +122,10 @@
 - `tests/core/professional-ui-global-guard.test.ts` scans `src/app` and `src/features` recursively.
 - The guard fails on old glass-template surface classes including material shadows, hover lift, oversized custom radii, and translucent white surfaces.
 - Existing page-specific UI guards, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
+
+## Acceptance Checks For P13 Professional UI Evidence Artifact
+
+- `npm run seo:professional-ui-evidence` emits machine-readable JSON with `evidenceType: professional-ui-source-guard`, scanned roots, forbidden classes, scanned file count, and violations.
+- GitHub Actions uploads `professional-ui-evidence-result.json` inside `production-seo-evidence`.
+- `scripts/validate-seo-evidence.mjs` and `scripts/generate-seo-evidence-manifest.mjs` require and list the professional UI evidence file.
+- Existing global UI guard tests, release-note tests, feature-registry tests, workflow tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

@@ -69,6 +69,11 @@ jobs:
           set -o pipefail
           node scripts/blog-discovery-evidence.mjs | tee blog-discovery-evidence-result.json
 
+      - name: Run professional UI source guard evidence check
+        run: |
+          set -o pipefail
+          node scripts/professional-ui-evidence.mjs | tee professional-ui-evidence-result.json
+
       - name: Validate SEO evidence artifact
         run: |
           set -o pipefail
@@ -90,6 +95,7 @@ jobs:
             performance-evidence-result.json
             structured-data-evidence-result.json
             blog-discovery-evidence-result.json
+            professional-ui-evidence-result.json
             seo-evidence-validation-result.json
             seo-evidence-manifest.json
           retention-days: 30

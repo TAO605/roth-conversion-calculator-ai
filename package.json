@@ -14,6 +14,7 @@
     "seo:performance": "node scripts/performance-evidence.mjs",
     "seo:structured-data": "node scripts/structured-data-evidence.mjs",
     "seo:blog-discovery": "node scripts/blog-discovery-evidence.mjs",
+    "seo:professional-ui-evidence": "node scripts/professional-ui-evidence.mjs",
     "seo:blog-review": "node scripts/blog-seo-review.mjs",
     "seo:blog-evidence-validate": "node scripts/validate-blog-publication-evidence.mjs",
     "seo:blog-ready": "node scripts/blog-publication-readiness.mjs",

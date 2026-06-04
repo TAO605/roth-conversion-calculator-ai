@@ -990,3 +990,29 @@ Run the global guard together with page-specific UI guards, release-note tests, 
 **Future trigger words:**
 
 new route glass class; feature component shadow-material; global UI guard; old template class returned; professional surface regression
+
+### 2026-06-04 - Source-level UI guards should be retained in production evidence
+
+**Symptom:**
+
+The global professional UI guard protected local and CI test runs, but the downloadable `production-seo-evidence` artifact did not retain a machine-readable UI source health result.
+
+**Root cause:**
+
+The SEO Smoke workflow uploaded live SEO, GSC, structured data, blog discovery, performance, validator, and manifest evidence, but source-level UI guard status was only represented by tests outside the retained artifact.
+
+**Fix:**
+
+Added `scripts/professional-ui-evidence.mjs`, wired it into `npm run seo:professional-ui-evidence`, the SEO Smoke workflow, the evidence validator, and the evidence manifest.
+
+**Guard:**
+
+Added `tests/core/professional-ui-evidence.test.ts` so the package script, workflow artifact path, validator, manifest, and source guard metadata stay wired together.
+
+**Validation:**
+
+Run professional UI evidence, evidence validator, manifest generation, workflow wiring tests, global UI guard tests, full Vitest, build, homepage E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+UI guard not in artifact; professional UI evidence missing; production-seo-evidence lacks source guard; validator missing UI evidence; manifest missing professional UI result

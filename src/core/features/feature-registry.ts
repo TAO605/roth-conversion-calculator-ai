@@ -768,14 +768,14 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "professional-ui-global-guard",
     label: "Global professional UI guard",
-    version: "1.0.136",
+    version: "1.0.137",
     layer: "content",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/app, src/features, and tests/core/professional-ui-global-guard.test.ts",
     rollbackPath:
-      "Remove the global professional UI guard test if the app intentionally adopts a new approved surface system.",
+      "Remove the global professional UI guard test and professional UI evidence artifact wiring if the app intentionally adopts a new approved surface system.",
   },
   {
     id: "ai-compliance-audit-playbook",
