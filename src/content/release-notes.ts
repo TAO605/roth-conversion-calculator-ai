@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.136",
+    date: "2026-06-03",
+    type: "patch",
+    title: "Global professional UI guard",
+    summary:
+      "Added a global source guard that scans app and feature code for old glass-template surface classes so future pages cannot reintroduce translucent cards, material shadows, hover-lift, or oversized custom radii.",
+    affectedArea:
+      "App routes, shared feature components, professional UI regression tests, release notes, feature registry, task tracking, progress evidence, and UI documentation",
+    rollbackPath:
+      "Remove the global professional UI guard test, then revert the release note, feature registry entry, task, progress, and UI documentation updates.",
+  },
+  {
     version: "1.0.135",
     date: "2026-06-03",
     type: "patch",

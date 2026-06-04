@@ -964,3 +964,29 @@ Run blog shell UI, blog content, blog discovery evidence, release-note, feature-
 **Future trigger words:**
 
 blog shell glass; blog card shadow-material; related guide hover lift; article metadata bg-white/70; blog topic oversized radius
+
+### 2026-06-03 - Page-specific UI guards need a global source baseline
+
+**Symptom:**
+
+After the professional UI cleanup reached app routes, dynamic detail pages, shared feature components, and blog shells, old glass-template classes were gone from source but only protected by multiple scoped tests.
+
+**Root cause:**
+
+Scoped UI guards are good for route semantics, but future routes or feature components could still add old template classes without being included in one of the existing page-specific lists.
+
+**Fix:**
+
+Added a global professional UI guard that recursively scans `src/app` and `src/features` for old glass, material-shadow, hover-lift, translucent, and oversized custom-radius classes.
+
+**Guard:**
+
+`tests/core/professional-ui-global-guard.test.ts` fails with file-level violation messages whenever old template surface classes return to app or feature source.
+
+**Validation:**
+
+Run the global guard together with page-specific UI guards, release-note tests, feature-registry tests, full Vitest, build, homepage E2E, and production SEO evidence before closing the release.
+
+**Future trigger words:**
+
+new route glass class; feature component shadow-material; global UI guard; old template class returned; professional surface regression

@@ -766,6 +766,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Restore the previous translucent, glass, large-radius, and heavy-shadow shared feature component classes, then remove the shared-feature UI regression guard.",
   },
   {
+    id: "professional-ui-global-guard",
+    label: "Global professional UI guard",
+    version: "1.0.136",
+    layer: "content",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/app, src/features, and tests/core/professional-ui-global-guard.test.ts",
+    rollbackPath:
+      "Remove the global professional UI guard test if the app intentionally adopts a new approved surface system.",
+  },
+  {
     id: "ai-compliance-audit-playbook",
     label: "AI compliance audit playbook",
     version: "1.0.46",

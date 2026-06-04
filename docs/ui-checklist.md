@@ -92,6 +92,12 @@
 - [ ] Blog shell UI changes preserve article body text, Article JSON-LD, Breadcrumb JSON-LD, canonical metadata, and required disclaimer text.
 - [ ] Blog shell UI changes do not alter tax calculation logic, blog publication validators, or user-owned article writing workflow.
 
+## Global Professional UI Guard
+
+- [ ] App and feature source stays free of old glass-template classes: `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, and translucent white surface classes.
+- [ ] New route or feature UI work either follows the plain bordered surface system or updates the design docs and guard intentionally.
+- [ ] Global UI guard changes do not alter page content, tax calculation logic, structured-data output, or blog article bodies.
+
 ## Acceptance Checks For P9 Dynamic Detail Page Surfaces
 
 - Keyword landing, age scenario, basis, example, filing status, glossary, state, federal bracket, multi-year planning, tax interaction, and tax payment method detail pages no longer use `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, `bg-white/75`, `bg-white/70`, or `bg-white/60`.
@@ -109,3 +115,9 @@
 - Blog index and blog article shell pages no longer use `backdrop-blur-xl`, `shadow-material`, hover-lift, oversized custom radii, `bg-white/75`, `bg-white/70`, or `bg-white/60`.
 - Topic groups, article metadata, calculator CTA, and related-guide links use `rounded-lg` or `rounded-md` bordered surfaces.
 - Existing blog content tests, blog discovery evidence, release-note tests, feature-registry tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
+
+## Acceptance Checks For P12 Global Professional UI Guard
+
+- `tests/core/professional-ui-global-guard.test.ts` scans `src/app` and `src/features` recursively.
+- The guard fails on old glass-template surface classes including material shadows, hover lift, oversized custom radii, and translucent white surfaces.
+- Existing page-specific UI guards, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

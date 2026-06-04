@@ -178,3 +178,10 @@
 - Use `rounded-lg border border-neutral-200 bg-white` for topic groups, post links, calculator CTA, and related-guide panels.
 - Use `rounded-md border border-neutral-200 bg-neutral-50` for compact article metadata and nested topic blocks.
 - Preserve article body text, publication metadata, Article JSON-LD, Breadcrumb JSON-LD, required disclaimer text, and blog publication validators during shell-only UI changes.
+
+## Global Professional UI Guard
+
+- Treat the no-glass professional surface system as a source-level invariant for `src/app` and `src/features`.
+- The global guard should catch old template classes before route-specific tests need to know about every new page.
+- Page-specific guards can still enforce semantic requirements, but the global guard owns the shared forbidden-class baseline.
+- If the visual system changes intentionally, update `DESIGN.md`, this pattern note, and the guard in the same release.
