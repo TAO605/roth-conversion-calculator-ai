@@ -1172,3 +1172,29 @@ Run manifest generation, manifest validation, SEO monitoring tests, release-note
 **Future trigger words:**
 
 manifest schema unclear; artifact contract changed; artifactSchemaVersion missing; evidence manifest version drift; proof package schema mismatch
+
+### 2026-06-04 - SEO evidence manifests need validated creation timestamps
+
+**Symptom:**
+
+The production SEO evidence manifest included `generatedAt`, but the checksum validator did not prove that the field was present and parseable.
+
+**Root cause:**
+
+Manifest integrity checks focused on file inventory, checksums, schema version, and GitHub provenance before validating the artifact creation timestamp.
+
+**Fix:**
+
+Added ISO timestamp validation for `generatedAt` and retained `generatedAtRetained: true` plus the timestamp in the manifest validation result.
+
+**Guard:**
+
+Updated SEO evidence and SEO monitoring tests so timestamp validation remains visible in automation and artifact review instructions.
+
+**Validation:**
+
+Run manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+manifest generatedAt missing; artifact creation time unclear; SEO evidence timestamp drift; generatedAtRetained missing; proof package generated time unverified

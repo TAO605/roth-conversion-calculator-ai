@@ -18,6 +18,7 @@ const SELF_FILE = "seo-evidence-manifest.json";
 const MANIFEST_VALIDATION_RESULT_FILE = "seo-evidence-manifest-validation-result.json";
 const GITHUB_RUN_URL_PATTERN = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/actions\/runs\/\d+$/;
 const GITHUB_COMMIT_URL_PATTERN = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/commit\/[a-f0-9]{40}$/i;
+const ISO_TIMESTAMP_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 
 function assert(condition, message) {
   if (!condition) {
@@ -66,6 +67,12 @@ function validateSeoEvidenceManifest(manifestPath) {
   assert(
     manifest.artifactSchemaVersion === EXPECTED_ARTIFACT_SCHEMA_VERSION,
     "SEO evidence manifest artifactSchemaVersion changed unexpectedly",
+  );
+  assert(
+    typeof manifest.generatedAt === "string" &&
+      ISO_TIMESTAMP_PATTERN.test(manifest.generatedAt) &&
+      !Number.isNaN(Date.parse(manifest.generatedAt)),
+    "SEO evidence manifest generatedAt must be an ISO timestamp",
   );
   assert(manifest.baseUrl === "https://www.roth-conversion-calculator-ai.shop", "SEO evidence manifest baseUrl changed unexpectedly");
   assert(manifest.retentionDays === 30, "SEO evidence manifest retentionDays must be 30");
@@ -118,6 +125,8 @@ function validateSeoEvidenceManifest(manifestPath) {
     artifactName: manifest.artifactName,
     artifactSchemaVersion: manifest.artifactSchemaVersion,
     checkedFileCount: EXPECTED_SOURCE_FILES.length,
+    generatedAt: manifest.generatedAt,
+    generatedAtRetained: true,
     manifestFileCount: manifest.files.length,
     manifestValidationResultRetained: true,
     ok: true,

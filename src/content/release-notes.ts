@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.144",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO evidence generated timestamp validation",
+    summary:
+      "Added manifest generatedAt timestamp validation so production SEO evidence artifacts retain a machine-checkable creation time.",
+    affectedArea:
+      "SEO evidence manifest checksum validator, SEO monitoring artifact review copy, release notes, feature registry, task tracking, progress evidence, and operations documentation",
+    rollbackPath:
+      "Remove generatedAt timestamp validation from the manifest validator, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.143",
     date: "2026-06-04",
     type: "patch",

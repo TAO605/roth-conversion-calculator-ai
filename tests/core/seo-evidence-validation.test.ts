@@ -132,10 +132,13 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("production-seo-evidence");
     expect(manifestScript).toContain("artifactSchemaVersion");
     expect(manifestScript).toContain("ARTIFACT_SCHEMA_VERSION");
+    expect(manifestScript).toContain("generatedAt");
     expect(manifestScript).toContain("retentionDays: 30");
     expect(manifestValidator).toContain("validateSeoEvidenceManifest");
     expect(manifestValidator).toContain("EXPECTED_ARTIFACT_SCHEMA_VERSION");
     expect(manifestValidator).toContain("artifactSchemaVersion");
+    expect(manifestValidator).toContain("ISO_TIMESTAMP_PATTERN");
+    expect(manifestValidator).toContain("generatedAtRetained");
     expect(manifestValidator).toContain("sha256 mismatch");
     expect(manifestValidator).toContain("byte count mismatch");
     expect(manifestValidator).toContain("selfDescribing");
