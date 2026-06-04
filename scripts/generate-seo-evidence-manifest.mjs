@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import fs from "node:fs";
 
 const DEFAULT_FILES = [
@@ -21,11 +22,13 @@ function fileRecord(filePath) {
     };
   }
 
+  const bytes = fs.readFileSync(filePath);
   const stats = fs.statSync(filePath);
 
   return {
     bytes: stats.size,
     name: filePath,
+    sha256: crypto.createHash("sha256").update(bytes).digest("hex"),
   };
 }
 

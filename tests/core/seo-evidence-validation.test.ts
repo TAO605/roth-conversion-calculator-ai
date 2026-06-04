@@ -112,6 +112,9 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("blog-discovery-evidence-result.json");
     expect(manifestScript).toContain("GITHUB_RUN_ID");
     expect(manifestScript).toContain("GITHUB_SHA");
+    expect(manifestScript).toContain('import crypto from "node:crypto"');
+    expect(manifestScript).toContain("sha256");
+    expect(manifestScript).toContain('crypto.createHash("sha256")');
     expect(manifestScript).toContain("hasUtf16Bom");
     expect(manifestScript).toContain("utf16le");
     expect(manifestScript).toContain("selfDescribing");
@@ -139,5 +142,14 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("seo-evidence-manifest.json");
     expect(workflow).toContain("name: production-seo-evidence");
     expect(workflow).toContain("retention-days: 30");
+  });
+
+  it("retains sha256 checksums for each source evidence file in the manifest", () => {
+    const manifestScript = fs.readFileSync(path.join(process.cwd(), "scripts/generate-seo-evidence-manifest.mjs"), "utf8");
+
+    expect(manifestScript).toContain('import crypto from "node:crypto"');
+    expect(manifestScript).toContain('crypto.createHash("sha256").update(bytes).digest("hex")');
+    expect(manifestScript).toContain("sha256");
+    expect(manifestScript).toContain("selfDescribing: true");
   });
 });

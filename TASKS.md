@@ -88,3 +88,4 @@
 - [done] Add global professional UI guard for app and feature source
 - [done] Retain professional UI guard evidence in production SEO artifacts
 - [done] Surface professional UI evidence in SEO monitoring artifact review
+- [done] Add sha256 checksums to SEO evidence manifest

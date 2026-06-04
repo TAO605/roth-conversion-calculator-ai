@@ -136,3 +136,10 @@
 - The checklist explains `ok: true`, `scannedFileCount`, `violationCount: 0`, and empty `violations` as the pass signal for the professional UI source guard.
 - The validator checklist copy references `professionalUiScannedFileCount` so human review matches the retained JSON contract.
 - Existing SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.
+
+## Acceptance Checks For P15 SEO Evidence Manifest Checksums
+
+- `seo-evidence-manifest.json` records `sha256` for each retained source evidence file in `production-seo-evidence`.
+- The manifest self-entry remains `selfDescribing: true` instead of hashing itself.
+- `/seo-monitoring` tells reviewers to verify retained file names, byte sizes, `sha256` checksums, run identity, and retention metadata before using an artifact for Search Console or incident work.
+- Existing SEO evidence workflow tests, SEO monitoring tests, release-note tests, feature-registry tests, full tests, build, production SEO evidence, structured data, and Lighthouse evidence continue to pass.

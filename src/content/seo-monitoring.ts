@@ -536,8 +536,8 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
     {
       label: "Confirm manifest traceability",
       artifactFile: "seo-evidence-manifest.json",
-      check: "Confirm the manifest records artifactName, gitHubRunId, gitHubSha, gitHubWorkflow, retentionDays, and the retained file list.",
-      passSignal: "The manifest includes seo-evidence-manifest.json with selfDescribing: true and records the same run SHA as the workflow.",
+      check: "Confirm the manifest records artifactName, gitHubRunId, gitHubSha, gitHubWorkflow, retentionDays, retained file names, byte sizes, and sha256 checksums for each source evidence file.",
+      passSignal: "The manifest includes sha256 for every retained source evidence file, includes seo-evidence-manifest.json with selfDescribing: true, and records the same run SHA as the workflow.",
       useBefore: "Use before treating the downloaded artifact as the durable proof package for that deployment.",
     },
   ];

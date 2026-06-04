@@ -187,3 +187,9 @@
 - When `/seo-monitoring` describes the evidence artifact, include the professional UI file and its pass signal: `ok: true`, scanned app/feature files, `violationCount: 0`, and no violations.
 - Page-specific guards can still enforce semantic requirements, but the global guard owns the shared forbidden-class baseline.
 - If the visual system changes intentionally, update `DESIGN.md`, this pattern note, and the guard in the same release.
+
+## SEO Evidence Manifest Integrity
+
+- Treat `seo-evidence-manifest.json` as both an inventory and an integrity index for downloaded production SEO evidence.
+- Each retained source evidence file should include `bytes` and `sha256`; the manifest self-entry should stay `selfDescribing: true` because the file cannot hash its final generated content before it exists.
+- Operations copy should tell reviewers to compare file presence, byte size, checksum, run SHA, workflow name, and retention window before using an artifact for Search Console retry notes or incident review.

@@ -1042,3 +1042,29 @@ Run SEO monitoring tests, release-note tests, feature-registry tests, full Vites
 **Future trigger words:**
 
 artifact checklist stale; SEO monitoring missing new evidence file; professional UI evidence review missing; operations page artifact contract drift
+
+### 2026-06-04 - Evidence manifests should include content checksums
+
+**Symptom:**
+
+The production SEO evidence manifest listed retained files and byte sizes, but it did not include a content hash for each source evidence file.
+
+**Root cause:**
+
+The manifest started as a traceability inventory for workflow run metadata and artifact contents. Once the artifact became the durable proof package for SEO, GSC, performance, structured data, blog discovery, and UI source evidence, file presence alone was weaker than an integrity check.
+
+**Fix:**
+
+Added `sha256` checksums to each retained source evidence file record in `seo-evidence-manifest.json` while keeping the manifest self-entry as `selfDescribing: true`.
+
+**Guard:**
+
+Updated SEO evidence workflow tests and SEO monitoring tests so the checksum contract and visible artifact review copy must keep mentioning `sha256`.
+
+**Validation:**
+
+Run manifest generation, SEO evidence validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, homepage E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+manifest lacks checksum; artifact integrity unclear; production SEO evidence hash missing; downloaded evidence package tamper check; sha256 missing

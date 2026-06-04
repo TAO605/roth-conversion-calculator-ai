@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.139",
+    date: "2026-06-04",
+    type: "patch",
+    title: "SEO evidence manifest checksums",
+    summary:
+      "Added sha256 checksums to the production SEO evidence manifest so downloaded proof packages can be reviewed for file integrity as well as file presence, run identity, and retention metadata.",
+    affectedArea:
+      "SEO evidence manifest generation, SEO monitoring artifact review copy, release notes, feature registry, task tracking, progress evidence, and operations documentation",
+    rollbackPath:
+      "Remove sha256 generation from the SEO evidence manifest, then revert the SEO monitoring checksum review copy, release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.138",
     date: "2026-06-04",
     type: "patch",
