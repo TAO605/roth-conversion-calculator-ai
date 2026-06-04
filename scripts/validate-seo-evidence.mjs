@@ -6,6 +6,7 @@ const DEFAULT_SMOKE_PATH = "seo-smoke-result.json";
 const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
 const DEFAULT_DNS_PATH = "dns-evidence-result.json";
 const DEFAULT_SECURITY_HEADERS_PATH = "security-headers-evidence-result.json";
+const DEFAULT_HEALTH_PATH = "health-evidence-result.json";
 const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
@@ -18,10 +19,11 @@ const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
 const dnsPath = process.argv[4] || DEFAULT_DNS_PATH;
 const securityHeadersPath = process.argv[5] || DEFAULT_SECURITY_HEADERS_PATH;
-const performancePath = process.argv[6] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[7] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[8] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[9] || DEFAULT_PROFESSIONAL_UI_PATH;
+const healthPath = process.argv[6] || DEFAULT_HEALTH_PATH;
+const performancePath = process.argv[7] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[8] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[9] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[10] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -145,6 +147,41 @@ function validateSecurityHeadersEvidence(securityHeaders, expectedBaseUrl) {
     "referrerPolicyRetained",
   ]) {
     assert(securityHeaders.checks?.[check] === true, `Security headers evidence missing passing check: ${check}`);
+  }
+}
+
+function validateHealthEvidence(health, expectedBaseUrl) {
+  assert(health.ok === true, "Health endpoint evidence must be ok");
+  assert(health.evidenceType === "production-health-endpoint", "Health evidence type changed unexpectedly");
+  assert(health.url === `${expectedBaseUrl}/api/health`, "Health evidence URL must match SEO smoke baseUrl");
+  assert(health.status === 200, "Health evidence status must be 200");
+  assert(health.app === "roth-conversion-calculator", "Health evidence app changed unexpectedly");
+  assert(health.taxYear === 2026, "Health evidence taxYear must remain 2026");
+  assert(typeof health.version === "string" && health.version.length > 0, "Health evidence version is missing");
+  assert(typeof health.taxData?.lastUpdated === "string" && health.taxData.lastUpdated.length > 0, "Health evidence taxData.lastUpdated is missing");
+  assert(
+    typeof health.taxData?.professionalReviewStatus === "string" &&
+      health.taxData.professionalReviewStatus.toLowerCase().includes("pending"),
+    "Health evidence must retain pending professional review status",
+  );
+  assert(health.content?.blogPosts >= 13, "Health evidence blog coverage is below expected count");
+  assert(health.content?.glossaryTerms >= 12, "Health evidence glossary coverage is below expected count");
+  assert(health.features?.enabled > 10, "Health evidence enabled feature coverage is unexpectedly low");
+  for (const check of [
+    "appRetained",
+    "blogCoverageRetained",
+    "cacheNoStoreRetained",
+    "checkedAtRetained",
+    "enabledFeatureCoverageRetained",
+    "glossaryCoverageRetained",
+    "healthEndpointOk",
+    "noSecretLikeKeys",
+    "professionalReviewPending",
+    "statusOk",
+    "taxDataLastUpdatedRetained",
+    "taxYearRetained",
+  ]) {
+    assert(health.checks?.[check] === true, `Health evidence missing passing check: ${check}`);
   }
 }
 
@@ -298,6 +335,7 @@ function run() {
   const gsc = readJson(gscPath);
   const dnsEvidence = readJson(dnsPath);
   const securityHeaders = readJson(securityHeadersPath);
+  const health = readJson(healthPath);
   const performance = readJson(performancePath);
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
@@ -307,6 +345,7 @@ function run() {
   validateGscEvidence(gsc, smoke.baseUrl);
   validateDnsEvidence(dnsEvidence, smoke.baseUrl);
   validateSecurityHeadersEvidence(securityHeaders, smoke.baseUrl);
+  validateHealthEvidence(health, smoke.baseUrl);
   validatePerformanceEvidence(performance, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
@@ -320,6 +359,7 @@ function run() {
           gscPath,
           dnsPath,
           securityHeadersPath,
+          healthPath,
           performancePath,
           structuredDataPath,
           blogDiscoveryPath,
@@ -329,6 +369,7 @@ function run() {
         blogDiscoveryCount: blogDiscovery.blogPostCount,
         dnsCanonicalOk: dnsEvidence.apexRedirectsToCanonical === true && dnsEvidence.wwwReturnsOk === true,
         gscPriorityUrlCount: gsc.priorityUrlCount,
+        healthEndpointOk: health.checks.healthEndpointOk === true,
         ok: true,
         performanceScore: performance.categories.performance,
         professionalUiScannedFileCount: professionalUi.scannedFileCount,

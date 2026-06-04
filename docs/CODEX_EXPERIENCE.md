@@ -1380,3 +1380,29 @@ Run security-header evidence, SEO evidence validation, manifest generation, mani
 **Future trigger words:**
 
 security headers only in config; CSP missing in production; HSTS missing; X-Powered-By exposed; security-headers evidence missing; frameAncestorsNone missing
+
+### 2026-06-04 - Health endpoint needs retained production evidence
+
+**Symptom:**
+
+The launch and SEO monitoring playbooks referenced `/api/health`, but the durable `production-seo-evidence` artifact did not retain the live health payload or prove it stayed public, cache-safe, and free of secret-like keys.
+
+**Root cause:**
+
+Operational health was treated as a manual URL to open instead of a first-class production evidence file in the same artifact contract as SEO smoke, DNS, security headers, structured data, blog discovery, performance, and UI guard evidence.
+
+**Fix:**
+
+Added `health-evidence-result.json` to the SEO Smoke artifact contract, validating live HTTP 200 JSON, `no-store` cache control, app identity, tax year 2026, tax-data freshness, pending professional-review language, blog/glossary/feature counts, and absence of secret-like keys.
+
+**Guard:**
+
+Updated SEO evidence, manifest, workflow, and SEO monitoring tests so health evidence remains generated, uploaded, validated, checksummed, and visible in the artifact review checklist.
+
+**Validation:**
+
+Run health evidence, SEO evidence validation, manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, health tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+health endpoint only manual; /api/health not in artifact; healthEndpointOk missing; no-store missing; secret key exposed in health payload; taxYear missing in health evidence

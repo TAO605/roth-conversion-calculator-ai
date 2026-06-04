@@ -156,6 +156,7 @@
 - GitHub Actions retains `seo-evidence-manifest-validation-result.json` inside `production-seo-evidence`.
 - GitHub Actions retains `dns-evidence-result.json` inside `production-seo-evidence`; before DNS edits or Search Console host troubleshooting, confirm `expectedCnameRetained: true`, `apexRedirectsToCanonical: true`, and `wwwReturnsOk: true`.
 - GitHub Actions retains `security-headers-evidence-result.json` inside `production-seo-evidence`; before launch-readiness, privacy, or YMYL trust reviews, confirm CSP, HSTS, nosniff, referrer policy, permissions policy, frame ancestors, base URI, form action, and no framework fingerprinting are all retained.
+- GitHub Actions retains `health-evidence-result.json` inside `production-seo-evidence`; before launch-readiness, uptime, privacy, or incident reviews, confirm `/api/health` is 200, no-store, tax-year 2026, pending professional review, content counts, feature counts, and no secret-like keys are retained.
 - `seo-evidence-manifest.json` lists the retained validation result as `postManifestValidation: true`.
 - `/seo-monitoring` includes a separate artifact review item for `seo-evidence-manifest-validation-result.json`.
 - `seo-evidence-manifest.json` records direct `gitHubRunUrl` and `gitHubCommitUrl` provenance links when generated inside GitHub Actions.

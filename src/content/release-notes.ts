@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.151",
+    date: "2026-06-04",
+    type: "patch",
+    title: "Production health endpoint evidence",
+    summary:
+      "Added retained production health-endpoint evidence so SEO proof packages verify live /api/health status, no-store caching, tax-year metadata, content counts, feature counts, pending professional-review status, and absence of secret-like keys.",
+    affectedArea:
+      "SEO Smoke workflow, health evidence script, SEO evidence validator, manifest schema, SEO monitoring artifact review copy, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the health evidence script and artifact wiring, restore the previous manifest schema version, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.150",
     date: "2026-06-04",
     type: "patch",

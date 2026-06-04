@@ -204,3 +204,4 @@
 - Restrict manifest `eventName` to known generation contexts and require `gitHubWorkflow` plus numeric `gitHubRunAttempt` for Actions artifacts; retain `gitHubWorkflowRetained: true` and `runAttemptRetained: true`.
 - Retain and validate `gitHubRepository` for Actions artifacts so downloaded production SEO evidence proves it came from `TAO605/roth-conversion-calculator-ai`, not only from a plausible GitHub run URL.
 - Retain and validate `gitHubServerUrl` as `https://github.com` so downloaded production SEO evidence cannot silently shift to an unexpected GitHub host while preserving plausible repository and run metadata.
+- Retain `/api/health` as production evidence, not just an operations page link: the artifact should prove HTTP 200, JSON/no-store behavior, tax-year metadata, pending professional-review status, content and feature counts, and absence of secret-like keys.

@@ -6,6 +6,7 @@ const DEFAULT_FILES = [
   "gsc-evidence-result.json",
   "dns-evidence-result.json",
   "security-headers-evidence-result.json",
+  "health-evidence-result.json",
   "performance-evidence-result.json",
   "structured-data-evidence-result.json",
   "blog-discovery-evidence-result.json",
@@ -14,7 +15,7 @@ const DEFAULT_FILES = [
   "seo-evidence-manifest.json",
   "seo-evidence-manifest-validation-result.json",
 ];
-const ARTIFACT_SCHEMA_VERSION = "2026-06-04.3";
+const ARTIFACT_SCHEMA_VERSION = "2026-06-04.4";
 
 function fileRecord(filePath) {
   if (filePath === "seo-evidence-manifest.json") {
