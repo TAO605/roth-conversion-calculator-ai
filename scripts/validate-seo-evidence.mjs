@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const DEFAULT_SMOKE_PATH = "seo-smoke-result.json";
 const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
 const DEFAULT_DNS_PATH = "dns-evidence-result.json";
+const DEFAULT_SECURITY_HEADERS_PATH = "security-headers-evidence-result.json";
 const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
@@ -16,10 +17,11 @@ const STATIC_STRUCTURED_DATA_PAGE_COUNT = 20;
 const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
 const dnsPath = process.argv[4] || DEFAULT_DNS_PATH;
-const performancePath = process.argv[5] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[6] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[7] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[8] || DEFAULT_PROFESSIONAL_UI_PATH;
+const securityHeadersPath = process.argv[5] || DEFAULT_SECURITY_HEADERS_PATH;
+const performancePath = process.argv[6] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[7] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[8] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[9] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -113,6 +115,37 @@ function validateDnsEvidence(dnsEvidence, expectedBaseUrl) {
   assert(Array.isArray(dnsEvidence.apexRecords?.cname), "DNS evidence apex CNAME records must be retained");
   assert(Array.isArray(dnsEvidence.wwwRecords?.a), "DNS evidence www A records must be retained");
   assert(Array.isArray(dnsEvidence.wwwRecords?.cname), "DNS evidence www CNAME records must be retained");
+}
+
+function validateSecurityHeadersEvidence(securityHeaders, expectedBaseUrl) {
+  assert(securityHeaders.ok === true, "Security headers evidence must be ok");
+  assert(securityHeaders.evidenceType === "production-security-headers", "Security headers evidence type changed unexpectedly");
+  assert(securityHeaders.url === `${expectedBaseUrl}/`, "Security headers evidence URL must match SEO smoke baseUrl");
+  assert(securityHeaders.status === 200, "Security headers evidence status must be 200");
+  assert(securityHeaders.headers?.xPoweredBy === "", "Security headers evidence must show no X-Powered-By header");
+  assert(securityHeaders.headers?.xContentTypeOptions === "nosniff", "Security headers evidence must retain nosniff");
+  assert(
+    securityHeaders.headers?.referrerPolicy === "strict-origin-when-cross-origin",
+    "Security headers evidence must retain Referrer-Policy",
+  );
+  assert(
+    securityHeaders.headers?.strictTransportSecurity?.includes("max-age=63072000"),
+    "Security headers evidence must retain HSTS",
+  );
+  for (const check of [
+    "baseUriSelf",
+    "connectSourcesLimited",
+    "contentSecurityPolicyRetained",
+    "formActionSelf",
+    "frameAncestorsNone",
+    "hstsRetained",
+    "noPoweredByHeader",
+    "nosniffRetained",
+    "permissionsPolicyRetained",
+    "referrerPolicyRetained",
+  ]) {
+    assert(securityHeaders.checks?.[check] === true, `Security headers evidence missing passing check: ${check}`);
+  }
 }
 
 function validatePerformanceEvidence(performance, expectedBaseUrl) {
@@ -264,6 +297,7 @@ function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
   const dnsEvidence = readJson(dnsPath);
+  const securityHeaders = readJson(securityHeadersPath);
   const performance = readJson(performancePath);
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
@@ -272,6 +306,7 @@ function run() {
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
   validateDnsEvidence(dnsEvidence, smoke.baseUrl);
+  validateSecurityHeadersEvidence(securityHeaders, smoke.baseUrl);
   validatePerformanceEvidence(performance, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
@@ -280,7 +315,16 @@ function run() {
   console.log(
     JSON.stringify(
       {
-        artifactFiles: [smokePath, gscPath, dnsPath, performancePath, structuredDataPath, blogDiscoveryPath, professionalUiPath],
+        artifactFiles: [
+          smokePath,
+          gscPath,
+          dnsPath,
+          securityHeadersPath,
+          performancePath,
+          structuredDataPath,
+          blogDiscoveryPath,
+          professionalUiPath,
+        ],
         baseUrl: smoke.baseUrl,
         blogDiscoveryCount: blogDiscovery.blogPostCount,
         dnsCanonicalOk: dnsEvidence.apexRedirectsToCanonical === true && dnsEvidence.wwwReturnsOk === true,
@@ -288,6 +332,7 @@ function run() {
         ok: true,
         performanceScore: performance.categories.performance,
         professionalUiScannedFileCount: professionalUi.scannedFileCount,
+        securityHeadersOk: securityHeaders.ok === true,
         smokeCheckCount: smoke.results.length,
         structuredDataTypeCount: structuredData.types.length,
       },

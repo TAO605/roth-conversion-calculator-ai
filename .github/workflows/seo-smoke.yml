@@ -26,6 +26,7 @@ jobs:
       DNS_EVIDENCE_APEX_HOST: roth-conversion-calculator-ai.shop
       DNS_EVIDENCE_WWW_HOST: www.roth-conversion-calculator-ai.shop
       DNS_EVIDENCE_CANONICAL_URL: https://www.roth-conversion-calculator-ai.shop/
+      SECURITY_HEADERS_EVIDENCE_URL: https://www.roth-conversion-calculator-ai.shop/
       PERFORMANCE_EVIDENCE_URL: https://www.roth-conversion-calculator-ai.shop
       STRUCTURED_DATA_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
       BLOG_DISCOVERY_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
@@ -61,6 +62,11 @@ jobs:
         run: |
           set -o pipefail
           node scripts/dns-evidence.mjs | tee dns-evidence-result.json
+
+      - name: Run security headers evidence check
+        run: |
+          set -o pipefail
+          node scripts/security-headers-evidence.mjs | tee security-headers-evidence-result.json
 
       - name: Run mobile performance evidence check
         run: |
@@ -106,6 +112,7 @@ jobs:
             seo-smoke-result.json
             gsc-evidence-result.json
             dns-evidence-result.json
+            security-headers-evidence-result.json
             performance-evidence-result.json
             structured-data-evidence-result.json
             blog-discovery-evidence-result.json

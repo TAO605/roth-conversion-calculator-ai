@@ -529,10 +529,20 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       useBefore: "Use before changing DNS records, resubmitting sitemap.xml, or diagnosing Search Console host verification warnings.",
     },
     {
+      label: "Confirm production security headers",
+      artifactFile: "security-headers-evidence-result.json",
+      check:
+        "Review the live production response headers for CSP, HSTS, nosniff, referrer policy, permissions policy, frame ancestors, base URI, form action, and framework fingerprinting.",
+      passSignal:
+        "The security headers evidence has ok: true, securityHeadersOk: true, contentSecurityPolicyRetained: true, hstsRetained: true, nosniffRetained: true, frameAncestorsNone: true, baseUriSelf: true, formActionSelf: true, permissionsPolicyRetained: true, referrerPolicyRetained: true, and noPoweredByHeader: true.",
+      useBefore: "Use before security, privacy, launch-readiness, or YMYL trust reviews.",
+    },
+    {
       label: "Confirm validator summary",
       artifactFile: "seo-evidence-validation-result.json",
-      check: "Confirm the retained validator result reports ok: true after checking smoke, GSC, DNS, performance, structured data, blog discovery, and professional UI evidence together.",
-      passSignal: "The validation summary records the expected host, dnsCanonicalOk: true, professionalUiScannedFileCount, and no contract failures.",
+      check: "Confirm the retained validator result reports ok: true after checking smoke, GSC, DNS, security headers, performance, structured data, blog discovery, and professional UI evidence together.",
+      passSignal:
+        "The validation summary records the expected host, dnsCanonicalOk: true, securityHeadersOk: true, professionalUiScannedFileCount, and no contract failures.",
       useBefore: "Use before attaching the artifact to incident review or a GSC retry note.",
     },
     {
@@ -554,7 +564,7 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       artifactFile: "seo-evidence-manifest-validation-result.json",
       check: "Open the retained manifest checksum validation result after downloading the production-seo-evidence artifact.",
       passSignal:
-        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 8, sha256CheckedCount: 8, manifestFileCount: 10, and manifestValidationResultRetained: true.",
+        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 9, sha256CheckedCount: 9, manifestFileCount: 11, and manifestValidationResultRetained: true.",
       useBefore: "Use before relying on the manifest checksum contract in Search Console retry notes or incident review.",
     },
   ];

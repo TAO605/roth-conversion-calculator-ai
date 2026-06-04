@@ -145,19 +145,26 @@ describe("SEO monitoring playbook", () => {
         "seo-smoke-result.json",
         "gsc-evidence-result.json",
         "dns-evidence-result.json",
+        "security-headers-evidence-result.json",
         "professional-ui-evidence-result.json",
         "seo-evidence-validation-result.json",
         "seo-evidence-manifest.json",
         "seo-evidence-manifest-validation-result.json",
       ]),
     );
-    expect(review.length).toBe(7);
+    expect(review.length).toBe(8);
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("professionalUiScannedFileCount");
     expect(combined).toContain("dnsCanonicalOk: true");
+    expect(combined).toContain("securityHeadersOk: true");
     expect(combined).toContain("expectedCnameRetained: true");
     expect(combined).toContain("apexRedirectsToCanonical: true");
     expect(combined).toContain("wwwReturnsOk: true");
+    expect(combined).toContain("contentSecurityPolicyRetained: true");
+    expect(combined).toContain("hstsRetained: true");
+    expect(combined).toContain("nosniffRetained: true");
+    expect(combined).toContain("frameAncestorsNone: true");
+    expect(combined).toContain("noPoweredByHeader: true");
     expect(combined).toContain("violationCount: 0");
     expect(combined).toContain("sha256");
     expect(combined).toContain("artifactSchemaVersion");
@@ -179,8 +186,8 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("gitHubServerUrlRetained: true");
     expect(combined).toContain("gitHubWorkflowRetained: true");
     expect(combined).toContain("runAttemptRetained: true");
-    expect(combined).toContain("sha256CheckedCount: 8");
-    expect(combined).toContain("manifestFileCount: 10");
+    expect(combined).toContain("sha256CheckedCount: 9");
+    expect(combined).toContain("manifestFileCount: 11");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");
     expect(combined).toContain("URL Inspection");

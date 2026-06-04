@@ -100,3 +100,4 @@
 - [done] Stabilize rapid calculator input state updates
 - [done] Validate SEO evidence GitHub server provenance
 - [done] Add production DNS and canonical host evidence to SEO artifacts
+- [done] Add production security headers evidence to SEO artifacts

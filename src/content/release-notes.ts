@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.150",
+    date: "2026-06-04",
+    type: "patch",
+    title: "Production security headers evidence",
+    summary:
+      "Added retained production security-header evidence so SEO proof packages verify live CSP, HSTS, nosniff, referrer, permissions, frame, base URI, form-action, and framework-fingerprint protections.",
+    affectedArea:
+      "SEO Smoke workflow, security headers evidence script, SEO evidence validator, manifest schema, SEO monitoring artifact review copy, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the security headers evidence script and artifact wiring, restore the previous manifest schema version, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.149",
     date: "2026-06-04",
     type: "patch",

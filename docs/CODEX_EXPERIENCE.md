@@ -1354,3 +1354,29 @@ Run DNS evidence, SEO evidence validation, manifest generation, manifest validat
 **Future trigger words:**
 
 DNS screenshot only; Vercel domain warning; apex redirect unknown; www host down; dns-evidence missing; expectedCnameRetained missing
+
+### 2026-06-04 - Security headers need retained production evidence
+
+**Symptom:**
+
+Security headers were configured and unit-tested, but the durable production SEO evidence artifact did not prove the live Vercel response retained them.
+
+**Root cause:**
+
+The artifact focused on SEO smoke, GSC, DNS, Lighthouse, structured data, blog discovery, and UI source guard evidence before treating browser security headers as a first-class production trust signal.
+
+**Fix:**
+
+Added `security-headers-evidence-result.json` to the SEO Smoke artifact contract, validating live CSP, HSTS, nosniff, referrer policy, permissions policy, frame ancestors, base URI, form action, and absence of `X-Powered-By`.
+
+**Guard:**
+
+Updated SEO evidence, manifest, workflow, and SEO monitoring tests so security-header evidence remains generated, uploaded, validated, checksummed, and visible in the artifact review checklist.
+
+**Validation:**
+
+Run security-header evidence, SEO evidence validation, manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+security headers only in config; CSP missing in production; HSTS missing; X-Powered-By exposed; security-headers evidence missing; frameAncestorsNone missing
