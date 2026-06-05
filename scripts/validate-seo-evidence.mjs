@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const DEFAULT_SMOKE_PATH = "seo-smoke-result.json";
 const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
+const DEFAULT_SEARCH_CONSOLE_VERIFICATION_PATH = "search-console-verification-evidence-result.json";
 const DEFAULT_DNS_PATH = "dns-evidence-result.json";
 const DEFAULT_SECURITY_HEADERS_PATH = "security-headers-evidence-result.json";
 const DEFAULT_HEALTH_PATH = "health-evidence-result.json";
@@ -21,17 +22,18 @@ const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
 const STATIC_STRUCTURED_DATA_PAGE_COUNT = 21;
 const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
-const dnsPath = process.argv[4] || DEFAULT_DNS_PATH;
-const securityHeadersPath = process.argv[5] || DEFAULT_SECURITY_HEADERS_PATH;
-const healthPath = process.argv[6] || DEFAULT_HEALTH_PATH;
-const crawlDiscoveryPath = process.argv[7] || DEFAULT_CRAWL_DISCOVERY_PATH;
-const internalLinkPath = process.argv[8] || DEFAULT_INTERNAL_LINK_PATH;
-const htmlQualityPath = process.argv[9] || DEFAULT_HTML_QUALITY_PATH;
-const professionalReviewPacketPath = process.argv[10] || DEFAULT_PROFESSIONAL_REVIEW_PACKET_PATH;
-const performancePath = process.argv[11] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[12] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[13] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[14] || DEFAULT_PROFESSIONAL_UI_PATH;
+const searchConsoleVerificationPath = process.argv[4] || DEFAULT_SEARCH_CONSOLE_VERIFICATION_PATH;
+const dnsPath = process.argv[5] || DEFAULT_DNS_PATH;
+const securityHeadersPath = process.argv[6] || DEFAULT_SECURITY_HEADERS_PATH;
+const healthPath = process.argv[7] || DEFAULT_HEALTH_PATH;
+const crawlDiscoveryPath = process.argv[8] || DEFAULT_CRAWL_DISCOVERY_PATH;
+const internalLinkPath = process.argv[9] || DEFAULT_INTERNAL_LINK_PATH;
+const htmlQualityPath = process.argv[10] || DEFAULT_HTML_QUALITY_PATH;
+const professionalReviewPacketPath = process.argv[11] || DEFAULT_PROFESSIONAL_REVIEW_PACKET_PATH;
+const performancePath = process.argv[12] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[13] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[14] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[15] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -107,6 +109,39 @@ function validateGscEvidence(gsc, expectedBaseUrl) {
       assert(result.lastmodFresh === true, `${pathname} must have lastmodFresh: true`);
     }
   }
+}
+
+function validateSearchConsoleVerificationEvidence(verification, expectedBaseUrl) {
+  assert(verification.ok === true, "Search Console verification evidence must be ok");
+  assert(
+    verification.evidenceType === "search-console-verification",
+    "Search Console verification evidence type changed unexpectedly",
+  );
+  assert(verification.baseUrl === expectedBaseUrl, "Search Console verification baseUrl must match SEO smoke baseUrl");
+  assert(
+    verification.domainHost === "roth-conversion-calculator-ai.shop",
+    "Search Console verification domainHost changed unexpectedly",
+  );
+  assert(
+    verification.expectedTxtRecord ===
+      "google-site-verification=bGl0K-Jm1Fck2gNqxkHlFPNWJjZDIGG5SeRvrmp1d4Q",
+    "Search Console verification expected TXT record changed unexpectedly",
+  );
+  assert(verification.domainTxtVerified === true, "Search Console domain TXT verification must be visible");
+  assert(verification.spfRecordRetained === true, "Search Console verification evidence must retain SPF");
+  assert(verification.homepage?.status === 200, "Search Console verification homepage status must be 200");
+  assert(verification.homepage?.htmlMetaVerified === true, "Search Console verification homepage meta must match");
+  assert(
+    verification.homepage?.canonical === expectedBaseUrl || verification.homepage?.canonical === `${expectedBaseUrl}/`,
+    "Search Console verification homepage canonical mismatch",
+  );
+  assert(verification.canonicalHostRetained === true, "Search Console verification canonical host must be retained");
+  assert(verification.gscUiOwnershipNotAsserted === true, "Search Console verification evidence must not assert GSC UI ownership");
+  assert(
+    Array.isArray(verification.googleVerificationRecords) && verification.googleVerificationRecords.length >= 1,
+    "Search Console verification records must include at least one Google TXT token",
+  );
+  assert(Array.isArray(verification.txtRecords), "Search Console verification evidence must retain TXT records");
 }
 
 function validateDnsEvidence(dnsEvidence, expectedBaseUrl) {
@@ -456,6 +491,7 @@ function validateProfessionalUiEvidence(professionalUi) {
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
+  const searchConsoleVerification = readJson(searchConsoleVerificationPath);
   const dnsEvidence = readJson(dnsPath);
   const securityHeaders = readJson(securityHeadersPath);
   const health = readJson(healthPath);
@@ -470,6 +506,7 @@ function run() {
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
+  validateSearchConsoleVerificationEvidence(searchConsoleVerification, smoke.baseUrl);
   validateDnsEvidence(dnsEvidence, smoke.baseUrl);
   validateSecurityHeadersEvidence(securityHeaders, smoke.baseUrl);
   validateHealthEvidence(health, smoke.baseUrl);
@@ -488,6 +525,7 @@ function run() {
         artifactFiles: [
           smokePath,
           gscPath,
+          searchConsoleVerificationPath,
           dnsPath,
           securityHeadersPath,
           healthPath,
@@ -513,6 +551,7 @@ function run() {
         professionalReviewPacketOk: professionalReviewPacket.ok === true,
         professionalUiScannedFileCount: professionalUi.scannedFileCount,
         securityHeadersOk: securityHeaders.ok === true,
+        searchConsoleVerificationOk: searchConsoleVerification.ok === true,
         smokeCheckCount: smoke.results.length,
         structuredDataTypeCount: structuredData.types.length,
       },

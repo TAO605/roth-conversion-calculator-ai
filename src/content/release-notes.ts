@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.156",
+    date: "2026-06-05",
+    type: "patch",
+    title: "Search Console verification evidence",
+    summary:
+      "Added retained Search Console verification evidence so production SEO proof packages verify the public domain TXT token, homepage Google verification meta tag, SPF retention, canonical host, and the boundary that private Search Console UI ownership is not asserted by site-side checks.",
+    affectedArea:
+      "Search Console verification evidence script, package scripts, SEO Smoke workflow, SEO evidence validator, manifest schema, SEO monitoring artifact review copy, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the Search Console verification evidence script and artifact wiring, restore the previous manifest schema version, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.155",
     date: "2026-06-05",
     type: "patch",

@@ -14,6 +14,9 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain('cron: "17 9 * * *"');
     expect(workflow).toContain("SEO_SMOKE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("GSC_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
+    expect(workflow).toContain("SEARCH_CONSOLE_VERIFICATION_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
+    expect(workflow).toContain("SEARCH_CONSOLE_VERIFICATION_DOMAIN: roth-conversion-calculator-ai.shop");
+    expect(workflow).toContain("SEARCH_CONSOLE_VERIFICATION_TOKEN: bGl0K-Jm1Fck2gNqxkHlFPNWJjZDIGG5SeRvrmp1d4Q");
     expect(workflow).toContain("PERFORMANCE_EVIDENCE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("STRUCTURED_DATA_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
     expect(workflow).toContain("BLOG_DISCOVERY_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop");
@@ -25,6 +28,10 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("set -o pipefail");
     expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");
     expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
+    expect(workflow).toContain("Run Search Console verification evidence check");
+    expect(workflow).toContain(
+      "node scripts/search-console-verification-evidence.mjs | tee search-console-verification-evidence-result.json",
+    );
     expect(workflow).toContain("Run mobile performance evidence check");
     expect(workflow).toContain("Run professional review packet evidence check");
     expect(workflow).toContain(
@@ -48,6 +55,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("name: production-seo-evidence");
     expect(workflow).toContain("seo-smoke-result.json");
     expect(workflow).toContain("gsc-evidence-result.json");
+    expect(workflow).toContain("search-console-verification-evidence-result.json");
     expect(workflow).toContain("performance-evidence-result.json");
     expect(workflow).toContain("professional-review-packet-evidence-result.json");
     expect(workflow).toContain("structured-data-evidence-result.json");

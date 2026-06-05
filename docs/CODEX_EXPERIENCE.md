@@ -1510,3 +1510,29 @@ Run professional review packet evidence, SEO evidence validation, manifest gener
 **Future trigger words:**
 
 professional review packet missing; CPA handoff not discoverable; pending review status changed; professionalReviewPacketOk missing; review packet not in sitemap; review packet not in llms
+
+### 2026-06-05 - Search Console verification needs public evidence with a clear boundary
+
+**Symptom:**
+
+Search Console property verification can be confused with DNS or HTML signal readiness when only screenshots or manual notes are retained.
+
+**Root cause:**
+
+The production evidence artifact proved crawlability, DNS routing, and GSC priority URL signals, but did not separately prove the Google verification TXT record, homepage verification meta tag, SPF retention, and the boundary that private GSC UI ownership is not machine-asserted.
+
+**Fix:**
+
+Added `search-console-verification-evidence-result.json` to the production SEO artifact contract.
+
+**Guard:**
+
+The SEO evidence validator, manifest checksum validator, workflow tests, and `/seo-monitoring` checklist now require the Search Console verification evidence file and the `gscUiOwnershipNotAsserted: true` boundary.
+
+**Validation:**
+
+Run Search Console verification evidence, SEO evidence validation, manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+GSC property not verified; Google verification token missing; SPF conflict; domain TXT not visible; HTML verification missing; searchConsoleVerificationOk missing; claiming GSC ownership without UI proof

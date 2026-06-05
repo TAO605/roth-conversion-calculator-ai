@@ -23,6 +23,9 @@ jobs:
     env:
       SEO_SMOKE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
       GSC_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
+      SEARCH_CONSOLE_VERIFICATION_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
+      SEARCH_CONSOLE_VERIFICATION_DOMAIN: roth-conversion-calculator-ai.shop
+      SEARCH_CONSOLE_VERIFICATION_TOKEN: bGl0K-Jm1Fck2gNqxkHlFPNWJjZDIGG5SeRvrmp1d4Q
       DNS_EVIDENCE_APEX_HOST: roth-conversion-calculator-ai.shop
       DNS_EVIDENCE_WWW_HOST: www.roth-conversion-calculator-ai.shop
       DNS_EVIDENCE_CANONICAL_URL: https://www.roth-conversion-calculator-ai.shop/
@@ -62,6 +65,11 @@ jobs:
         run: |
           set -o pipefail
           node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json
+
+      - name: Run Search Console verification evidence check
+        run: |
+          set -o pipefail
+          node scripts/search-console-verification-evidence.mjs | tee search-console-verification-evidence-result.json
 
       - name: Run DNS and canonical host evidence check
         run: |
@@ -141,6 +149,7 @@ jobs:
           path: |
             seo-smoke-result.json
             gsc-evidence-result.json
+            search-console-verification-evidence-result.json
             dns-evidence-result.json
             security-headers-evidence-result.json
             health-evidence-result.json

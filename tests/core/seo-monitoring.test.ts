@@ -144,6 +144,7 @@ describe("SEO monitoring playbook", () => {
       expect.arrayContaining([
         "seo-smoke-result.json",
         "gsc-evidence-result.json",
+        "search-console-verification-evidence-result.json",
         "dns-evidence-result.json",
         "security-headers-evidence-result.json",
         "health-evidence-result.json",
@@ -157,9 +158,14 @@ describe("SEO monitoring playbook", () => {
         "seo-evidence-manifest-validation-result.json",
       ]),
     );
-    expect(review.length).toBe(13);
+    expect(review.length).toBe(14);
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("professionalUiScannedFileCount");
+    expect(combined).toContain("searchConsoleVerificationOk: true");
+    expect(combined).toContain("domainTxtVerified: true");
+    expect(combined).toContain("htmlMetaVerified: true");
+    expect(combined).toContain("spfRecordRetained: true");
+    expect(combined).toContain("gscUiOwnershipNotAsserted: true");
     expect(combined).toContain("dnsCanonicalOk: true");
     expect(combined).toContain("securityHeadersOk: true");
     expect(combined).toContain("healthEndpointOk: true");
@@ -228,8 +234,8 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("gitHubServerUrlRetained: true");
     expect(combined).toContain("gitHubWorkflowRetained: true");
     expect(combined).toContain("runAttemptRetained: true");
-    expect(combined).toContain("sha256CheckedCount: 14");
-    expect(combined).toContain("manifestFileCount: 16");
+    expect(combined).toContain("sha256CheckedCount: 15");
+    expect(combined).toContain("manifestFileCount: 17");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");
     expect(combined).toContain("URL Inspection");

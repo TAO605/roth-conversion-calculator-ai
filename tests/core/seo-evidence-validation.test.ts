@@ -19,6 +19,9 @@ describe("SEO evidence artifact validation", () => {
     expect(packageJson.scripts["seo:evidence-validate"]).toBe("node scripts/validate-seo-evidence.mjs");
     expect(packageJson.scripts["seo:evidence-manifest"]).toBe("node scripts/generate-seo-evidence-manifest.mjs");
     expect(packageJson.scripts["seo:evidence-manifest-validate"]).toBe("node scripts/validate-seo-evidence-manifest.mjs");
+    expect(packageJson.scripts["seo:search-console-verification"]).toBe(
+      "node scripts/search-console-verification-evidence.mjs",
+    );
     expect(packageJson.scripts["seo:dns-evidence"]).toBe("node scripts/dns-evidence.mjs");
     expect(packageJson.scripts["seo:security-headers"]).toBe("node scripts/security-headers-evidence.mjs");
     expect(packageJson.scripts["seo:health"]).toBe("node scripts/health-evidence.mjs");
@@ -32,6 +35,7 @@ describe("SEO evidence artifact validation", () => {
     expect(packageJson.scripts["seo:structured-data"]).toBe("node scripts/structured-data-evidence.mjs");
     expect(script).toContain("seo-smoke-result.json");
     expect(script).toContain("gsc-evidence-result.json");
+    expect(script).toContain("search-console-verification-evidence-result.json");
     expect(script).toContain("dns-evidence-result.json");
     expect(script).toContain("security-headers-evidence-result.json");
     expect(script).toContain("health-evidence-result.json");
@@ -52,6 +56,12 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("validateStructuredDataEvidence");
     expect(script).toContain("validateBlogDiscoveryEvidence");
     expect(script).toContain("validateDnsEvidence");
+    expect(script).toContain("validateSearchConsoleVerificationEvidence");
+    expect(script).toContain("searchConsoleVerificationOk");
+    expect(script).toContain("domainTxtVerified");
+    expect(script).toContain("htmlMetaVerified");
+    expect(script).toContain("spfRecordRetained");
+    expect(script).toContain("gscUiOwnershipNotAsserted");
     expect(script).toContain("validateSecurityHeadersEvidence");
     expect(script).toContain("dnsCanonicalOk");
     expect(script).toContain("securityHeadersOk");
@@ -145,6 +155,10 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("Run mobile performance evidence check");
     expect(workflow).toContain("set -o pipefail");
     expect(workflow).toContain("Run DNS and canonical host evidence check");
+    expect(workflow).toContain("Run Search Console verification evidence check");
+    expect(workflow).toContain(
+      "node scripts/search-console-verification-evidence.mjs | tee search-console-verification-evidence-result.json",
+    );
     expect(workflow).toContain("node scripts/dns-evidence.mjs | tee dns-evidence-result.json");
     expect(workflow).toContain("Run security headers evidence check");
     expect(workflow).toContain("node scripts/security-headers-evidence.mjs | tee security-headers-evidence-result.json");
@@ -171,6 +185,7 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("Validate SEO evidence manifest checksums");
     expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
     expect(manifestScript).toContain("structured-data-evidence-result.json");
+    expect(manifestScript).toContain("search-console-verification-evidence-result.json");
     expect(manifestScript).toContain("dns-evidence-result.json");
     expect(manifestScript).toContain("security-headers-evidence-result.json");
     expect(manifestScript).toContain("health-evidence-result.json");
@@ -201,12 +216,12 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("production-seo-evidence");
     expect(manifestScript).toContain("artifactSchemaVersion");
     expect(manifestScript).toContain("ARTIFACT_SCHEMA_VERSION");
-    expect(manifestScript).toContain("2026-06-05.4");
+    expect(manifestScript).toContain("2026-06-05.5");
     expect(manifestScript).toContain("generatedAt");
     expect(manifestScript).toContain("retentionDays: 30");
     expect(manifestValidator).toContain("validateSeoEvidenceManifest");
     expect(manifestValidator).toContain("EXPECTED_ARTIFACT_SCHEMA_VERSION");
-    expect(manifestValidator).toContain("2026-06-05.4");
+    expect(manifestValidator).toContain("2026-06-05.5");
     expect(manifestValidator).toContain("artifactSchemaVersion");
     expect(manifestValidator).toContain("ISO_TIMESTAMP_PATTERN");
     expect(manifestValidator).toContain("generatedAtRetained");
@@ -243,6 +258,9 @@ describe("SEO evidence artifact validation", () => {
 
     expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");
     expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
+    expect(workflow).toContain(
+      "node scripts/search-console-verification-evidence.mjs | tee search-console-verification-evidence-result.json",
+    );
     expect(workflow).toContain("node scripts/dns-evidence.mjs | tee dns-evidence-result.json");
     expect(workflow).toContain("node scripts/security-headers-evidence.mjs | tee security-headers-evidence-result.json");
     expect(workflow).toContain("node scripts/health-evidence.mjs | tee health-evidence-result.json");
@@ -260,6 +278,7 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
     expect(workflow).toContain("seo-smoke-result.json");
     expect(workflow).toContain("gsc-evidence-result.json");
+    expect(workflow).toContain("search-console-verification-evidence-result.json");
     expect(workflow).toContain("dns-evidence-result.json");
     expect(workflow).toContain("security-headers-evidence-result.json");
     expect(workflow).toContain("health-evidence-result.json");
