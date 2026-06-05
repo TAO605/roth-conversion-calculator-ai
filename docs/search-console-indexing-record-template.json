@@ -1,0 +1,38 @@
+{
+  "evidenceType": "search-console-indexing-record",
+  "recordStatus": "template",
+  "recordedAt": "REPLACE_WITH_ISO_TIMESTAMP",
+  "recordedBy": "REPLACE_WITH_REVIEWER_NAME_OR_AI_ASSISTED",
+  "property": {
+    "type": "url-prefix",
+    "url": "https://www.roth-conversion-calculator-ai.shop/"
+  },
+  "inspectedUrl": "https://www.roth-conversion-calculator-ai.shop/seo-monitoring",
+  "inspectionSource": "Google Search Console URL Inspection",
+  "indexingState": "unknown",
+  "liveTestState": "not_run",
+  "googleSelectedCanonical": "REPLACE_WITH_GSC_VALUE_OR_EMPTY",
+  "userDeclaredCanonical": "https://www.roth-conversion-calculator-ai.shop/seo-monitoring",
+  "lastCrawlAt": null,
+  "requestIndexing": {
+    "attempted": false,
+    "attemptedAt": null,
+    "outcome": "not_attempted",
+    "exactMessage": ""
+  },
+  "siteEvidence": {
+    "productionSeoEvidenceRunId": "REPLACE_WITH_GITHUB_ACTIONS_RUN_ID",
+    "productionSeoEvidenceCommitSha": "REPLACE_WITH_40_CHAR_COMMIT_SHA",
+    "gscEvidenceOk": true,
+    "searchConsoleVerificationOk": true,
+    "internalLinkEvidenceOk": true,
+    "htmlQualityEvidenceOk": true
+  },
+  "screenshots": [
+    {
+      "label": "URL Inspection result",
+      "pathOrUrl": "REPLACE_WITH_SCREENSHOT_PATH_OR_URL"
+    }
+  ],
+  "notes": "Replace this template with the exact GSC status, Google-selected canonical, last crawl date if shown, request-indexing outcome, and screenshot path. Do not infer private GSC state from site-side evidence."
+}

@@ -1,6 +1,7 @@
 ﻿import Link from "next/link";
 import {
   buildSearchConsoleExceptionQueue,
+  buildSearchConsoleIndexingRecordTemplate,
   buildSearchConsoleOpportunityMatrix,
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
@@ -25,6 +26,7 @@ export default function SeoMonitoringPage() {
   const exceptions = buildSearchConsoleExceptionQueue();
   const opportunities = buildSearchConsoleOpportunityMatrix();
   const retryProtocol = buildSearchConsoleRetryProtocol();
+  const indexingRecordTemplate = buildSearchConsoleIndexingRecordTemplate();
   const searchConsoleSteps = buildSearchConsoleSubmissionLoop();
   const searchConsoleSources = getSearchConsoleSources();
   const artifactReview = buildSeoEvidenceArtifactReview();
@@ -125,6 +127,54 @@ export default function SeoMonitoringPage() {
             >
               {source.label}
             </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
+              GSC indexing record template
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">
+              Convert URL Inspection Screens Into Durable Evidence
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              Use <span className="font-mono">docs/search-console-indexing-record-template.json</span> after manual
+              URL Inspection or Page indexing review. Validate the filled record with{" "}
+              <span className="font-mono">npm run seo:gsc-indexing-record-validate -- path/to/record.json</span> before
+              attaching it to a Search Console retry note. Site-side evidence can support the record, but it must not
+              infer private Google Search Console status.
+            </p>
+          </div>
+          <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-systemBlue">
+            {indexingRecordTemplate.length} fields
+          </span>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {indexingRecordTemplate.map((item) => (
+            <article
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
+              key={item.field}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="font-mono text-sm font-semibold text-neutral-950 dark:text-white">{item.field}</h3>
+                <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 dark:bg-white/10 dark:text-neutral-200">
+                  {item.requiredWhen}
+                </span>
+              </div>
+              <dl className="grid gap-3 text-sm">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
+                  <dt className="font-semibold text-neutral-950 dark:text-white">Source</dt>
+                  <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{item.source}</dd>
+                </div>
+                <div className="rounded-md bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
+                  <dt className="font-semibold">Validation</dt>
+                  <dd className="mt-1 leading-6">{item.validation}</dd>
+                </div>
+              </dl>
+            </article>
           ))}
         </div>
       </section>

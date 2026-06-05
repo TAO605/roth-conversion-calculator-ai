@@ -5,6 +5,7 @@ import sitemap from "@/app/sitemap";
 import { blogPosts } from "@/content/blog";
 import {
   buildSearchConsoleExceptionQueue,
+  buildSearchConsoleIndexingRecordTemplate,
   buildSearchConsoleOpportunityMatrix,
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
@@ -113,6 +114,32 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("npm run seo:gsc-evidence");
     expect(combined).toContain("Stop after one failed Request indexing attempt");
     expect(combined).toContain("Search Console-side");
+    expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
+  });
+
+  it("documents a GSC indexing record template for manual URL Inspection evidence", () => {
+    const fields = buildSearchConsoleIndexingRecordTemplate();
+    const fieldNames = fields.map((item) => item.field);
+    const combined = fields
+      .map((item) => `${item.field} ${item.source} ${item.requiredWhen} ${item.validation}`)
+      .join(" ");
+
+    expect(fieldNames).toEqual(
+      expect.arrayContaining([
+        "recordStatus",
+        "inspectedUrl",
+        "indexingState",
+        "liveTestState",
+        "googleSelectedCanonical",
+        "requestIndexing",
+        "siteEvidence",
+        "screenshots",
+      ]),
+    );
+    expect(combined).toContain("docs/search-console-indexing-record-template.json");
+    expect(combined).toContain("production-seo-evidence");
+    expect(combined).toContain("searchConsoleVerificationOk");
+    expect(combined).toContain("Do not infer");
     expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
   });
 
@@ -294,7 +321,10 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("buildSearchConsoleRetryProtocol");
     expect(pageFile).toContain("buildSitemapFreshnessEvidence");
     expect(pageFile).toContain("buildSeoEvidenceArtifactReview");
+    expect(pageFile).toContain("buildSearchConsoleIndexingRecordTemplate");
     expect(pageFile).toContain("Search Console submission loop");
+    expect(pageFile).toContain("GSC indexing record template");
+    expect(pageFile).toContain("seo:gsc-indexing-record-validate");
     expect(pageFile).toContain("Search Console exception queue");
     expect(pageFile).toContain("Indexing retry protocol");
     expect(pageFile).toContain("Sitemap freshness evidence");

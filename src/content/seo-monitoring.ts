@@ -66,6 +66,13 @@ export interface SeoEvidenceArtifactReview {
   useBefore: string;
 }
 
+export interface SearchConsoleIndexingRecordField {
+  field: string;
+  source: string;
+  requiredWhen: string;
+  validation: string;
+}
+
 export interface SeoMonitoringGroup {
   id: SeoMonitoringCadence;
   title: string;
@@ -459,6 +466,64 @@ export function buildSearchConsoleRetryProtocol(): SearchConsoleRetryProtocol[] 
       stopCondition:
         "Do not rewrite YMYL calculator copy or tax logic unless query data, compliance review, and tests support a specific content need.",
       record: "Page indexing trend, affected URL examples, chosen corrective action, test coverage, and follow-up date.",
+    },
+  ];
+}
+
+export function buildSearchConsoleIndexingRecordTemplate(): SearchConsoleIndexingRecordField[] {
+  return [
+    {
+      field: "recordStatus",
+      source: "Reviewer",
+      requiredWhen: "Always",
+      validation:
+        "Use docs/search-console-indexing-record-template.json with recordStatus template before capture and recorded after a real GSC URL Inspection result is copied in.",
+    },
+    {
+      field: "inspectedUrl",
+      source: "Google Search Console URL Inspection",
+      requiredWhen: "Always",
+      validation: "Must be an https URL on www.roth-conversion-calculator-ai.shop.",
+    },
+    {
+      field: "indexingState",
+      source: "URL Inspection result",
+      requiredWhen: "Recorded status",
+      validation:
+        "Use the observed state such as indexed, not_on_google, discovered_not_indexed, crawled_not_indexed, alternate_canonical, blocked, or duplicate_without_user_selected_canonical.",
+    },
+    {
+      field: "liveTestState",
+      source: "URL Inspection live test",
+      requiredWhen: "When live test is run",
+      validation: "Use can_be_indexed, cannot_be_indexed, not_run, or unknown.",
+    },
+    {
+      field: "googleSelectedCanonical",
+      source: "URL Inspection canonical panel",
+      requiredWhen: "Recorded status",
+      validation: "Copy the exact Google-selected canonical value or leave empty only when GSC does not show it.",
+    },
+    {
+      field: "requestIndexing",
+      source: "Request indexing action",
+      requiredWhen: "Every retry window",
+      validation:
+        "Record attempted, attemptedAt, outcome, and the exact Google message so transient errors do not become site-side regressions.",
+    },
+    {
+      field: "siteEvidence",
+      source: "Downloaded production-seo-evidence artifact",
+      requiredWhen: "Every recorded status",
+      validation:
+        "Link the GitHub Actions run id and commit SHA and confirm gscEvidenceOk, searchConsoleVerificationOk, internalLinkEvidenceOk, and htmlQualityEvidenceOk.",
+    },
+    {
+      field: "screenshots",
+      source: "GSC screenshot or exported evidence",
+      requiredWhen: "Recorded status",
+      validation:
+        "Include at least one real screenshot path or URL before treating the record as final evidence. Do not infer private GSC status from site-side evidence.",
     },
   ];
 }

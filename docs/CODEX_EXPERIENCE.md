@@ -1536,3 +1536,29 @@ Run Search Console verification evidence, SEO evidence validation, manifest gene
 **Future trigger words:**
 
 GSC property not verified; Google verification token missing; SPF conflict; domain TXT not visible; HTML verification missing; searchConsoleVerificationOk missing; claiming GSC ownership without UI proof
+
+### 2026-06-05 - GSC indexing observations need structured external records
+
+**Symptom:**
+
+Manual Search Console URL Inspection results can be lost in screenshots, chat notes, or ambiguous statements such as "not indexed" without the exact URL, Google-selected canonical, request-indexing response, or supporting site evidence.
+
+**Root cause:**
+
+The site had strong production SEO artifacts, but no structured template for retaining private GSC UI observations that cannot be machine-asserted from the public site.
+
+**Fix:**
+
+Added `docs/search-console-indexing-record-template.json`, `npm run seo:gsc-indexing-record-validate`, and a visible `/seo-monitoring` indexing record section.
+
+**Guard:**
+
+The validator allows placeholder template records but requires real ISO timestamps, reviewer identity, indexing state, canonical field, production evidence run id, commit SHA, notes, and screenshot evidence before a record can be marked `recorded`.
+
+**Validation:**
+
+Run the GSC indexing record validator tests, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+URL Inspection screenshot; Page indexing status; discovered currently not indexed; Google-selected canonical; request indexing result; GSC indexing record; private Search Console state

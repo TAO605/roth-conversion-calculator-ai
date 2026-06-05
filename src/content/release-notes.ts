@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.157",
+    date: "2026-06-05",
+    type: "patch",
+    title: "Search Console indexing record template",
+    summary:
+      "Added a structured GSC indexing record template and validator so manual URL Inspection or Page indexing observations can be retained with screenshots, canonical state, request-indexing outcome, and linked production SEO evidence without inferring private Search Console status from site-side checks.",
+    affectedArea:
+      "Search Console indexing record template, validator command, SEO monitoring playbook, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the GSC indexing record template and validator command, then revert the SEO monitoring page, release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.156",
     date: "2026-06-05",
     type: "patch",
