@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.152",
+    date: "2026-06-05",
+    type: "patch",
+    title: "Production crawl discovery evidence",
+    summary:
+      "Added retained production crawl-discovery evidence so SEO proof packages verify robots.txt discovery links, sitemap canonical URL coverage, RSS feed item coverage, and llms.txt core AI-discovery coverage.",
+    affectedArea:
+      "SEO Smoke workflow, crawl discovery evidence script, SEO evidence validator, manifest schema, SEO monitoring artifact review copy, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the crawl discovery evidence script and artifact wiring, restore the previous manifest schema version, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.151",
     date: "2026-06-04",
     type: "patch",

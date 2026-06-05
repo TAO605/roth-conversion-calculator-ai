@@ -147,18 +147,26 @@ describe("SEO monitoring playbook", () => {
         "dns-evidence-result.json",
         "security-headers-evidence-result.json",
         "health-evidence-result.json",
+        "crawl-discovery-evidence-result.json",
         "professional-ui-evidence-result.json",
         "seo-evidence-validation-result.json",
         "seo-evidence-manifest.json",
         "seo-evidence-manifest-validation-result.json",
       ]),
     );
-    expect(review.length).toBe(9);
+    expect(review.length).toBe(10);
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("professionalUiScannedFileCount");
     expect(combined).toContain("dnsCanonicalOk: true");
     expect(combined).toContain("securityHeadersOk: true");
     expect(combined).toContain("healthEndpointOk: true");
+    expect(combined).toContain("crawl-discovery-evidence-result.json");
+    expect(combined).toContain("robotsDiscoveryRetained: true");
+    expect(combined).toContain("sitemapUrlCountRetained: true");
+    expect(combined).toContain("sitemapCanonicalHostRetained: true");
+    expect(combined).toContain("feedItemsRetained: true");
+    expect(combined).toContain("llmsCoreCoverageRetained: true");
+    expect(combined).toContain("crawlDiscoveryUrlCount");
     expect(combined).toContain("cacheNoStoreRetained: true");
     expect(combined).toContain("taxYearRetained: true");
     expect(combined).toContain("professionalReviewPending: true");
@@ -192,8 +200,8 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("gitHubServerUrlRetained: true");
     expect(combined).toContain("gitHubWorkflowRetained: true");
     expect(combined).toContain("runAttemptRetained: true");
-    expect(combined).toContain("sha256CheckedCount: 10");
-    expect(combined).toContain("manifestFileCount: 12");
+    expect(combined).toContain("sha256CheckedCount: 11");
+    expect(combined).toContain("manifestFileCount: 13");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");
     expect(combined).toContain("URL Inspection");

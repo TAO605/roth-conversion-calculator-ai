@@ -7,6 +7,7 @@ const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
 const DEFAULT_DNS_PATH = "dns-evidence-result.json";
 const DEFAULT_SECURITY_HEADERS_PATH = "security-headers-evidence-result.json";
 const DEFAULT_HEALTH_PATH = "health-evidence-result.json";
+const DEFAULT_CRAWL_DISCOVERY_PATH = "crawl-discovery-evidence-result.json";
 const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
@@ -20,10 +21,11 @@ const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
 const dnsPath = process.argv[4] || DEFAULT_DNS_PATH;
 const securityHeadersPath = process.argv[5] || DEFAULT_SECURITY_HEADERS_PATH;
 const healthPath = process.argv[6] || DEFAULT_HEALTH_PATH;
-const performancePath = process.argv[7] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[8] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[9] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[10] || DEFAULT_PROFESSIONAL_UI_PATH;
+const crawlDiscoveryPath = process.argv[7] || DEFAULT_CRAWL_DISCOVERY_PATH;
+const performancePath = process.argv[8] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[9] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[10] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[11] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -185,6 +187,37 @@ function validateHealthEvidence(health, expectedBaseUrl) {
   }
 }
 
+function validateCrawlDiscoveryEvidence(crawlDiscovery, expectedBaseUrl) {
+  assert(crawlDiscovery.ok === true, "Crawl discovery evidence must be ok");
+  assert(crawlDiscovery.evidenceType === "production-crawl-discovery", "Crawl discovery evidence type changed unexpectedly");
+  assert(crawlDiscovery.baseUrl === expectedBaseUrl, "Crawl discovery evidence baseUrl must match SEO smoke baseUrl");
+  assert(crawlDiscovery.robots?.status === 200, "Crawl discovery robots status must be 200");
+  assert(crawlDiscovery.sitemap?.status === 200, "Crawl discovery sitemap status must be 200");
+  assert(crawlDiscovery.feed?.status === 200, "Crawl discovery feed status must be 200");
+  assert(crawlDiscovery.llms?.status === 200, "Crawl discovery llms status must be 200");
+  assert(crawlDiscovery.robots?.discoveryCount === 3, "robots.txt must retain sitemap, feed, and llms discovery links");
+  assert(crawlDiscovery.sitemap?.urlCount >= 120, "sitemap.xml URL count is below expected production coverage");
+  assert(crawlDiscovery.feed?.itemCount >= 13, "feed.xml item count is below expected blog coverage");
+  assert(crawlDiscovery.feed?.contentType.includes("application/rss+xml"), "feed.xml content type changed unexpectedly");
+  assert(crawlDiscovery.llms?.contentType.includes("text/plain"), "llms.txt content type changed unexpectedly");
+  for (const check of [
+    "feedBlogCoverageRetained",
+    "feedItemsRetained",
+    "feedStatusOk",
+    "llmsBoundaryRetained",
+    "llmsCoreCoverageRetained",
+    "llmsStatusOk",
+    "robotsDiscoveryRetained",
+    "robotsStatusOk",
+    "sitemapCanonicalHostRetained",
+    "sitemapRequiredPathsRetained",
+    "sitemapStatusOk",
+    "sitemapUrlCountRetained",
+  ]) {
+    assert(crawlDiscovery.checks?.[check] === true, `Crawl discovery evidence missing passing check: ${check}`);
+  }
+}
+
 function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(performance.ok === true, "Performance evidence must be ok");
   assert(performance.baseUrl === expectedBaseUrl, "Performance evidence baseUrl must match SEO smoke baseUrl");
@@ -336,6 +369,7 @@ function run() {
   const dnsEvidence = readJson(dnsPath);
   const securityHeaders = readJson(securityHeadersPath);
   const health = readJson(healthPath);
+  const crawlDiscovery = readJson(crawlDiscoveryPath);
   const performance = readJson(performancePath);
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
@@ -346,6 +380,7 @@ function run() {
   validateDnsEvidence(dnsEvidence, smoke.baseUrl);
   validateSecurityHeadersEvidence(securityHeaders, smoke.baseUrl);
   validateHealthEvidence(health, smoke.baseUrl);
+  validateCrawlDiscoveryEvidence(crawlDiscovery, smoke.baseUrl);
   validatePerformanceEvidence(performance, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
@@ -360,6 +395,7 @@ function run() {
           dnsPath,
           securityHeadersPath,
           healthPath,
+          crawlDiscoveryPath,
           performancePath,
           structuredDataPath,
           blogDiscoveryPath,
@@ -367,6 +403,7 @@ function run() {
         ],
         baseUrl: smoke.baseUrl,
         blogDiscoveryCount: blogDiscovery.blogPostCount,
+        crawlDiscoveryUrlCount: crawlDiscovery.sitemap.urlCount,
         dnsCanonicalOk: dnsEvidence.apexRedirectsToCanonical === true && dnsEvidence.wwwReturnsOk === true,
         gscPriorityUrlCount: gsc.priorityUrlCount,
         healthEndpointOk: health.checks.healthEndpointOk === true,

@@ -4,7 +4,7 @@ import path from "node:path";
 
 const DEFAULT_MANIFEST_PATH = "seo-evidence-manifest.json";
 const EXPECTED_ARTIFACT_NAME = "production-seo-evidence";
-const EXPECTED_ARTIFACT_SCHEMA_VERSION = "2026-06-04.4";
+const EXPECTED_ARTIFACT_SCHEMA_VERSION = "2026-06-05.1";
 const EXPECTED_GITHUB_REPOSITORY = "TAO605/roth-conversion-calculator-ai";
 const EXPECTED_GITHUB_SERVER_URL = "https://github.com";
 const EXPECTED_SOURCE_FILES = [
@@ -13,6 +13,7 @@ const EXPECTED_SOURCE_FILES = [
   "dns-evidence-result.json",
   "security-headers-evidence-result.json",
   "health-evidence-result.json",
+  "crawl-discovery-evidence-result.json",
   "performance-evidence-result.json",
   "structured-data-evidence-result.json",
   "blog-discovery-evidence-result.json",

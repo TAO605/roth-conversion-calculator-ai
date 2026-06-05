@@ -102,3 +102,4 @@
 - [done] Add production DNS and canonical host evidence to SEO artifacts
 - [done] Add production security headers evidence to SEO artifacts
 - [done] Add production health endpoint evidence to SEO artifacts
+- [done] Add production crawl discovery evidence to SEO artifacts

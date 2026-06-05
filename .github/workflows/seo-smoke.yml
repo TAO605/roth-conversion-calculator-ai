@@ -28,6 +28,7 @@ jobs:
       DNS_EVIDENCE_CANONICAL_URL: https://www.roth-conversion-calculator-ai.shop/
       SECURITY_HEADERS_EVIDENCE_URL: https://www.roth-conversion-calculator-ai.shop/
       HEALTH_EVIDENCE_URL: https://www.roth-conversion-calculator-ai.shop/api/health
+      CRAWL_DISCOVERY_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
       PERFORMANCE_EVIDENCE_URL: https://www.roth-conversion-calculator-ai.shop
       STRUCTURED_DATA_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
       BLOG_DISCOVERY_EVIDENCE_BASE_URL: https://www.roth-conversion-calculator-ai.shop
@@ -73,6 +74,11 @@ jobs:
         run: |
           set -o pipefail
           node scripts/health-evidence.mjs | tee health-evidence-result.json
+
+      - name: Run crawl discovery evidence check
+        run: |
+          set -o pipefail
+          node scripts/crawl-discovery-evidence.mjs | tee crawl-discovery-evidence-result.json
 
       - name: Run mobile performance evidence check
         run: |
@@ -120,6 +126,7 @@ jobs:
             dns-evidence-result.json
             security-headers-evidence-result.json
             health-evidence-result.json
+            crawl-discovery-evidence-result.json
             performance-evidence-result.json
             structured-data-evidence-result.json
             blog-discovery-evidence-result.json

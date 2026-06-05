@@ -1406,3 +1406,29 @@ Run health evidence, SEO evidence validation, manifest generation, manifest vali
 **Future trigger words:**
 
 health endpoint only manual; /api/health not in artifact; healthEndpointOk missing; no-store missing; secret key exposed in health payload; taxYear missing in health evidence
+
+### 2026-06-04 - Crawl discovery endpoints need retained production evidence
+
+**Symptom:**
+
+The production SEO smoke check verified robots.txt, sitemap.xml, feed.xml, and llms.txt at a high level, but the durable `production-seo-evidence` artifact did not retain detailed discovery counts, canonical-host coverage, RSS item coverage, or llms.txt core coverage.
+
+**Root cause:**
+
+Discovery endpoints were treated as smoke status checks instead of a first-class production evidence file that reviewers can inspect before sitemap resubmission, crawl incident notes, RSS checks, or AI-search discovery review.
+
+**Fix:**
+
+Added `crawl-discovery-evidence-result.json` to the SEO Smoke artifact contract, validating robots discovery links, sitemap canonical-host URL coverage and required paths, RSS content type and blog item count, and llms.txt core paths plus educational boundary language.
+
+**Guard:**
+
+Updated SEO evidence, manifest, workflow, and SEO monitoring tests so crawl discovery evidence remains generated, uploaded, validated, checksummed, and visible in the artifact review checklist.
+
+**Validation:**
+
+Run crawl discovery evidence, SEO evidence validation, manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+robots only smoke checked; sitemap URL count unknown; feed.xml item count missing; llms core coverage missing; crawlDiscoveryUrlCount missing; crawl discovery not in artifact
