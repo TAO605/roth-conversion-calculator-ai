@@ -8,6 +8,7 @@ const DEFAULT_DNS_PATH = "dns-evidence-result.json";
 const DEFAULT_SECURITY_HEADERS_PATH = "security-headers-evidence-result.json";
 const DEFAULT_HEALTH_PATH = "health-evidence-result.json";
 const DEFAULT_CRAWL_DISCOVERY_PATH = "crawl-discovery-evidence-result.json";
+const DEFAULT_INTERNAL_LINK_PATH = "internal-link-evidence-result.json";
 const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
@@ -22,10 +23,11 @@ const dnsPath = process.argv[4] || DEFAULT_DNS_PATH;
 const securityHeadersPath = process.argv[5] || DEFAULT_SECURITY_HEADERS_PATH;
 const healthPath = process.argv[6] || DEFAULT_HEALTH_PATH;
 const crawlDiscoveryPath = process.argv[7] || DEFAULT_CRAWL_DISCOVERY_PATH;
-const performancePath = process.argv[8] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[9] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[10] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[11] || DEFAULT_PROFESSIONAL_UI_PATH;
+const internalLinkPath = process.argv[8] || DEFAULT_INTERNAL_LINK_PATH;
+const performancePath = process.argv[9] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[10] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[11] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[12] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -218,6 +220,31 @@ function validateCrawlDiscoveryEvidence(crawlDiscovery, expectedBaseUrl) {
   }
 }
 
+function validateInternalLinkEvidence(internalLink, expectedBaseUrl) {
+  assert(internalLink.ok === true, "Internal link evidence must be ok");
+  assert(internalLink.evidenceType === "production-internal-link-health", "Internal link evidence type changed unexpectedly");
+  assert(internalLink.baseUrl === expectedBaseUrl, "Internal link evidence baseUrl must match SEO smoke baseUrl");
+  assert(internalLink.sitemap?.status === 200, "Internal link evidence sitemap status must be 200");
+  assert(internalLink.sitemap?.uniqueUrlCount >= 120, "Internal link evidence unique sitemap URL count is below expected production coverage");
+  assert(internalLink.sitemap?.checkedUrlCount === internalLink.sitemap?.uniqueUrlCount, "Internal link evidence must check every sitemap URL");
+  assert(internalLink.sitemap?.nonCanonicalUrlCount === 0, "Internal link evidence must not include non-canonical sitemap URLs");
+  assert(internalLink.siteIndex?.status === 200, "Internal link evidence site-index status must be 200");
+  assert(internalLink.siteIndex?.internalLinkCount >= 100, "Internal link evidence site-index internal link count is too low");
+  assert(internalLink.siteIndex?.requiredPathCount >= 6, "Internal link evidence required site-index path count changed unexpectedly");
+  assert(Array.isArray(internalLink.sampledFailures) && internalLink.sampledFailures.length === 0, "Internal link evidence must not retain sampled failures");
+
+  for (const check of [
+    "allSitemapUrlsOk",
+    "canonicalHostRetained",
+    "noNoindexRetained",
+    "siteIndexCorePathsRetained",
+    "siteIndexInternalLinksRetained",
+    "sitemapUrlHealthRetained",
+  ]) {
+    assert(internalLink.checks?.[check] === true, `Internal link evidence missing passing check: ${check}`);
+  }
+}
+
 function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(performance.ok === true, "Performance evidence must be ok");
   assert(performance.baseUrl === expectedBaseUrl, "Performance evidence baseUrl must match SEO smoke baseUrl");
@@ -370,6 +397,7 @@ function run() {
   const securityHeaders = readJson(securityHeadersPath);
   const health = readJson(healthPath);
   const crawlDiscovery = readJson(crawlDiscoveryPath);
+  const internalLink = readJson(internalLinkPath);
   const performance = readJson(performancePath);
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
@@ -381,6 +409,7 @@ function run() {
   validateSecurityHeadersEvidence(securityHeaders, smoke.baseUrl);
   validateHealthEvidence(health, smoke.baseUrl);
   validateCrawlDiscoveryEvidence(crawlDiscovery, smoke.baseUrl);
+  validateInternalLinkEvidence(internalLink, smoke.baseUrl);
   validatePerformanceEvidence(performance, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
@@ -396,6 +425,7 @@ function run() {
           securityHeadersPath,
           healthPath,
           crawlDiscoveryPath,
+          internalLinkPath,
           performancePath,
           structuredDataPath,
           blogDiscoveryPath,
@@ -407,6 +437,7 @@ function run() {
         dnsCanonicalOk: dnsEvidence.apexRedirectsToCanonical === true && dnsEvidence.wwwReturnsOk === true,
         gscPriorityUrlCount: gsc.priorityUrlCount,
         healthEndpointOk: health.checks.healthEndpointOk === true,
+        internalLinkCheckedUrlCount: internalLink.sitemap.checkedUrlCount,
         ok: true,
         performanceScore: performance.categories.performance,
         professionalUiScannedFileCount: professionalUi.scannedFileCount,

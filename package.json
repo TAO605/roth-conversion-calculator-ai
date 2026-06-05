@@ -15,6 +15,7 @@
     "seo:security-headers": "node scripts/security-headers-evidence.mjs",
     "seo:health": "node scripts/health-evidence.mjs",
     "seo:crawl-discovery": "node scripts/crawl-discovery-evidence.mjs",
+    "seo:internal-links": "node scripts/internal-link-evidence.mjs",
     "seo:performance": "node scripts/performance-evidence.mjs",
     "seo:structured-data": "node scripts/structured-data-evidence.mjs",
     "seo:blog-discovery": "node scripts/blog-discovery-evidence.mjs",

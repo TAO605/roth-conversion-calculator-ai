@@ -1432,3 +1432,29 @@ Run crawl discovery evidence, SEO evidence validation, manifest generation, mani
 **Future trigger words:**
 
 robots only smoke checked; sitemap URL count unknown; feed.xml item count missing; llms core coverage missing; crawlDiscoveryUrlCount missing; crawl discovery not in artifact
+
+### 2026-06-05 - Internal link health needs retained production evidence
+
+**Symptom:**
+
+The production evidence artifact proved discovery endpoints existed, but it did not prove that all sitemap URLs were live, canonical-host HTML pages without noindex or that `/site-index` retained core internal links.
+
+**Root cause:**
+
+Internal linking and crawl-depth health were treated as weekly manual SEO review items rather than first-class retained production evidence.
+
+**Fix:**
+
+Added `internal-link-evidence-result.json` to the SEO Smoke artifact contract, validating sitemap URL status, canonical host retention, noindex absence, checked URL count, and `/site-index` internal-link coverage.
+
+**Guard:**
+
+Updated SEO evidence, manifest, workflow, and SEO monitoring tests so internal-link evidence remains generated, uploaded, validated, checksummed, and visible in the artifact review checklist.
+
+**Validation:**
+
+Run internal-link evidence, SEO evidence validation, manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+orphan pages; crawl depth unknown; sitemap URLs not checked; site-index links missing; internalLinkCheckedUrlCount missing; discovered not indexed without internal link evidence
