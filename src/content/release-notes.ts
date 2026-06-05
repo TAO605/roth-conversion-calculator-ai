@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.154",
+    date: "2026-06-05",
+    type: "patch",
+    title: "Production HTML quality evidence",
+    summary:
+      "Added retained production HTML quality evidence so SEO proof packages verify page status, html lang, single H1 coverage, titles, meta descriptions, canonical tags, image alt text, button names, and form labels.",
+    affectedArea:
+      "SEO Smoke workflow, HTML quality evidence script, SEO evidence validator, manifest schema, SEO monitoring artifact review copy, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the HTML quality evidence script and artifact wiring, restore the previous manifest schema version, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.153",
     date: "2026-06-05",
     type: "patch",

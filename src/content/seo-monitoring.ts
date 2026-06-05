@@ -565,11 +565,20 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       useBefore: "Use before diagnosing crawl-depth, orphan-page, sitemap-health, or Search Console discovered-not-indexed issues.",
     },
     {
+      label: "Confirm HTML quality signals",
+      artifactFile: "html-quality-evidence-result.json",
+      check:
+        "Review production HTML quality evidence for HTTP 200 status, html lang, one H1 per page, title and meta description coverage, canonical tags, image alt text, button names, and form labels.",
+      passSignal:
+        "The HTML quality evidence has ok: true, pageStatusRetained: true, htmlLangRetained: true, singleH1Retained: true, titleRetained: true, metaDescriptionRetained: true, canonicalRetained: true, imageAltRetained: true, buttonNameRetained: true, formLabelRetained: true, pageCount at least 120, and maxFailureCount: 0.",
+      useBefore: "Use before diagnosing HTML SEO, accessibility, page-template, or rich-result eligibility regressions.",
+    },
+    {
       label: "Confirm validator summary",
       artifactFile: "seo-evidence-validation-result.json",
-      check: "Confirm the retained validator result reports ok: true after checking smoke, GSC, DNS, security headers, health, crawl discovery, internal links, performance, structured data, blog discovery, and professional UI evidence together.",
+      check: "Confirm the retained validator result reports ok: true after checking smoke, GSC, DNS, security headers, health, crawl discovery, internal links, HTML quality, performance, structured data, blog discovery, and professional UI evidence together.",
       passSignal:
-        "The validation summary records the expected host, dnsCanonicalOk: true, securityHeadersOk: true, healthEndpointOk: true, crawlDiscoveryUrlCount, internalLinkCheckedUrlCount, professionalUiScannedFileCount, and no contract failures.",
+        "The validation summary records the expected host, dnsCanonicalOk: true, securityHeadersOk: true, healthEndpointOk: true, crawlDiscoveryUrlCount, internalLinkCheckedUrlCount, htmlQualityPageCount, professionalUiScannedFileCount, and no contract failures.",
       useBefore: "Use before attaching the artifact to incident review or a GSC retry note.",
     },
     {
@@ -591,7 +600,7 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       artifactFile: "seo-evidence-manifest-validation-result.json",
       check: "Open the retained manifest checksum validation result after downloading the production-seo-evidence artifact.",
       passSignal:
-        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 12, sha256CheckedCount: 12, manifestFileCount: 14, and manifestValidationResultRetained: true.",
+        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 13, sha256CheckedCount: 13, manifestFileCount: 15, and manifestValidationResultRetained: true.",
       useBefore: "Use before relying on the manifest checksum contract in Search Console retry notes or incident review.",
     },
   ];

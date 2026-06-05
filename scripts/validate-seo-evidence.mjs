@@ -9,6 +9,7 @@ const DEFAULT_SECURITY_HEADERS_PATH = "security-headers-evidence-result.json";
 const DEFAULT_HEALTH_PATH = "health-evidence-result.json";
 const DEFAULT_CRAWL_DISCOVERY_PATH = "crawl-discovery-evidence-result.json";
 const DEFAULT_INTERNAL_LINK_PATH = "internal-link-evidence-result.json";
+const DEFAULT_HTML_QUALITY_PATH = "html-quality-evidence-result.json";
 const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
@@ -24,10 +25,11 @@ const securityHeadersPath = process.argv[5] || DEFAULT_SECURITY_HEADERS_PATH;
 const healthPath = process.argv[6] || DEFAULT_HEALTH_PATH;
 const crawlDiscoveryPath = process.argv[7] || DEFAULT_CRAWL_DISCOVERY_PATH;
 const internalLinkPath = process.argv[8] || DEFAULT_INTERNAL_LINK_PATH;
-const performancePath = process.argv[9] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[10] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[11] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[12] || DEFAULT_PROFESSIONAL_UI_PATH;
+const htmlQualityPath = process.argv[9] || DEFAULT_HTML_QUALITY_PATH;
+const performancePath = process.argv[10] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[11] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[12] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[13] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -245,6 +247,34 @@ function validateInternalLinkEvidence(internalLink, expectedBaseUrl) {
   }
 }
 
+function validateHtmlQualityEvidence(htmlQuality, expectedBaseUrl) {
+  assert(htmlQuality.ok === true, "HTML quality evidence must be ok");
+  assert(htmlQuality.evidenceType === "production-html-quality", "HTML quality evidence type changed unexpectedly");
+  assert(htmlQuality.baseUrl === expectedBaseUrl, "HTML quality evidence baseUrl must match SEO smoke baseUrl");
+  assert(htmlQuality.pageCount >= 120, "HTML quality evidence pageCount is below expected production coverage");
+  assert(Array.isArray(htmlQuality.sampledFailures) && htmlQuality.sampledFailures.length === 0, "HTML quality evidence must not retain sampled failures");
+  assert(htmlQuality.summary?.maxFailureCount === 0, "HTML quality evidence must have zero max failures");
+  assert(htmlQuality.summary?.pagesWithCanonical === htmlQuality.pageCount, "HTML quality evidence must retain canonical coverage");
+  assert(htmlQuality.summary?.pagesWithHtmlLang === htmlQuality.pageCount, "HTML quality evidence must retain html lang coverage");
+  assert(htmlQuality.summary?.pagesWithSingleH1 === htmlQuality.pageCount, "HTML quality evidence must retain one H1 per page");
+  assert(htmlQuality.summary?.pagesWithValidMetaDescription === htmlQuality.pageCount, "HTML quality evidence must retain meta descriptions");
+  assert(htmlQuality.summary?.pagesWithValidTitle === htmlQuality.pageCount, "HTML quality evidence must retain titles");
+
+  for (const check of [
+    "buttonNameRetained",
+    "canonicalRetained",
+    "formLabelRetained",
+    "htmlLangRetained",
+    "imageAltRetained",
+    "metaDescriptionRetained",
+    "pageStatusRetained",
+    "singleH1Retained",
+    "titleRetained",
+  ]) {
+    assert(htmlQuality.checks?.[check] === true, `HTML quality evidence missing passing check: ${check}`);
+  }
+}
+
 function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(performance.ok === true, "Performance evidence must be ok");
   assert(performance.baseUrl === expectedBaseUrl, "Performance evidence baseUrl must match SEO smoke baseUrl");
@@ -398,6 +428,7 @@ function run() {
   const health = readJson(healthPath);
   const crawlDiscovery = readJson(crawlDiscoveryPath);
   const internalLink = readJson(internalLinkPath);
+  const htmlQuality = readJson(htmlQualityPath);
   const performance = readJson(performancePath);
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
@@ -410,6 +441,7 @@ function run() {
   validateHealthEvidence(health, smoke.baseUrl);
   validateCrawlDiscoveryEvidence(crawlDiscovery, smoke.baseUrl);
   validateInternalLinkEvidence(internalLink, smoke.baseUrl);
+  validateHtmlQualityEvidence(htmlQuality, smoke.baseUrl);
   validatePerformanceEvidence(performance, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
@@ -426,6 +458,7 @@ function run() {
           healthPath,
           crawlDiscoveryPath,
           internalLinkPath,
+          htmlQualityPath,
           performancePath,
           structuredDataPath,
           blogDiscoveryPath,
@@ -437,6 +470,7 @@ function run() {
         dnsCanonicalOk: dnsEvidence.apexRedirectsToCanonical === true && dnsEvidence.wwwReturnsOk === true,
         gscPriorityUrlCount: gsc.priorityUrlCount,
         healthEndpointOk: health.checks.healthEndpointOk === true,
+        htmlQualityPageCount: htmlQuality.pageCount,
         internalLinkCheckedUrlCount: internalLink.sitemap.checkedUrlCount,
         ok: true,
         performanceScore: performance.categories.performance,

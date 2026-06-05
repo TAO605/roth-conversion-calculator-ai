@@ -149,13 +149,14 @@ describe("SEO monitoring playbook", () => {
         "health-evidence-result.json",
         "crawl-discovery-evidence-result.json",
         "internal-link-evidence-result.json",
+        "html-quality-evidence-result.json",
         "professional-ui-evidence-result.json",
         "seo-evidence-validation-result.json",
         "seo-evidence-manifest.json",
         "seo-evidence-manifest-validation-result.json",
       ]),
     );
-    expect(review.length).toBe(11);
+    expect(review.length).toBe(12);
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("professionalUiScannedFileCount");
     expect(combined).toContain("dnsCanonicalOk: true");
@@ -176,6 +177,18 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("siteIndexInternalLinksRetained: true");
     expect(combined).toContain("siteIndexCorePathsRetained: true");
     expect(combined).toContain("internalLinkCheckedUrlCount");
+    expect(combined).toContain("html-quality-evidence-result.json");
+    expect(combined).toContain("htmlQualityPageCount");
+    expect(combined).toContain("pageStatusRetained: true");
+    expect(combined).toContain("htmlLangRetained: true");
+    expect(combined).toContain("singleH1Retained: true");
+    expect(combined).toContain("titleRetained: true");
+    expect(combined).toContain("metaDescriptionRetained: true");
+    expect(combined).toContain("canonicalRetained: true");
+    expect(combined).toContain("imageAltRetained: true");
+    expect(combined).toContain("buttonNameRetained: true");
+    expect(combined).toContain("formLabelRetained: true");
+    expect(combined).toContain("maxFailureCount: 0");
     expect(combined).toContain("cacheNoStoreRetained: true");
     expect(combined).toContain("taxYearRetained: true");
     expect(combined).toContain("professionalReviewPending: true");
@@ -209,8 +222,8 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("gitHubServerUrlRetained: true");
     expect(combined).toContain("gitHubWorkflowRetained: true");
     expect(combined).toContain("runAttemptRetained: true");
-    expect(combined).toContain("sha256CheckedCount: 12");
-    expect(combined).toContain("manifestFileCount: 14");
+    expect(combined).toContain("sha256CheckedCount: 13");
+    expect(combined).toContain("manifestFileCount: 15");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");
     expect(combined).toContain("URL Inspection");

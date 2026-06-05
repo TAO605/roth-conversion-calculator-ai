@@ -1458,3 +1458,29 @@ Run internal-link evidence, SEO evidence validation, manifest generation, manife
 **Future trigger words:**
 
 orphan pages; crawl depth unknown; sitemap URLs not checked; site-index links missing; internalLinkCheckedUrlCount missing; discovered not indexed without internal link evidence
+
+### 2026-06-05 - HTML quality needs retained production evidence
+
+**Symptom:**
+
+Source tests and page templates covered SEO semantics, but the durable `production-seo-evidence` artifact did not prove the deployed pages retained `lang`, one H1, titles, meta descriptions, canonical tags, image alt text, button names, and form labels.
+
+**Root cause:**
+
+HTML quality was treated as source-level or manual review evidence instead of a first-class production artifact contract checked after deployment.
+
+**Fix:**
+
+Added `html-quality-evidence-result.json` to the SEO Smoke artifact contract, validating production HTML quality across sitemap URLs. The checker recognizes both explicit `label for=id` and valid implicit `<label>...<input>...</label>` form labeling.
+
+**Guard:**
+
+Updated SEO evidence, manifest, workflow, and SEO monitoring tests so HTML quality evidence remains generated, uploaded, validated, checksummed, and visible in the artifact review checklist.
+
+**Validation:**
+
+Run HTML quality evidence, SEO evidence validation, manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+missing H1 in production; title missing; meta description missing; canonical missing; image alt missing; form labels missing; htmlQualityPageCount missing; HTML quality not in artifact
