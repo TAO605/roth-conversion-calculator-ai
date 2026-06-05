@@ -37,6 +37,7 @@ export function buildLlmsText(posts: BlogPost[]): string {
     line("AI Compliance Audit Playbook", "/ai-compliance-audit", "No-advice boundaries, required disclaimer, sensitive data blocking, model-change regression, fallback, and audit trail workflow."),
     line("Content Operations Playbook", "/content-operations", "Keyword research, educational drafting, compliance review, internal linking, publishing, and content refresh workflow."),
     line("CPA Review Checklist", "/cpa-review-checklist", "Professional review handoff checklist for calculator output, tax documents, model limits, advisor questions, and records."),
+    line("Professional Review Packet", "/professional-review-packet", "Professional review status, modeled scope, non-modeled tax interactions, source data, production evidence, and CPA handoff materials."),
     line("Feedback Roadmap Playbook", "/feedback-roadmap", "User feedback capture, triage, compliance risk, small-version scope, feature registry release, and follow-up workflow."),
     line("Privacy Data Flow Playbook", "/privacy-data-flow", "Local calculation, browser storage, share link, PDF, GA4, health endpoint, and AI API privacy audit workflow."),
     line("Roth Conversion Planning Checklist", "/roth-conversion-planning-checklist", "Pre-calculator checklist for tax profile, account data, assumptions, model limits, and professional review planning."),

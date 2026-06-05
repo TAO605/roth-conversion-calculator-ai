@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.155",
+    date: "2026-06-05",
+    type: "patch",
+    title: "Professional review packet evidence",
+    summary:
+      "Added a professional review packet page and retained production evidence so CPA or EA handoff can verify review status, modeled scope, non-modeled tax interactions, source data, sitemap discovery, llms.txt discovery, and pending professional-review language.",
+    affectedArea:
+      "Professional review packet page, sitemap, llms.txt, site index, structured-data evidence, SEO Smoke workflow, SEO evidence validator, manifest schema, SEO monitoring artifact review copy, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the professional review packet route and evidence script, restore the previous manifest schema version, then revert sitemap, llms.txt, site-index, release note, feature registry, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.154",
     date: "2026-06-05",
     type: "patch",

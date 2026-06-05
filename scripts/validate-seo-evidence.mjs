@@ -10,6 +10,7 @@ const DEFAULT_HEALTH_PATH = "health-evidence-result.json";
 const DEFAULT_CRAWL_DISCOVERY_PATH = "crawl-discovery-evidence-result.json";
 const DEFAULT_INTERNAL_LINK_PATH = "internal-link-evidence-result.json";
 const DEFAULT_HTML_QUALITY_PATH = "html-quality-evidence-result.json";
+const DEFAULT_PROFESSIONAL_REVIEW_PACKET_PATH = "professional-review-packet-evidence-result.json";
 const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
@@ -17,7 +18,7 @@ const DEFAULT_PROFESSIONAL_UI_PATH = "professional-ui-evidence-result.json";
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
 const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
-const STATIC_STRUCTURED_DATA_PAGE_COUNT = 20;
+const STATIC_STRUCTURED_DATA_PAGE_COUNT = 21;
 const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
 const dnsPath = process.argv[4] || DEFAULT_DNS_PATH;
@@ -26,10 +27,11 @@ const healthPath = process.argv[6] || DEFAULT_HEALTH_PATH;
 const crawlDiscoveryPath = process.argv[7] || DEFAULT_CRAWL_DISCOVERY_PATH;
 const internalLinkPath = process.argv[8] || DEFAULT_INTERNAL_LINK_PATH;
 const htmlQualityPath = process.argv[9] || DEFAULT_HTML_QUALITY_PATH;
-const performancePath = process.argv[10] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[11] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[12] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[13] || DEFAULT_PROFESSIONAL_UI_PATH;
+const professionalReviewPacketPath = process.argv[10] || DEFAULT_PROFESSIONAL_REVIEW_PACKET_PATH;
+const performancePath = process.argv[11] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[12] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[13] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[14] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -275,6 +277,36 @@ function validateHtmlQualityEvidence(htmlQuality, expectedBaseUrl) {
   }
 }
 
+function validateProfessionalReviewPacketEvidence(reviewPacket, expectedBaseUrl) {
+  assert(reviewPacket.ok === true, "Professional review packet evidence must be ok");
+  assert(
+    reviewPacket.evidenceType === "professional-review-packet",
+    "Professional review packet evidence type changed unexpectedly",
+  );
+  assert(reviewPacket.baseUrl === expectedBaseUrl, "Professional review packet evidence baseUrl must match SEO smoke baseUrl");
+  assert(reviewPacket.page?.path === "/professional-review-packet", "Professional review packet evidence must inspect the review packet path");
+  assert(reviewPacket.page?.status === 200, "Professional review packet page status must be 200");
+  assert(reviewPacket.page?.contentType.includes("text/html"), "Professional review packet page must return HTML");
+  assert(reviewPacket.page?.termCount >= 10, "Professional review packet evidence must retain the required review terms");
+  assert(reviewPacket.health?.taxYear === 2026, "Professional review packet health taxYear must remain 2026");
+  assert(
+    typeof reviewPacket.health?.professionalReviewStatus === "string" &&
+      reviewPacket.health.professionalReviewStatus.toLowerCase().includes("pending"),
+    "Professional review packet evidence must retain pending professional review status",
+  );
+
+  for (const check of [
+    "healthPendingReviewRetained",
+    "llmsRetained",
+    "pageStatusOk",
+    "pageTermsRetained",
+    "sitemapRetained",
+    "taxYearRetained",
+  ]) {
+    assert(reviewPacket.checks?.[check] === true, `Professional review packet evidence missing passing check: ${check}`);
+  }
+}
+
 function validatePerformanceEvidence(performance, expectedBaseUrl) {
   assert(performance.ok === true, "Performance evidence must be ok");
   assert(performance.baseUrl === expectedBaseUrl, "Performance evidence baseUrl must match SEO smoke baseUrl");
@@ -349,6 +381,7 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
     "/roth-conversion-estimated-tax-guide",
     "/calculator-assumptions-guide",
     "/cpa-review-checklist",
+    "/professional-review-packet",
     "/roth-conversion-5-year-rules",
     "/roth-conversion-capital-gains-guide",
     "/roth-conversion-cpa-questions",
@@ -429,6 +462,7 @@ function run() {
   const crawlDiscovery = readJson(crawlDiscoveryPath);
   const internalLink = readJson(internalLinkPath);
   const htmlQuality = readJson(htmlQualityPath);
+  const professionalReviewPacket = readJson(professionalReviewPacketPath);
   const performance = readJson(performancePath);
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
@@ -442,6 +476,7 @@ function run() {
   validateCrawlDiscoveryEvidence(crawlDiscovery, smoke.baseUrl);
   validateInternalLinkEvidence(internalLink, smoke.baseUrl);
   validateHtmlQualityEvidence(htmlQuality, smoke.baseUrl);
+  validateProfessionalReviewPacketEvidence(professionalReviewPacket, smoke.baseUrl);
   validatePerformanceEvidence(performance, smoke.baseUrl);
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
@@ -459,6 +494,7 @@ function run() {
           crawlDiscoveryPath,
           internalLinkPath,
           htmlQualityPath,
+          professionalReviewPacketPath,
           performancePath,
           structuredDataPath,
           blogDiscoveryPath,
@@ -474,6 +510,7 @@ function run() {
         internalLinkCheckedUrlCount: internalLink.sitemap.checkedUrlCount,
         ok: true,
         performanceScore: performance.categories.performance,
+        professionalReviewPacketOk: professionalReviewPacket.ok === true,
         professionalUiScannedFileCount: professionalUi.scannedFileCount,
         securityHeadersOk: securityHeaders.ok === true,
         smokeCheckCount: smoke.results.length,

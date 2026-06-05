@@ -51,6 +51,10 @@ const staticMonitoredPages = [
     requiredTypes: ["BreadcrumbList", "WebPage"],
   },
   {
+    path: "/professional-review-packet",
+    requiredTypes: ["BreadcrumbList", "WebPage"],
+  },
+  {
     path: "/roth-conversion-5-year-rules",
     requiredTypes: ["BreadcrumbList", "WebPage"],
   },

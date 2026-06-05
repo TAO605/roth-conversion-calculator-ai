@@ -679,14 +679,15 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "cpa-review-checklist",
     label: "CPA review checklist",
-    version: "1.0.48",
+    version: "1.0.155",
     layer: "content",
     enabled: true,
     locked: false,
     grayRate: 100,
-    ownerArea: "src/content/cpa-review-checklist and src/app/cpa-review-checklist",
+    ownerArea:
+      "src/content/cpa-review-checklist, src/content/professional-review-packet, src/app/cpa-review-checklist, and src/app/professional-review-packet",
     rollbackPath:
-      "Disable cpa-review-checklist in the feature registry and remove the cpa-review-checklist route, sitemap entry, homepage link, site-index link, and llms.txt link.",
+      "Disable cpa-review-checklist in the feature registry and remove the cpa-review-checklist and professional-review-packet routes, sitemap entries, homepage links, site-index links, and llms.txt links.",
   },
   {
     id: "content-operations-playbook",
@@ -828,7 +829,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "seo-monitoring-playbook",
     label: "SEO monitoring playbook",
-    version: "1.0.154",
+    version: "1.0.155",
     layer: "content",
     enabled: true,
     locked: false,

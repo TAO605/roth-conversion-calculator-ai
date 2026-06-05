@@ -17,6 +17,7 @@
     "seo:crawl-discovery": "node scripts/crawl-discovery-evidence.mjs",
     "seo:internal-links": "node scripts/internal-link-evidence.mjs",
     "seo:html-quality": "node scripts/html-quality-evidence.mjs",
+    "seo:professional-review-packet": "node scripts/professional-review-packet-evidence.mjs",
     "seo:performance": "node scripts/performance-evidence.mjs",
     "seo:structured-data": "node scripts/structured-data-evidence.mjs",
     "seo:blog-discovery": "node scripts/blog-discovery-evidence.mjs",

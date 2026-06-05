@@ -1484,3 +1484,29 @@ Run HTML quality evidence, SEO evidence validation, manifest generation, manifes
 **Future trigger words:**
 
 missing H1 in production; title missing; meta description missing; canonical missing; image alt missing; form labels missing; htmlQualityPageCount missing; HTML quality not in artifact
+
+### 2026-06-05 - Professional review readiness needs retained evidence
+
+**Symptom:**
+
+Professional review readiness can drift when it exists only as page copy, a checklist, or a chat recommendation.
+
+**Root cause:**
+
+The site had pending professional-review status and CPA handoff content, but no dedicated production evidence file proving the review packet page, sitemap, llms.txt, health tax year, and pending status stayed aligned.
+
+**Fix:**
+
+Added `/professional-review-packet` and retained `professional-review-packet-evidence-result.json` in the production SEO artifact contract.
+
+**Guard:**
+
+The SEO evidence validator and manifest checksum validator require the professional review packet evidence file before artifact upload.
+
+**Validation:**
+
+Run professional review packet evidence, SEO evidence validation, manifest generation, manifest validation, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, production SEO evidence, and final GitHub artifact download.
+
+**Future trigger words:**
+
+professional review packet missing; CPA handoff not discoverable; pending review status changed; professionalReviewPacketOk missing; review packet not in sitemap; review packet not in llms

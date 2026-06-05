@@ -121,6 +121,7 @@ export function buildSiteIndexGroups(): SiteIndexGroup[] {
         link("AI Compliance Audit Playbook", "/ai-compliance-audit", "No-advice, disclaimer, sensitive data, model upgrade, fallback, and audit checks."),
         link("Content Operations Playbook", "/content-operations", "Keyword research, drafting, compliance review, publishing, and refresh workflow."),
         link("CPA Review Checklist", "/cpa-review-checklist", "Professional handoff checklist for calculator outputs, documents, model limits, and questions."),
+        link("Professional Review Packet", "/professional-review-packet", "Professional review status, modeled scope, non-modeled tax interactions, source data, production evidence, and CPA handoff materials."),
         link("Feedback Roadmap Playbook", "/feedback-roadmap", "User feedback, triage, small-version scope, rollout, and follow-up workflow."),
         link("Privacy Data Flow Playbook", "/privacy-data-flow", "Local calculation, storage, sharing, analytics, health, and AI API data-flow checks."),
         link("Health Endpoint", "/api/health", "Public operational health payload."),

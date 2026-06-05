@@ -26,6 +26,10 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");
     expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
     expect(workflow).toContain("Run mobile performance evidence check");
+    expect(workflow).toContain("Run professional review packet evidence check");
+    expect(workflow).toContain(
+      "node scripts/professional-review-packet-evidence.mjs | tee professional-review-packet-evidence-result.json",
+    );
     expect(workflow).toContain("node scripts/performance-evidence.mjs | tee performance-evidence-result.json");
     expect(workflow).toContain("Run structured data evidence check");
     expect(workflow).toContain("node scripts/structured-data-evidence.mjs | tee structured-data-evidence-result.json");
@@ -45,6 +49,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("seo-smoke-result.json");
     expect(workflow).toContain("gsc-evidence-result.json");
     expect(workflow).toContain("performance-evidence-result.json");
+    expect(workflow).toContain("professional-review-packet-evidence-result.json");
     expect(workflow).toContain("structured-data-evidence-result.json");
     expect(workflow).toContain("blog-discovery-evidence-result.json");
     expect(workflow).toContain("seo-evidence-validation-result.json");

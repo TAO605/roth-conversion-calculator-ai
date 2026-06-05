@@ -160,6 +160,7 @@
 - GitHub Actions retains `crawl-discovery-evidence-result.json` inside `production-seo-evidence`; before sitemap, RSS, robots, or AI-discovery reviews, confirm robots lists sitemap/feed/llms, sitemap keeps canonical URL coverage, RSS keeps blog item coverage, and llms keeps core discovery plus educational boundary language.
 - GitHub Actions retains `internal-link-evidence-result.json` inside `production-seo-evidence`; before crawl-depth, orphan-page, sitemap-health, or discovered-not-indexed reviews, confirm every sitemap URL returns 200 on the canonical host without noindex and `/site-index` retains core internal links.
 - GitHub Actions retains `html-quality-evidence-result.json` inside `production-seo-evidence`; before HTML SEO, accessibility, page-template, or rich-result eligibility reviews, confirm production pages retain `lang`, one H1, title, meta description, canonical URL, image alt text, button names, and form labels.
+- GitHub Actions retains `professional-review-packet-evidence-result.json` inside `production-seo-evidence`; before professional handoff or changing review status, confirm the packet page, sitemap, llms.txt, health endpoint, tax year, and pending review language are retained.
 - `seo-evidence-manifest.json` lists the retained validation result as `postManifestValidation: true`.
 - `/seo-monitoring` includes a separate artifact review item for `seo-evidence-manifest-validation-result.json`.
 - `seo-evidence-manifest.json` records direct `gitHubRunUrl` and `gitHubCommitUrl` provenance links when generated inside GitHub Actions.

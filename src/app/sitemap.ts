@@ -48,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/performance-audit", lastModified: "2026-05-03" },
     { path: "/production-launch", lastModified: "2026-05-03" },
     { path: "/privacy-data-flow", lastModified: "2026-05-03" },
+    { path: "/professional-review-packet", lastModified: "2026-06-05" },
     { path: "/editorial-policy", lastModified: "2026-05-01" },
     { path: "/launch-readiness", lastModified: "2026-05-02" },
     { path: "/release-notes", lastModified: "2026-05-30" },
