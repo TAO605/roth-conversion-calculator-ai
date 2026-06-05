@@ -477,7 +477,7 @@ export function buildSearchConsoleIndexingRecordTemplate(): SearchConsoleIndexin
       source: "Reviewer",
       requiredWhen: "Always",
       validation:
-        "Use docs/search-console-indexing-record-template.json with recordStatus template before capture and recorded after a real GSC URL Inspection result is copied in.",
+        "Use docs/search-console-indexing-record-template.json with recordStatus template before capture, generate a draft with npm run seo:gsc-indexing-record-draft, and use recorded only after a real GSC URL Inspection result is copied in.",
     },
     {
       field: "inspectedUrl",
@@ -516,7 +516,7 @@ export function buildSearchConsoleIndexingRecordTemplate(): SearchConsoleIndexin
       source: "Downloaded production-seo-evidence artifact",
       requiredWhen: "Every recorded status",
       validation:
-        "Link the GitHub Actions run id and commit SHA and confirm gscEvidenceOk, searchConsoleVerificationOk, internalLinkEvidenceOk, and htmlQualityEvidenceOk.",
+        "Link the GitHub Actions run id and commit SHA and confirm gscEvidenceOk, searchConsoleVerificationOk, internalLinkEvidenceOk, and htmlQualityEvidenceOk. The draft generator can prefill these from a downloaded production-seo-evidence artifact.",
     },
     {
       field: "screenshots",

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.158",
+    date: "2026-06-05",
+    type: "patch",
+    title: "Search Console indexing record drafts",
+    summary:
+      "Added an AI-assisted GSC indexing record draft generator that pre-fills public production SEO evidence from downloaded artifacts while keeping private Search Console URL Inspection fields as placeholders until a reviewer copies the real GSC result and screenshot.",
+    affectedArea:
+      "Search Console indexing record draft generator, validator states, SEO monitoring playbook, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the draft generator command and draft validator state, then revert the SEO monitoring page, release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.157",
     date: "2026-06-05",
     type: "patch",

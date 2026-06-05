@@ -71,6 +71,35 @@ function validateTemplate(record) {
   );
 }
 
+function validateDraft(record) {
+  assert(record.recordStatus === "draft", "draft record must keep recordStatus: draft");
+  assert(ISO_TIMESTAMP_PATTERN.test(record.recordedAt), "draft recordedAt must be an ISO timestamp");
+  assert(record.recordedBy === "AI-assisted draft", "draft recordedBy must identify the AI-assisted draft boundary");
+  assert(record.indexingState === "unknown", "draft indexingState must remain unknown until GSC is reviewed");
+  assert(record.liveTestState === "not_run" || record.liveTestState === "unknown", "draft liveTestState must not claim a private GSC result");
+  assert(
+    isPlaceholder(record.googleSelectedCanonical),
+    "draft googleSelectedCanonical must remain a replacement placeholder",
+  );
+  assert(
+    record.requestIndexing.attempted === false && record.requestIndexing.outcome === "not_attempted",
+    "draft must not claim request-indexing submission",
+  );
+  assert(
+    GITHUB_RUN_ID_PATTERN.test(record.siteEvidence.productionSeoEvidenceRunId),
+    "draft productionSeoEvidenceRunId must be numeric when generated from an artifact",
+  );
+  assert(
+    GITHUB_SHA_PATTERN.test(record.siteEvidence.productionSeoEvidenceCommitSha),
+    "draft productionSeoEvidenceCommitSha must be a 40-character SHA when generated from an artifact",
+  );
+  assert(
+    record.screenshots.every((screenshot) => isPlaceholder(screenshot.pathOrUrl)),
+    "draft screenshots must remain placeholders until manual GSC screenshots are attached",
+  );
+  assert(record.notes.includes("AI filled public site evidence"), "draft notes must explain the public/private evidence boundary");
+}
+
 function validateRecorded(record) {
   assert(record.recordStatus === "recorded", "real GSC indexing records must use recordStatus: recorded");
   assert(ISO_TIMESTAMP_PATTERN.test(record.recordedAt), "recordedAt must be an ISO timestamp");
@@ -96,7 +125,10 @@ function validateRecorded(record) {
 
 function validateRecord(record) {
   assert(record.evidenceType === EVIDENCE_TYPE, "GSC indexing record evidenceType changed unexpectedly");
-  assert(record.recordStatus === "template" || record.recordStatus === "recorded", "recordStatus must be template or recorded");
+  assert(
+    record.recordStatus === "template" || record.recordStatus === "draft" || record.recordStatus === "recorded",
+    "recordStatus must be template, draft, or recorded",
+  );
   assert(record.property?.type === "url-prefix" || record.property?.type === "domain", "property.type must be url-prefix or domain");
   parseUrl(record.property.url, "property.url");
   parseUrl(record.inspectedUrl, "inspectedUrl");
@@ -141,6 +173,8 @@ function validateRecord(record) {
 
   if (record.recordStatus === "template") {
     validateTemplate(record);
+  } else if (record.recordStatus === "draft") {
+    validateDraft(record);
   } else {
     validateRecorded(record);
   }

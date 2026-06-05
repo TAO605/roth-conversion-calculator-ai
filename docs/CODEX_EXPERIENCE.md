@@ -1562,3 +1562,29 @@ Run the GSC indexing record validator tests, SEO monitoring tests, release-note 
 **Future trigger words:**
 
 URL Inspection screenshot; Page indexing status; discovered currently not indexed; Google-selected canonical; request indexing result; GSC indexing record; private Search Console state
+
+### 2026-06-05 - GSC indexing draft records need public/private evidence separation
+
+**Symptom:**
+
+Creating a Search Console indexing record from scratch wastes review time and tempts automation to overstate private GSC UI status.
+
+**Root cause:**
+
+Public production SEO evidence can be machine-read from artifacts, but indexing status, Google-selected canonical, request-indexing messages, and screenshots are private GSC observations that must be copied by a reviewer.
+
+**Fix:**
+
+Added `npm run seo:gsc-indexing-record-draft` to prefill public evidence and keep private GSC fields as placeholders under `recordStatus: "draft"`.
+
+**Guard:**
+
+The validator accepts `draft` only when it keeps private GSC fields unclaimed, and it still requires real timestamps, reviewer identity, status, canonical, screenshot, and notes before `recorded`.
+
+**Validation:**
+
+Run the draft generator test, GSC indexing record validator, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+generate GSC record; indexing draft; Search Console evidence from artifact; do not infer GSC status; URL Inspection private field

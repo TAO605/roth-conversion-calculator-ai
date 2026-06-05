@@ -1,4 +1,4 @@
-import { expect, type Locator, test } from "@playwright/test";
+import { expect, type Locator, type Page, test } from "@playwright/test";
 
 async function fillAndConfirm(locator: Locator, value: string) {
   await locator.click();
@@ -12,6 +12,21 @@ async function fillAndConfirm(locator: Locator, value: string) {
     await locator.press(process.platform === "darwin" ? "Meta+A" : "Control+A");
     await locator.pressSequentially(value);
     await expect(locator).toHaveValue(value);
+  }
+}
+
+async function gotoStable(page: Page, url: string) {
+  try {
+    await page.goto(url);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+
+    if (!message.includes("is interrupted by another navigation")) {
+      throw error;
+    }
+
+    await page.waitForLoadState("domcontentloaded").catch(() => undefined);
+    await page.goto(url);
   }
 }
 
@@ -59,11 +74,11 @@ test("mobile viewport keeps the primary calculator path usable", async ({ page }
 });
 
 test("SEO content pages expose crawlable headings and calculator links", async ({ page }) => {
-  await page.goto("/blog/roth-conversion-tax-brackets-2026");
+  await gotoStable(page, "/blog/roth-conversion-tax-brackets-2026");
   await expect(page.getByRole("heading", { name: /Roth Conversion Tax Brackets in 2026/i })).toBeVisible();
   await expect(page.locator('script[type="application/ld+json"]').first()).toBeAttached();
 
-  await page.goto("/states/california");
+  await gotoStable(page, "/states/california");
   await expect(page.getByRole("heading", { name: /California/i })).toBeVisible();
   await expect(page.getByRole("link", { name: "Use this state rate" })).toHaveAttribute("href", /#.+/);
 });

@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 import { describe, expect, it } from "vitest";
 
 const scriptPath = path.join(process.cwd(), "scripts/validate-gsc-indexing-record.mjs");
+const draftScriptPath = path.join(process.cwd(), "scripts/generate-gsc-indexing-record-draft.mjs");
 const templatePath = path.join(process.cwd(), "docs/search-console-indexing-record-template.json");
 
 function runValidator(recordPath: string) {
@@ -33,12 +34,101 @@ describe("GSC indexing record validator", () => {
     expect(packageJson.scripts["seo:gsc-indexing-record-validate"]).toBe(
       "node scripts/validate-gsc-indexing-record.mjs",
     );
+    expect(packageJson.scripts["seo:gsc-indexing-record-draft"]).toBe(
+      "node scripts/generate-gsc-indexing-record-draft.mjs",
+    );
     expect(template.evidenceType).toBe("search-console-indexing-record");
     expect(template.recordStatus).toBe("template");
     expect(template.notes).toContain("Do not infer private GSC state from site-side evidence");
     expect(output).toMatchObject({
       ok: true,
       recordStatus: "template",
+      siteEvidenceLinked: true,
+    });
+  });
+
+  it("generates and validates an AI-assisted draft from a production SEO artifact", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "gsc-indexing-record-draft-"));
+    const artifactDir = path.join(tempDir, "artifact");
+    const recordPath = path.join(tempDir, "draft.json");
+
+    fs.mkdirSync(artifactDir);
+    fs.writeFileSync(
+      path.join(artifactDir, "seo-evidence-manifest.json"),
+      JSON.stringify(
+        {
+          gitHubRunId: "27010627659",
+          gitHubSha: "c8d1be09a42468cd2088d3206b4b2cf417e8869b",
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    fs.writeFileSync(
+      path.join(artifactDir, "seo-evidence-validation-result.json"),
+      JSON.stringify(
+        {
+          gscPriorityUrlCount: 6,
+          htmlQualityPageCount: 121,
+          internalLinkCheckedUrlCount: 121,
+          ok: true,
+          searchConsoleVerificationOk: true,
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    fs.writeFileSync(
+      path.join(artifactDir, "seo-evidence-manifest-validation-result.json"),
+      JSON.stringify({ ok: true }, null, 2),
+      "utf8",
+    );
+
+    const draftOutput = execFileSync(
+      "node",
+      [
+        draftScriptPath,
+        "--url",
+        "https://www.roth-conversion-calculator-ai.shop/seo-monitoring",
+        "--artifact",
+        artifactDir,
+        "--out",
+        recordPath,
+      ],
+      {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      },
+    );
+    const draft = JSON.parse(draftOutput) as {
+      googleSelectedCanonical: string;
+      notes: string;
+      recordStatus: string;
+      siteEvidence: {
+        productionSeoEvidenceRunId: string;
+        productionSeoEvidenceCommitSha: string;
+        searchConsoleVerificationOk: boolean;
+      };
+    };
+    const validationOutput = JSON.parse(runValidator(recordPath)) as {
+      ok: boolean;
+      recordStatus: string;
+      siteEvidenceLinked: boolean;
+    };
+
+    expect(draft.recordStatus).toBe("draft");
+    expect(draft.googleSelectedCanonical).toBe("REPLACE_WITH_GSC_VALUE_OR_EMPTY");
+    expect(draft.notes).toContain("AI filled public site evidence");
+    expect(draft.siteEvidence).toMatchObject({
+      productionSeoEvidenceRunId: "27010627659",
+      productionSeoEvidenceCommitSha: "c8d1be09a42468cd2088d3206b4b2cf417e8869b",
+      searchConsoleVerificationOk: true,
+    });
+    expect(validationOutput).toMatchObject({
+      ok: true,
+      recordStatus: "draft",
       siteEvidenceLinked: true,
     });
   });

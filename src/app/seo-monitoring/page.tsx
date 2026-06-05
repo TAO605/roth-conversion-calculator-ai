@@ -142,7 +142,11 @@ export default function SeoMonitoringPage() {
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               Use <span className="font-mono">docs/search-console-indexing-record-template.json</span> after manual
-              URL Inspection or Page indexing review. Validate the filled record with{" "}
+              URL Inspection or Page indexing review. Generate a prefilled draft with{" "}
+              <span className="font-mono">
+                npm run seo:gsc-indexing-record-draft -- --url https://www.roth-conversion-calculator-ai.shop/seo-monitoring --artifact tmp-round107-final-artifact --out docs/search-console-indexing-record-draft.json
+              </span>
+              , then validate the filled record with{" "}
               <span className="font-mono">npm run seo:gsc-indexing-record-validate -- path/to/record.json</span> before
               attaching it to a Search Console retry note. Site-side evidence can support the record, but it must not
               infer private Google Search Console status.
