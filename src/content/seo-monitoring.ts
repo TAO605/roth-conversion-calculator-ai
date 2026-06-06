@@ -462,7 +462,7 @@ export function buildSearchConsoleQueryOpportunityRecordTemplate(): SearchConsol
       source: "Content operations",
       requiredWhen: "Always",
       validation:
-        "Use needs_review, planned, published, deferred, or rejected so query observations become an auditable backlog instead of ad hoc keyword chasing.",
+        "Use needs_review, planned, published, deferred, or rejected so query observations become an auditable backlog instead of ad hoc keyword chasing. Run npm run seo:gsc-query-opportunity-backlog to summarize local query records by status, risk, cluster, and next action before content planning.",
     },
   ];
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
+import { buildGscQueryOpportunityBacklogSummary } from "../../scripts/gsc-query-opportunity-backlog-summary.mjs";
 import { buildGscQueryOpportunityDraft, pickGscQueryOpportunityCluster } from "../../scripts/generate-gsc-query-opportunity-draft.mjs";
 import { buildGscQueryOpportunityReadiness } from "../../scripts/gsc-query-opportunity-readiness.mjs";
 import { validateGscQueryOpportunityRecord } from "../../scripts/validate-gsc-query-opportunity-record.mjs";
@@ -82,6 +83,40 @@ describe("GSC query opportunity record validator", () => {
     });
     expect(validateGscQueryOpportunityRecord(draft).ok).toBe(true);
     expect(buildGscQueryOpportunityReadiness(draft).readyForRecordedEvidence).toBe(false);
+  });
+
+  it("summarizes query opportunity records into a review-gated backlog", () => {
+    const { draft } = buildGscQueryOpportunityDraft({
+      averagePosition: "12.3",
+      clicks: "1",
+      ctr: "5",
+      dateEnd: "2026-06-05",
+      dateStart: "2026-06-01",
+      evidencePath: "docs/evidence/gsc-query-state-tax.png",
+      impressions: "20",
+      owner: "SEO/content",
+      query: "roth conversion state tax calculator",
+      sourceType: "gsc_screenshot",
+      templatePath: "docs/search-console-query-opportunity-template.json",
+    });
+    const template = JSON.parse(
+      fs.readFileSync(path.join(process.cwd(), "docs/search-console-query-opportunity-template.json"), "utf8"),
+    );
+    const summary = buildGscQueryOpportunityBacklogSummary([template, draft]);
+
+    expect(summary).toMatchObject({
+      ok: true,
+      recordCount: 2,
+      actionableCount: 1,
+      byRecordStatus: { template: 1, draft: 1 },
+      byRiskLevel: { review: 1, professional: 1 },
+      templateOnly: false,
+    });
+    expect(summary.actionableRecords[0]).toMatchObject({
+      matchedCluster: "State and filing-status questions",
+      query: "roth conversion state tax calculator",
+      readyForRecordedEvidence: false,
+    });
   });
 
   it("maps observed queries to the nearest safe opportunity cluster", () => {

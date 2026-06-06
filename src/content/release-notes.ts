@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.165",
+    date: "2026-06-06",
+    type: "patch",
+    title: "Search Console query opportunity backlog",
+    summary:
+      "Added a GSC query opportunity backlog summary command that inventories local template, draft, and recorded query records by status, risk, cluster, priority score, and next action before content planning.",
+    affectedArea:
+      "Search Console query opportunity backlog command, SEO monitoring playbook, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the query opportunity backlog summary command and related SEO monitoring copy, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.164",
     date: "2026-06-06",
     type: "patch",

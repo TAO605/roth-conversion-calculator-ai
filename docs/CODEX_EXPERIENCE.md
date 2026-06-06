@@ -1771,6 +1771,32 @@ Run the draft command, GSC query opportunity tests, SEO monitoring tests, releas
 
 GSC query draft; Search Console query row draft; AI fill query opportunity; query cluster mapping; draft from GSC screenshot; query opportunity generator
 
+### 2026-06-06 - Query opportunity records need backlog summarization
+
+**Symptom:**
+
+Individual query opportunity templates, drafts, and recorded files can become scattered JSON records without a single view of status, risk, cluster, priority, and next action.
+
+**Root cause:**
+
+The workflow had creation, validation, readiness, and draft generation, but no deterministic local inventory step before content planning.
+
+**Fix:**
+
+Added `npm run seo:gsc-query-opportunity-backlog` to summarize local query records into counts, risk distribution, cluster distribution, actionable records, priority scores, missing reviewer fields, and next actions.
+
+**Guard:**
+
+Tests require the backlog summary to separate template-only state from actionable draft or recorded records and preserve review-gated status before content work.
+
+**Validation:**
+
+Run the backlog command, GSC query opportunity tests, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+GSC query backlog; query opportunity inventory; Search Console query planning; keyword backlog summary; query records summary; content planning from GSC records
+
 ### 2026-06-06 - Helpful-content fixes need source identity and live guard closure
 
 **Symptom:**

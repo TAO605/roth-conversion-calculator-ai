@@ -115,4 +115,6 @@
 - [done] Add GSC query opportunity record template and validator
 - [done] Add GSC query opportunity missing-field readiness command
 - [done] Add AI-assisted GSC query opportunity draft generator
+- [done] Add GSC query opportunity backlog summary command
 - [done] Add methodology related-reference internal links for helpful-content guard
+- [done] Add methodology WebPage and BreadcrumbList structured data

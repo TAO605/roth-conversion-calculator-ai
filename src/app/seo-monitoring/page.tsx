@@ -485,8 +485,10 @@ export default function SeoMonitoringPage() {
               <span className="font-mono">
                 npm run seo:gsc-query-opportunity-validate -- path/to/query-record.json
               </span>{" "}
-              before using it for metadata, internal-link, guide-refresh, or professional-review work. The record keeps
-              GSC query observations private and prevents keyword data from turning into personal tax advice.
+              before using it for metadata, internal-link, guide-refresh, or professional-review work. Run{" "}
+              <span className="font-mono">npm run seo:gsc-query-opportunity-backlog</span> to summarize local query
+              records by status, risk, cluster, and next action before content planning. The record keeps GSC query
+              observations private and prevents keyword data from turning into personal tax advice.
             </p>
           </div>
           <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-systemBlue">
