@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.164",
+    date: "2026-06-06",
+    type: "patch",
+    title: "Search Console query opportunity drafts",
+    summary:
+      "Added an AI-assisted GSC query opportunity draft generator that maps reviewer-supplied Search Console query rows to safe clusters, target surfaces, actions, review gates, and draft records without fetching private GSC data.",
+    affectedArea:
+      "Search Console query opportunity draft generator, SEO monitoring playbook, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the query opportunity draft generator and related SEO monitoring copy, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.163",
     date: "2026-06-06",
     type: "patch",

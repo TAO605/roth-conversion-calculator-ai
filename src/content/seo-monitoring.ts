@@ -399,7 +399,7 @@ export function buildSearchConsoleQueryOpportunityRecordTemplate(): SearchConsol
       source: "Reviewer",
       requiredWhen: "Always",
       validation:
-        "Use docs/search-console-query-opportunity-template.json with recordStatus template before capture, draft after AI has filled public context, npm run seo:gsc-query-opportunity-ready to list missing reviewer fields, recorded only after a real GSC query row or screenshot is attached, and npm run seo:gsc-query-opportunity-validate before content work begins.",
+        "Use docs/search-console-query-opportunity-template.json with recordStatus template before capture, npm run seo:gsc-query-opportunity-draft after a reviewer supplies a real query row, npm run seo:gsc-query-opportunity-ready to list missing reviewer fields, recorded only after a real GSC query row or screenshot is attached, and npm run seo:gsc-query-opportunity-validate before content work begins.",
     },
     {
       field: "source",
@@ -427,7 +427,7 @@ export function buildSearchConsoleQueryOpportunityRecordTemplate(): SearchConsol
       source: "Query opportunity matrix",
       requiredWhen: "Recorded status",
       validation:
-        "Map the query to an existing safe cluster such as core calculator, bracket room, hidden tax interaction, payment, state, or CPA handoff before choosing a content action.",
+        "Map the query to an existing safe cluster such as core calculator, bracket room, hidden tax interaction, payment, state, or CPA handoff before choosing a content action. The draft generator can prefill this from the reviewer-supplied query, but the reviewer still confirms it before publication work.",
     },
     {
       field: "recommendedAction",

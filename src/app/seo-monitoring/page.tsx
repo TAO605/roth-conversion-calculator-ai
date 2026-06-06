@@ -472,7 +472,11 @@ export default function SeoMonitoringPage() {
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               Use <span className="font-mono">docs/search-console-query-opportunity-template.json</span> after a
-              Search Console Performance export or screenshot. Run{" "}
+              Search Console Performance export or screenshot. Once a reviewer supplies a real query row, run{" "}
+              <span className="font-mono">
+                npm run seo:gsc-query-opportunity-draft -- --query "roth conversion irmaa impact" --start 2026-06-01 --end 2026-06-05 --impressions 44 --clicks 2 --ctr 4.5 --position 9.4 --evidence docs/evidence/gsc-query.png --out docs/search-console-query-opportunity-draft.json
+              </span>{" "}
+              to draft the safe cluster, intent, target surface, action, and review gate. Then run{" "}
               <span className="font-mono">
                 npm run seo:gsc-query-opportunity-ready -- path/to/query-record.json
               </span>{" "}

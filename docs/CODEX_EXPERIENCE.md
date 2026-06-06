@@ -1744,3 +1744,55 @@ Run live route checks for `/`, `/release-notes`, and `/seo-monitoring`, then run
 **Future trigger words:**
 
 Vercel alias stale; production domain old build; release-notes 404 after deploy; seo-monitoring 404; homepage JSON-LD count dropped; structured-data evidence alias failure
+
+### 2026-06-06 - Query rows need an AI draft step before recorded evidence
+
+**Symptom:**
+
+The query opportunity template and readiness command showed what was missing, but a reviewer-supplied GSC query row still had to be manually mapped to cluster, intent, target surface, action, risk, and review gate.
+
+**Root cause:**
+
+The workflow separated AI-fillable fields from private reviewer fields, but it did not yet provide a deterministic way for AI to fill those fields after the reviewer supplies the real query row.
+
+**Fix:**
+
+Added `npm run seo:gsc-query-opportunity-draft` to generate draft records from reviewer-supplied query rows, optional metrics, evidence paths, and production SEO artifacts.
+
+**Guard:**
+
+Tests require query-to-cluster mapping, safe non-advisory action text, draft validation, and readiness remaining false until reviewer-controlled evidence fields are accepted.
+
+**Validation:**
+
+Run the draft command, GSC query opportunity tests, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+GSC query draft; Search Console query row draft; AI fill query opportunity; query cluster mapping; draft from GSC screenshot; query opportunity generator
+
+### 2026-06-06 - Helpful-content fixes need source identity and live guard closure
+
+**Symptom:**
+
+A cross-site helpful-content guard found Roth `/methodology` had enough references but too few internal continuation links for users and crawlers.
+
+**Root cause:**
+
+The page explained formulas and external IRS sources but did not connect users to the local assumption guide, bracket tables, examples, or professional review handoff. A previous wrong-source deployment also showed that a correct content patch can become dangerous if deployed from an incomplete local source tree.
+
+**Fix:**
+
+Added a related-reference section to `src/app/methodology/page.tsx` linking to `/calculator-assumptions-guide`, `/tax-brackets/2026`, `/examples`, and `/cpa-review-checklist`, then deployed only after confirming `.vercel/project.json` was bound to `roth-conversion-calculator-ai`.
+
+**Guard:**
+
+Use the global helpful-content guard for live closure and confirm local build output before deployment. For Roth production deploys, also confirm the source tree generates the expected full static page count and the live sitemap remains at 121 URLs after deployment.
+
+**Validation:**
+
+`npm run build` passed with 131 static pages; `npm test` passed with 113 files / 327 tests; local built `/methodology` retained 7 internal links and all four expected related links; post-deploy `live-three-site-seo-check.mjs` passed 54/54 and `helpful-content-signal-check.mjs` passed 114/114.
+
+**Future trigger words:**
+
+helpful-content internal links; Roth methodology thin link graph; wrong Roth source; sitemap dropped after deploy; deploy source identity; related-reference links
