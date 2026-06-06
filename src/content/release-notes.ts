@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.169",
+    date: "2026-06-06",
+    type: "patch",
+    title: "GSC validation action evidence",
+    summary:
+      "Added a sanitized Google Search Console validation-action record validator so Page indexing Validate fix actions can be recorded without syncing account UI, cookies, tokens, or raw private GSC text.",
+    affectedArea:
+      "GSC validation action evidence command, SEO monitoring playbook, release notes, feature registry, task tracking, and progress documentation",
+    rollbackPath:
+      "Remove the GSC validation action validator command and SEO monitoring section, then revert the release note, feature registry version, task, progress, and validation-action evidence updates.",
+  },
+  {
     version: "1.0.168",
     date: "2026-06-06",
     type: "patch",

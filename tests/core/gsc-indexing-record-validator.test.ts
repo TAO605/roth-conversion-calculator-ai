@@ -9,7 +9,12 @@ const draftScriptPath = path.join(process.cwd(), "scripts/generate-gsc-indexing-
 const readinessScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-record-readiness.mjs");
 const summaryScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-record-summary.mjs");
 const manifestScriptPath = path.join(process.cwd(), "scripts/generate-gsc-indexing-records-manifest.mjs");
+const validationActionScriptPath = path.join(process.cwd(), "scripts/validate-gsc-validation-action.mjs");
 const templatePath = path.join(process.cwd(), "docs/search-console-indexing-record-template.json");
+const validationActionPath = path.join(
+  process.cwd(),
+  "docs/evidence/gsc-discovered-validation-final-2026-06-06.json",
+);
 
 function runValidator(recordPath: string) {
   return execFileSync("node", [scriptPath, recordPath], {
@@ -49,6 +54,9 @@ describe("GSC indexing record validator", () => {
     expect(packageJson.scripts["seo:gsc-indexing-records-manifest"]).toBe(
       "node scripts/generate-gsc-indexing-records-manifest.mjs",
     );
+    expect(packageJson.scripts["seo:gsc-validation-action-validate"]).toBe(
+      "node scripts/validate-gsc-validation-action.mjs",
+    );
     expect(template.evidenceType).toBe("search-console-indexing-record");
     expect(template.recordStatus).toBe("template");
     expect(template.notes).toContain("Do not infer private GSC state from site-side evidence");
@@ -57,6 +65,57 @@ describe("GSC indexing record validator", () => {
       recordStatus: "template",
       siteEvidenceLinked: true,
     });
+  });
+
+  it("validates the sanitized GSC Page indexing validation action record", () => {
+    const output = JSON.parse(
+      execFileSync("node", [validationActionScriptPath, validationActionPath], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ) as {
+      affectedUrlCount: number;
+      ok: boolean;
+      privacyBoundaryRetained: boolean;
+      sampleCount: number;
+      siteEvidenceLinked: boolean;
+      validationStarted: boolean;
+    };
+    const record = JSON.parse(fs.readFileSync(validationActionPath, "utf8")) as {
+      privacyBoundary: string;
+      sampleUrlsObserved: string[];
+      screenshotPath?: string;
+      textExcerpt?: string;
+    };
+
+    expect(output).toMatchObject({
+      affectedUrlCount: 108,
+      ok: true,
+      privacyBoundaryRetained: true,
+      sampleCount: 10,
+      siteEvidenceLinked: true,
+      validationStarted: true,
+    });
+    expect(record.sampleUrlsObserved).toContain("https://www.roth-conversion-calculator-ai.shop/about");
+    expect(record.privacyBoundary).toContain("excludes account identifiers");
+    expect(record).not.toHaveProperty("textExcerpt");
+    expect(record).not.toHaveProperty("screenshotPath");
+  });
+
+  it("rejects GSC validation action records with raw private UI payloads", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "gsc-validation-action-bad-"));
+    const recordPath = path.join(tempDir, "bad.json");
+    const record = JSON.parse(fs.readFileSync(validationActionPath, "utf8"));
+
+    record.textExcerpt = "Google account: taoqi0058@gmail.com";
+    fs.writeFileSync(recordPath, JSON.stringify(record, null, 2), "utf8");
+
+    expect(() =>
+      execFileSync("node", [validationActionScriptPath, recordPath], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ).toThrow(/must not include private account\/session text|must not retain raw private GSC UI text/);
   });
 
   it("reports reviewer-supplied fields still missing from an AI-assisted draft", () => {

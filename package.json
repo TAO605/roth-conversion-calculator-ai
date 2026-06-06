@@ -17,6 +17,7 @@
     "seo:gsc-indexing-record-summary": "node scripts/gsc-indexing-record-summary.mjs",
     "seo:gsc-indexing-records-manifest": "node scripts/generate-gsc-indexing-records-manifest.mjs",
     "seo:gsc-indexing-record-validate": "node scripts/validate-gsc-indexing-record.mjs",
+    "seo:gsc-validation-action-validate": "node scripts/validate-gsc-validation-action.mjs",
     "seo:gsc-query-opportunity-validate": "node scripts/validate-gsc-query-opportunity-record.mjs",
     "seo:gsc-query-opportunity-ready": "node scripts/gsc-query-opportunity-readiness.mjs",
     "seo:gsc-query-opportunity-draft": "node scripts/generate-gsc-query-opportunity-draft.mjs",

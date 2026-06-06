@@ -10,6 +10,7 @@ import {
   buildSearchConsoleQueryOpportunityRecordTemplate,
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
+  buildSearchConsoleValidationActionRecord,
   buildSeoEvidenceArtifactReview,
   buildSeoMonitoringGroups,
   buildSitemapFreshnessEvidence,
@@ -148,6 +149,30 @@ describe("SEO monitoring playbook", () => {
     expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
   });
 
+  it("documents sanitized GSC validation action records for Page indexing validation", () => {
+    const fields = buildSearchConsoleValidationActionRecord();
+    const fieldNames = fields.map((item) => item.field);
+    const combined = fields
+      .map((item) => `${item.field} ${item.source} ${item.requiredWhen} ${item.validation}`)
+      .join(" ");
+
+    expect(fieldNames).toEqual(
+      expect.arrayContaining([
+        "evidenceType",
+        "gscResult.validationStarted",
+        "siteEvidenceLinked",
+        "privacyBoundary",
+      ]),
+    );
+    expect(combined).toContain("seo:gsc-validation-action-validate");
+    expect(combined).toContain("Validation started");
+    expect(combined).toContain("account identifiers");
+    expect(combined).toContain("cookies");
+    expect(combined).toContain("tokens");
+    expect(combined).toContain("screenshot paths");
+    expect(combined).not.toMatch(/best amount|should convert|guaranteed|100% accurate/i);
+  });
+
   it("documents sitemap freshness evidence for priority Search Console URLs", () => {
     const evidence = buildSitemapFreshnessEvidence();
     const paths = evidence.map((item) => item.path);
@@ -177,6 +202,7 @@ describe("SEO monitoring playbook", () => {
         "seo-smoke-result.json",
         "gsc-evidence-result.json",
         "gsc-discovered-sample-evidence-result.json",
+        "docs/evidence/gsc-discovered-validation-final-2026-06-06.json",
         "search-console-verification-evidence-result.json",
         "dns-evidence-result.json",
         "security-headers-evidence-result.json",
@@ -191,13 +217,17 @@ describe("SEO monitoring playbook", () => {
         "seo-evidence-manifest-validation-result.json",
       ]),
     );
-    expect(review.length).toBe(15);
+    expect(review.length).toBe(16);
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("gscDiscoveredSampleCount");
     expect(combined).toContain("sourceIssueState: discovered_not_indexed");
     expect(combined).toContain("failureCount: 0");
     expect(combined).toContain("siteIndex.linkedSampleCount");
     expect(combined).toContain("linked from /site-index");
+    expect(combined).toContain("seo:gsc-validation-action-validate");
+    expect(combined).toContain("validationStarted: true");
+    expect(combined).toContain("validate_fix_started");
+    expect(combined).toContain("raw private UI text");
     expect(combined).toContain("professionalUiScannedFileCount");
     expect(combined).toContain("searchConsoleVerificationOk: true");
     expect(combined).toContain("domainTxtVerified: true");
@@ -365,6 +395,7 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("buildSitemapFreshnessEvidence");
     expect(pageFile).toContain("buildSeoEvidenceArtifactReview");
     expect(pageFile).toContain("buildSearchConsoleIndexingRecordTemplate");
+    expect(pageFile).toContain("buildSearchConsoleValidationActionRecord");
     expect(pageFile).toContain("Search Console submission loop");
     expect(pageFile).toContain("GSC indexing record template");
     expect(pageFile).toContain("seo:gsc-indexing-record-draft");
@@ -372,6 +403,7 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("seo:gsc-indexing-record-summary");
     expect(pageFile).toContain("seo:gsc-indexing-records-manifest");
     expect(pageFile).toContain("seo:gsc-indexing-record-validate");
+    expect(pageFile).toContain("seo:gsc-validation-action-validate");
     expect(pageFile).toContain("Search Console exception queue");
     expect(pageFile).toContain("Indexing retry protocol");
     expect(pageFile).toContain("Sitemap freshness evidence");

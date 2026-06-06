@@ -73,6 +73,13 @@ export interface SearchConsoleIndexingRecordField {
   validation: string;
 }
 
+export interface SearchConsoleValidationActionRecordField {
+  field: string;
+  source: string;
+  requiredWhen: string;
+  validation: string;
+}
+
 export interface SearchConsoleQueryOpportunityRecordField {
   field: string;
   source: string;
@@ -610,6 +617,39 @@ export function buildSearchConsoleIndexingRecordTemplate(): SearchConsoleIndexin
   ];
 }
 
+export function buildSearchConsoleValidationActionRecord(): SearchConsoleValidationActionRecordField[] {
+  return [
+    {
+      field: "evidenceType",
+      source: "Sanitized GSC validation action record",
+      requiredWhen: "Every Page indexing validation action",
+      validation:
+        "Use gsc-indexing-validation-action and validate it with npm run seo:gsc-validation-action-validate before syncing the record.",
+    },
+    {
+      field: "gscResult.validationStarted",
+      source: "Google Search Console Page indexing issue detail",
+      requiredWhen: "After clicking Validate fix",
+      validation:
+        "Must be true only after the issue detail page visibly changes to Validation started with a retained validationStartDate.",
+    },
+    {
+      field: "siteEvidenceLinked",
+      source: "Production technical evidence",
+      requiredWhen: "Before and after GSC validation is started",
+      validation:
+        "Link docs/evidence/gsc-discovered-sample-evidence-2026-06-06.json and require sampleTechnicalEvidenceOk, sampleCount, and siteIndexLinkedSampleCount to match the observed sample URLs.",
+    },
+    {
+      field: "privacyBoundary",
+      source: "Reviewer",
+      requiredWhen: "Always",
+      validation:
+        "State that screenshots stay local when they contain account UI and that the public JSON excludes account identifiers, cookies, tokens, raw private UI text, and screenshot paths.",
+    },
+  ];
+}
+
 export function buildSitemapFreshnessEvidence(): SitemapFreshnessEvidence[] {
   return [
     {
@@ -675,6 +715,16 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
         "The evidence has ok: true, failureCount: 0, sourceIssueState: discovered_not_indexed, siteIndex.linkedSampleCount equal to resultCount, and every sample URL returns 200, appears in sitemap.xml, is linked from /site-index, has no noindex signal, and keeps a self-canonical URL.",
       useBefore:
         "Use before deciding whether a discovered-not-indexed cluster needs a site-side canonical/sitemap fix or should remain in Google crawl-priority monitoring.",
+    },
+    {
+      label: "Confirm GSC validation action record",
+      artifactFile: "docs/evidence/gsc-discovered-validation-final-2026-06-06.json",
+      check:
+        "Review the sanitized Page indexing validation action record after clicking Validate fix in Google Search Console.",
+      passSignal:
+        "The record validates with npm run seo:gsc-validation-action-validate, has evidenceType: gsc-indexing-validation-action, action: validate_fix_started, validationStarted: true, validationStartDate, affectedUrlCount, sampleTechnicalEvidenceOk: true, siteIndexLinkedSampleCount matching sampleCount, and a privacyBoundary excluding account identifiers, cookies, tokens, raw private UI text, and screenshot paths.",
+      useBefore:
+        "Use before treating the GSC Discovered - currently not indexed issue as in validation, before syncing evidence to GitHub, or before scheduling the next GSC follow-up.",
     },
     {
       label: "Confirm Search Console verification signals",
