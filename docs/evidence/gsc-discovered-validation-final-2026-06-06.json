@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "evidenceType": "gsc-indexing-validation-action",
+  "action": "validate_fix_started",
+  "checkedAt": "2026-06-06T06:38:01.887Z",
+  "propertyUrl": "https://www.roth-conversion-calculator-ai.shop/",
+  "issue": {
+    "state": "discovered_not_indexed",
+    "label": "Discovered - currently not indexed",
+    "affectedUrlCount": 108,
+    "firstDetectedDate": "2026-05-29",
+    "lastUpdatedDate": "2026-05-28"
+  },
+  "gscResult": {
+    "validationStarted": true,
+    "validationStartDate": "2026-06-06",
+    "visibleStatusText": "Validation started"
+  },
+  "sampleUrlsObserved": [
+    "https://www.roth-conversion-calculator-ai.shop/2026-roth-conversion-calculator",
+    "https://www.roth-conversion-calculator-ai.shop/about",
+    "https://www.roth-conversion-calculator-ai.shop/accessibility-audit",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios/age-59-and-a-half-to-retirement",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios/already-retired",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios/near-retirement",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios/under-59-and-a-half",
+    "https://www.roth-conversion-calculator-ai.shop/ai-compliance-audit",
+    "https://www.roth-conversion-calculator-ai.shop/basis"
+  ],
+  "siteEvidenceLinked": {
+    "gscDiscoveredSampleEvidence": "docs/evidence/gsc-discovered-sample-evidence-2026-06-06.json",
+    "sampleTechnicalEvidenceOk": true,
+    "sampleCount": 10,
+    "siteIndexLinkedSampleCount": 10
+  },
+  "privacyBoundary": "Screenshot evidence is retained locally only because the GSC UI contains account chrome. This JSON intentionally excludes account identifiers, cookies, tokens, and private UI text."
+}
