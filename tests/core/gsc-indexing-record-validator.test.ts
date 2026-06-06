@@ -8,6 +8,7 @@ const scriptPath = path.join(process.cwd(), "scripts/validate-gsc-indexing-recor
 const draftScriptPath = path.join(process.cwd(), "scripts/generate-gsc-indexing-record-draft.mjs");
 const readinessScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-record-readiness.mjs");
 const summaryScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-record-summary.mjs");
+const manifestScriptPath = path.join(process.cwd(), "scripts/generate-gsc-indexing-records-manifest.mjs");
 const templatePath = path.join(process.cwd(), "docs/search-console-indexing-record-template.json");
 
 function runValidator(recordPath: string) {
@@ -44,6 +45,9 @@ describe("GSC indexing record validator", () => {
     );
     expect(packageJson.scripts["seo:gsc-indexing-record-summary"]).toBe(
       "node scripts/gsc-indexing-record-summary.mjs",
+    );
+    expect(packageJson.scripts["seo:gsc-indexing-records-manifest"]).toBe(
+      "node scripts/generate-gsc-indexing-records-manifest.mjs",
     );
     expect(template.evidenceType).toBe("search-console-indexing-record");
     expect(template.recordStatus).toBe("template");
@@ -222,6 +226,75 @@ describe("GSC indexing record validator", () => {
     expect(output.blockingFields).toEqual(expect.arrayContaining(["recordStatus", "indexingState"]));
     expect(output.summaryMarkdown).toContain("not ready for archive");
     expect(output.summaryMarkdown).toContain("Blocking fields:");
+  });
+
+  it("generates a manifest for archived recorded GSC indexing records and screenshots", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "gsc-indexing-records-manifest-"));
+    const docsDir = path.join(tempDir, "docs");
+    const evidenceDir = path.join(docsDir, "evidence");
+    const recordPath = path.join(docsDir, "search-console-indexing-record-homepage-recorded.json");
+    const screenshotPath = path.join(evidenceDir, "gsc-homepage-indexed-result.png");
+    const outputPath = path.join(docsDir, "gsc-indexing-records-manifest.json");
+    const record = JSON.parse(fs.readFileSync(templatePath, "utf8"));
+
+    fs.mkdirSync(evidenceDir, { recursive: true });
+    fs.writeFileSync(screenshotPath, Buffer.from("fake screenshot bytes"));
+
+    record.recordStatus = "recorded";
+    record.recordedAt = "2026-06-06T02:30:00.000Z";
+    record.recordedBy = "Codex assisted reviewer";
+    record.indexingState = "indexed";
+    record.liveTestState = "can_be_indexed";
+    record.googleSelectedCanonical = "";
+    record.requestIndexing = {
+      attempted: false,
+      attemptedAt: null,
+      exactMessage: "",
+      outcome: "not_attempted",
+    };
+    record.siteEvidence.productionSeoEvidenceRunId = "27049420213";
+    record.siteEvidence.productionSeoEvidenceCommitSha = "d03dc7802e424b202c636e556237ad99fa3ca638";
+    record.screenshots = [
+      {
+        label: "URL Inspection result",
+        pathOrUrl: path.relative(process.cwd(), screenshotPath).replace(/\\/g, "/"),
+      },
+    ];
+    record.notes = "GSC URL Inspection screenshot was archived for homepage indexing evidence.";
+    fs.writeFileSync(recordPath, JSON.stringify(record, null, 2), "utf8");
+
+    const output = JSON.parse(
+      execFileSync(
+        "node",
+        [manifestScriptPath, "--docsDir", docsDir, "--out", outputPath],
+        {
+          cwd: process.cwd(),
+          encoding: "utf8",
+        },
+      ),
+    ) as {
+      ok: boolean;
+      recordCount: number;
+      records: Array<{
+        inspectedUrl: string;
+        ok: boolean;
+        recordStatus: string;
+        screenshotsOk: boolean;
+        screenshots: Array<{ exists: boolean; sha256: string }>;
+      }>;
+    };
+
+    expect(output.ok).toBe(true);
+    expect(output.recordCount).toBe(1);
+    expect(output.records[0]).toMatchObject({
+      inspectedUrl: "https://www.roth-conversion-calculator-ai.shop/seo-monitoring",
+      ok: true,
+      recordStatus: "recorded",
+      screenshotsOk: true,
+    });
+    expect(output.records[0].screenshots[0].exists).toBe(true);
+    expect(output.records[0].screenshots[0].sha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(fs.existsSync(outputPath)).toBe(true);
   });
 
   it("generates and validates an AI-assisted draft from a production SEO artifact", () => {

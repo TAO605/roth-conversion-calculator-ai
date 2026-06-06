@@ -150,7 +150,9 @@ export default function SeoMonitoringPage() {
               <span className="font-mono">npm run seo:gsc-indexing-record-ready -- path/to/record.json</span> to list
               the reviewer-supplied GSC fields still missing, run{" "}
               <span className="font-mono">npm run seo:gsc-indexing-record-summary -- path/to/record.json</span> after
-              the record is completed, then validate the filled record with{" "}
+              the record is completed, run{" "}
+              <span className="font-mono">npm run seo:gsc-indexing-records-manifest</span> to inventory archived
+              records and screenshot hashes, then validate the filled record with{" "}
               <span className="font-mono">npm run seo:gsc-indexing-record-validate -- path/to/record.json</span> before
               attaching it to a Search Console retry note. Site-side evidence can support the record, but it must not
               infer private Google Search Console status.

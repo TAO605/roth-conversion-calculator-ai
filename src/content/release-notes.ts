@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.161",
+    date: "2026-06-06",
+    type: "patch",
+    title: "Search Console indexing records manifest",
+    summary:
+      "Added a GSC indexing records manifest command that inventories recorded URL Inspection evidence and screenshot hashes so archived Search Console proof stays traceable after private screenshots are synced.",
+    affectedArea:
+      "Search Console indexing records manifest command, SEO monitoring playbook, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the manifest command and generated GSC records manifest, then revert the SEO monitoring copy, release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.160",
     date: "2026-06-06",
     type: "patch",

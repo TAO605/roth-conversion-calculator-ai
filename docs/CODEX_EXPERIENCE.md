@@ -1640,3 +1640,29 @@ Run the summary command, GSC indexing record tests, SEO monitoring tests, releas
 **Future trigger words:**
 
 GSC handoff summary; archive indexing record; retry note summary; readyForHandoff; summarize URL Inspection record
+
+### 2026-06-06 - Archived GSC screenshots need a manifest
+
+**Symptom:**
+
+Private Search Console screenshots can be synced successfully but later become hard to audit if paths, byte sizes, or hashes are not tracked.
+
+**Root cause:**
+
+Recorded GSC JSON files reference screenshot paths, but there was no machine-readable inventory proving the screenshot files existed after sync or preserving their content hashes.
+
+**Fix:**
+
+Added `npm run seo:gsc-indexing-records-manifest` to inventory recorded GSC indexing records and screenshot sha256 values.
+
+**Guard:**
+
+Tests generate a temporary recorded GSC record with a screenshot file and require the manifest to return `ok: true`, `recordCount`, screenshot existence, and 64-character sha256 hashes.
+
+**Validation:**
+
+Run the manifest command, GSC indexing record tests, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+GSC evidence manifest; screenshot hash; archived Search Console screenshots; private evidence inventory; GSC record manifest

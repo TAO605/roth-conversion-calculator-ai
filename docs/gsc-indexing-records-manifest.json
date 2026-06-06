@@ -1,0 +1,44 @@
+{
+  "evidenceType": "gsc-indexing-records-manifest",
+  "generatedAt": "2026-06-06T03:05:02.443Z",
+  "ok": true,
+  "recordCount": 1,
+  "records": [
+    {
+      "file": "docs/search-console-indexing-record-homepage-recorded.json",
+      "inspectedUrl": "https://www.roth-conversion-calculator-ai.shop/",
+      "indexingState": "indexed",
+      "liveTestState": "can_be_indexed",
+      "ok": true,
+      "recordSha256": "289febeafc12b61c49f65ab50f544dcd93c04694e69dbd3333b550b8e5a1f01a",
+      "recordStatus": "recorded",
+      "requestIndexingOutcome": "not_attempted",
+      "screenshots": [
+        {
+          "bytes": 198540,
+          "exists": true,
+          "label": "URL Inspection indexed result",
+          "pathOrUrl": "docs/evidence/gsc-homepage-indexed-result.png",
+          "sha256": "10c54bfa4ec6e838a34b5421a1dfdd482ba3ca11c0deaddbdcb7dbcbe729e712"
+        },
+        {
+          "bytes": 93393,
+          "exists": true,
+          "label": "URL Inspection live test FAQ result",
+          "pathOrUrl": "docs/evidence/gsc-homepage-live-faq-result.png",
+          "sha256": "8d2f36ea06b5956d02030befdab01163b7cc52afbda92103698541abb593b219"
+        }
+      ],
+      "screenshotsOk": true,
+      "siteEvidence": {
+        "productionSeoEvidenceRunId": "27049420213",
+        "productionSeoEvidenceCommitSha": "d03dc7802e424b202c636e556237ad99fa3ca638",
+        "gscEvidenceOk": true,
+        "searchConsoleVerificationOk": true,
+        "internalLinkEvidenceOk": true,
+        "htmlQualityEvidenceOk": true
+      }
+    }
+  ],
+  "reviewBoundary": "This manifest inventories archived GSC indexing records and screenshot files; it does not infer private Search Console status beyond the recorded evidence."
+}
