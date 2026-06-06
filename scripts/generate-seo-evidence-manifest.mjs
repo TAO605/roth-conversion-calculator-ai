@@ -4,6 +4,7 @@ import fs from "node:fs";
 const DEFAULT_FILES = [
   "seo-smoke-result.json",
   "gsc-evidence-result.json",
+  "gsc-discovered-sample-evidence-result.json",
   "search-console-verification-evidence-result.json",
   "dns-evidence-result.json",
   "security-headers-evidence-result.json",
@@ -20,7 +21,7 @@ const DEFAULT_FILES = [
   "seo-evidence-manifest.json",
   "seo-evidence-manifest-validation-result.json",
 ];
-const ARTIFACT_SCHEMA_VERSION = "2026-06-05.5";
+const ARTIFACT_SCHEMA_VERSION = "2026-06-05.6";
 
 function fileRecord(filePath) {
   if (filePath === "seo-evidence-manifest.json") {

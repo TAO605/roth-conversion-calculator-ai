@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const DEFAULT_SMOKE_PATH = "seo-smoke-result.json";
 const DEFAULT_GSC_PATH = "gsc-evidence-result.json";
+const DEFAULT_GSC_DISCOVERED_SAMPLE_PATH = "gsc-discovered-sample-evidence-result.json";
 const DEFAULT_SEARCH_CONSOLE_VERIFICATION_PATH = "search-console-verification-evidence-result.json";
 const DEFAULT_DNS_PATH = "dns-evidence-result.json";
 const DEFAULT_SECURITY_HEADERS_PATH = "security-headers-evidence-result.json";
@@ -22,18 +23,19 @@ const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
 const STATIC_STRUCTURED_DATA_PAGE_COUNT = 21;
 const smokePath = process.argv[2] || DEFAULT_SMOKE_PATH;
 const gscPath = process.argv[3] || DEFAULT_GSC_PATH;
-const searchConsoleVerificationPath = process.argv[4] || DEFAULT_SEARCH_CONSOLE_VERIFICATION_PATH;
-const dnsPath = process.argv[5] || DEFAULT_DNS_PATH;
-const securityHeadersPath = process.argv[6] || DEFAULT_SECURITY_HEADERS_PATH;
-const healthPath = process.argv[7] || DEFAULT_HEALTH_PATH;
-const crawlDiscoveryPath = process.argv[8] || DEFAULT_CRAWL_DISCOVERY_PATH;
-const internalLinkPath = process.argv[9] || DEFAULT_INTERNAL_LINK_PATH;
-const htmlQualityPath = process.argv[10] || DEFAULT_HTML_QUALITY_PATH;
-const professionalReviewPacketPath = process.argv[11] || DEFAULT_PROFESSIONAL_REVIEW_PACKET_PATH;
-const performancePath = process.argv[12] || DEFAULT_PERFORMANCE_PATH;
-const structuredDataPath = process.argv[13] || DEFAULT_STRUCTURED_DATA_PATH;
-const blogDiscoveryPath = process.argv[14] || DEFAULT_BLOG_DISCOVERY_PATH;
-const professionalUiPath = process.argv[15] || DEFAULT_PROFESSIONAL_UI_PATH;
+const gscDiscoveredSamplePath = process.argv[4] || DEFAULT_GSC_DISCOVERED_SAMPLE_PATH;
+const searchConsoleVerificationPath = process.argv[5] || DEFAULT_SEARCH_CONSOLE_VERIFICATION_PATH;
+const dnsPath = process.argv[6] || DEFAULT_DNS_PATH;
+const securityHeadersPath = process.argv[7] || DEFAULT_SECURITY_HEADERS_PATH;
+const healthPath = process.argv[8] || DEFAULT_HEALTH_PATH;
+const crawlDiscoveryPath = process.argv[9] || DEFAULT_CRAWL_DISCOVERY_PATH;
+const internalLinkPath = process.argv[10] || DEFAULT_INTERNAL_LINK_PATH;
+const htmlQualityPath = process.argv[11] || DEFAULT_HTML_QUALITY_PATH;
+const professionalReviewPacketPath = process.argv[12] || DEFAULT_PROFESSIONAL_REVIEW_PACKET_PATH;
+const performancePath = process.argv[13] || DEFAULT_PERFORMANCE_PATH;
+const structuredDataPath = process.argv[14] || DEFAULT_STRUCTURED_DATA_PATH;
+const blogDiscoveryPath = process.argv[15] || DEFAULT_BLOG_DISCOVERY_PATH;
+const professionalUiPath = process.argv[16] || DEFAULT_PROFESSIONAL_UI_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -108,6 +110,29 @@ function validateGscEvidence(gsc, expectedBaseUrl) {
     if (freshnessCriticalPaths.has(pathname)) {
       assert(result.lastmodFresh === true, `${pathname} must have lastmodFresh: true`);
     }
+  }
+}
+
+function validateGscDiscoveredSampleEvidence(samples, expectedBaseUrl) {
+  assert(samples.ok === true, "GSC discovered sample evidence must be ok");
+  assert(
+    samples.evidenceType === "gsc-discovered-sample-url-evidence",
+    "GSC discovered sample evidence type changed unexpectedly",
+  );
+  assert(samples.baseUrl === expectedBaseUrl, "GSC discovered sample baseUrl must match SEO smoke baseUrl");
+  assert(samples.sourceIssueState === "discovered_not_indexed", "GSC discovered sample source issue state changed unexpectedly");
+  assert(samples.resultCount >= 1, "GSC discovered sample evidence must include at least one sample URL");
+  assert(samples.failureCount === 0, "GSC discovered sample evidence must have zero failures");
+  assert(Array.isArray(samples.failures) && samples.failures.length === 0, "GSC discovered sample failures must be empty");
+  assert(Array.isArray(samples.results), "GSC discovered sample results must be an array");
+
+  for (const result of samples.results) {
+    assert(result.status === 200, `${result.url} status must be 200`);
+    assert(result.inSitemap === true, `${result.url} must be in sitemap`);
+    assert(result.noindex === false, `${result.url} must not be noindex`);
+    assert(result.ok === true, `${result.url} sample evidence must be ok`);
+    assert(typeof result.canonical === "string" && result.canonical.startsWith(expectedBaseUrl), `${result.url} canonical mismatch`);
+    assert(typeof result.title === "string" && result.title.length > 0, `${result.url} title is missing`);
   }
 }
 
@@ -491,6 +516,7 @@ function validateProfessionalUiEvidence(professionalUi) {
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
+  const gscDiscoveredSamples = readJson(gscDiscoveredSamplePath);
   const searchConsoleVerification = readJson(searchConsoleVerificationPath);
   const dnsEvidence = readJson(dnsPath);
   const securityHeaders = readJson(securityHeadersPath);
@@ -506,6 +532,7 @@ function run() {
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
+  validateGscDiscoveredSampleEvidence(gscDiscoveredSamples, smoke.baseUrl);
   validateSearchConsoleVerificationEvidence(searchConsoleVerification, smoke.baseUrl);
   validateDnsEvidence(dnsEvidence, smoke.baseUrl);
   validateSecurityHeadersEvidence(securityHeaders, smoke.baseUrl);
@@ -525,6 +552,7 @@ function run() {
         artifactFiles: [
           smokePath,
           gscPath,
+          gscDiscoveredSamplePath,
           searchConsoleVerificationPath,
           dnsPath,
           securityHeadersPath,
@@ -542,6 +570,7 @@ function run() {
         blogDiscoveryCount: blogDiscovery.blogPostCount,
         crawlDiscoveryUrlCount: crawlDiscovery.sitemap.urlCount,
         dnsCanonicalOk: dnsEvidence.apexRedirectsToCanonical === true && dnsEvidence.wwwReturnsOk === true,
+        gscDiscoveredSampleCount: gscDiscoveredSamples.resultCount,
         gscPriorityUrlCount: gsc.priorityUrlCount,
         healthEndpointOk: health.checks.healthEndpointOk === true,
         htmlQualityPageCount: htmlQuality.pageCount,

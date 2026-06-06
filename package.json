@@ -21,6 +21,7 @@
     "seo:gsc-query-opportunity-ready": "node scripts/gsc-query-opportunity-readiness.mjs",
     "seo:gsc-query-opportunity-draft": "node scripts/generate-gsc-query-opportunity-draft.mjs",
     "seo:gsc-query-opportunity-backlog": "node scripts/gsc-query-opportunity-backlog-summary.mjs",
+    "seo:gsc-discovered-samples": "node scripts/gsc-discovered-sample-evidence.mjs",
     "seo:dns-evidence": "node scripts/dns-evidence.mjs",
     "seo:security-headers": "node scripts/security-headers-evidence.mjs",
     "seo:health": "node scripts/health-evidence.mjs",

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.167",
+    date: "2026-06-06",
+    type: "patch",
+    title: "GSC discovered sample evidence",
+    summary:
+      "Added a production evidence command for Google Search Console discovered-not-indexed sample URLs so each sample can be checked for status, canonical, sitemap inclusion, noindex, and title before indexing follow-up.",
+    affectedArea:
+      "GSC discovered sample evidence command, SEO Smoke artifact workflow, SEO evidence manifest schema, release notes, task tracking, and progress documentation",
+    rollbackPath:
+      "Remove the GSC discovered sample evidence command and workflow artifact step, restore the previous SEO evidence manifest schema version, then revert the release note, feature registry version, task, and progress updates.",
+  },
+  {
     version: "1.0.166",
     date: "2026-06-06",
     type: "patch",

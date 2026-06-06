@@ -35,6 +35,7 @@ describe("SEO evidence artifact validation", () => {
     expect(packageJson.scripts["seo:structured-data"]).toBe("node scripts/structured-data-evidence.mjs");
     expect(script).toContain("seo-smoke-result.json");
     expect(script).toContain("gsc-evidence-result.json");
+    expect(script).toContain("gsc-discovered-sample-evidence-result.json");
     expect(script).toContain("search-console-verification-evidence-result.json");
     expect(script).toContain("dns-evidence-result.json");
     expect(script).toContain("security-headers-evidence-result.json");
@@ -56,6 +57,8 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("validateStructuredDataEvidence");
     expect(script).toContain("validateBlogDiscoveryEvidence");
     expect(script).toContain("validateDnsEvidence");
+    expect(script).toContain("validateGscDiscoveredSampleEvidence");
+    expect(script).toContain("gscDiscoveredSampleCount");
     expect(script).toContain("validateSearchConsoleVerificationEvidence");
     expect(script).toContain("searchConsoleVerificationOk");
     expect(script).toContain("domainTxtVerified");
@@ -160,6 +163,9 @@ describe("SEO evidence artifact validation", () => {
       "node scripts/search-console-verification-evidence.mjs | tee search-console-verification-evidence-result.json",
     );
     expect(workflow).toContain("node scripts/dns-evidence.mjs | tee dns-evidence-result.json");
+    expect(workflow).toContain(
+      "node scripts/gsc-discovered-sample-evidence.mjs | tee gsc-discovered-sample-evidence-result.json",
+    );
     expect(workflow).toContain("Run security headers evidence check");
     expect(workflow).toContain("node scripts/security-headers-evidence.mjs | tee security-headers-evidence-result.json");
     expect(workflow).toContain("Run health endpoint evidence check");
@@ -185,6 +191,7 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("Validate SEO evidence manifest checksums");
     expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
     expect(manifestScript).toContain("structured-data-evidence-result.json");
+    expect(manifestScript).toContain("gsc-discovered-sample-evidence-result.json");
     expect(manifestScript).toContain("search-console-verification-evidence-result.json");
     expect(manifestScript).toContain("dns-evidence-result.json");
     expect(manifestScript).toContain("security-headers-evidence-result.json");
@@ -216,12 +223,12 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("production-seo-evidence");
     expect(manifestScript).toContain("artifactSchemaVersion");
     expect(manifestScript).toContain("ARTIFACT_SCHEMA_VERSION");
-    expect(manifestScript).toContain("2026-06-05.5");
+    expect(manifestScript).toContain("2026-06-05.6");
     expect(manifestScript).toContain("generatedAt");
     expect(manifestScript).toContain("retentionDays: 30");
     expect(manifestValidator).toContain("validateSeoEvidenceManifest");
     expect(manifestValidator).toContain("EXPECTED_ARTIFACT_SCHEMA_VERSION");
-    expect(manifestValidator).toContain("2026-06-05.5");
+    expect(manifestValidator).toContain("2026-06-05.6");
     expect(manifestValidator).toContain("artifactSchemaVersion");
     expect(manifestValidator).toContain("ISO_TIMESTAMP_PATTERN");
     expect(manifestValidator).toContain("generatedAtRetained");
@@ -259,6 +266,9 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("node scripts/seo-smoke.mjs | tee seo-smoke-result.json");
     expect(workflow).toContain("node scripts/gsc-evidence.mjs | tee gsc-evidence-result.json");
     expect(workflow).toContain(
+      "node scripts/gsc-discovered-sample-evidence.mjs | tee gsc-discovered-sample-evidence-result.json",
+    );
+    expect(workflow).toContain(
       "node scripts/search-console-verification-evidence.mjs | tee search-console-verification-evidence-result.json",
     );
     expect(workflow).toContain("node scripts/dns-evidence.mjs | tee dns-evidence-result.json");
@@ -278,6 +288,7 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
     expect(workflow).toContain("seo-smoke-result.json");
     expect(workflow).toContain("gsc-evidence-result.json");
+    expect(workflow).toContain("gsc-discovered-sample-evidence-result.json");
     expect(workflow).toContain("search-console-verification-evidence-result.json");
     expect(workflow).toContain("dns-evidence-result.json");
     expect(workflow).toContain("security-headers-evidence-result.json");

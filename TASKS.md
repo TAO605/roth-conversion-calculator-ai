@@ -120,3 +120,4 @@
 - [done] Add methodology WebPage and BreadcrumbList structured data
 - [done] Repair methodology related-link production alias regression
 - [done] Record GSC zero-query and discovered-not-indexed evidence, then repair About canonical
+- [done] Add automated GSC discovered-not-indexed sample URL evidence
