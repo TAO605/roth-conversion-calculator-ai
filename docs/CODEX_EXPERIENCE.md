@@ -1718,3 +1718,29 @@ Run the readiness command, GSC query opportunity tests, SEO monitoring tests, re
 **Future trigger words:**
 
 GSC query readiness; missing query fields; AI fill what; query opportunity missing fields; readyForRecordedEvidence; Search Console query backlog readiness
+
+### 2026-06-06 - Production domain can serve an incomplete old Vercel build
+
+**Symptom:**
+
+GitHub Actions SEO Smoke failed at structured-data evidence even though local tests and build passed. The formal domain homepage exposed only two JSON-LD scripts, and operational routes such as `/release-notes` and `/seo-monitoring` returned 404.
+
+**Root cause:**
+
+The production alias was serving an incomplete or stale Vercel production build rather than the current full Next.js site output.
+
+**Fix:**
+
+Re-deployed from the correct project root with `vercel --prod --yes`, confirmed the build generated 131 static pages, and verified the formal domain was re-aliased to the new deployment before re-running GitHub Actions.
+
+**Guard:**
+
+Before treating structured-data failures as code failures, check the formal domain for key operational routes and homepage JSON-LD count, then inspect the Vercel deployment output count and aliases.
+
+**Validation:**
+
+Run live route checks for `/`, `/release-notes`, and `/seo-monitoring`, then run `npm run seo:structured-data`, `npm run seo:smoke`, re-run SEO Smoke in GitHub Actions, download `production-seo-evidence`, and validate the manifest.
+
+**Future trigger words:**
+
+Vercel alias stale; production domain old build; release-notes 404 after deploy; seo-monitoring 404; homepage JSON-LD count dropped; structured-data evidence alias failure
