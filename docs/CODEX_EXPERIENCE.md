@@ -1666,3 +1666,29 @@ Run the manifest command, GSC indexing record tests, SEO monitoring tests, relea
 **Future trigger words:**
 
 GSC evidence manifest; screenshot hash; archived Search Console screenshots; private evidence inventory; GSC record manifest
+
+### 2026-06-06 - GSC query rows need review-gated records
+
+**Symptom:**
+
+Search Console query observations can easily turn into ad hoc keyword chasing or tax-sensitive page changes if they are copied from screenshots directly into content work.
+
+**Root cause:**
+
+The site had a safe query opportunity matrix, but no structured record for a real GSC query row, metrics, evidence path, risk level, review gate, and final content decision.
+
+**Fix:**
+
+Added `docs/search-console-query-opportunity-template.json` and `npm run seo:gsc-query-opportunity-validate` so query observations become review-gated backlog items before metadata, internal-link, guide-refresh, or professional-review work begins.
+
+**Guard:**
+
+The validator accepts empty templates, accepts recorded professional-risk items only when evidence and professional review gates are present, and blocks recommendation or absolute-accuracy phrasing such as best amount, should convert, guaranteed, 100% accurate, optimal conversion, or convert exactly.
+
+**Validation:**
+
+Run the query opportunity record tests, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+GSC query opportunity; Search Console query row; keyword backlog; query screenshot; content action from GSC; CTR opportunity; GSC Performance export

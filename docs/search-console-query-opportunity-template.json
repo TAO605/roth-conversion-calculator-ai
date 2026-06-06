@@ -1,0 +1,41 @@
+{
+  "recordStatus": "template",
+  "source": {
+    "property": "https://www.roth-conversion-calculator-ai.shop/",
+    "dateRange": {
+      "start": "",
+      "end": ""
+    },
+    "exportedAt": "",
+    "sourceType": "gsc_performance_export"
+  },
+  "query": "",
+  "metrics": {
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "averagePosition": null
+  },
+  "matchedCluster": "",
+  "intentSummary": "",
+  "targetSurface": "",
+  "recommendedAction": "",
+  "riskLevel": "review",
+  "reviewGate": "",
+  "evidence": {
+    "screenshotOrExportPath": "",
+    "productionSeoEvidenceRunId": "",
+    "productionSeoEvidenceCommitSha": ""
+  },
+  "decision": {
+    "status": "needs_review",
+    "owner": "",
+    "nextReviewDate": "",
+    "notes": ""
+  },
+  "guardrails": [
+    "Do not turn a query into personal tax advice.",
+    "Do not use best amount, should convert, guaranteed, or 100% accurate phrasing.",
+    "Use professional review before new formulas, tax-year data, state-specific rules, or unsupported tax interactions."
+  ]
+}

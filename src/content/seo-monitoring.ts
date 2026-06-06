@@ -73,6 +73,13 @@ export interface SearchConsoleIndexingRecordField {
   validation: string;
 }
 
+export interface SearchConsoleQueryOpportunityRecordField {
+  field: string;
+  source: string;
+  requiredWhen: string;
+  validation: string;
+}
+
 export interface SeoMonitoringGroup {
   id: SeoMonitoringCadence;
   title: string;
@@ -381,6 +388,81 @@ export function buildSearchConsoleOpportunityMatrix(): SeoQueryOpportunity[] {
         "Turn these queries into handoff checklists, document lists, and review prompts rather than filing instructions for a specific taxpayer.",
       reviewGate: "No personalized filing instructions without qualified professional review.",
       risk: "review",
+    },
+  ];
+}
+
+export function buildSearchConsoleQueryOpportunityRecordTemplate(): SearchConsoleQueryOpportunityRecordField[] {
+  return [
+    {
+      field: "recordStatus",
+      source: "Reviewer",
+      requiredWhen: "Always",
+      validation:
+        "Use docs/search-console-query-opportunity-template.json with recordStatus template before capture, draft after AI has filled public context, recorded only after a real GSC query row or screenshot is attached, and npm run seo:gsc-query-opportunity-validate before content work begins.",
+    },
+    {
+      field: "source",
+      source: "Google Search Console Performance report",
+      requiredWhen: "Always",
+      validation:
+        "Keep the canonical https://www URL-prefix property, date range, exportedAt when available, and sourceType as gsc_performance_export, gsc_screenshot, or manual_gsc_review.",
+    },
+    {
+      field: "query",
+      source: "GSC query row",
+      requiredWhen: "Draft or recorded status",
+      validation:
+        "Copy the observed query exactly enough for review, but do not publish private Search Console exports directly on the site.",
+    },
+    {
+      field: "metrics",
+      source: "GSC Performance report",
+      requiredWhen: "When exported",
+      validation:
+        "Record clicks, impressions, CTR, and average position as non-negative numbers or null when the screenshot does not show the metric.",
+    },
+    {
+      field: "matchedCluster",
+      source: "Query opportunity matrix",
+      requiredWhen: "Recorded status",
+      validation:
+        "Map the query to an existing safe cluster such as core calculator, bracket room, hidden tax interaction, payment, state, or CPA handoff before choosing a content action.",
+    },
+    {
+      field: "recommendedAction",
+      source: "SEO reviewer",
+      requiredWhen: "Recorded status",
+      validation:
+        "Use educational actions such as metadata review, internal-link update, guide refresh, or professional-review handoff. Do not use best amount, should convert, guaranteed, absolute-accuracy, optimal conversion, or convert exactly phrasing.",
+    },
+    {
+      field: "riskLevel",
+      source: "SEO reviewer",
+      requiredWhen: "Always",
+      validation:
+        "Use low, review, or professional. Use professional when the query implies state-specific rules, new formulas, exact tax planning, or unsupported tax interactions.",
+    },
+    {
+      field: "reviewGate",
+      source: "Compliance or professional reviewer",
+      requiredWhen: "Recorded status",
+      validation:
+        "Professional-risk records must explicitly retain professional review before content, calculator logic, tax data, or state-specific modeling changes.",
+    },
+    {
+      field: "evidence",
+      source: "GSC screenshot or export plus production SEO evidence",
+      requiredWhen: "Recorded status",
+      validation:
+        "Attach screenshotOrExportPath and, when used for production work, link the latest production SEO evidence run id and commit SHA.",
+    },
+    {
+      field: "decision",
+      source: "Content operations",
+      requiredWhen: "Always",
+      validation:
+        "Use needs_review, planned, published, deferred, or rejected so query observations become an auditable backlog instead of ad hoc keyword chasing.",
     },
   ];
 }

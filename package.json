@@ -17,6 +17,7 @@
     "seo:gsc-indexing-record-summary": "node scripts/gsc-indexing-record-summary.mjs",
     "seo:gsc-indexing-records-manifest": "node scripts/generate-gsc-indexing-records-manifest.mjs",
     "seo:gsc-indexing-record-validate": "node scripts/validate-gsc-indexing-record.mjs",
+    "seo:gsc-query-opportunity-validate": "node scripts/validate-gsc-query-opportunity-record.mjs",
     "seo:dns-evidence": "node scripts/dns-evidence.mjs",
     "seo:security-headers": "node scripts/security-headers-evidence.mjs",
     "seo:health": "node scripts/health-evidence.mjs",

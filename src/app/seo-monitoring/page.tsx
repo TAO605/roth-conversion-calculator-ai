@@ -3,6 +3,7 @@ import {
   buildSearchConsoleExceptionQueue,
   buildSearchConsoleIndexingRecordTemplate,
   buildSearchConsoleOpportunityMatrix,
+  buildSearchConsoleQueryOpportunityRecordTemplate,
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
   buildSeoEvidenceArtifactReview,
@@ -25,6 +26,7 @@ export default function SeoMonitoringPage() {
   const groups = buildSeoMonitoringGroups();
   const exceptions = buildSearchConsoleExceptionQueue();
   const opportunities = buildSearchConsoleOpportunityMatrix();
+  const queryOpportunityRecordTemplate = buildSearchConsoleQueryOpportunityRecordTemplate();
   const retryProtocol = buildSearchConsoleRetryProtocol();
   const indexingRecordTemplate = buildSearchConsoleIndexingRecordTemplate();
   const searchConsoleSteps = buildSearchConsoleSubmissionLoop();
@@ -452,6 +454,56 @@ export default function SeoMonitoringPage() {
                   <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">
                     {opportunity.reviewGate}
                   </dd>
+                </div>
+              </dl>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
+              GSC query opportunity record
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">
+              Convert Query Rows Into Review-Gated Backlog Items
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              Use <span className="font-mono">docs/search-console-query-opportunity-template.json</span> after a
+              Search Console Performance export or screenshot. Validate the filled record with{" "}
+              <span className="font-mono">
+                npm run seo:gsc-query-opportunity-validate -- path/to/query-record.json
+              </span>{" "}
+              before using it for metadata, internal-link, guide-refresh, or professional-review work. The record keeps
+              GSC query observations private and prevents keyword data from turning into personal tax advice.
+            </p>
+          </div>
+          <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-systemBlue">
+            {queryOpportunityRecordTemplate.length} fields
+          </span>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {queryOpportunityRecordTemplate.map((item) => (
+            <article
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
+              key={item.field}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="font-mono text-sm font-semibold text-neutral-950 dark:text-white">{item.field}</h3>
+                <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 dark:bg-white/10 dark:text-neutral-200">
+                  {item.requiredWhen}
+                </span>
+              </div>
+              <dl className="grid gap-3 text-sm">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
+                  <dt className="font-semibold text-neutral-950 dark:text-white">Source</dt>
+                  <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{item.source}</dd>
+                </div>
+                <div className="rounded-md bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
+                  <dt className="font-semibold">Validation</dt>
+                  <dd className="mt-1 leading-6">{item.validation}</dd>
                 </div>
               </dl>
             </article>

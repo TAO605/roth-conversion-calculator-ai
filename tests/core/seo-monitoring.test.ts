@@ -7,6 +7,7 @@ import {
   buildSearchConsoleExceptionQueue,
   buildSearchConsoleIndexingRecordTemplate,
   buildSearchConsoleOpportunityMatrix,
+  buildSearchConsoleQueryOpportunityRecordTemplate,
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
   buildSeoEvidenceArtifactReview,
@@ -308,6 +309,34 @@ describe("SEO monitoring playbook", () => {
     );
   });
 
+  it("documents a Search Console query opportunity record template with YMYL review gates", () => {
+    const fields = buildSearchConsoleQueryOpportunityRecordTemplate();
+    const fieldNames = fields.map((item) => item.field);
+    const combined = fields
+      .map((item) => `${item.field} ${item.source} ${item.requiredWhen} ${item.validation}`)
+      .join(" ");
+
+    expect(fieldNames).toEqual(
+      expect.arrayContaining([
+        "recordStatus",
+        "source",
+        "query",
+        "metrics",
+        "matchedCluster",
+        "recommendedAction",
+        "riskLevel",
+        "reviewGate",
+        "evidence",
+        "decision",
+      ]),
+    );
+    expect(combined).toContain("docs/search-console-query-opportunity-template.json");
+    expect(combined).toContain("seo:gsc-query-opportunity-validate");
+    expect(combined).toContain("professional review");
+    expect(combined).toContain("needs_review");
+    expect(combined).toContain("Do not use best amount");
+  });
+
   it("exposes SEO monitoring through sitemap, homepage, site index, and LLM discovery", () => {
     const urls = sitemap().map((entry) => entry.url);
     const contentFile = fs.readFileSync(path.join(process.cwd(), "src/content/seo-monitoring.ts"), "utf8");
@@ -322,6 +351,7 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("buildSearchConsoleExceptionQueue");
     expect(pageFile).toContain("buildSearchConsoleSubmissionLoop");
     expect(pageFile).toContain("buildSearchConsoleOpportunityMatrix");
+    expect(pageFile).toContain("buildSearchConsoleQueryOpportunityRecordTemplate");
     expect(pageFile).toContain("buildSearchConsoleRetryProtocol");
     expect(pageFile).toContain("buildSitemapFreshnessEvidence");
     expect(pageFile).toContain("buildSeoEvidenceArtifactReview");
@@ -338,6 +368,8 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("Sitemap freshness evidence");
     expect(pageFile).toContain("SEO evidence artifact review");
     expect(pageFile).toContain("Query opportunity matrix");
+    expect(pageFile).toContain("GSC query opportunity record");
+    expect(pageFile).toContain("seo:gsc-query-opportunity-validate");
     expect(contentFile).toContain("seo:gsc-evidence");
     expect(contentFile).toContain("lastmodFresh");
     expect(homePage).toContain('href="/seo-monitoring"');

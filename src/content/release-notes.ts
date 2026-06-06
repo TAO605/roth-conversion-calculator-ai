@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.162",
+    date: "2026-06-06",
+    type: "patch",
+    title: "Search Console query opportunity records",
+    summary:
+      "Added a GSC query opportunity record template and validator so private Search Console query observations can become review-gated content backlog items without turning keyword data into personal tax advice.",
+    affectedArea:
+      "Search Console query opportunity template, validator command, SEO monitoring playbook, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the query opportunity template and validator command, then revert the SEO monitoring copy, release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.161",
     date: "2026-06-06",
     type: "patch",
