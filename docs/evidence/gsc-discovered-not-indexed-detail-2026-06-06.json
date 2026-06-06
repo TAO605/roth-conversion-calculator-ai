@@ -1,0 +1,30 @@
+{
+  "evidenceType": "gsc-discovered-not-indexed-detail",
+  "ok": true,
+  "capturedAt": "2026-06-06T05:15:41.570Z",
+  "property": "https://www.roth-conversion-calculator-ai.shop/",
+  "report": "Google Search Console Page indexing drilldown",
+  "issue": {
+    "state": "discovered_not_indexed",
+    "visibleLabel": "Discovered - currently not indexed",
+    "affectedPageCount": 108,
+    "firstDetectedVisibleDate": "2026/5/29",
+    "lastCrawlDateForVisibleSamples": "not applicable"
+  },
+  "sampleUrls": [
+    "https://www.roth-conversion-calculator-ai.shop/2026-roth-conversion-calculator",
+    "https://www.roth-conversion-calculator-ai.shop/about",
+    "https://www.roth-conversion-calculator-ai.shop/accessibility-audit",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios/age-59-and-a-half-to-retirement",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios/already-retired",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios/near-retirement",
+    "https://www.roth-conversion-calculator-ai.shop/age-scenarios/under-59-and-a-half",
+    "https://www.roth-conversion-calculator-ai.shop/ai-compliance-audit",
+    "https://www.roth-conversion-calculator-ai.shop/basis"
+  ],
+  "conclusion": "GSC sample rows are valid production URLs that Google has discovered but not crawled yet. Site-side checks should focus on canonical, sitemap, noindex, and internal-link evidence for these samples.",
+  "screenshotPath": "docs/evidence/gsc-discovered-not-indexed-detail-2026-06-06.png",
+  "textEvidencePath": "docs/evidence/gsc-discovered-not-indexed-detail-2026-06-06.txt",
+  "gscUiLanguage": "zh-CN"
+}

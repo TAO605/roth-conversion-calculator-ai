@@ -12,6 +12,7 @@ describe("GSC evidence script", () => {
     expect(packageJson.scripts["seo:gsc-evidence"]).toBe("node scripts/gsc-evidence.mjs");
     expect(script).toContain("GSC_EVIDENCE_BASE_URL");
     expect(script).toContain("https://www.roth-conversion-calculator-ai.shop");
+    expect(script).toContain("/about");
     expect(script).toContain("/seo-monitoring");
     expect(script).toContain("/methodology");
     expect(script).toContain("/tax-data-update");
@@ -29,8 +30,10 @@ describe("GSC evidence script", () => {
 
   it("keeps priority URL pages from inheriting the homepage canonical", () => {
     const methodologyPage = fs.readFileSync(path.join(process.cwd(), "src/app/methodology/page.tsx"), "utf8");
+    const aboutPage = fs.readFileSync(path.join(process.cwd(), "src/app/about/page.tsx"), "utf8");
 
     expect(methodologyPage).toContain('canonical: "/methodology"');
+    expect(aboutPage).toContain('canonical: "/about"');
   });
 
   it("requires fresh sitemap lastmod evidence for recently updated priority pages", () => {

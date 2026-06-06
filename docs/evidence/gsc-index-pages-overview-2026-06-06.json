@@ -1,0 +1,32 @@
+{
+  "evidenceType": "gsc-index-pages-overview",
+  "ok": true,
+  "capturedAt": "2026-06-06T05:12:09.047Z",
+  "property": "https://www.roth-conversion-calculator-ai.shop/",
+  "report": "Google Search Console Page indexing",
+  "lastUpdatedLabel": "2026-05-28, per visible GSC UI",
+  "summary": {
+    "notIndexedPages": 108,
+    "indexedPages": 12,
+    "reasonCount": 1
+  },
+  "topReasons": [
+    {
+      "reason": "Discovered - currently not indexed",
+      "visibleLabelEnglish": "Discovered - currently not indexed",
+      "source": "Google systems",
+      "validationStatus": "Not started",
+      "pageCount": 108
+    }
+  ],
+  "conclusion": "GSC does not show a site-side indexing block in this report. The current SEO priority is crawl/indexing acceleration and evidence monitoring, not query optimization, because Performance has zero query rows.",
+  "nextActions": [
+    "Keep priority URLs in sitemap with fresh lastmod and internal links.",
+    "Use URL Inspection for the homepage and highest-priority routes, not bulk indexing requests.",
+    "Monitor whether Discovered - currently not indexed page count decreases after Google recrawls.",
+    "Only generate GSC query opportunity records after Performance shows impressions/clicks."
+  ],
+  "screenshotPath": "docs/evidence/gsc-index-pages-overview-2026-06-06.png",
+  "textEvidencePath": "docs/evidence/gsc-index-pages-overview-2026-06-06.txt",
+  "gscUiLanguage": "zh-CN"
+}

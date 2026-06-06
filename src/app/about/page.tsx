@@ -1,6 +1,7 @@
 export const metadata = {
   title: "About",
   description: "About the Roth Conversion Calculator educational tool.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {

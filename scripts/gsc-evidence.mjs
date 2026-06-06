@@ -3,6 +3,7 @@ const baseUrl = (process.env.GSC_EVIDENCE_BASE_URL || DEFAULT_BASE_URL).replace(
 
 const priorityPaths = [
   "/",
+  "/about",
   "/seo-monitoring",
   "/methodology",
   "/tax-data-update",

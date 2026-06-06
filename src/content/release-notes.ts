@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.166",
+    date: "2026-06-06",
+    type: "patch",
+    title: "Search Console indexing evidence follow-up",
+    summary:
+      "Captured GSC Performance zero-data and Page indexing evidence, then fixed the About page canonical after the discovered-not-indexed sample check showed it inheriting the homepage canonical.",
+    affectedArea:
+      "About page SEO metadata, GSC priority URL evidence, Search Console evidence archive, release notes, task tracking, and progress documentation",
+    rollbackPath:
+      "Remove the About page canonical metadata, remove /about from the GSC priority URL evidence list, and revert the retained GSC evidence files, release note, task, and progress updates.",
+  },
+  {
     version: "1.0.165",
     date: "2026-06-06",
     type: "patch",

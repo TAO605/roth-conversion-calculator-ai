@@ -118,3 +118,5 @@
 - [done] Add GSC query opportunity backlog summary command
 - [done] Add methodology related-reference internal links for helpful-content guard
 - [done] Add methodology WebPage and BreadcrumbList structured data
+- [done] Repair methodology related-link production alias regression
+- [done] Record GSC zero-query and discovered-not-indexed evidence, then repair About canonical

@@ -1,0 +1,26 @@
+{
+  "evidenceType": "gsc-performance-zero-data",
+  "ok": true,
+  "capturedAt": "2026-06-06T05:10:33.921Z",
+  "property": "https://www.roth-conversion-calculator-ai.shop/",
+  "pageUrl": "https://search.google.com/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fwww.roth-conversion-calculator-ai.shop%2F",
+  "report": "Google Search Console Performance / Search results",
+  "observedDateRangeLabel": "3 months selected in visible GSC UI",
+  "lastUpdatedLabel": "4 hours before capture, per visible GSC UI",
+  "metrics": {
+    "totalClicks": 0,
+    "totalImpressions": 0,
+    "averageCtrText": "0%",
+    "averagePositionText": "0"
+  },
+  "queryTable": {
+    "visibleTab": "queries",
+    "status": "no data",
+    "actionableQueryRows": 0
+  },
+  "conclusion": "No real GSC query rows are available yet, so query-opportunity drafts must remain blocked until clicks/impressions appear or the user supplies an export.",
+  "nextPriority": "Continue indexing coverage work because GSC overview showed indexed pages and not-indexed pages while Performance has no query rows.",
+  "screenshotPath": "docs/evidence/gsc-performance-zero-data-2026-06-06.png",
+  "textEvidencePath": "docs/evidence/gsc-performance-zero-data-2026-06-06.txt",
+  "gscUiLanguage": "zh-CN"
+}
