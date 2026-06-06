@@ -1,0 +1,51 @@
+{
+  "ok": true,
+  "evidenceType": "gsc-indexing-validation-follow-up",
+  "sourceValidationAction": "docs/evidence/gsc-discovered-validation-final-2026-06-06.json",
+  "createdAt": "2026-06-06T07:50:00.000Z",
+  "propertyUrl": "https://www.roth-conversion-calculator-ai.shop/",
+  "issue": {
+    "state": "discovered_not_indexed",
+    "label": "Discovered - currently not indexed",
+    "affectedUrlCountAtValidationStart": 108
+  },
+  "validation": {
+    "started": true,
+    "startDate": "2026-06-06",
+    "initialStatusText": "Validation started"
+  },
+  "followUpPlan": {
+    "firstReviewDate": "2026-06-09",
+    "secondReviewDate": "2026-06-13",
+    "cadence": "Review no more than twice in the first week unless Google Search Console changes the issue state.",
+    "reviewSurface": "Google Search Console Page indexing issue detail for Discovered - currently not indexed"
+  },
+  "reviewChecklist": [
+    "Confirm whether validation status is still started, passed, failed, or waiting for Google systems.",
+    "Record the affected URL count shown in GSC without copying account UI or private session text.",
+    "If sample URLs change, update the sanitized sample evidence and rerun seo:gsc-discovered-samples.",
+    "If GSC shows failed validation, inspect failed sample URLs for status, canonical, sitemap, noindex, internal links, and title coverage before changing content.",
+    "If GSC shows passed validation or affected URLs decrease, record the new sanitized status and wait for Performance query data before keyword backlog work."
+  ],
+  "allowedOutcomes": [
+    "validation_started",
+    "validation_passed",
+    "validation_failed",
+    "validation_waiting",
+    "not_enough_data"
+  ],
+  "blockedActions": [
+    "Do not repeatedly click Validate fix while validation is already started.",
+    "Do not request indexing at scale for all discovered URLs.",
+    "Do not infer Google indexing status from site-side evidence alone.",
+    "Do not sync screenshots that contain visible account UI unless explicitly approved."
+  ],
+  "siteEvidenceRequired": {
+    "technicalSampleEvidence": "docs/evidence/gsc-discovered-sample-evidence-2026-06-06.json",
+    "validationActionEvidence": "docs/evidence/gsc-discovered-validation-final-2026-06-06.json",
+    "technicalSampleEvidenceOk": true,
+    "validationActionEvidenceOk": true
+  },
+  "nextEngineeringAction": "Run npm run seo:gsc-validation-follow-up-validate before GSC follow-up, then update the sanitized evidence only when GSC status or sample URLs change.",
+  "privacyBoundary": "This follow-up plan excludes account identifiers, cookies, tokens, raw private GSC UI text, and screenshot paths."
+}

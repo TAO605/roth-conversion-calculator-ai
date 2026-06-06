@@ -80,6 +80,13 @@ export interface SearchConsoleValidationActionRecordField {
   validation: string;
 }
 
+export interface SearchConsoleValidationFollowUpField {
+  field: string;
+  source: string;
+  requiredWhen: string;
+  validation: string;
+}
+
 export interface SearchConsoleQueryOpportunityRecordField {
   field: string;
   source: string;
@@ -650,6 +657,46 @@ export function buildSearchConsoleValidationActionRecord(): SearchConsoleValidat
   ];
 }
 
+export function buildSearchConsoleValidationFollowUpRecord(): SearchConsoleValidationFollowUpField[] {
+  return [
+    {
+      field: "sourceValidationAction",
+      source: "Sanitized GSC validation action record",
+      requiredWhen: "Every follow-up plan",
+      validation:
+        "Link docs/evidence/gsc-discovered-validation-final-2026-06-06.json so the follow-up plan starts from a validated Validate fix action.",
+    },
+    {
+      field: "followUpPlan",
+      source: "Operations reviewer",
+      requiredWhen: "After Validation started",
+      validation:
+        "Record firstReviewDate, secondReviewDate, cadence, and reviewSurface. Validate with npm run seo:gsc-validation-follow-up-validate before treating the issue as scheduled for follow-up.",
+    },
+    {
+      field: "reviewChecklist",
+      source: "Search Console Page indexing issue detail plus site-side evidence",
+      requiredWhen: "Each GSC follow-up",
+      validation:
+        "Check validation status, affected URL count, changed sample URLs, and failed samples. If sample URLs change, rerun seo:gsc-discovered-samples before editing site code.",
+    },
+    {
+      field: "blockedActions",
+      source: "Google SEO operations boundary",
+      requiredWhen: "Always",
+      validation:
+        "Prevent repeated Validate fix clicks, scaled request-indexing attempts, indexing-status inference from site-side evidence, and syncing account-UI screenshots without explicit approval.",
+    },
+    {
+      field: "privacyBoundary",
+      source: "Reviewer",
+      requiredWhen: "Always",
+      validation:
+        "Public follow-up JSON must exclude account identifiers, cookies, tokens, raw private GSC UI text, and screenshot paths.",
+    },
+  ];
+}
+
 export function buildSitemapFreshnessEvidence(): SitemapFreshnessEvidence[] {
   return [
     {
@@ -725,6 +772,16 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
         "The record validates with npm run seo:gsc-validation-action-validate, has evidenceType: gsc-indexing-validation-action, action: validate_fix_started, validationStarted: true, validationStartDate, affectedUrlCount, sampleTechnicalEvidenceOk: true, siteIndexLinkedSampleCount matching sampleCount, and a privacyBoundary excluding account identifiers, cookies, tokens, raw private UI text, and screenshot paths.",
       useBefore:
         "Use before treating the GSC Discovered - currently not indexed issue as in validation, before syncing evidence to GitHub, or before scheduling the next GSC follow-up.",
+    },
+    {
+      label: "Confirm GSC validation follow-up plan",
+      artifactFile: "docs/evidence/gsc-discovered-validation-follow-up-2026-06-06.json",
+      check:
+        "Review the sanitized follow-up plan after the Page indexing validation action starts, before checking GSC again.",
+      passSignal:
+        "The record validates with npm run seo:gsc-validation-follow-up-validate, has evidenceType: gsc-indexing-validation-follow-up, validation start date, first and second review dates, allowed outcomes, blocked repeated Validate fix actions, linked sample evidence, linked validation-action evidence, and a privacyBoundary excluding account identifiers, cookies, tokens, raw private UI text, and screenshot paths.",
+      useBefore:
+        "Use before returning to GSC after Validation started, before recording validation passed or failed, or before deciding whether changed samples need new site-side evidence.",
     },
     {
       label: "Confirm Search Console verification signals",

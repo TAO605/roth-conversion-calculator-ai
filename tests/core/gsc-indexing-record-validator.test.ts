@@ -10,10 +10,15 @@ const readinessScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-recor
 const summaryScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-record-summary.mjs");
 const manifestScriptPath = path.join(process.cwd(), "scripts/generate-gsc-indexing-records-manifest.mjs");
 const validationActionScriptPath = path.join(process.cwd(), "scripts/validate-gsc-validation-action.mjs");
+const validationFollowUpScriptPath = path.join(process.cwd(), "scripts/validate-gsc-validation-follow-up.mjs");
 const templatePath = path.join(process.cwd(), "docs/search-console-indexing-record-template.json");
 const validationActionPath = path.join(
   process.cwd(),
   "docs/evidence/gsc-discovered-validation-final-2026-06-06.json",
+);
+const validationFollowUpPath = path.join(
+  process.cwd(),
+  "docs/evidence/gsc-discovered-validation-follow-up-2026-06-06.json",
 );
 
 function runValidator(recordPath: string) {
@@ -56,6 +61,9 @@ describe("GSC indexing record validator", () => {
     );
     expect(packageJson.scripts["seo:gsc-validation-action-validate"]).toBe(
       "node scripts/validate-gsc-validation-action.mjs",
+    );
+    expect(packageJson.scripts["seo:gsc-validation-follow-up-validate"]).toBe(
+      "node scripts/validate-gsc-validation-follow-up.mjs",
     );
     expect(template.evidenceType).toBe("search-console-indexing-record");
     expect(template.recordStatus).toBe("template");
@@ -116,6 +124,61 @@ describe("GSC indexing record validator", () => {
         encoding: "utf8",
       }),
     ).toThrow(/must not include private account\/session text|must not retain raw private GSC UI text/);
+  });
+
+  it("validates the sanitized GSC Page indexing validation follow-up plan", () => {
+    const output = JSON.parse(
+      execFileSync("node", [validationFollowUpScriptPath, validationFollowUpPath], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ) as {
+      allowedOutcomeCount: number;
+      blockedActionCount: number;
+      firstReviewDate: string;
+      ok: boolean;
+      privacyBoundaryRetained: boolean;
+      secondReviewDate: string;
+      validationStartDate: string;
+    };
+    const record = JSON.parse(fs.readFileSync(validationFollowUpPath, "utf8")) as {
+      blockedActions: string[];
+      privacyBoundary: string;
+      reviewChecklist: string[];
+      screenshotPath?: string;
+      textExcerpt?: string;
+    };
+
+    expect(output).toMatchObject({
+      allowedOutcomeCount: 5,
+      blockedActionCount: 4,
+      firstReviewDate: "2026-06-09",
+      ok: true,
+      privacyBoundaryRetained: true,
+      secondReviewDate: "2026-06-13",
+      validationStartDate: "2026-06-06",
+    });
+    expect(record.reviewChecklist.join(" ")).toContain("rerun seo:gsc-discovered-samples");
+    expect(record.blockedActions.join(" ")).toContain("Do not repeatedly click Validate fix");
+    expect(record.privacyBoundary).toContain("excludes account identifiers");
+    expect(record).not.toHaveProperty("textExcerpt");
+    expect(record).not.toHaveProperty("screenshotPath");
+  });
+
+  it("rejects GSC validation follow-up plans with real private session fields", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "gsc-validation-follow-up-bad-"));
+    const recordPath = path.join(tempDir, "bad.json");
+    const record = JSON.parse(fs.readFileSync(validationFollowUpPath, "utf8"));
+
+    record.privateDebug = "session_id=abc123";
+    fs.writeFileSync(recordPath, JSON.stringify(record, null, 2), "utf8");
+
+    expect(() =>
+      execFileSync("node", [validationFollowUpScriptPath, recordPath], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ).toThrow(/must not include private account\/session text/);
   });
 
   it("reports reviewer-supplied fields still missing from an AI-assisted draft", () => {

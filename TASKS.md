@@ -123,3 +123,4 @@
 - [done] Add automated GSC discovered-not-indexed sample URL evidence
 - [done] Add site-index internal discovery guard for GSC discovered samples
 - [done] Add sanitized GSC validation action evidence guard
+- [done] Add sanitized GSC validation follow-up plan guard

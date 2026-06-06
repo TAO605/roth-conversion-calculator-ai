@@ -7,6 +7,7 @@ import {
   buildSearchConsoleRetryProtocol,
   buildSearchConsoleSubmissionLoop,
   buildSearchConsoleValidationActionRecord,
+  buildSearchConsoleValidationFollowUpRecord,
   buildSeoEvidenceArtifactReview,
   buildSeoMonitoringGroups,
   buildSitemapFreshnessEvidence,
@@ -31,6 +32,7 @@ export default function SeoMonitoringPage() {
   const retryProtocol = buildSearchConsoleRetryProtocol();
   const indexingRecordTemplate = buildSearchConsoleIndexingRecordTemplate();
   const validationActionRecord = buildSearchConsoleValidationActionRecord();
+  const validationFollowUpRecord = buildSearchConsoleValidationFollowUpRecord();
   const searchConsoleSteps = buildSearchConsoleSubmissionLoop();
   const searchConsoleSources = getSearchConsoleSources();
   const artifactReview = buildSeoEvidenceArtifactReview();
@@ -131,6 +133,53 @@ export default function SeoMonitoringPage() {
             >
               {source.label}
             </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
+              GSC validation follow-up plan
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">
+              Schedule Follow-Up Without Re-clicking Validate Fix
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              Once Page indexing shows <span className="font-mono">Validation started</span>, use{" "}
+              <span className="font-mono">npm run seo:gsc-validation-follow-up-validate</span> to validate the next
+              review window, allowed outcomes, blocked actions, and privacy boundary before returning to Search
+              Console.
+            </p>
+          </div>
+          <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-systemBlue">
+            {validationFollowUpRecord.length} fields
+          </span>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {validationFollowUpRecord.map((item) => (
+            <article
+              className="grid gap-3 rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
+              key={item.field}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="font-mono text-sm font-semibold text-neutral-950 dark:text-white">{item.field}</h3>
+                <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 dark:bg-white/10 dark:text-neutral-200">
+                  {item.requiredWhen}
+                </span>
+              </div>
+              <dl className="grid gap-3 text-sm">
+                <div className="rounded-md bg-neutral-50 p-3 dark:bg-white/10">
+                  <dt className="font-semibold text-neutral-950 dark:text-white">Source</dt>
+                  <dd className="mt-1 leading-6 text-neutral-600 dark:text-neutral-300">{item.source}</dd>
+                </div>
+                <div className="rounded-md bg-emerald-500/10 p-3 text-emerald-800 dark:text-emerald-200">
+                  <dt className="font-semibold">Validation</dt>
+                  <dd className="mt-1 leading-6">{item.validation}</dd>
+                </div>
+              </dl>
+            </article>
           ))}
         </div>
       </section>

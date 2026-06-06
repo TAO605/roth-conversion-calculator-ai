@@ -1822,3 +1822,55 @@ Use the global helpful-content guard for live closure and confirm local build ou
 **Future trigger words:**
 
 helpful-content internal links; Roth methodology thin link graph; wrong Roth source; sitemap dropped after deploy; deploy source identity; related-reference links
+
+### 2026-06-06 - Later production deploys can overwrite live SEO fixes
+
+**Symptom:**
+
+Roth `/methodology` source still contained the helpful related-reference links, but the live page again exposed only one internal link and failed the cross-site helpful-content guard.
+
+**Root cause:**
+
+A newer Vercel production deployment replaced the previously fixed artifact. The problem was not missing source code; it was production alias drift to a build that did not contain the expected changed-page evidence.
+
+**Fix:**
+
+Verified the correct source tree and Vercel project binding, rebuilt the full app, confirmed the expected static page and sitemap counts, then redeployed from `D:\roth-conversion-calculator-ai-github\roth-conversion-calculator-ai-main`.
+
+**Guard:**
+
+After any production deploy that could touch SEO pages, fetch the custom-domain page that was previously fixed and assert the exact changed-page markers, not just generic SEO smoke status.
+
+**Validation:**
+
+`npm run build` generated 131 static pages, sitemap output retained 121 URLs, `npm test` passed 113 files / 330 tests, direct live `/methodology` fetch returned the related-reference heading and all four expected internal links, and global guards passed: helpful-content 114/114, three-site SEO 54/54, route structured data 121/121, homepage performance signal 18/18.
+
+**Future trigger words:**
+
+production alias drift; later deployment overwrote fix; changed-page marker missing; custom domain old artifact; helpful-content regression after deploy; Vercel deploy replaced SEO fix
+
+### 2026-06-06 - GSC validation needs a follow-up plan, not repeated clicks
+
+**Symptom:**
+
+After Google Search Console showed `Validation started` for `Discovered - currently not indexed`, the project had sanitized evidence for the click action but no deterministic schedule for the next review window, allowed outcomes, or blocked actions.
+
+**Root cause:**
+
+The workflow validated the initial `Validate fix` action but still relied on chat memory for when to re-check GSC. A first follow-up validator also used an over-broad `/session/i` privacy pattern that rejected explanatory text containing "private session text".
+
+**Fix:**
+
+Added `docs/evidence/gsc-discovered-validation-follow-up-2026-06-06.json`, `scripts/validate-gsc-validation-follow-up.mjs`, and `npm run seo:gsc-validation-follow-up-validate`. Narrowed sensitive-session detection to real `session_id` or `session_token` field shapes while keeping cookies, tokens, authorization, and password fields blocked.
+
+**Guard:**
+
+Tests now validate the shipped follow-up plan and verify that a real private field such as `session_id=abc123` is rejected. `/seo-monitoring` documents the follow-up plan so reviewers do not repeatedly click `Validate fix` while validation is already in progress.
+
+**Validation:**
+
+Run `npm run seo:gsc-validation-follow-up-validate`, targeted GSC indexing/SEO monitoring/release/feature tests, full Vitest, build, and live `/seo-monitoring` plus `/release-notes` smoke after deployment.
+
+**Future trigger words:**
+
+GSC validation follow-up; Validation started next step; don't click Validate fix again; discovered not indexed review date; Search Console follow-up plan; session privacy false positive

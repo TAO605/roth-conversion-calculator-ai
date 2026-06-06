@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.170",
+    date: "2026-06-06",
+    type: "patch",
+    title: "GSC validation follow-up plan",
+    summary:
+      "Added a sanitized Google Search Console validation follow-up record and validator so Page indexing validation can be reviewed on a planned cadence without repeatedly clicking Validate fix or syncing account UI.",
+    affectedArea:
+      "GSC validation follow-up evidence command, SEO monitoring playbook, release notes, feature registry, task tracking, and progress documentation",
+    rollbackPath:
+      "Remove the GSC validation follow-up validator command, follow-up evidence record, and SEO monitoring section, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.169",
     date: "2026-06-06",
     type: "patch",
