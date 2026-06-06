@@ -7,6 +7,7 @@ import { describe, expect, it } from "vitest";
 const scriptPath = path.join(process.cwd(), "scripts/validate-gsc-indexing-record.mjs");
 const draftScriptPath = path.join(process.cwd(), "scripts/generate-gsc-indexing-record-draft.mjs");
 const readinessScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-record-readiness.mjs");
+const summaryScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-record-summary.mjs");
 const templatePath = path.join(process.cwd(), "docs/search-console-indexing-record-template.json");
 
 function runValidator(recordPath: string) {
@@ -40,6 +41,9 @@ describe("GSC indexing record validator", () => {
     );
     expect(packageJson.scripts["seo:gsc-indexing-record-ready"]).toBe(
       "node scripts/gsc-indexing-record-readiness.mjs",
+    );
+    expect(packageJson.scripts["seo:gsc-indexing-record-summary"]).toBe(
+      "node scripts/gsc-indexing-record-summary.mjs",
     );
     expect(template.evidenceType).toBe("search-console-indexing-record");
     expect(template.recordStatus).toBe("template");
@@ -138,6 +142,86 @@ describe("GSC indexing record validator", () => {
       ok: true,
       readyForRecordedEvidence: true,
     });
+  });
+
+  it("summarizes a recorded URL Inspection record for archive handoff", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "gsc-indexing-record-summary-"));
+    const recordPath = path.join(tempDir, "recorded.json");
+    const record = JSON.parse(fs.readFileSync(templatePath, "utf8"));
+
+    record.recordStatus = "recorded";
+    record.recordedAt = "2026-06-06T01:50:00.000Z";
+    record.recordedBy = "Codex assisted reviewer";
+    record.indexingState = "indexed";
+    record.liveTestState = "can_be_indexed";
+    record.googleSelectedCanonical = "https://www.roth-conversion-calculator-ai.shop/seo-monitoring";
+    record.requestIndexing = {
+      attempted: true,
+      attemptedAt: "2026-06-06T01:51:00.000Z",
+      exactMessage: "Request indexing submitted.",
+      outcome: "submitted",
+    };
+    record.siteEvidence.productionSeoEvidenceRunId = "27049063159";
+    record.siteEvidence.productionSeoEvidenceCommitSha = "15f717e77e785e5aed95d044eec2b731abae568b";
+    record.screenshots = [
+      {
+        label: "URL Inspection result",
+        pathOrUrl: "C:/Users/86189/Documents/gsc-url-inspection-seo-monitoring.png",
+      },
+    ];
+    record.notes = "GSC URL Inspection was manually reviewed and copied for archive handoff.";
+    fs.writeFileSync(recordPath, JSON.stringify(record, null, 2), "utf8");
+
+    const output = JSON.parse(
+      execFileSync("node", [summaryScriptPath, recordPath], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ) as {
+      blockingFields: string[];
+      ok: boolean;
+      readyForHandoff: boolean;
+      summaryMarkdown: string;
+    };
+
+    expect(output).toMatchObject({
+      blockingFields: [],
+      ok: true,
+      readyForHandoff: true,
+    });
+    expect(output.summaryMarkdown).toContain("GSC indexing record for https://www.roth-conversion-calculator-ai.shop/seo-monitoring is ready");
+    expect(output.summaryMarkdown).toContain("Status: indexed; live test: can_be_indexed");
+    expect(output.summaryMarkdown).toContain("run 27049063159");
+    expect(output.summaryMarkdown).not.toMatch(/inferred|guaranteed|100% accurate/i);
+  });
+
+  it("keeps draft summaries marked as not ready without inferring GSC status", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "gsc-indexing-record-summary-draft-"));
+    const recordPath = path.join(tempDir, "draft.json");
+    const record = JSON.parse(fs.readFileSync(templatePath, "utf8"));
+
+    record.recordStatus = "draft";
+    record.recordedAt = "2026-06-06T01:50:00.000Z";
+    record.recordedBy = "AI-assisted draft";
+    record.siteEvidence.productionSeoEvidenceRunId = "27049063159";
+    record.siteEvidence.productionSeoEvidenceCommitSha = "15f717e77e785e5aed95d044eec2b731abae568b";
+    fs.writeFileSync(recordPath, JSON.stringify(record, null, 2), "utf8");
+
+    const output = JSON.parse(
+      execFileSync("node", [summaryScriptPath, recordPath], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ) as {
+      blockingFields: string[];
+      readyForHandoff: boolean;
+      summaryMarkdown: string;
+    };
+
+    expect(output.readyForHandoff).toBe(false);
+    expect(output.blockingFields).toEqual(expect.arrayContaining(["recordStatus", "indexingState"]));
+    expect(output.summaryMarkdown).toContain("not ready for archive");
+    expect(output.summaryMarkdown).toContain("Blocking fields:");
   });
 
   it("generates and validates an AI-assisted draft from a production SEO artifact", () => {

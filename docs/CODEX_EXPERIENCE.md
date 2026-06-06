@@ -1614,3 +1614,29 @@ Run the readiness command, GSC indexing record tests, SEO monitoring tests, rele
 **Future trigger words:**
 
 what is missing in GSC record; indexing record readiness; readyForRecordedEvidence; missingReviewerFields; Search Console retry note checklist
+
+### 2026-06-06 - Completed GSC indexing records need archive-safe summaries
+
+**Symptom:**
+
+After a reviewer fills a GSC indexing record, the evidence still needs to be copied into progress notes, retry notes, or incident handoff text without accidentally adding interpretation.
+
+**Root cause:**
+
+The draft and readiness tools prepare the record, but there was no machine-generated summary that restates recorded fields and blocks incomplete drafts from sounding final.
+
+**Fix:**
+
+Added `npm run seo:gsc-indexing-record-summary` to produce archive-ready summary text only from recorded fields and linked production evidence.
+
+**Guard:**
+
+Tests cover a complete recorded record with `readyForHandoff: true` and a draft record that remains `readyForHandoff: false` with blocking fields.
+
+**Validation:**
+
+Run the summary command, GSC indexing record tests, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+GSC handoff summary; archive indexing record; retry note summary; readyForHandoff; summarize URL Inspection record

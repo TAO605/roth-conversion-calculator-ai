@@ -477,7 +477,7 @@ export function buildSearchConsoleIndexingRecordTemplate(): SearchConsoleIndexin
       source: "Reviewer",
       requiredWhen: "Always",
       validation:
-        "Use docs/search-console-indexing-record-template.json with recordStatus template before capture, generate a draft with npm run seo:gsc-indexing-record-draft, run npm run seo:gsc-indexing-record-ready to list missing reviewer fields, and use recorded only after a real GSC URL Inspection result is copied in.",
+        "Use docs/search-console-indexing-record-template.json with recordStatus template before capture, generate a draft with npm run seo:gsc-indexing-record-draft, run npm run seo:gsc-indexing-record-ready to list missing reviewer fields, run npm run seo:gsc-indexing-record-summary after recording, and use recorded only after a real GSC URL Inspection result is copied in.",
     },
     {
       field: "inspectedUrl",
@@ -523,7 +523,7 @@ export function buildSearchConsoleIndexingRecordTemplate(): SearchConsoleIndexin
       source: "GSC screenshot or exported evidence",
       requiredWhen: "Recorded status",
       validation:
-        "Include at least one real screenshot path or URL before treating the record as final evidence. Use the readiness command to confirm no reviewer-supplied GSC fields remain missing. Do not infer private GSC status from site-side evidence.",
+        "Include at least one real screenshot path or URL before treating the record as final evidence. Use the readiness command to confirm no reviewer-supplied GSC fields remain missing, then use the summary command for archive or retry notes. Do not infer private GSC status from site-side evidence.",
     },
   ];
 }

@@ -165,6 +165,7 @@
 - Use `docs/search-console-indexing-record-template.json` after manual URL Inspection or Page indexing review; before marking a record as final, run `npm run seo:gsc-indexing-record-validate -- path/to/record.json` and confirm the record includes the observed indexing state, live-test state, Google-selected canonical, request-indexing outcome, production SEO evidence run id, commit SHA, and at least one screenshot path or URL.
 - Use `npm run seo:gsc-indexing-record-draft -- --url https://www.roth-conversion-calculator-ai.shop/seo-monitoring --artifact tmp-round107-final-artifact --out docs/search-console-indexing-record-draft.json` to prefill public production evidence before copying private GSC URL Inspection fields.
 - Use `npm run seo:gsc-indexing-record-ready -- path/to/record.json` before archive or retry notes; it should report `readyForRecordedEvidence: true` only after reviewer-supplied GSC fields and screenshot evidence are complete.
+- Use `npm run seo:gsc-indexing-record-summary -- path/to/record.json` after readiness passes to produce archive or retry-note text that restates recorded fields without adding inferred Search Console status.
 - `seo-evidence-manifest.json` lists the retained validation result as `postManifestValidation: true`.
 - `/seo-monitoring` includes a separate artifact review item for `seo-evidence-manifest-validation-result.json`.
 - `seo-evidence-manifest.json` records direct `gitHubRunUrl` and `gitHubCommitUrl` provenance links when generated inside GitHub Actions.

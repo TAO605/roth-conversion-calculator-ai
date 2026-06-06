@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.160",
+    date: "2026-06-06",
+    type: "patch",
+    title: "Search Console indexing record summary",
+    summary:
+      "Added a GSC indexing record summary command that turns completed URL Inspection records into archive-ready handoff text while refusing to infer private Search Console status from public site evidence.",
+    affectedArea:
+      "Search Console indexing record summary command, SEO monitoring playbook, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the summary command and related SEO monitoring copy, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.159",
     date: "2026-06-05",
     type: "patch",

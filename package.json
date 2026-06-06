@@ -14,6 +14,7 @@
     "seo:search-console-verification": "node scripts/search-console-verification-evidence.mjs",
     "seo:gsc-indexing-record-draft": "node scripts/generate-gsc-indexing-record-draft.mjs",
     "seo:gsc-indexing-record-ready": "node scripts/gsc-indexing-record-readiness.mjs",
+    "seo:gsc-indexing-record-summary": "node scripts/gsc-indexing-record-summary.mjs",
     "seo:gsc-indexing-record-validate": "node scripts/validate-gsc-indexing-record.mjs",
     "seo:dns-evidence": "node scripts/dns-evidence.mjs",
     "seo:security-headers": "node scripts/security-headers-evidence.mjs",
