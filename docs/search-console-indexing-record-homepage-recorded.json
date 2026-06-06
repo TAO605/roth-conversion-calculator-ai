@@ -1,0 +1,42 @@
+{
+  "evidenceType": "search-console-indexing-record",
+  "recordStatus": "recorded",
+  "recordedAt": "2026-06-06T02:32:25.727Z",
+  "recordedBy": "Codex assisted reviewer from user-provided GSC screenshots",
+  "property": {
+    "type": "url-prefix",
+    "url": "https://www.roth-conversion-calculator-ai.shop/"
+  },
+  "inspectedUrl": "https://www.roth-conversion-calculator-ai.shop/",
+  "inspectionSource": "Google Search Console URL Inspection",
+  "indexingState": "indexed",
+  "liveTestState": "can_be_indexed",
+  "googleSelectedCanonical": "",
+  "userDeclaredCanonical": "https://www.roth-conversion-calculator-ai.shop/",
+  "lastCrawlAt": null,
+  "requestIndexing": {
+    "attempted": false,
+    "attemptedAt": null,
+    "outcome": "not_attempted",
+    "exactMessage": ""
+  },
+  "siteEvidence": {
+    "productionSeoEvidenceRunId": "27049420213",
+    "productionSeoEvidenceCommitSha": "d03dc7802e424b202c636e556237ad99fa3ca638",
+    "gscEvidenceOk": true,
+    "searchConsoleVerificationOk": true,
+    "internalLinkEvidenceOk": true,
+    "htmlQualityEvidenceOk": true
+  },
+  "screenshots": [
+    {
+      "label": "URL Inspection indexed result",
+      "pathOrUrl": "docs/evidence/gsc-homepage-indexed-result.png"
+    },
+    {
+      "label": "URL Inspection live test FAQ result",
+      "pathOrUrl": "docs/evidence/gsc-homepage-live-faq-result.png"
+    }
+  ],
+  "notes": "User-provided Google Search Console URL Inspection screenshots for https://www.roth-conversion-calculator-ai.shop/. The indexed result screenshot shows the URL is on Google and the page is indexed. The live version screenshot shows a live test time of 2026-06-05 21:30, detected one valid FAQ rich-result item, and shows last successful crawl time as 2026-06-05 21:30:55 in the GSC UI. The screenshots do not display Google-selected canonical, so googleSelectedCanonical is intentionally retained as an empty string rather than inferred. Request indexing was not attempted because the inspected URL is already indexed in the provided GSC screenshot."
+}
