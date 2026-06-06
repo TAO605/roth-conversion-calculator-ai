@@ -146,7 +146,9 @@ export default function SeoMonitoringPage() {
               <span className="font-mono">
                 npm run seo:gsc-indexing-record-draft -- --url https://www.roth-conversion-calculator-ai.shop/seo-monitoring --artifact tmp-round107-final-artifact --out docs/search-console-indexing-record-draft.json
               </span>
-              , then validate the filled record with{" "}
+              , run{" "}
+              <span className="font-mono">npm run seo:gsc-indexing-record-ready -- path/to/record.json</span> to list
+              the reviewer-supplied GSC fields still missing, then validate the filled record with{" "}
               <span className="font-mono">npm run seo:gsc-indexing-record-validate -- path/to/record.json</span> before
               attaching it to a Search Console retry note. Site-side evidence can support the record, but it must not
               infer private Google Search Console status.

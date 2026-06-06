@@ -138,6 +138,7 @@ describe("SEO monitoring playbook", () => {
     );
     expect(combined).toContain("docs/search-console-indexing-record-template.json");
     expect(combined).toContain("seo:gsc-indexing-record-draft");
+    expect(combined).toContain("seo:gsc-indexing-record-ready");
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("searchConsoleVerificationOk");
     expect(combined).toContain("Do not infer");
@@ -326,6 +327,7 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("Search Console submission loop");
     expect(pageFile).toContain("GSC indexing record template");
     expect(pageFile).toContain("seo:gsc-indexing-record-draft");
+    expect(pageFile).toContain("seo:gsc-indexing-record-ready");
     expect(pageFile).toContain("seo:gsc-indexing-record-validate");
     expect(pageFile).toContain("Search Console exception queue");
     expect(pageFile).toContain("Indexing retry protocol");

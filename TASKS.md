@@ -109,3 +109,4 @@
 - [done] Add Search Console verification evidence to SEO artifacts
 - [done] Add GSC indexing record template and validator
 - [done] Add AI-assisted GSC indexing record draft generator
+- [done] Add GSC indexing record missing-field readiness command

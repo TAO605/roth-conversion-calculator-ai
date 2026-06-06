@@ -1588,3 +1588,29 @@ Run the draft generator test, GSC indexing record validator, SEO monitoring test
 **Future trigger words:**
 
 generate GSC record; indexing draft; Search Console evidence from artifact; do not infer GSC status; URL Inspection private field
+
+### 2026-06-05 - GSC indexing records need a missing-field readiness report
+
+**Symptom:**
+
+Draft records can be valid as drafts while still missing the reviewer-supplied fields required before archive or Search Console retry notes.
+
+**Root cause:**
+
+The validator correctly separates `draft` from `recorded`, but reviewers still need a direct checklist of missing GSC UI fields rather than reading the whole JSON by hand.
+
+**Fix:**
+
+Added `npm run seo:gsc-indexing-record-ready` to list missing reviewer fields and return `readyForRecordedEvidence: true` only for complete recorded records.
+
+**Guard:**
+
+Tests cover both an AI-assisted draft with missing private GSC fields and a completed recorded entry with no missing fields.
+
+**Validation:**
+
+Run the readiness command, GSC indexing record tests, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+what is missing in GSC record; indexing record readiness; readyForRecordedEvidence; missingReviewerFields; Search Console retry note checklist

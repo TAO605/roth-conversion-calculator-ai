@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 
 const scriptPath = path.join(process.cwd(), "scripts/validate-gsc-indexing-record.mjs");
 const draftScriptPath = path.join(process.cwd(), "scripts/generate-gsc-indexing-record-draft.mjs");
+const readinessScriptPath = path.join(process.cwd(), "scripts/gsc-indexing-record-readiness.mjs");
 const templatePath = path.join(process.cwd(), "docs/search-console-indexing-record-template.json");
 
 function runValidator(recordPath: string) {
@@ -37,6 +38,9 @@ describe("GSC indexing record validator", () => {
     expect(packageJson.scripts["seo:gsc-indexing-record-draft"]).toBe(
       "node scripts/generate-gsc-indexing-record-draft.mjs",
     );
+    expect(packageJson.scripts["seo:gsc-indexing-record-ready"]).toBe(
+      "node scripts/gsc-indexing-record-readiness.mjs",
+    );
     expect(template.evidenceType).toBe("search-console-indexing-record");
     expect(template.recordStatus).toBe("template");
     expect(template.notes).toContain("Do not infer private GSC state from site-side evidence");
@@ -44,6 +48,95 @@ describe("GSC indexing record validator", () => {
       ok: true,
       recordStatus: "template",
       siteEvidenceLinked: true,
+    });
+  });
+
+  it("reports reviewer-supplied fields still missing from an AI-assisted draft", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "gsc-indexing-record-ready-draft-"));
+    const recordPath = path.join(tempDir, "draft.json");
+    const record = JSON.parse(fs.readFileSync(templatePath, "utf8"));
+
+    record.recordStatus = "draft";
+    record.recordedAt = "2026-06-05T11:44:20.919Z";
+    record.recordedBy = "AI-assisted draft";
+    record.siteEvidence.productionSeoEvidenceRunId = "27013209297";
+    record.siteEvidence.productionSeoEvidenceCommitSha = "527d16e2e052bee496a679f6112a00445e9fb279";
+    record.requestIndexing.exactMessage = "REPLACE_WITH_EXACT_GSC_REQUEST_INDEXING_MESSAGE_OR_EMPTY";
+    record.notes =
+      "AI filled public site evidence from the production SEO artifact when available. Copy private GSC fields before recording.";
+    fs.writeFileSync(recordPath, JSON.stringify(record, null, 2), "utf8");
+
+    const output = JSON.parse(
+      execFileSync("node", [readinessScriptPath, recordPath], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ) as {
+      missingReviewerFieldCount: number;
+      missingReviewerFields: Array<{ field: string }>;
+      ok: boolean;
+      readyForRecordedEvidence: boolean;
+    };
+    const fields = output.missingReviewerFields.map((item) => item.field);
+
+    expect(output.ok).toBe(true);
+    expect(output.readyForRecordedEvidence).toBe(false);
+    expect(output.missingReviewerFieldCount).toBeGreaterThanOrEqual(5);
+    expect(fields).toEqual(
+      expect.arrayContaining([
+        "recordedBy",
+        "indexingState",
+        "liveTestState",
+        "googleSelectedCanonical",
+        "requestIndexing.exactMessage",
+        "screenshots.pathOrUrl",
+      ]),
+    );
+  });
+
+  it("marks a fully recorded URL Inspection record ready for archive", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "gsc-indexing-record-ready-recorded-"));
+    const recordPath = path.join(tempDir, "recorded.json");
+    const record = JSON.parse(fs.readFileSync(templatePath, "utf8"));
+
+    record.recordStatus = "recorded";
+    record.recordedAt = "2026-06-05T12:10:00.000Z";
+    record.recordedBy = "Codex assisted reviewer";
+    record.indexingState = "indexed";
+    record.liveTestState = "can_be_indexed";
+    record.googleSelectedCanonical = "https://www.roth-conversion-calculator-ai.shop/seo-monitoring";
+    record.requestIndexing = {
+      attempted: true,
+      attemptedAt: "2026-06-05T12:11:00.000Z",
+      exactMessage: "Request indexing submitted.",
+      outcome: "submitted",
+    };
+    record.siteEvidence.productionSeoEvidenceRunId = "27013209297";
+    record.siteEvidence.productionSeoEvidenceCommitSha = "527d16e2e052bee496a679f6112a00445e9fb279";
+    record.screenshots = [
+      {
+        label: "URL Inspection result",
+        pathOrUrl: "C:/Users/86189/Documents/gsc-url-inspection-seo-monitoring.png",
+      },
+    ];
+    record.notes = "GSC URL Inspection was manually reviewed and the result was copied into this record.";
+    fs.writeFileSync(recordPath, JSON.stringify(record, null, 2), "utf8");
+
+    const output = JSON.parse(
+      execFileSync("node", [readinessScriptPath, recordPath], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+      }),
+    ) as {
+      missingReviewerFieldCount: number;
+      ok: boolean;
+      readyForRecordedEvidence: boolean;
+    };
+
+    expect(output).toMatchObject({
+      missingReviewerFieldCount: 0,
+      ok: true,
+      readyForRecordedEvidence: true,
     });
   });
 

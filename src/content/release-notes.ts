@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.159",
+    date: "2026-06-05",
+    type: "patch",
+    title: "Search Console indexing record readiness",
+    summary:
+      "Added a GSC indexing record readiness command that lists the reviewer-supplied Search Console fields still missing from template or draft records, so AI can prefill public evidence without pretending to know private URL Inspection status.",
+    affectedArea:
+      "Search Console indexing record readiness command, SEO monitoring playbook, release notes, feature registry, task tracking, E2E stability guard, and operations documentation",
+    rollbackPath:
+      "Remove the readiness command and related SEO monitoring copy, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.158",
     date: "2026-06-05",
     type: "patch",
