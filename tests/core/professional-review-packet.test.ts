@@ -78,8 +78,8 @@ describe("professional review packet", () => {
     expect(validator).toContain("validateProfessionalReviewPacketEvidence");
     expect(validator).toContain("professionalReviewPacketOk");
     expect(manifest).toContain("professional-review-packet-evidence-result.json");
-    expect(manifest).toContain("2026-06-05.6");
+    expect(manifest).toContain("2026-06-05.7");
     expect(manifestValidator).toContain("professional-review-packet-evidence-result.json");
-    expect(manifestValidator).toContain("2026-06-05.6");
+    expect(manifestValidator).toContain("2026-06-05.7");
   });
 });

@@ -125,12 +125,19 @@ function validateGscDiscoveredSampleEvidence(samples, expectedBaseUrl) {
   assert(samples.failureCount === 0, "GSC discovered sample evidence must have zero failures");
   assert(Array.isArray(samples.failures) && samples.failures.length === 0, "GSC discovered sample failures must be empty");
   assert(Array.isArray(samples.results), "GSC discovered sample results must be an array");
+  assert(samples.siteIndex?.status === 200, "GSC discovered sample site-index status must be 200");
+  assert(
+    samples.siteIndex?.linkedSampleCount === samples.resultCount,
+    "GSC discovered sample evidence must link every sample from /site-index",
+  );
+  assert(samples.siteIndex?.internalLinkCount >= 100, "GSC discovered sample site-index internal link count is too low");
 
   for (const result of samples.results) {
     assert(result.status === 200, `${result.url} status must be 200`);
     assert(result.inSitemap === true, `${result.url} must be in sitemap`);
     assert(result.noindex === false, `${result.url} must not be noindex`);
     assert(result.ok === true, `${result.url} sample evidence must be ok`);
+    assert(result.siteIndexLinked === true, `${result.url} must be linked from /site-index`);
     assert(typeof result.canonical === "string" && result.canonical.startsWith(expectedBaseUrl), `${result.url} canonical mismatch`);
     assert(typeof result.title === "string" && result.title.length > 0, `${result.url} title is missing`);
   }

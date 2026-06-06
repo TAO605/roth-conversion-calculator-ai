@@ -59,6 +59,8 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("validateDnsEvidence");
     expect(script).toContain("validateGscDiscoveredSampleEvidence");
     expect(script).toContain("gscDiscoveredSampleCount");
+    expect(script).toContain("siteIndex?.linkedSampleCount");
+    expect(script).toContain("must be linked from /site-index");
     expect(script).toContain("validateSearchConsoleVerificationEvidence");
     expect(script).toContain("searchConsoleVerificationOk");
     expect(script).toContain("domainTxtVerified");
@@ -223,12 +225,12 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("production-seo-evidence");
     expect(manifestScript).toContain("artifactSchemaVersion");
     expect(manifestScript).toContain("ARTIFACT_SCHEMA_VERSION");
-    expect(manifestScript).toContain("2026-06-05.6");
+    expect(manifestScript).toContain("2026-06-05.7");
     expect(manifestScript).toContain("generatedAt");
     expect(manifestScript).toContain("retentionDays: 30");
     expect(manifestValidator).toContain("validateSeoEvidenceManifest");
     expect(manifestValidator).toContain("EXPECTED_ARTIFACT_SCHEMA_VERSION");
-    expect(manifestValidator).toContain("2026-06-05.6");
+    expect(manifestValidator).toContain("2026-06-05.7");
     expect(manifestValidator).toContain("artifactSchemaVersion");
     expect(manifestValidator).toContain("ISO_TIMESTAMP_PATTERN");
     expect(manifestValidator).toContain("generatedAtRetained");

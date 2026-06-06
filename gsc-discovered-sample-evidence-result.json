@@ -14,6 +14,7 @@
       "lastmod": "2026-05-03T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "2026 Roth Conversion Calculator | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/2026-roth-conversion-calculator"
@@ -26,6 +27,7 @@
       "lastmod": "2026-05-01T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "About | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/about"
@@ -38,6 +40,7 @@
       "lastmod": "2026-05-03T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "Accessibility Audit Playbook | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/accessibility-audit"
@@ -50,6 +53,7 @@
       "lastmod": "2026-05-02T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "Roth Conversion Calculator by Age | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/age-scenarios"
@@ -62,6 +66,7 @@
       "lastmod": "2026-05-02T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "Roth Conversion Calculator After 59 1/2 | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/age-scenarios/age-59-and-a-half-to-retirement"
@@ -74,6 +79,7 @@
       "lastmod": "2026-05-02T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "Roth Conversion Calculator for Retirees | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/age-scenarios/already-retired"
@@ -86,6 +92,7 @@
       "lastmod": "2026-05-02T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "Roth Conversion Calculator Near Retirement | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/age-scenarios/near-retirement"
@@ -98,6 +105,7 @@
       "lastmod": "2026-05-02T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "Roth Conversion Calculator Under 59 1/2 | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/age-scenarios/under-59-and-a-half"
@@ -110,6 +118,7 @@
       "lastmod": "2026-05-03T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "AI Compliance Audit Playbook | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/ai-compliance-audit"
@@ -122,6 +131,7 @@
       "lastmod": "2026-05-03T00:00:00.000Z",
       "noindex": false,
       "ok": true,
+      "siteIndexLinked": true,
       "status": 200,
       "title": "Roth Conversion Basis and Pro-Rata Rule | Roth Conversion Calculator",
       "url": "https://www.roth-conversion-calculator-ai.shop/basis"
@@ -129,5 +139,11 @@
   ],
   "reviewBoundary": "This command checks site-side technical signals for GSC discovered-not-indexed sample URLs; it does not fetch private Search Console data or request indexing.",
   "sourceEvidenceFile": "docs/evidence/gsc-discovered-not-indexed-detail-2026-06-06.json",
-  "sourceIssueState": "discovered_not_indexed"
+  "sourceIssueState": "discovered_not_indexed",
+  "siteIndex": {
+    "internalLinkCount": 129,
+    "linkedSampleCount": 10,
+    "status": 200,
+    "url": "https://www.roth-conversion-calculator-ai.shop/site-index"
+  }
 }

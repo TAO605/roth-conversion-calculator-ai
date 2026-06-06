@@ -670,9 +670,9 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       label: "Confirm discovered sample URL signals",
       artifactFile: "gsc-discovered-sample-evidence-result.json",
       check:
-        "Review the GSC discovered-not-indexed sample URLs for HTTP status, canonical URL, sitemap inclusion, noindex status, lastmod, and title coverage.",
+        "Review the GSC discovered-not-indexed sample URLs for HTTP status, canonical URL, sitemap inclusion, /site-index internal discovery, noindex status, lastmod, and title coverage.",
       passSignal:
-        "The evidence has ok: true, failureCount: 0, sourceIssueState: discovered_not_indexed, and every sample URL returns 200, appears in sitemap.xml, has no noindex signal, and keeps a self-canonical URL.",
+        "The evidence has ok: true, failureCount: 0, sourceIssueState: discovered_not_indexed, siteIndex.linkedSampleCount equal to resultCount, and every sample URL returns 200, appears in sitemap.xml, is linked from /site-index, has no noindex signal, and keeps a self-canonical URL.",
       useBefore:
         "Use before deciding whether a discovered-not-indexed cluster needs a site-side canonical/sitemap fix or should remain in Google crawl-priority monitoring.",
     },

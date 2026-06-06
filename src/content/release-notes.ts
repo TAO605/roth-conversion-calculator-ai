@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.168",
+    date: "2026-06-06",
+    type: "patch",
+    title: "GSC sample internal discovery evidence",
+    summary:
+      "Extended the GSC discovered sample evidence command so discovered-not-indexed sample URLs must also be linked from /site-index, turning crawl-priority follow-up into a repeatable internal-discovery check.",
+    affectedArea:
+      "GSC discovered sample evidence command, SEO evidence validator, SEO evidence manifest schema, Search Console monitoring playbook, release notes, task tracking, and progress documentation",
+    rollbackPath:
+      "Remove the /site-index linked-sample assertions from the GSC discovered sample evidence command and validator, restore the previous SEO evidence manifest schema version, then revert the release note, feature registry version, task, and progress updates.",
+  },
+  {
     version: "1.0.167",
     date: "2026-06-06",
     type: "patch",

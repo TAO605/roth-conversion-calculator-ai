@@ -70,6 +70,26 @@ function hasNoIndex({ html, xRobotsTag }) {
   return /noindex/i.test(xRobotsTag) || /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html);
 }
 
+function extractHrefValues(html) {
+  return [...html.matchAll(/\shref=["']([^"']+)["']/gi)].map((match) => match[1].trim());
+}
+
+function normalizeInternalHref(href, baseUrl) {
+  if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+    return "";
+  }
+
+  if (href.startsWith(baseUrl)) {
+    return href.slice(baseUrl.length).split("#")[0] || "/";
+  }
+
+  if (href.startsWith("/")) {
+    return href.split("#")[0] || "/";
+  }
+
+  return "";
+}
+
 function extractSitemapEntry(sitemapXml, url) {
   const escapedUrl = url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const match = sitemapXml.match(new RegExp(`<url>\\s*<loc>${escapedUrl}</loc>([\\s\\S]*?)</url>`, "i"));
@@ -130,16 +150,25 @@ async function buildDiscoveredSampleEvidence({
 
   const sitemapUrl = `${normalizedBaseUrl}/sitemap.xml`;
   const sitemap = await fetchText(fetchImpl, sitemapUrl);
+  const siteIndexUrl = `${normalizedBaseUrl}/site-index`;
+  const siteIndex = await fetchText(fetchImpl, siteIndexUrl);
+  const siteIndexLinks = new Set(
+    extractHrefValues(siteIndex.text)
+      .map((href) => normalizeInternalHref(href, normalizedBaseUrl))
+      .filter(Boolean),
+  );
 
   const results = [];
 
   for (const sampleUrl of sampleUrls) {
     const url = assertExpectedUrl(sampleUrl, normalizedBaseUrl);
+    const pathname = new URL(url).pathname || "/";
     const page = await fetchText(fetchImpl, url);
     const canonical = extractCanonical(page.text);
     const title = extractTitle(page.text);
     const sitemapEntry = extractSitemapEntry(sitemap.text, url);
     const noindex = hasNoIndex({ html: page.text, xRobotsTag: page.xRobotsTag });
+    const siteIndexLinked = siteIndexLinks.has(pathname);
     const expectedCanonical = url.replace(/\/$/, "");
     const normalizedCanonical = canonical.replace(/\/$/, "");
     const pass =
@@ -147,6 +176,7 @@ async function buildDiscoveredSampleEvidence({
       page.contentType.includes("text/html") &&
       normalizedCanonical === expectedCanonical &&
       sitemapEntry.inSitemap &&
+      siteIndexLinked &&
       !noindex;
 
     results.push({
@@ -157,6 +187,7 @@ async function buildDiscoveredSampleEvidence({
       lastmod: sitemapEntry.lastmod,
       noindex,
       ok: pass,
+      siteIndexLinked,
       status: page.status,
       title,
       url,
@@ -169,6 +200,7 @@ async function buildDiscoveredSampleEvidence({
       canonical: result.canonical,
       inSitemap: result.inSitemap,
       noindex: result.noindex,
+      siteIndexLinked: result.siteIndexLinked,
       status: result.status,
       url: result.url,
     }));
@@ -185,6 +217,12 @@ async function buildDiscoveredSampleEvidence({
       "This command checks site-side technical signals for GSC discovered-not-indexed sample URLs; it does not fetch private Search Console data or request indexing.",
     sourceEvidenceFile,
     sourceIssueState: sourceEvidence.issue?.state || "",
+    siteIndex: {
+      internalLinkCount: siteIndexLinks.size,
+      linkedSampleCount: results.filter((result) => result.siteIndexLinked).length,
+      status: siteIndex.status,
+      url: siteIndexUrl,
+    },
   };
 }
 

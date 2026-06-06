@@ -21,7 +21,7 @@ const DEFAULT_FILES = [
   "seo-evidence-manifest.json",
   "seo-evidence-manifest-validation-result.json",
 ];
-const ARTIFACT_SCHEMA_VERSION = "2026-06-05.6";
+const ARTIFACT_SCHEMA_VERSION = "2026-06-05.7";
 
 function fileRecord(filePath) {
   if (filePath === "seo-evidence-manifest.json") {

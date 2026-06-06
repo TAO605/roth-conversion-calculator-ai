@@ -196,6 +196,8 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("gscDiscoveredSampleCount");
     expect(combined).toContain("sourceIssueState: discovered_not_indexed");
     expect(combined).toContain("failureCount: 0");
+    expect(combined).toContain("siteIndex.linkedSampleCount");
+    expect(combined).toContain("linked from /site-index");
     expect(combined).toContain("professionalUiScannedFileCount");
     expect(combined).toContain("searchConsoleVerificationOk: true");
     expect(combined).toContain("domainTxtVerified: true");

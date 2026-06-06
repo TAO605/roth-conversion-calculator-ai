@@ -66,6 +66,7 @@ describe("GSC evidence script", () => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.roth-conversion-calculator-ai.shop/about</loc><lastmod>2026-05-01</lastmod></url>
 </urlset>`;
+    const siteIndex = '<!doctype html><html><body><a href="/about">About</a></body></html>';
     const html =
       '<!doctype html><html><head><title>About | Roth Conversion Calculator</title><link rel="canonical" href="https://www.roth-conversion-calculator-ai.shop/about"></head><body><h1>About</h1></body></html>';
     const fetchImpl = async (url: string) =>
@@ -74,7 +75,7 @@ describe("GSC evidence script", () => {
           get: (name: string) => (name === "content-type" ? (url.endsWith("sitemap.xml") ? "application/xml" : "text/html; charset=utf-8") : ""),
         },
         status: 200,
-        text: async () => (url.endsWith("sitemap.xml") ? sitemap : html),
+        text: async () => (url.endsWith("sitemap.xml") ? sitemap : url.endsWith("/site-index") ? siteIndex : html),
         url,
       }) as Response;
 
@@ -94,6 +95,11 @@ describe("GSC evidence script", () => {
       canonical: "https://www.roth-conversion-calculator-ai.shop/about",
       inSitemap: true,
       noindex: false,
+      siteIndexLinked: true,
+      status: 200,
+    });
+    expect(result.siteIndex).toMatchObject({
+      linkedSampleCount: 1,
       status: 200,
     });
   });
@@ -113,6 +119,7 @@ describe("GSC evidence script", () => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.roth-conversion-calculator-ai.shop/about</loc><lastmod>2026-05-01</lastmod></url>
 </urlset>`;
+    const siteIndex = '<!doctype html><html><body><a href="/about">About</a></body></html>';
     const html =
       '<!doctype html><html><head><title>About</title><link rel="canonical" href="https://www.roth-conversion-calculator-ai.shop"></head><body><h1>About</h1></body></html>';
     const fetchImpl = async (url: string) =>
@@ -121,7 +128,7 @@ describe("GSC evidence script", () => {
           get: (name: string) => (name === "content-type" ? (url.endsWith("sitemap.xml") ? "application/xml" : "text/html; charset=utf-8") : ""),
         },
         status: 200,
-        text: async () => (url.endsWith("sitemap.xml") ? sitemap : html),
+        text: async () => (url.endsWith("sitemap.xml") ? sitemap : url.endsWith("/site-index") ? siteIndex : html),
         url,
       }) as Response;
 
