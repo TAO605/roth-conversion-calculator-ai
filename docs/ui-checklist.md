@@ -168,6 +168,7 @@
 - Use `npm run seo:gsc-indexing-record-summary -- path/to/record.json` after readiness passes to produce archive or retry-note text that restates recorded fields without adding inferred Search Console status.
 - Use `npm run seo:gsc-indexing-records-manifest` after archived GSC records are added or screenshots change; confirm `ok: true`, recorded count, screenshot existence, and screenshot sha256 values before treating the private evidence archive as durable.
 - Use `docs/search-console-query-opportunity-template.json` after a GSC Performance export or screenshot; before turning a query into metadata, internal-link, guide-refresh, or professional-review work, run `npm run seo:gsc-query-opportunity-validate -- path/to/query-record.json` and confirm the record keeps source/date/metrics/evidence fields, review gate, decision status, and YMYL guardrails.
+- Run `npm run seo:gsc-query-opportunity-ready -- path/to/query-record.json` before query-driven content work; confirm it separates AI-fillable planning fields from reviewer-supplied GSC query, date range, screenshot/export, owner, and follow-up fields.
 - `seo-evidence-manifest.json` lists the retained validation result as `postManifestValidation: true`.
 - `/seo-monitoring` includes a separate artifact review item for `seo-evidence-manifest-validation-result.json`.
 - `seo-evidence-manifest.json` records direct `gitHubRunUrl` and `gitHubCommitUrl` provenance links when generated inside GitHub Actions.

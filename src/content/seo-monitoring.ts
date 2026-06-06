@@ -399,7 +399,7 @@ export function buildSearchConsoleQueryOpportunityRecordTemplate(): SearchConsol
       source: "Reviewer",
       requiredWhen: "Always",
       validation:
-        "Use docs/search-console-query-opportunity-template.json with recordStatus template before capture, draft after AI has filled public context, recorded only after a real GSC query row or screenshot is attached, and npm run seo:gsc-query-opportunity-validate before content work begins.",
+        "Use docs/search-console-query-opportunity-template.json with recordStatus template before capture, draft after AI has filled public context, npm run seo:gsc-query-opportunity-ready to list missing reviewer fields, recorded only after a real GSC query row or screenshot is attached, and npm run seo:gsc-query-opportunity-validate before content work begins.",
     },
     {
       field: "source",

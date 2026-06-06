@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
+import { buildGscQueryOpportunityReadiness } from "../../scripts/gsc-query-opportunity-readiness.mjs";
 import { validateGscQueryOpportunityRecord } from "../../scripts/validate-gsc-query-opportunity-record.mjs";
 
 describe("GSC query opportunity record validator", () => {
@@ -19,8 +20,38 @@ describe("GSC query opportunity record validator", () => {
     });
   });
 
+  it("reports missing reviewer fields for the shipped template", () => {
+    const template = JSON.parse(
+      fs.readFileSync(path.join(process.cwd(), "docs/search-console-query-opportunity-template.json"), "utf8"),
+    );
+    const readiness = buildGscQueryOpportunityReadiness(template);
+
+    expect(readiness).toMatchObject({
+      ok: true,
+      readyForRecordedEvidence: false,
+      recordStatus: "template",
+      aiFillableFieldCount: 7,
+    });
+    expect(readiness.missingReviewerFieldCount).toBeGreaterThanOrEqual(9);
+    expect(readiness.missingReviewerFields.map((field) => field.field)).toEqual(
+      expect.arrayContaining([
+        "recordStatus",
+        "source.dateRange.start",
+        "source.dateRange.end",
+        "query",
+        "matchedCluster",
+        "intentSummary",
+        "targetSurface",
+        "recommendedAction",
+        "reviewGate",
+        "evidence.screenshotOrExportPath",
+        "decision.owner",
+      ]),
+    );
+  });
+
   it("accepts a recorded professional-risk query with evidence and review gate", () => {
-    const result = validateGscQueryOpportunityRecord({
+    const record = {
       recordStatus: "recorded",
       source: {
         property: "https://www.roth-conversion-calculator-ai.shop/",
@@ -51,7 +82,9 @@ describe("GSC query opportunity record validator", () => {
         "Do not turn a query into personal tax advice.",
         "Use professional review before state-specific modeling changes.",
       ],
-    });
+    };
+    const result = validateGscQueryOpportunityRecord(record);
+    const readiness = buildGscQueryOpportunityReadiness(record);
 
     expect(result).toMatchObject({
       ok: true,
@@ -60,10 +93,16 @@ describe("GSC query opportunity record validator", () => {
       riskLevel: "professional",
       decisionStatus: "planned",
     });
+    expect(readiness).toMatchObject({
+      ok: true,
+      readyForRecordedEvidence: true,
+      missingReviewerFieldCount: 0,
+      recordStatus: "recorded",
+    });
   });
 
   it("blocks recorded query actions that sound like personal tax recommendations", () => {
-    const result = validateGscQueryOpportunityRecord({
+    const record = {
       recordStatus: "recorded",
       source: {
         property: "https://www.roth-conversion-calculator-ai.shop/",
@@ -86,9 +125,11 @@ describe("GSC query opportunity record validator", () => {
       },
       decision: { status: "needs_review", owner: "", nextReviewDate: "", notes: "" },
       guardrails: ["Do not turn a query into personal tax advice.", "Keep review gates."],
-    });
+    };
+    const result = validateGscQueryOpportunityRecord(record);
 
     expect(result.ok).toBe(false);
     expect(result.failures.map((failure) => failure.field)).toContain("ymylLanguage");
+    expect(buildGscQueryOpportunityReadiness(record).readyForRecordedEvidence).toBe(false);
   });
 });

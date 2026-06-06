@@ -472,7 +472,12 @@ export default function SeoMonitoringPage() {
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
               Use <span className="font-mono">docs/search-console-query-opportunity-template.json</span> after a
-              Search Console Performance export or screenshot. Validate the filled record with{" "}
+              Search Console Performance export or screenshot. Run{" "}
+              <span className="font-mono">
+                npm run seo:gsc-query-opportunity-ready -- path/to/query-record.json
+              </span>{" "}
+              to list what AI can draft and what still requires a reviewer-supplied GSC query row, metric export, or
+              screenshot. Validate the filled record with{" "}
               <span className="font-mono">
                 npm run seo:gsc-query-opportunity-validate -- path/to/query-record.json
               </span>{" "}

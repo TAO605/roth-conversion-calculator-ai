@@ -113,3 +113,4 @@
 - [done] Add GSC indexing record archive summary command
 - [done] Add GSC indexing records manifest command
 - [done] Add GSC query opportunity record template and validator
+- [done] Add GSC query opportunity missing-field readiness command

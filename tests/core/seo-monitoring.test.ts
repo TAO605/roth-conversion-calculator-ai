@@ -331,6 +331,7 @@ describe("SEO monitoring playbook", () => {
       ]),
     );
     expect(combined).toContain("docs/search-console-query-opportunity-template.json");
+    expect(combined).toContain("seo:gsc-query-opportunity-ready");
     expect(combined).toContain("seo:gsc-query-opportunity-validate");
     expect(combined).toContain("professional review");
     expect(combined).toContain("needs_review");
@@ -369,6 +370,7 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("SEO evidence artifact review");
     expect(pageFile).toContain("Query opportunity matrix");
     expect(pageFile).toContain("GSC query opportunity record");
+    expect(pageFile).toContain("seo:gsc-query-opportunity-ready");
     expect(pageFile).toContain("seo:gsc-query-opportunity-validate");
     expect(contentFile).toContain("seo:gsc-evidence");
     expect(contentFile).toContain("lastmodFresh");

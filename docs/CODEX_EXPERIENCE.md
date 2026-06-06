@@ -1692,3 +1692,29 @@ Run the query opportunity record tests, SEO monitoring tests, release-note tests
 **Future trigger words:**
 
 GSC query opportunity; Search Console query row; keyword backlog; query screenshot; content action from GSC; CTR opportunity; GSC Performance export
+
+### 2026-06-06 - Query opportunity records need readiness before content work
+
+**Symptom:**
+
+Template or draft GSC query opportunity records can validate structurally while still missing the private query row, date range, screenshot/export evidence, owner, or follow-up fields needed before content work starts.
+
+**Root cause:**
+
+The validator catches malformed records and YMYL phrasing, but reviewers also need a direct checklist separating AI-fillable planning fields from fields that must come from Search Console or content operations.
+
+**Fix:**
+
+Added `npm run seo:gsc-query-opportunity-ready` to report missing reviewer fields, AI-fillable fields, blocking validator failures, and `readyForRecordedEvidence`.
+
+**Guard:**
+
+Tests require the shipped template to report missing reviewer fields, a complete professional-risk record to return `readyForRecordedEvidence: true`, and recommendation-like query records to remain blocked.
+
+**Validation:**
+
+Run the readiness command, GSC query opportunity tests, SEO monitoring tests, release-note tests, feature-registry tests, full Vitest, build, E2E, and live `/seo-monitoring` smoke after deployment.
+
+**Future trigger words:**
+
+GSC query readiness; missing query fields; AI fill what; query opportunity missing fields; readyForRecordedEvidence; Search Console query backlog readiness

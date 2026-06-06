@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.163",
+    date: "2026-06-06",
+    type: "patch",
+    title: "Search Console query opportunity readiness",
+    summary:
+      "Added a GSC query opportunity readiness command that lists reviewer-supplied query fields still missing from template or draft records and separates them from AI-fillable planning fields.",
+    affectedArea:
+      "Search Console query opportunity readiness command, SEO monitoring playbook, release notes, feature registry, task tracking, and operations documentation",
+    rollbackPath:
+      "Remove the query opportunity readiness command and related SEO monitoring copy, then revert the release note, feature registry version, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.162",
     date: "2026-06-06",
     type: "patch",
