@@ -27,5 +27,9 @@ export function validateCalculatorInput(input: RothConversionInput): CalculatorE
     errors.withheldForTaxes = "Withheld tax amount must be non-negative.";
   }
 
+  if (input.withheldForTaxes > input.conversionAmount) {
+    errors.withheldForTaxes = "Withheld tax amount cannot exceed the conversion amount.";
+  }
+
   return errors;
 }

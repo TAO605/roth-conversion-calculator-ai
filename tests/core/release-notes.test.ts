@@ -7,10 +7,11 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.185",
+      version: "1.0.186",
       type: "patch",
-      title: "Tax impact warnings boundary feature registry",
+      title: "Withheld tax boundary guard",
     });
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("core calculator");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

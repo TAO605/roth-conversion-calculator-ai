@@ -144,3 +144,4 @@
 - [done] Register tax payment comparison in the main feature registry
 - [done] Register result scope boundary in the main feature registry
 - [done] Register tax impact warnings boundary in the main feature registry
+- [done] Add withheld-tax boundary guard for core penalty calculation

@@ -31,6 +31,10 @@ function calculateBasisExclusionRatio(input: RothConversionInput): number {
   return Math.min(Math.max(input.basis / input.traditionalIraBalance, 0), 1);
 }
 
+function modeledWithholdingAmount(input: RothConversionInput): number {
+  return Math.min(Math.max(0, input.withheldForTaxes), Math.max(0, input.conversionAmount));
+}
+
 function calculateEarlyPenalty(input: RothConversionInput): number {
   if (input.age >= 59.5 || input.penaltyException) {
     return 0;
@@ -40,7 +44,7 @@ function calculateEarlyPenalty(input: RothConversionInput): number {
     return 0;
   }
 
-  return Math.max(0, input.withheldForTaxes) * 0.1;
+  return modeledWithholdingAmount(input) * 0.1;
 }
 
 function penaltyBasis(input: RothConversionInput): number {
@@ -48,7 +52,7 @@ function penaltyBasis(input: RothConversionInput): number {
     return 0;
   }
 
-  return Math.max(0, input.withheldForTaxes);
+  return modeledWithholdingAmount(input);
 }
 
 function penaltyExplanation(input: RothConversionInput): string {
@@ -61,6 +65,10 @@ function penaltyExplanation(input: RothConversionInput): string {
   }
 
   if (input.taxPaymentMethod === "withhold_from_ira") {
+    if (input.withheldForTaxes > input.conversionAmount) {
+      return "The modeled penalty is capped at the conversion amount because withheld taxes cannot exceed the modeled IRA distribution.";
+    }
+
     return "The modeled penalty applies only to the amount withheld from the IRA distribution for taxes.";
   }
 

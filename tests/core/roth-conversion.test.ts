@@ -85,6 +85,19 @@ describe("roth conversion calculation", () => {
     expect(result.earlyDistributionPenalty).toBe(600);
   });
 
+  it("caps the modeled penalty basis at the conversion amount for defensive calculation", () => {
+    const result = calculateRothConversion({
+      ...baseInput,
+      conversionAmount: 5000,
+      taxPaymentMethod: "withhold_from_ira",
+      withheldForTaxes: 9000,
+    });
+
+    expect(result.earlyDistributionPenalty).toBe(500);
+    expect(result.breakdown.penaltyBasis).toBe(5000);
+    expect(result.breakdown.penaltyExplanation).toContain("capped at the conversion amount");
+  });
+
   it("does not apply the modeled early distribution penalty at age 59.5 or older", () => {
     const result = calculateRothConversion({
       ...baseInput,
@@ -160,6 +173,17 @@ describe("input validation and share codes", () => {
 
     expect(errors.conversionAmount).toContain("non-negative");
     expect(errors.basis).toContain("IRA balance");
+  });
+
+  it("returns a validation error when withheld taxes exceed the conversion amount", () => {
+    const errors = validateCalculatorInput({
+      ...baseInput,
+      conversionAmount: 5000,
+      taxPaymentMethod: "withhold_from_ira",
+      withheldForTaxes: 9000,
+    });
+
+    expect(errors.withheldForTaxes).toContain("cannot exceed the conversion amount");
   });
 
   it("round-trips share codes without uploading data", () => {

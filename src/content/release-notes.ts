@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.186",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Withheld tax boundary guard",
+    summary:
+      "Added a core calculator boundary guard so withheld tax amounts above the conversion amount are rejected in input validation and capped defensively before early-distribution penalty math runs.",
+    affectedArea:
+      "Core Roth conversion calculator, input validation, early-distribution penalty modeling, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Restore the prior withheld-tax validation and penalty-basis behavior only if a reviewed replacement keeps invalid share-link or integration data from producing impossible modeled penalty amounts.",
+  },
+  {
     version: "1.0.185",
     date: "2026-06-08",
     type: "patch",
