@@ -176,6 +176,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Locked YMYL boundary: do not disable through feature flags. Any rollback must keep equivalent visible tax-year, educational-estimate, input-based, and not-tax-advice boundary copy before the result summary.",
   },
   {
+    id: "tax-impact-warnings-boundary",
+    label: "Tax impact warnings boundary",
+    version: "1.0.185",
+    layer: "feature",
+    enabled: true,
+    locked: true,
+    grayRate: 100,
+    ownerArea: "src/features/tax-impact-warnings and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Locked YMYL boundary: do not disable through feature flags. Any rollback must keep equivalent visible IRMAA, ACA, Social Security, NIIT, RMD, and state-tax review warnings near the result summary.",
+  },
+  {
     id: "faq-schema",
     label: "FAQPage structured data",
     version: "1.0.6",

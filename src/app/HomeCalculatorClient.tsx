@@ -169,9 +169,11 @@ export function HomeCalculatorClient() {
                 Reset
               </button>
             </div>
-            <div className="mt-4">
-              <TaxImpactWarnings input={input} result={result} />
-            </div>
+            {isFeatureEnabled("tax-impact-warnings-boundary") ? (
+              <div className="mt-4">
+                <TaxImpactWarnings input={input} result={result} />
+              </div>
+            ) : null}
             {isFeatureEnabled("tax-payment-comparison") ? (
               <div className="mt-4">
                 <TaxPaymentComparison input={input} result={result} />

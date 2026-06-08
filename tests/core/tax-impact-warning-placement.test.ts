@@ -115,12 +115,15 @@ describe("tax impact warning placement", () => {
   it("keeps the warnings directly inside the results card before AI, projection, and advanced details", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
     const resultSummaryIndex = source.indexOf("<ResultSummary result={result} />");
+    const gateIndex = source.indexOf('isFeatureEnabled("tax-impact-warnings-boundary")');
     const warningIndex = source.indexOf("<TaxImpactWarnings input={input} result={result} />");
     const aiIndex = source.indexOf('id="ai-explainer"');
     const projectionIndex = source.indexOf("<ProjectionChart");
     const advancedDetailsIndex = source.indexOf("Advanced calculation details");
 
     expect(resultSummaryIndex).toBeGreaterThan(-1);
+    expect(gateIndex).toBeGreaterThan(resultSummaryIndex);
+    expect(gateIndex).toBeLessThan(warningIndex);
     expect(warningIndex).toBeGreaterThan(resultSummaryIndex);
     expect(warningIndex).toBeLessThan(aiIndex);
     expect(warningIndex).toBeLessThan(projectionIndex);

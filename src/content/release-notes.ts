@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.185",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Tax impact warnings boundary feature registry",
+    summary:
+      "Registered the homepage Tax Impact Warnings panel as a locked YMYL boundary in the main feature registry and routed the mount through that locked registry entry so hidden tax-interaction review prompts cannot be disabled by normal feature overrides.",
+    affectedArea:
+      "Feature registry, homepage Tax Impact Warnings boundary, release notes, tax-impact placement guard, and task tracking",
+    rollbackPath:
+      "Keep equivalent visible IRMAA, ACA, Social Security, NIIT, RMD, and state-tax review warnings near the result summary, then revert the registry entry, homepage mount, release note, task, progress, and tests only after a reviewed replacement is in place.",
+  },
+  {
     version: "1.0.184",
     date: "2026-06-08",
     type: "patch",

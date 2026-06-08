@@ -143,3 +143,4 @@
 - [done] Register calculation breakdown in the main feature registry
 - [done] Register tax payment comparison in the main feature registry
 - [done] Register result scope boundary in the main feature registry
+- [done] Register tax impact warnings boundary in the main feature registry
