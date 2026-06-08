@@ -13,6 +13,11 @@ playwright-report/
 next-env.d.ts
 .vercel/
 
+# Private local evidence captures: never sync account UI screenshots by default
+docs/evidence/*.png
+docs/evidence/*.jpg
+docs/evidence/*.jpeg
+
 # Local agent/tooling caches
 .codex-skills/
 .design-md/

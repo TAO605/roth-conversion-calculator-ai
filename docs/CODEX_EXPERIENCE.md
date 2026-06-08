@@ -1952,3 +1952,29 @@ The provider usage evidence tests require the template to validate, require reco
 **Future trigger words:**
 
 Bearer token false positive; secret scanner prose; provider usage evidence template; privacyBoundary false positive; API key evidence validator
+
+### 2026-06-08 - Private GSC screenshots need an explicit sync allowlist
+
+**Symptom:**
+
+A privacy boundary check found GSC screenshot files under `docs/evidence` already present on GitHub main.
+
+**Root cause:**
+
+The project has mixed evidence types: some screenshots were explicitly approved for GitHub sync, while later GSC account UI screenshots were intended to remain local. A direct GitHub API sync workflow can bypass `.gitignore`, so filename patterns alone are not enough.
+
+**Fix:**
+
+Added `.gitignore` rules for local evidence images, a private evidence sync allowlist tied to recorded approval, and an operations guard that compares GitHub main against the allowlist.
+
+**Guard:**
+
+`npm run ops:privacy-evidence-boundary` reports approved and unapproved remote evidence screenshots separately. It currently blocks because three remote GSC screenshots lack explicit approval records.
+
+**Validation:**
+
+Targeted privacy/provider/cost evidence tests passed with 3 files / 11 tests. The boundary command correctly returned `ok: false` with the three unapproved remote paths, so deletion needs explicit user approval before GitHub changes.
+
+**Future trigger words:**
+
+GSC screenshot synced; private evidence GitHub; account UI screenshot; docs/evidence png; privacy evidence allowlist; direct GitHub API sync bypassed gitignore

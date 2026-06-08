@@ -1,0 +1,17 @@
+{
+  "evidenceType": "private-evidence-sync-allowlist",
+  "createdAt": "2026-06-08T00:00:00.000Z",
+  "privacyBoundary": "Only evidence screenshots with explicit user approval and a recorded reason may remain synced to GitHub. New account UI screenshots must stay local unless explicitly approved again.",
+  "allowedPaths": [
+    {
+      "path": "docs/evidence/gsc-homepage-indexed-result.png",
+      "approvalSource": "PROGRESS.md Round 111: user explicitly approved syncing the private GSC homepage evidence to GitHub.",
+      "reason": "Homepage URL Inspection indexed result evidence."
+    },
+    {
+      "path": "docs/evidence/gsc-homepage-live-faq-result.png",
+      "approvalSource": "PROGRESS.md Round 111: user explicitly approved syncing the private GSC homepage evidence to GitHub.",
+      "reason": "Homepage live test / FAQ rich result evidence."
+    }
+  ]
+}

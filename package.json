@@ -47,6 +47,8 @@
     "ops:ai-cost-abuse-evidence": "node scripts/ai-cost-abuse-evidence.mjs",
     "ops:ai-provider-usage-validate": "node scripts/validate-ai-provider-usage-evidence.mjs",
     "ops:ai-provider-usage-ready": "node scripts/ai-provider-usage-readiness.mjs",
+    "ops:privacy-evidence-boundary": "node scripts/privacy-evidence-boundary.mjs",
+    "ops:privacy-evidence-cleanup-plan": "node scripts/privacy-evidence-cleanup-plan.mjs",
     "lint": "next lint"
   },
   "dependencies": {

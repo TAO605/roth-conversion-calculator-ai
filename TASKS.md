@@ -127,3 +127,6 @@
 - [done] Add AI explainer cost-abuse guard
 - [done] Add AI cost-abuse evidence command
 - [done] Add AI provider usage evidence records
+- [done] Add private evidence sync boundary guard
+- [done] Add dry-run cleanup plan for unapproved remote GSC screenshots
+- [blocked] Remove unapproved remote GSC screenshot files from GitHub main
