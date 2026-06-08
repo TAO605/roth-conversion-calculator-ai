@@ -92,6 +92,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
     rollbackPath: "Remove CopyResultButton from the results actions.",
   },
   {
+    id: "pdf-report",
+    label: "Print-ready report export",
+    version: "1.0.178",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/pdf-report and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Disable pdf-report in the feature registry, remove PdfReportButton from the homepage result actions, or restore the prior report export implementation.",
+  },
+  {
     id: "faq-schema",
     label: "FAQPage structured data",
     version: "1.0.6",

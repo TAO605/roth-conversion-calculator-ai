@@ -8,7 +8,7 @@ describe("result actions layout", () => {
     const actionsIndex = source.indexOf('aria-label="Result actions"');
     const summaryIndex = source.indexOf("<ResultSummary result={result} />");
     const shareIndex = source.indexOf("<ShareResultButton input={input} />");
-    const reportIndex = source.indexOf("<PdfReportButton input={input} result={result} />");
+    const reportIndex = source.indexOf('<PdfReportButton input={input} result={result} />');
     const cpaIndex = source.indexOf("<CopyProfessionalHandoffButton input={input} result={result} />");
     const resetIndex = source.indexOf("<RotateCcw aria-hidden");
 
@@ -17,6 +17,7 @@ describe("result actions layout", () => {
     expect(actionsIndex).toBeGreaterThan(summaryIndex);
     expect(source).toContain("mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-4");
     expect(source).toContain("[&>button]:w-full");
+    expect(source).toContain('isFeatureEnabled("pdf-report")');
     expect(source).not.toContain("xl:flex");
     expect(shareIndex).toBeGreaterThan(actionsIndex);
     expect(reportIndex).toBeGreaterThan(shareIndex);

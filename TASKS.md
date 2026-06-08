@@ -136,3 +136,4 @@
 - [done] Add IRMAA review prep without Medicare premium amount calculation
 - [done] Upgrade report download to print-ready HTML export
 - [done] Align report wording across current content pages
+- [done] Register report export in the main feature registry

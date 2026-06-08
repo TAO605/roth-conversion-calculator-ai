@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.178",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Report export feature registry",
+    summary:
+      "Registered the print-ready report export in the main feature registry and gated the homepage report action through that registry so report export rollback and release review are visible in the modular rollback map.",
+    affectedArea:
+      "Feature registry, homepage result actions, release notes, task tracking, and feature-registry regression tests",
+    rollbackPath:
+      "Remove the pdf-report feature registry entry, restore the always-rendered PdfReportButton in HomeCalculatorClient, then revert the release note, task, progress, and tests.",
+  },
+  {
     version: "1.0.177",
     date: "2026-06-08",
     type: "patch",
