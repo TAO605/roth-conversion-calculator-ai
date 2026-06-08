@@ -116,6 +116,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Disable pdf-report in the feature registry, remove PdfReportButton from the homepage result actions, or restore the prior report export implementation.",
   },
   {
+    id: "professional-handoff",
+    label: "CPA packet copy action",
+    version: "1.0.180",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/professional-handoff and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Disable professional-handoff in the feature registry, remove CopyProfessionalHandoffButton from the homepage result actions, and keep the professional review packet page available.",
+  },
+  {
     id: "faq-schema",
     label: "FAQPage structured data",
     version: "1.0.6",

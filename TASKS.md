@@ -138,3 +138,4 @@
 - [done] Align report wording across current content pages
 - [done] Register report export in the main feature registry
 - [done] Register share link in the main feature registry
+- [done] Register professional handoff in the main feature registry

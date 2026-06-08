@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.180",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Professional handoff feature registry",
+    summary:
+      "Registered the CPA packet copy action in the main feature registry and gated the homepage Copy CPA packet action through that registry so professional-handoff rollback is visible in the modular rollback map.",
+    affectedArea:
+      "Feature registry, homepage result actions, professional handoff tests, release notes, and task tracking",
+    rollbackPath:
+      "Remove the professional-handoff feature registry entry, restore the always-rendered CopyProfessionalHandoffButton in HomeCalculatorClient, then revert the release note, task, progress, and tests.",
+  },
+  {
     version: "1.0.179",
     date: "2026-06-08",
     type: "patch",

@@ -9,6 +9,7 @@ describe("result actions layout", () => {
     const summaryIndex = source.indexOf("<ResultSummary result={result} />");
     const shareIndex = source.indexOf("<ShareResultButton input={input} />");
     const reportIndex = source.indexOf('<PdfReportButton input={input} result={result} />');
+    const cpaGateIndex = source.indexOf('isFeatureEnabled("professional-handoff")');
     const cpaIndex = source.indexOf("<CopyProfessionalHandoffButton input={input} result={result} />");
     const resetIndex = source.indexOf("<RotateCcw aria-hidden");
 
@@ -19,10 +20,12 @@ describe("result actions layout", () => {
     expect(source).toContain("[&>button]:w-full");
     expect(source).toContain('isFeatureEnabled("share-link")');
     expect(source).toContain('isFeatureEnabled("pdf-report")');
+    expect(source).toContain('isFeatureEnabled("professional-handoff")');
     expect(source).not.toContain("xl:flex");
     expect(shareIndex).toBeGreaterThan(actionsIndex);
     expect(reportIndex).toBeGreaterThan(shareIndex);
-    expect(cpaIndex).toBeGreaterThan(reportIndex);
+    expect(cpaGateIndex).toBeGreaterThan(reportIndex);
+    expect(cpaIndex).toBeGreaterThan(cpaGateIndex);
     expect(resetIndex).toBeGreaterThan(cpaIndex);
   });
 

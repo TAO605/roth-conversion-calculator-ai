@@ -153,7 +153,9 @@ export function HomeCalculatorClient() {
             >
               {isFeatureEnabled("share-link") ? <ShareResultButton input={input} /> : null}
               {isFeatureEnabled("pdf-report") ? <PdfReportButton input={input} result={result} /> : null}
-              <CopyProfessionalHandoffButton input={input} result={result} />
+              {isFeatureEnabled("professional-handoff") ? (
+                <CopyProfessionalHandoffButton input={input} result={result} />
+              ) : null}
               <button
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-systemRed transition-colors hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-systemRed focus:ring-offset-2 dark:border-white/10 dark:bg-neutral-950 dark:hover:bg-neutral-900 dark:focus:ring-offset-neutral-950"
                 onClick={() => {

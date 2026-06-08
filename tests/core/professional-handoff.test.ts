@@ -69,6 +69,7 @@ describe("professional handoff packet", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
     expect(source).toContain("CopyProfessionalHandoffButton");
+    expect(source).toContain('isFeatureEnabled("professional-handoff")');
     expect(source.indexOf("<CopyProfessionalHandoffButton input={input} result={result} />")).toBeGreaterThan(
       source.indexOf("<PdfReportButton input={input} result={result} />"),
     );
