@@ -19,11 +19,19 @@ describe("privacy data flow playbook", () => {
     expect(labels).toContain("Confirm calculator runs locally");
     expect(labels).toContain("Review localStorage contents");
     expect(labels).toContain("Inspect share-link parameters");
+    expect(labels).toContain("Review print-ready report contents");
     expect(labels).toContain("Verify privacy-safe GA4 events");
     expect(labels).toContain("Block sensitive data before AI requests");
     expect(summary.totalChecks).toBeGreaterThanOrEqual(12);
     expect(summary.dataSurfaces).toEqual(
-      expect.arrayContaining(["Browser memory", "localStorage", "URL hash", "GA4 event ranges", "Serverless AI route"]),
+      expect.arrayContaining([
+        "Browser memory",
+        "localStorage",
+        "URL hash",
+        "Downloaded HTML report",
+        "GA4 event ranges",
+        "Serverless AI route",
+      ]),
     );
   });
 

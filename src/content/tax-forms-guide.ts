@@ -104,9 +104,9 @@ export function buildTaxFormsGuideGroups(): TaxFormsGuideGroup[] {
       goal: "Bundle calculator output with documents that help a CPA review the scenario.",
       forms: [
         form(
-          "Calculator PDF",
+          "Print-ready calculator report",
           "taxableConversion",
-          "Summarizes user-entered assumptions, estimated tax cost, projection output, and disclaimer language.",
+          "Summarizes user-entered assumptions, estimated tax cost, projection output, source links, and disclaimer language.",
           "Use it as a worksheet, not as filing instructions or advice.",
         ),
         form(

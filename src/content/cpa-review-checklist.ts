@@ -24,12 +24,12 @@ export function buildCpaReviewChecklistGroups(): CpaReviewChecklistGroup[] {
       items: [
         item(
           "Calculator result summary",
-          "Calculator PDF",
+          "Print-ready calculator report",
           "Export or copy the calculator result summary, including conversion amount, filing status, income, tax-year label, and output totals.",
         ),
         item(
           "Scenario assumptions",
-          "Calculator PDF",
+          "Print-ready calculator report",
           "List expected return, retirement age, retirement marginal tax rate, inflation rate, state tax assumption, and tax payment method.",
         ),
         item(
@@ -113,7 +113,7 @@ export function buildCpaReviewChecklistGroups(): CpaReviewChecklistGroup[] {
         item(
           "Save calculator and advisor materials",
           "Decision record",
-          "Keep the calculator PDF, professional notes, tax documents, and final decision record together.",
+          "Keep the print-ready calculator report, professional notes, tax documents, and final decision record together.",
         ),
         item(
           "Track final conversion paperwork",

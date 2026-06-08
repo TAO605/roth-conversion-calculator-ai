@@ -138,7 +138,7 @@ export function buildCpaQuestionGroups(): CpaQuestionGroup[] {
           "How should I compare the filed return with the calculator estimate?",
           "Filing records",
           "Post-filing comparison helps identify assumptions that were too high, too low, or outside the calculator scope.",
-          ["Filed return", "Calculator PDF", "CPA notes", "Post-filing review log"],
+          ["Filed return", "Print-ready calculator report", "CPA notes", "Post-filing review log"],
         ),
         question(
           "What should be documented before considering another future conversion?",

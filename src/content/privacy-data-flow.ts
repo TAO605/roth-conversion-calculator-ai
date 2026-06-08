@@ -80,10 +80,10 @@ export function buildPrivacyDataFlowGroups(): PrivacyDataFlowGroup[] {
           "Share link sample",
         ),
         check(
-          "Review PDF report contents",
-          "Downloaded PDF",
-          "Confirm PDF exports contain user-selected inputs, results, methodology notes, and the required disclaimer.",
-          "PDF sample",
+          "Review print-ready report contents",
+          "Downloaded HTML report",
+          "Confirm report exports contain user-selected inputs, results, methodology notes, source links, and the required disclaimer before saving as PDF from the browser.",
+          "Report sample",
         ),
         check(
           "Check copy-summary wording",

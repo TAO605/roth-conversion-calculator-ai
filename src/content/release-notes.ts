@@ -10,6 +10,30 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.177",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Report wording consistency",
+    summary:
+      "Aligned current privacy, CPA handoff, tax forms, custodian, mistakes, LLM index, and review-packet copy with the print-ready HTML report export so users are not told the site directly generates a PDF file.",
+    affectedArea:
+      "Current report-related content pages, LLM discovery text, privacy data-flow playbook, CPA checklist, professional review packet, release notes, task tracking, and wording regression tests",
+    rollbackPath:
+      "Restore the previous PDF-oriented wording on current report-related content pages, then remove the report wording consistency test and revert release note, task, and progress updates.",
+  },
+  {
+    version: "1.0.176",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Print-ready report export",
+    summary:
+      "Upgraded the result report download from a plain-text file to a print-ready HTML report with input verification, modeled outputs, tax-impact review items, IRMAA review prep, official source links, and the required educational boundary so users can save the report as PDF from their browser.",
+    affectedArea:
+      "Report export button, report HTML builder, feature config, release notes, task tracking, and report regression tests",
+    rollbackPath:
+      "Restore PdfReportButton to the previous text/plain report download, remove the report HTML builder and tests, then revert the release note, feature config version, task, and progress updates.",
+  },
+  {
     version: "1.0.175",
     date: "2026-06-08",
     type: "patch",

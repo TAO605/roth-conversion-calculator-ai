@@ -138,7 +138,7 @@ export function buildEstimatedTaxGuideSections(): EstimatedTaxGuideSection[] {
           "Estimated tax belongs in the CPA handoff packet",
           "Calculator limits",
           "Payment timing questions should be documented alongside conversion amount, tax cost, withholding, state tax, and other income-linked items.",
-          "Bring Form 1040-ES, payment receipts, withholding records, and the calculator PDF.",
+          "Bring Form 1040-ES, payment receipts, withholding records, and the print-ready calculator report.",
         ),
         point(
           "Payment review should be repeated after actual processing",

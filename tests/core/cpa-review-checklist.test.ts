@@ -23,7 +23,7 @@ describe("CPA review checklist", () => {
     expect(labels).toContain("Written professional recommendation");
     expect(summary.totalItems).toBeGreaterThanOrEqual(12);
     expect(summary.handoffOutputs).toEqual(
-      expect.arrayContaining(["Calculator PDF", "Tax document packet", "Question list", "Decision record"]),
+      expect.arrayContaining(["Print-ready calculator report", "Tax document packet", "Question list", "Decision record"]),
     );
   });
 

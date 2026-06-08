@@ -134,3 +134,5 @@
 - [done] Add CI-safe AI endpoint security evidence guard
 - [done] Surface private evidence and AI security artifacts in SEO monitoring review
 - [done] Add IRMAA review prep without Medicare premium amount calculation
+- [done] Upgrade report download to print-ready HTML export
+- [done] Align report wording across current content pages

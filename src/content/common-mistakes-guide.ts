@@ -144,7 +144,7 @@ export function buildCommonMistakeGroups(): CommonMistakeGroup[] {
           "Not saving assumptions",
           "Privacy Data Flow Playbook",
           "A result is hard to review later if the assumptions that produced it are missing.",
-          "Save a PDF, share link, or copied summary for review and recordkeeping.",
+          "Save the print-ready report, share link, or copied summary for review and recordkeeping.",
         ),
       ],
     },

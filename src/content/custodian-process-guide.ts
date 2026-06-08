@@ -118,7 +118,7 @@ export function buildCustodianProcessSteps(): CustodianProcessStep[] {
         checkpoint(
           "Prepare a CPA handoff packet",
           "Tax form reconciliation",
-          "Bundle the calculator PDF, conversion confirmation, tax forms, basis records, and open questions.",
+          "Bundle the print-ready calculator report, conversion confirmation, tax forms, basis records, and open questions.",
           "The packet supports review; it does not replace tax software or professional judgment.",
         ),
       ],

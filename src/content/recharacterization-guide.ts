@@ -119,7 +119,7 @@ export function buildRecharacterizationGuideSections(): RecharacterizationGuideS
           "Keep estimated and actual scenarios separate",
           "Error review",
           "If the processed transaction differs from the planned scenario, keep both records so the difference is traceable.",
-          "Save calculator PDFs, confirmation numbers, tax forms, and CPA notes.",
+          "Save print-ready calculator reports, confirmation numbers, tax forms, and CPA notes.",
         ),
       ],
     },

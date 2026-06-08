@@ -6,7 +6,7 @@ import { breadcrumbJsonLd } from "@/core/seo/json-ld";
 export const metadata = {
   title: "Privacy Data Flow Playbook",
   description:
-    "Privacy and data-flow audit playbook for the Roth Conversion Calculator, covering local calculation, browser storage, share links, PDF exports, GA4 events, health checks, and AI API boundaries.",
+    "Privacy and data-flow audit playbook for the Roth Conversion Calculator, covering local calculation, browser storage, share links, print-ready report exports, GA4 events, health checks, and AI API boundaries.",
   alternates: { canonical: "/privacy-data-flow" },
 };
 

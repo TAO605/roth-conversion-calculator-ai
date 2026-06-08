@@ -1,0 +1,144 @@
+import { formatCurrency, formatPercent } from "@/common/format/currency";
+import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
+import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
+import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function formatBreakEven(result: RothConversionResult): string {
+  return result.breakEvenYear === null ? "Not reached in projection period" : `${result.breakEvenYear} years`;
+}
+
+function row(label: string, value: string): string {
+  return `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`;
+}
+
+function list(items: string[]): string {
+  return `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+}
+
+export function buildReportHtml(input: RothConversionInput, result: RothConversionResult): string {
+  const reviewItems = buildTaxImpactReviewItems(input, result);
+  const irmaaPrep = buildIrmaaReviewPrep(input, result);
+  const generatedAt = new Date().toISOString().slice(0, 10);
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roth Conversion Calculator Report</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, Helvetica, sans-serif; color: #171717; }
+    body { margin: 0; background: #f5f5f5; }
+    main { max-width: 840px; margin: 0 auto; padding: 32px 20px; background: #fff; }
+    h1 { margin: 0 0 8px; font-size: 28px; line-height: 1.2; }
+    h2 { margin: 28px 0 12px; font-size: 18px; line-height: 1.3; }
+    p, li, td, th { font-size: 14px; line-height: 1.55; }
+    .meta { color: #525252; margin: 0 0 20px; }
+    .notice { border: 1px solid #d4d4d4; border-radius: 8px; padding: 12px 14px; background: #fafafa; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { border: 1px solid #e5e5e5; padding: 9px 10px; text-align: left; vertical-align: top; }
+    th { width: 42%; background: #fafafa; font-weight: 700; }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    a { color: #0645ad; }
+    @media print {
+      body { background: #fff; }
+      main { max-width: none; padding: 0; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Roth Conversion Calculator Report</h1>
+    <p class="meta">Generated ${escapeHtml(generatedAt)} for the ${escapeHtml(String(input.taxYear))} tax year. Print this page or use your browser's Save as PDF option.</p>
+
+    <section class="notice" aria-label="Report boundary">
+      <p><strong>Report boundary:</strong> This is an educational calculator report based on the inputs entered in the browser. It is not tax, financial, legal, or investment advice.</p>
+    </section>
+
+    <section aria-labelledby="inputs-heading">
+      <h2 id="inputs-heading">Inputs To Verify</h2>
+      <table>
+        <tbody>
+          ${row("Conversion amount", formatCurrency(input.conversionAmount))}
+          ${row("Traditional IRA balance", formatCurrency(input.traditionalIraBalance))}
+          ${row("After-tax basis entered", formatCurrency(input.basis))}
+          ${row("Filing status", input.filingStatus)}
+          ${row("Current taxable income entered", formatCurrency(input.currentTaxableIncome))}
+          ${row("State marginal tax assumption", formatPercent(input.stateMarginalTaxRate))}
+          ${row("Age entered", String(input.age))}
+          ${row("Retirement age assumption", String(input.retirementAge))}
+          ${row("Tax payment method modeled", input.taxPaymentMethod)}
+          ${row("Expected annual return assumption", formatPercent(input.expectedAnnualReturn))}
+          ${row("Retirement marginal tax assumption", formatPercent(input.retirementMarginalTaxRate))}
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="outputs-heading">
+      <h2 id="outputs-heading">Modeled Calculator Output</h2>
+      <table>
+        <tbody>
+          ${row("Taxable conversion estimate", formatCurrency(result.taxableConversion))}
+          ${row("Federal tax estimate", formatCurrency(result.federalTax))}
+          ${row("State tax estimate", formatCurrency(result.stateTax))}
+          ${row("Potential early distribution penalty", formatCurrency(result.earlyDistributionPenalty))}
+          ${row("Total upfront cost estimate", formatCurrency(result.totalUpfrontCost))}
+          ${row("Modeled break-even estimate", formatBreakEven(result))}
+          ${row("Projected after-tax difference", formatCurrency(result.afterTaxDifference))}
+          ${row("Basis exclusion ratio", formatPercent(result.breakdown.basisExclusionRatio))}
+          ${row("Federal bracket before conversion", formatPercent(result.bracketImpact.beforeRate))}
+          ${row("Federal bracket after conversion", formatPercent(result.bracketImpact.afterRate))}
+          ${row("Amount modeled in higher brackets", formatCurrency(result.bracketImpact.incomeTaxedInHigherBrackets))}
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="review-heading">
+      <h2 id="review-heading">Tax Impact Review Items</h2>
+      ${list(reviewItems.map((item) => `${item.label}: ${item.reason}`))}
+    </section>
+
+    <section aria-labelledby="irmaa-heading">
+      <h2 id="irmaa-heading">IRMAA Review Prep</h2>
+      <table>
+        <tbody>
+          ${row("Premium year context", String(irmaaPrep.premiumYear))}
+          ${row("Usual lookback tax year to verify", String(irmaaPrep.usualLookbackTaxYear))}
+          ${row("Calculator income proxy after conversion", formatCurrency(irmaaPrep.incomeProxy))}
+          ${row("IRMAA threshold note", irmaaPrep.thresholdLabel)}
+          ${row("Prep summary", irmaaPrep.summary)}
+        </tbody>
+      </table>
+      <h2>Inputs Still Needed Before Any Premium Amount Review</h2>
+      ${list(irmaaPrep.missingInputs)}
+    </section>
+
+    <section aria-labelledby="sources-heading">
+      <h2 id="sources-heading">Review Sources</h2>
+      <ul>
+        <li><a href="https://www.medicare.gov/basics/costs/medicare-costs/part-b-costs">Medicare.gov Part B costs and IRMAA overview</a></li>
+        <li><a href="https://www.ssa.gov/forms/ssa-44.pdf">SSA Form SSA-44 for life-changing event review</a></li>
+        <li><a href="https://www.irs.gov/publications/p590a">IRS Publication 590-A</a></li>
+        <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="disclaimer-heading">
+      <h2 id="disclaimer-heading">Disclaimer</h2>
+      <p>${escapeHtml(REQUIRED_DISCLAIMER)}</p>
+    </section>
+  </main>
+</body>
+</html>`;
+}

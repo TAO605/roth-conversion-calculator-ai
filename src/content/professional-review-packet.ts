@@ -147,8 +147,8 @@ export function buildProfessionalReviewPacketSections(): ProfessionalReviewPacke
       items: [
         item(
           "Calculator scenario packet",
-          "Copy CPA packet / PDF report",
-          "A user or reviewer can export a scenario with inputs, modeled outputs, assumptions, and review warnings.",
+          "Copy CPA packet / print-ready report",
+          "A user or reviewer can export a scenario with inputs, modeled outputs, assumptions, review warnings, and source links.",
         ),
         item(
           "CPA checklist",
