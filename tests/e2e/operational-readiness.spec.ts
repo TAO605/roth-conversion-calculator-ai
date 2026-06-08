@@ -41,7 +41,7 @@ test("calculator workflow renders advanced analysis modules", async ({ page }) =
   await fillAndConfirm(taxableIncome, "110000");
   await fillAndConfirm(stateTaxRate, "5");
 
-  await expect(page.getByText("Estimated upfront tax")).toBeVisible();
+  await expect(page.getByText("Estimated upfront cost")).toBeVisible();
   await page.getByText("Advanced calculation details").click();
   await expect(page.getByRole("heading", { name: "Calculation Breakdown" })).toBeVisible();
   await expect(page.getByText("Total upfront cost rate")).toBeVisible();
@@ -69,7 +69,7 @@ test("mobile viewport keeps the primary calculator path usable", async ({ page }
 
   await expect(page.getByRole("heading", { name: "Roth Conversion Calculator" })).toBeVisible();
   await page.getByLabel("Conversion amount").fill("45000");
-  await expect(page.getByText("Estimated upfront tax")).toBeVisible();
+  await expect(page.getByText("Estimated upfront cost")).toBeVisible();
   await expect(page.getByRole("button", { name: /Share result/i })).toBeVisible();
 });
 

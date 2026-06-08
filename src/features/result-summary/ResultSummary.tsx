@@ -39,7 +39,7 @@ export function ResultSummary({ result }: ResultSummaryProps) {
       <div className="grid gap-2 sm:gap-3 lg:grid-cols-3" aria-label="Primary result estimates">
         <div className="rounded border border-neutral-200 bg-white p-3 shadow-none dark:border-white/10 dark:bg-neutral-950 sm:p-4">
           <p className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-500 dark:text-neutral-400">
-            Estimated upfront tax
+            Estimated upfront cost
           </p>
           <p className="mt-1 font-mono text-[32px] font-bold leading-tight tracking-normal text-systemRed sm:mt-2">
             {formatCurrency(result.totalUpfrontCost)}

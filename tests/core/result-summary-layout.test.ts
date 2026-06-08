@@ -29,7 +29,8 @@ describe("result summary layout", () => {
 
     render(React.createElement(ResultSummary, { result }));
 
-    expect(screen.getByLabelText("Primary result estimates").textContent).toContain("Estimated upfront tax");
+    expect(screen.getByLabelText("Primary result estimates").textContent).toContain("Estimated upfront cost");
+    expect(screen.getByLabelText("Primary result estimates").textContent).not.toContain("Estimated upfront tax");
     expect(screen.getByText("Modeled bracket room")).toBeTruthy();
     expect(screen.getByText("Projected after-tax difference")).toBeTruthy();
     expect(screen.getByText("Scenario reading")).toBeTruthy();

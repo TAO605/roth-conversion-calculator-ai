@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.189",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Upfront cost result label",
+    summary:
+      "Renamed the homepage primary result label from estimated upfront tax to estimated upfront cost so the displayed total does not imply that modeled early-distribution penalties are tax.",
+    affectedArea:
+      "Homepage result summary, result display wording, operational readiness checks, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Restore the prior label only if the result total no longer includes modeled early-distribution penalties or a reviewed replacement keeps tax and penalty amounts clearly separated.",
+  },
+  {
     version: "1.0.188",
     date: "2026-06-08",
     type: "patch",

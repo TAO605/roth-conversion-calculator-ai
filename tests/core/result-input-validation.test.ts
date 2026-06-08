@@ -83,7 +83,7 @@ describe("result input validation boundary", () => {
     });
 
     expect(screen.getAllByText("Withheld tax amount cannot exceed the conversion amount.")).toHaveLength(2);
-    expect(screen.queryByText("Estimated upfront tax")).toBeNull();
+    expect(screen.queryByText("Estimated upfront cost")).toBeNull();
     expect(screen.queryByText("Download report")).toBeNull();
     expect(screen.queryByText("Tax Payment Method Comparison")).toBeNull();
   });
@@ -100,7 +100,7 @@ describe("result input validation boundary", () => {
     });
 
     expect(screen.getAllByText("Withheld tax amount cannot exceed the conversion amount.")).toHaveLength(2);
-    expect(screen.queryByText("Estimated upfront tax")).toBeNull();
+    expect(screen.queryByText("Estimated upfront cost")).toBeNull();
   });
 
   it("restores results after an invalid input is corrected", async () => {
@@ -123,7 +123,7 @@ describe("result input validation boundary", () => {
 
     await waitFor(() => {
       expect(screen.queryByTestId("result-input-validation-notice")).toBeNull();
-      expect(screen.getByText("Estimated upfront tax")).toBeTruthy();
+      expect(screen.getByText("Estimated upfront cost")).toBeTruthy();
     });
 
     expect(screen.getByText("Tax Payment Method Comparison")).toBeTruthy();
