@@ -1874,3 +1874,29 @@ Run `npm run seo:gsc-validation-follow-up-validate`, targeted GSC indexing/SEO m
 **Future trigger words:**
 
 GSC validation follow-up; Validation started next step; don't click Validate fix again; discovered not indexed review date; Search Console follow-up plan; session privacy false positive
+
+### 2026-06-07 - Public paid-model endpoints need a default-off cost fuse
+
+**Symptom:**
+
+The user worried that short visits might mean visitors were abusing the site's GPT or Claude API keys through the public calculator.
+
+**Root cause:**
+
+Source inspection did not show frontend key exposure or production Claude integration, but `/api/ai/explain` could call OpenAI server-side whenever `OPENAI_API_KEY` existed. In-memory per-IP limiting alone is not enough for a public serverless endpoint that can spend paid model quota.
+
+**Fix:**
+
+Added same-origin/referer enforcement, a conservative configurable hourly limit, fallback-only default behavior, an explicit `AI_EXPLAINER_PAID_MODEL_ENABLED=true` cost fuse, invalid JSON handling, and `X-AI-Provider` response evidence. Removed browser CSP permission for direct OpenAI API connections.
+
+**Guard:**
+
+Added AI API security tests that require the paid-model opt-in fuse, same-origin guard, fallback provider evidence, fallback-only env defaults, and no browser `connect-src` permission for `https://api.openai.com`.
+
+**Validation:**
+
+Targeted AI/security/release/feature tests passed with 6 files / 18 tests; full Vitest passed with 114 files / 343 tests; `npm run build` passed with 131 static pages; production checks confirmed cross-origin POST returns 403 and same-origin POST returns `X-AI-Provider: fallback`.
+
+**Future trigger words:**
+
+API key abuse; users are using my API key; AI endpoint cost spike; public OpenAI endpoint; Claude key abuse; short visits API spend; paid model fuse; fallback-only AI

@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { finalizeAiAnswer, validateAiExplainRequest } from "@/core/compliance/ai-compliance-gateway";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { createOpenAiExplanation } from "@/core/ai/openai-provider";
-import { createInMemoryRateLimiter, getClientRateLimitKey } from "@/core/ai/rate-limit";
+import {
+  createInMemoryRateLimiter,
+  getAiExplainerMaxRequestsPerHour,
+  getClientRateLimitKey,
+  isAllowedAiRequestOrigin,
+} from "@/core/ai/rate-limit";
 
 interface AiExplainRequest {
   question?: string;
@@ -11,11 +16,25 @@ interface AiExplainRequest {
 }
 
 const aiRateLimiter = createInMemoryRateLimiter({
-  maxRequests: 20,
+  maxRequests: getAiExplainerMaxRequestsPerHour(),
   windowMs: 60 * 60 * 1000,
 });
 
 export async function POST(request: Request) {
+  const originCheck = isAllowedAiRequestOrigin(request.headers);
+
+  if (!originCheck.allowed) {
+    return NextResponse.json(
+      {
+        answer: finalizeAiAnswer(
+          "The AI explainer is available from the Roth Conversion Calculator page. Please use the on-page calculator before asking for an educational explanation.",
+        ),
+        reason: "origin_blocked",
+      },
+      { status: 403, headers: { "X-AI-Provider": "fallback" } },
+    );
+  }
+
   const rateLimit = aiRateLimiter.check(getClientRateLimitKey(request.headers));
 
   if (!rateLimit.allowed) {
@@ -36,13 +55,34 @@ export async function POST(request: Request) {
     );
   }
 
-  const body = (await request.json()) as AiExplainRequest;
+  let body: AiExplainRequest;
+
+  try {
+    body = (await request.json()) as AiExplainRequest;
+  } catch {
+    return NextResponse.json(
+      {
+        answer: finalizeAiAnswer(
+          "The AI explainer could not read the request. Please refresh the calculator and try again without sharing private identifiers.",
+        ),
+        reason: "invalid_json",
+      },
+      {
+        status: 400,
+        headers: {
+          "X-AI-Provider": "fallback",
+          "X-RateLimit-Remaining": String(rateLimit.remaining),
+        },
+      },
+    );
+  }
+
   const validation = validateAiExplainRequest(body);
 
   if (!validation.ok) {
     return NextResponse.json(
       { answer: validation.answer, reason: validation.reason },
-      { status: 200, headers: { "X-RateLimit-Remaining": String(rateLimit.remaining) } },
+      { status: 200, headers: { "X-AI-Provider": "fallback", "X-RateLimit-Remaining": String(rateLimit.remaining) } },
     );
   }
 
@@ -59,8 +99,9 @@ export async function POST(request: Request) {
   } and does not calculate IRMAA, ACA subsidies, NIIT, AMT, RMD interactions, or state-specific exceptions.`;
 
   const apiKey = process.env.OPENAI_API_KEY;
+  const paidModelEnabled = process.env.AI_EXPLAINER_PAID_MODEL_ENABLED === "true";
 
-  if (apiKey) {
+  if (paidModelEnabled && apiKey) {
     try {
       const model = process.env.OPENAI_MODEL || "gpt-5";
       const answer = await createOpenAiExplanation({
@@ -72,12 +113,12 @@ export async function POST(request: Request) {
 
       return NextResponse.json(
         { answer: finalizeAiAnswer(answer || fallbackExplanation) },
-        { headers: { "X-RateLimit-Remaining": String(rateLimit.remaining) } },
+        { headers: { "X-AI-Provider": "openai", "X-RateLimit-Remaining": String(rateLimit.remaining) } },
       );
     } catch {
       return NextResponse.json(
         { answer: finalizeAiAnswer(fallbackExplanation) },
-        { headers: { "X-RateLimit-Remaining": String(rateLimit.remaining) } },
+        { headers: { "X-AI-Provider": "fallback", "X-RateLimit-Remaining": String(rateLimit.remaining) } },
       );
     }
   }
@@ -86,6 +127,6 @@ export async function POST(request: Request) {
     {
       answer: finalizeAiAnswer(fallbackExplanation),
     },
-    { headers: { "X-RateLimit-Remaining": String(rateLimit.remaining) } },
+    { headers: { "X-AI-Provider": "fallback", "X-RateLimit-Remaining": String(rateLimit.remaining) } },
   );
 }

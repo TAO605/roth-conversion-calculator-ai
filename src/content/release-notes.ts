@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.171",
+    date: "2026-06-06",
+    type: "patch",
+    title: "AI explainer cost-abuse guard",
+    summary:
+      "Hardened the public AI explainer endpoint with same-origin request checks, a conservative configurable hourly limit, fallback-only default behavior, and an explicit paid-model opt-in fuse so deployed API keys cannot be spent by default.",
+    affectedArea:
+      "AI explainer API route, AI rate-limit helpers, content security policy, environment defaults, release notes, feature registry, task tracking, and security regression tests",
+    rollbackPath:
+      "Restore the previous AI explainer API route, rate-limit helper, CSP connect-src setting, and environment defaults, then revert the AI API security tests, release note, feature registry version, task, and progress updates.",
+  },
+  {
     version: "1.0.170",
     date: "2026-06-06",
     type: "patch",

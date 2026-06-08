@@ -27,7 +27,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "ai-explainer",
     label: "AI Roth Conversion Explainer",
-    version: "1.0.125",
+    version: "1.0.171",
     layer: "feature",
     enabled: true,
     locked: false,
@@ -160,7 +160,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "ai-compliance-gateway",
     label: "AI compliance gateway and rate limit",
-    version: "1.0.12",
+    version: "1.0.171",
     layer: "common",
     enabled: true,
     locked: false,

@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { createInMemoryRateLimiter, getClientRateLimitKey } from "@/core/ai/rate-limit";
+import {
+  createInMemoryRateLimiter,
+  getAiExplainerMaxRequestsPerHour,
+  getClientRateLimitKey,
+  isAllowedAiRequestOrigin,
+} from "@/core/ai/rate-limit";
 
 describe("AI rate limit", () => {
   it("allows requests inside the configured window and blocks the next request", () => {
@@ -27,5 +32,40 @@ describe("AI rate limit", () => {
 
     expect(key).toMatch(/^ip:/);
     expect(key).not.toContain("203.0.113.10");
+  });
+
+  it("defaults the public AI explainer to a conservative hourly limit", () => {
+    expect(getAiExplainerMaxRequestsPerHour()).toBe(5);
+    expect(getAiExplainerMaxRequestsPerHour("3")).toBe(3);
+    expect(getAiExplainerMaxRequestsPerHour("100")).toBe(20);
+    expect(getAiExplainerMaxRequestsPerHour("not-a-number")).toBe(5);
+  });
+
+  it("allows AI requests only from the canonical site origin or referer", () => {
+    const siteUrl = "https://www.roth-conversion-calculator-ai.shop";
+
+    expect(
+      isAllowedAiRequestOrigin(
+        new Headers({ origin: "https://www.roth-conversion-calculator-ai.shop" }),
+        siteUrl,
+      ),
+    ).toMatchObject({ allowed: true, reason: "same_origin" });
+
+    expect(
+      isAllowedAiRequestOrigin(
+        new Headers({ referer: "https://www.roth-conversion-calculator-ai.shop/#calculator" }),
+        siteUrl,
+      ),
+    ).toMatchObject({ allowed: true, reason: "same_origin" });
+
+    expect(isAllowedAiRequestOrigin(new Headers(), siteUrl)).toMatchObject({
+      allowed: false,
+      reason: "missing_origin",
+    });
+
+    expect(isAllowedAiRequestOrigin(new Headers({ origin: "https://example.com" }), siteUrl)).toMatchObject({
+      allowed: false,
+      reason: "cross_origin",
+    });
   });
 });
