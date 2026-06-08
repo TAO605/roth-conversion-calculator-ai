@@ -17,6 +17,7 @@ const DEFAULT_PERFORMANCE_PATH = "performance-evidence-result.json";
 const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
 const DEFAULT_PROFESSIONAL_UI_PATH = "professional-ui-evidence-result.json";
+const DEFAULT_PRIVACY_EVIDENCE_BOUNDARY_PATH = "privacy-evidence-boundary-result.json";
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
 const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
@@ -36,6 +37,7 @@ const performancePath = process.argv[13] || DEFAULT_PERFORMANCE_PATH;
 const structuredDataPath = process.argv[14] || DEFAULT_STRUCTURED_DATA_PATH;
 const blogDiscoveryPath = process.argv[15] || DEFAULT_BLOG_DISCOVERY_PATH;
 const professionalUiPath = process.argv[16] || DEFAULT_PROFESSIONAL_UI_PATH;
+const privacyEvidenceBoundaryPath = process.argv[17] || DEFAULT_PRIVACY_EVIDENCE_BOUNDARY_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -520,6 +522,43 @@ function validateProfessionalUiEvidence(professionalUi) {
   assert(Array.isArray(professionalUi.violations) && professionalUi.violations.length === 0, "Professional UI evidence violations must be empty");
 }
 
+function validatePrivacyEvidenceBoundary(boundary) {
+  assert(boundary.ok === true, "Privacy evidence boundary must be ok");
+  assert(
+    boundary.evidenceType === "privacy-evidence-sync-boundary",
+    "Privacy evidence boundary type changed unexpectedly",
+  );
+  assert(
+    boundary.repository === "TAO605/roth-conversion-calculator-ai",
+    "Privacy evidence boundary repository changed unexpectedly",
+  );
+  assert(boundary.branch === "main", "Privacy evidence boundary must scan main");
+  assert(boundary.checks?.allowlistPresent === true, "Privacy evidence boundary must retain the allowlist");
+  assert(
+    boundary.checks?.gitignoreRetainsPrivateEvidenceRules === true,
+    "Privacy evidence boundary must retain local screenshot ignore rules",
+  );
+  assert(
+    boundary.checks?.remotePrivateEvidenceApprovedOnly === true,
+    "Privacy evidence boundary must allow only approved remote screenshots",
+  );
+  assert(boundary.checks?.remoteScanAvailable === true, "Privacy evidence boundary remote scan must be available");
+  assert(boundary.remotePrivateEvidenceCount === 2, "Privacy evidence boundary must retain only two approved screenshots");
+  assert(boundary.approvedRemotePrivateEvidenceCount === 2, "Privacy evidence boundary approved screenshot count must be 2");
+  assert(boundary.unapprovedRemotePrivateEvidenceCount === 0, "Privacy evidence boundary must have zero unapproved screenshots");
+  assert(
+    Array.isArray(boundary.unapprovedRemotePrivateEvidencePaths) &&
+      boundary.unapprovedRemotePrivateEvidencePaths.length === 0,
+    "Privacy evidence boundary unapproved paths must be empty",
+  );
+  assert(
+    Array.isArray(boundary.approvedRemotePrivateEvidencePaths) &&
+      boundary.approvedRemotePrivateEvidencePaths.includes("docs/evidence/gsc-homepage-indexed-result.png") &&
+      boundary.approvedRemotePrivateEvidencePaths.includes("docs/evidence/gsc-homepage-live-faq-result.png"),
+    "Privacy evidence boundary must retain the two approved homepage screenshots",
+  );
+}
+
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
@@ -536,6 +575,7 @@ function run() {
   const structuredData = readJson(structuredDataPath);
   const blogDiscovery = readJson(blogDiscoveryPath);
   const professionalUi = readJson(professionalUiPath);
+  const privacyEvidenceBoundary = readJson(privacyEvidenceBoundaryPath);
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
@@ -552,6 +592,7 @@ function run() {
   validateStructuredDataEvidence(structuredData, smoke.baseUrl);
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
   validateProfessionalUiEvidence(professionalUi);
+  validatePrivacyEvidenceBoundary(privacyEvidenceBoundary);
 
   console.log(
     JSON.stringify(
@@ -572,6 +613,7 @@ function run() {
           structuredDataPath,
           blogDiscoveryPath,
           professionalUiPath,
+          privacyEvidenceBoundaryPath,
         ],
         baseUrl: smoke.baseUrl,
         blogDiscoveryCount: blogDiscovery.blogPostCount,
@@ -586,6 +628,8 @@ function run() {
         performanceScore: performance.categories.performance,
         professionalReviewPacketOk: professionalReviewPacket.ok === true,
         professionalUiScannedFileCount: professionalUi.scannedFileCount,
+        privacyEvidenceBoundaryOk: privacyEvidenceBoundary.ok === true,
+        privacyUnapprovedRemoteEvidenceCount: privacyEvidenceBoundary.unapprovedRemotePrivateEvidenceCount,
         securityHeadersOk: securityHeaders.ok === true,
         searchConsoleVerificationOk: searchConsoleVerification.ok === true,
         smokeCheckCount: smoke.results.length,

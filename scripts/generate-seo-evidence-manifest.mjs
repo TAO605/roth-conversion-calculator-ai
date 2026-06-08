@@ -17,11 +17,12 @@ const DEFAULT_FILES = [
   "structured-data-evidence-result.json",
   "blog-discovery-evidence-result.json",
   "professional-ui-evidence-result.json",
+  "privacy-evidence-boundary-result.json",
   "seo-evidence-validation-result.json",
   "seo-evidence-manifest.json",
   "seo-evidence-manifest-validation-result.json",
 ];
-const ARTIFACT_SCHEMA_VERSION = "2026-06-05.7";
+const ARTIFACT_SCHEMA_VERSION = "2026-06-08.1";
 
 function fileRecord(filePath) {
   if (filePath === "seo-evidence-manifest.json") {

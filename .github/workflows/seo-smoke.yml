@@ -131,6 +131,13 @@ jobs:
           set -o pipefail
           node scripts/professional-ui-evidence.mjs | tee professional-ui-evidence-result.json
 
+      - name: Run private evidence boundary check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          node scripts/privacy-evidence-boundary.mjs | tee privacy-evidence-boundary-result.json
+
       - name: Validate SEO evidence artifact
         run: |
           set -o pipefail
@@ -167,6 +174,7 @@ jobs:
             structured-data-evidence-result.json
             blog-discovery-evidence-result.json
             professional-ui-evidence-result.json
+            privacy-evidence-boundary-result.json
             seo-evidence-validation-result.json
             seo-evidence-manifest.json
             seo-evidence-manifest-validation-result.json
