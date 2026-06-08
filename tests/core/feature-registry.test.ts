@@ -37,6 +37,7 @@ describe("feature registry", () => {
   it("returns only enabled feature ids", () => {
     expect(getEnabledFeatureIds()).toContain("scenario-history");
     expect(getEnabledFeatureIds()).toContain("calculator-input-layout");
+    expect(getEnabledFeatureIds()).toContain("share-link");
     expect(getEnabledFeatureIds()).toContain("pdf-report");
     expect(getEnabledFeatureIds()).toContain("tax-data-freshness");
     expect(getEnabledFeatureIds()).toContain("ai-compliance-gateway");
@@ -129,6 +130,7 @@ describe("feature registry", () => {
     expect(homePage).toContain('isFeatureEnabled("ai-explainer")');
     expect(homePage).toContain('isFeatureEnabled("tax-data-freshness")');
     expect(homePage).toContain('isFeatureEnabled("theme-toggle")');
+    expect(homePage).toContain('isFeatureEnabled("share-link")');
     expect(homePage).toContain('isFeatureEnabled("pdf-report")');
     expect(homePage).toContain('isFeatureEnabled("privacy-safe-analytics")');
     expect(homePage).toContain('isFeatureEnabled("homepage-howto-structured-data")');

@@ -151,7 +151,7 @@ export function HomeCalculatorClient() {
               aria-label="Result actions"
               className="mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-4 [&>button]:w-full"
             >
-              <ShareResultButton input={input} />
+              {isFeatureEnabled("share-link") ? <ShareResultButton input={input} /> : null}
               {isFeatureEnabled("pdf-report") ? <PdfReportButton input={input} result={result} /> : null}
               <CopyProfessionalHandoffButton input={input} result={result} />
               <button

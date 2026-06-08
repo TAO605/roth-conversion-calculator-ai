@@ -17,6 +17,7 @@ describe("result actions layout", () => {
     expect(actionsIndex).toBeGreaterThan(summaryIndex);
     expect(source).toContain("mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-4");
     expect(source).toContain("[&>button]:w-full");
+    expect(source).toContain('isFeatureEnabled("share-link")');
     expect(source).toContain('isFeatureEnabled("pdf-report")');
     expect(source).not.toContain("xl:flex");
     expect(shareIndex).toBeGreaterThan(actionsIndex);

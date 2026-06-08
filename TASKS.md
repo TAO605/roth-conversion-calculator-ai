@@ -137,3 +137,4 @@
 - [done] Upgrade report download to print-ready HTML export
 - [done] Align report wording across current content pages
 - [done] Register report export in the main feature registry
+- [done] Register share link in the main feature registry

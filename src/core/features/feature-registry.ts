@@ -92,6 +92,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
     rollbackPath: "Remove CopyResultButton from the results actions.",
   },
   {
+    id: "share-link",
+    label: "Share result link",
+    version: "1.0.179",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/share-link, src/common/storage/share-code, and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Disable share-link in the feature registry, remove ShareResultButton from the homepage result actions, and keep local calculator persistence available.",
+  },
+  {
     id: "pdf-report",
     label: "Print-ready report export",
     version: "1.0.178",

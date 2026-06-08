@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.179",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Share link feature registry",
+    summary:
+      "Registered the share result link in the main feature registry and gated the homepage Share result action through that registry so share-link rollback and release review are visible in the modular rollback map.",
+    affectedArea:
+      "Feature registry, homepage result actions, release notes, task tracking, and feature-registry regression tests",
+    rollbackPath:
+      "Remove the share-link feature registry entry, restore the always-rendered ShareResultButton in HomeCalculatorClient, then revert the release note, task, progress, and tests.",
+  },
+  {
     version: "1.0.178",
     date: "2026-06-08",
     type: "patch",
