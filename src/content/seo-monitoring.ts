@@ -857,11 +857,32 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       useBefore: "Use before professional review handoff, tax-data signoff, or changing review-pending language.",
     },
     {
+      label: "Confirm private evidence boundary",
+      artifactFile: "privacy-evidence-boundary-result.json",
+      check:
+        "Review the GitHub main evidence scan before syncing private GSC screenshots, account UI images, or docs/evidence image files.",
+      passSignal:
+        "The privacy boundary evidence has ok: true, privacyEvidenceBoundaryOk: true, repository: TAO605/roth-conversion-calculator-ai, branch: main, allowlistRetained: true, gitignoreRulesRetained: true, remotePrivateEvidenceCount: 2, approvedRemotePrivateEvidenceCount: 2, unapprovedRemotePrivateEvidenceCount: 0, and privacyUnapprovedRemoteEvidenceCount: 0.",
+      useBefore:
+        "Use before syncing evidence to GitHub, attaching Search Console screenshots to public records, or reviewing private/public evidence boundaries.",
+    },
+    {
+      label: "Confirm AI endpoint security guard",
+      artifactFile: "ai-security-evidence-result.json",
+      check:
+        "Review the CI-safe AI endpoint security evidence after AI route, CSP, rate-limit, or environment-default changes.",
+      passSignal:
+        "The AI security evidence has ok: true, aiSecurityOk: true, paidModelFuseRetained: true, originGuardRetained: true, rateLimitRetained: true, fallbackProviderHeaderRetained: true, envExampleSecretHygieneRetained: true, crossOriginProbeBlocked: true, crossOriginProbeStatus: 403, crossOriginProbeProvider: fallback, crossOriginProbeReason: origin_blocked, and homepageCspBlocksBrowserOpenAi: true.",
+      useBefore:
+        "Use before diagnosing API-key abuse, changing AI explainer model settings, or treating short site visits as paid provider spend evidence.",
+    },
+    {
       label: "Confirm validator summary",
       artifactFile: "seo-evidence-validation-result.json",
-      check: "Confirm the retained validator result reports ok: true after checking smoke, GSC priority URLs, GSC discovered samples, DNS, security headers, health, crawl discovery, internal links, HTML quality, professional review packet, performance, structured data, blog discovery, and professional UI evidence together.",
+      check:
+        "Confirm the retained validator result reports ok: true after checking smoke, GSC priority URLs, GSC discovered samples, DNS, security headers, health, crawl discovery, internal links, HTML quality, professional review packet, performance, structured data, blog discovery, professional UI evidence, private evidence boundary, and AI security evidence together.",
       passSignal:
-        "The validation summary records the expected host, gscDiscoveredSampleCount, searchConsoleVerificationOk: true, dnsCanonicalOk: true, securityHeadersOk: true, healthEndpointOk: true, crawlDiscoveryUrlCount, internalLinkCheckedUrlCount, htmlQualityPageCount, professionalReviewPacketOk: true, professionalUiScannedFileCount, and no contract failures.",
+        "The validation summary records the expected host, gscDiscoveredSampleCount, searchConsoleVerificationOk: true, dnsCanonicalOk: true, securityHeadersOk: true, healthEndpointOk: true, crawlDiscoveryUrlCount, internalLinkCheckedUrlCount, htmlQualityPageCount, professionalReviewPacketOk: true, professionalUiScannedFileCount, privacyEvidenceBoundaryOk: true, privacyUnapprovedRemoteEvidenceCount: 0, aiSecurityOk: true, and no contract failures.",
       useBefore: "Use before attaching the artifact to incident review or a GSC retry note.",
     },
     {
@@ -883,7 +904,7 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       artifactFile: "seo-evidence-manifest-validation-result.json",
       check: "Open the retained manifest checksum validation result after downloading the production-seo-evidence artifact.",
       passSignal:
-        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 16, sha256CheckedCount: 16, manifestFileCount: 18, and manifestValidationResultRetained: true.",
+        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 18, sha256CheckedCount: 18, manifestFileCount: 20, and manifestValidationResultRetained: true.",
       useBefore: "Use before relying on the manifest checksum contract in Search Console retry notes or incident review.",
     },
   ];

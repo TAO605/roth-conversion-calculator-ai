@@ -240,12 +240,14 @@ describe("SEO monitoring playbook", () => {
         "html-quality-evidence-result.json",
         "professional-review-packet-evidence-result.json",
         "professional-ui-evidence-result.json",
+        "privacy-evidence-boundary-result.json",
+        "ai-security-evidence-result.json",
         "seo-evidence-validation-result.json",
         "seo-evidence-manifest.json",
         "seo-evidence-manifest-validation-result.json",
       ]),
     );
-    expect(review.length).toBe(17);
+    expect(review.length).toBe(19);
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("gscDiscoveredSampleCount");
     expect(combined).toContain("sourceIssueState: discovered_not_indexed");
@@ -297,6 +299,25 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("maxFailureCount: 0");
     expect(combined).toContain("professional-review-packet-evidence-result.json");
     expect(combined).toContain("professionalReviewPacketOk: true");
+    expect(combined).toContain("privacy-evidence-boundary-result.json");
+    expect(combined).toContain("privacyEvidenceBoundaryOk: true");
+    expect(combined).toContain("allowlistRetained: true");
+    expect(combined).toContain("gitignoreRulesRetained: true");
+    expect(combined).toContain("approvedRemotePrivateEvidenceCount: 2");
+    expect(combined).toContain("unapprovedRemotePrivateEvidenceCount: 0");
+    expect(combined).toContain("privacyUnapprovedRemoteEvidenceCount: 0");
+    expect(combined).toContain("ai-security-evidence-result.json");
+    expect(combined).toContain("aiSecurityOk: true");
+    expect(combined).toContain("paidModelFuseRetained: true");
+    expect(combined).toContain("originGuardRetained: true");
+    expect(combined).toContain("rateLimitRetained: true");
+    expect(combined).toContain("fallbackProviderHeaderRetained: true");
+    expect(combined).toContain("envExampleSecretHygieneRetained: true");
+    expect(combined).toContain("crossOriginProbeBlocked: true");
+    expect(combined).toContain("crossOriginProbeStatus: 403");
+    expect(combined).toContain("crossOriginProbeProvider: fallback");
+    expect(combined).toContain("crossOriginProbeReason: origin_blocked");
+    expect(combined).toContain("homepageCspBlocksBrowserOpenAi: true");
     expect(combined).toContain("pageTermsRetained: true");
     expect(combined).toContain("healthPendingReviewRetained: true");
     expect(combined).toContain("taxYearRetained: true");
@@ -333,8 +354,9 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("gitHubServerUrlRetained: true");
     expect(combined).toContain("gitHubWorkflowRetained: true");
     expect(combined).toContain("runAttemptRetained: true");
-    expect(combined).toContain("sha256CheckedCount: 16");
-    expect(combined).toContain("manifestFileCount: 18");
+    expect(combined).toContain("checkedFileCount: 18");
+    expect(combined).toContain("sha256CheckedCount: 18");
+    expect(combined).toContain("manifestFileCount: 20");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");
     expect(combined).toContain("URL Inspection");

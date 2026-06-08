@@ -1978,3 +1978,29 @@ Targeted privacy/provider/cost evidence tests passed with 3 files / 11 tests. Th
 **Future trigger words:**
 
 GSC screenshot synced; private evidence GitHub; account UI screenshot; docs/evidence png; privacy evidence allowlist; direct GitHub API sync bypassed gitignore
+
+### 2026-06-08 - Artifact review pages must track CI evidence contract changes
+
+**Symptom:**
+
+The SEO Smoke artifact gained private evidence boundary and AI endpoint security evidence files, but the visible `/seo-monitoring` artifact review checklist still described the older manifest file counts.
+
+**Root cause:**
+
+The automation contract was updated in scripts and CI first, while the human review checklist was not updated in the same round. That can make operators believe a fresh artifact is missing files even when CI is correct.
+
+**Fix:**
+
+Added explicit review entries for `privacy-evidence-boundary-result.json` and `ai-security-evidence-result.json`, and updated the manifest checksum copy to the current `checkedFileCount: 18`, `sha256CheckedCount: 18`, and `manifestFileCount: 20` contract.
+
+**Guard:**
+
+`tests/core/seo-monitoring.test.ts` now requires both artifact filenames and their key pass signals in `buildSeoEvidenceArtifactReview`.
+
+**Validation:**
+
+Targeted SEO monitoring, release-note, and feature-registry tests passed with 3 files / 19 tests.
+
+**Future trigger words:**
+
+SEO artifact count mismatch; production-seo-evidence new file; manifestFileCount drift; artifact review checklist stale; CI evidence contract changed

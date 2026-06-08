@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.174",
+    date: "2026-06-08",
+    type: "patch",
+    title: "SEO artifact review security checklist",
+    summary:
+      "Updated the SEO monitoring artifact review checklist so downloaded production-seo-evidence packages now explicitly include private evidence boundary proof, AI endpoint security proof, and the current 20-file manifest checksum contract.",
+    affectedArea:
+      "SEO monitoring artifact review copy, release notes, feature registry, task tracking, and progress documentation",
+    rollbackPath:
+      "Remove the private evidence boundary and AI security checklist items from buildSeoEvidenceArtifactReview, restore the previous manifest count copy, then revert the release note, feature registry version, task, and progress updates.",
+  },
+  {
     version: "1.0.173",
     date: "2026-06-08",
     type: "patch",
