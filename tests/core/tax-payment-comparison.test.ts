@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { calculateRothConversion } from "@/core/calculator/roth-conversion";
@@ -48,5 +50,12 @@ describe("tax payment comparison", () => {
     expect(copy).not.toMatch(/\byou should\b/i);
     expect(copy).not.toMatch(/\bstrongly recommend\b/i);
     expect(copy).not.toMatch(/\bbest move\b/i);
+  });
+
+  it("is gated through the main feature registry on the homepage", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
+
+    expect(source).toContain('isFeatureEnabled("tax-payment-comparison")');
+    expect(source).toContain("<TaxPaymentComparison input={input} result={result} />");
   });
 });

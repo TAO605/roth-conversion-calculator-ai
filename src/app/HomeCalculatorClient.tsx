@@ -172,9 +172,11 @@ export function HomeCalculatorClient() {
             <div className="mt-4">
               <TaxImpactWarnings input={input} result={result} />
             </div>
-            <div className="mt-4">
-              <TaxPaymentComparison input={input} result={result} />
-            </div>
+            {isFeatureEnabled("tax-payment-comparison") ? (
+              <div className="mt-4">
+                <TaxPaymentComparison input={input} result={result} />
+              </div>
+            ) : null}
           </Card>
           {isFeatureEnabled("ai-explainer") ? (
             <div id="ai-explainer">

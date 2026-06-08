@@ -152,6 +152,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Disable calculation-breakdown in the feature registry and remove the homepage Advanced calculation details disclosure while keeping summary estimates, projection, and professional handoff available.",
   },
   {
+    id: "tax-payment-comparison",
+    label: "Tax payment method comparison",
+    version: "1.0.183",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/tax-payment-comparison and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Disable tax-payment-comparison in the feature registry and remove the homepage Tax Payment Method Comparison panel while keeping result summary, warnings, projection, and professional handoff available.",
+  },
+  {
     id: "faq-schema",
     label: "FAQPage structured data",
     version: "1.0.6",

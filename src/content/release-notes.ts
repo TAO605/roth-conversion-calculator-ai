@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.183",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Tax payment comparison feature registry",
+    summary:
+      "Registered the homepage Tax Payment Method Comparison support panel in the main feature registry and gated the panel through that registry so tax-payment-comparison rollback is visible in the modular rollback map.",
+    affectedArea:
+      "Feature registry, homepage tax payment comparison panel, release notes, tax payment comparison guard, and task tracking",
+    rollbackPath:
+      "Remove the tax-payment-comparison feature registry entry, restore the always-rendered TaxPaymentComparison panel in HomeCalculatorClient, then revert the release note, task, progress, and tests.",
+  },
+  {
     version: "1.0.182",
     date: "2026-06-08",
     type: "patch",
