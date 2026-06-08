@@ -28,6 +28,7 @@ describe("privacy evidence sync boundary", () => {
     expect(script).toContain("privacy-evidence-cleanup-plan");
     expect(script).toContain("dry-run only");
     expect(script).toContain("Explicit user confirmation is required");
+    expect(script).toContain("cleanupComplete");
     expect(script).toContain("cleanupCandidates");
     expect(script).toContain("retainedApprovedPaths");
     expect(script).not.toContain("DELETE");
