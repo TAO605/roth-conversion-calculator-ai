@@ -18,6 +18,7 @@ const DEFAULT_STRUCTURED_DATA_PATH = "structured-data-evidence-result.json";
 const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
 const DEFAULT_PROFESSIONAL_UI_PATH = "professional-ui-evidence-result.json";
 const DEFAULT_PRIVACY_EVIDENCE_BOUNDARY_PATH = "privacy-evidence-boundary-result.json";
+const DEFAULT_AI_SECURITY_PATH = "ai-security-evidence-result.json";
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
 const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
@@ -38,6 +39,7 @@ const structuredDataPath = process.argv[14] || DEFAULT_STRUCTURED_DATA_PATH;
 const blogDiscoveryPath = process.argv[15] || DEFAULT_BLOG_DISCOVERY_PATH;
 const professionalUiPath = process.argv[16] || DEFAULT_PROFESSIONAL_UI_PATH;
 const privacyEvidenceBoundaryPath = process.argv[17] || DEFAULT_PRIVACY_EVIDENCE_BOUNDARY_PATH;
+const aiSecurityPath = process.argv[18] || DEFAULT_AI_SECURITY_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -559,6 +561,36 @@ function validatePrivacyEvidenceBoundary(boundary) {
   );
 }
 
+function validateAiSecurityEvidence(aiSecurity, expectedBaseUrl) {
+  assert(aiSecurity.ok === true, "AI security evidence must be ok");
+  assert(aiSecurity.evidenceType === "ai-security-evidence", "AI security evidence type changed unexpectedly");
+  assert(aiSecurity.baseUrl === expectedBaseUrl, "AI security evidence baseUrl must match SEO smoke baseUrl");
+  assert(aiSecurity.checks?.paidModelFuseRetained === true, "AI security evidence must retain the paid-model fuse");
+  assert(aiSecurity.checks?.originGuardRetained === true, "AI security evidence must retain the origin guard");
+  assert(aiSecurity.checks?.rateLimitRetained === true, "AI security evidence must retain rate limiting");
+  assert(aiSecurity.checks?.fallbackProviderHeaderRetained === true, "AI security evidence must retain fallback provider headers");
+  assert(
+    aiSecurity.checks?.envExampleDoesNotExposeApiKey === true,
+    "AI security evidence must prove env example does not expose API keys",
+  );
+  assert(
+    aiSecurity.checks?.browserOpenAiConnectBlockedInSource === true,
+    "AI security evidence must prove browser OpenAI connect-src is blocked in source",
+  );
+  assert(
+    aiSecurity.checks?.homepageCspBlocksBrowserOpenAi === true,
+    "AI security evidence must prove production CSP blocks browser OpenAI calls",
+  );
+  assert(aiSecurity.checks?.crossOriginProbeBlocked === true, "AI security evidence must block cross-origin probes");
+  assert(aiSecurity.crossOriginProbe?.status === 403, "AI security cross-origin probe status must be 403");
+  assert(aiSecurity.crossOriginProbe?.provider === "fallback", "AI security cross-origin probe provider must be fallback");
+  assert(aiSecurity.crossOriginProbe?.reason === "origin_blocked", "AI security cross-origin probe reason must be origin_blocked");
+  assert(
+    typeof aiSecurity.spendBoundary === "string" && aiSecurity.spendBoundary.includes("Provider billing or usage consoles"),
+    "AI security evidence must retain the provider spend boundary",
+  );
+}
+
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
@@ -576,6 +608,7 @@ function run() {
   const blogDiscovery = readJson(blogDiscoveryPath);
   const professionalUi = readJson(professionalUiPath);
   const privacyEvidenceBoundary = readJson(privacyEvidenceBoundaryPath);
+  const aiSecurity = readJson(aiSecurityPath);
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
@@ -593,6 +626,7 @@ function run() {
   validateBlogDiscoveryEvidence(blogDiscovery, smoke.baseUrl);
   validateProfessionalUiEvidence(professionalUi);
   validatePrivacyEvidenceBoundary(privacyEvidenceBoundary);
+  validateAiSecurityEvidence(aiSecurity, smoke.baseUrl);
 
   console.log(
     JSON.stringify(
@@ -614,7 +648,9 @@ function run() {
           blogDiscoveryPath,
           professionalUiPath,
           privacyEvidenceBoundaryPath,
+          aiSecurityPath,
         ],
+        aiSecurityOk: aiSecurity.ok === true,
         baseUrl: smoke.baseUrl,
         blogDiscoveryCount: blogDiscovery.blogPostCount,
         crawlDiscoveryUrlCount: crawlDiscovery.sitemap.urlCount,

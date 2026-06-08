@@ -45,6 +45,8 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("Run private evidence boundary check");
     expect(workflow).toContain("GH_TOKEN: ${{ github.token }}");
     expect(workflow).toContain("node scripts/privacy-evidence-boundary.mjs | tee privacy-evidence-boundary-result.json");
+    expect(workflow).toContain("Run AI security evidence check");
+    expect(workflow).toContain("node scripts/ai-security-evidence.mjs | tee ai-security-evidence-result.json");
     expect(workflow).toContain("Validate SEO evidence artifact");
     expect(workflow).toContain("node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json");
     expect(workflow).toContain("Generate SEO evidence manifest");
@@ -64,6 +66,7 @@ describe("SEO smoke workflow", () => {
     expect(workflow).toContain("structured-data-evidence-result.json");
     expect(workflow).toContain("blog-discovery-evidence-result.json");
     expect(workflow).toContain("privacy-evidence-boundary-result.json");
+    expect(workflow).toContain("ai-security-evidence-result.json");
     expect(workflow).toContain("seo-evidence-validation-result.json");
     expect(workflow).toContain("seo-evidence-manifest.json");
     expect(workflow).toContain("seo-evidence-manifest-validation-result.json");

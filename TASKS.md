@@ -131,3 +131,4 @@
 - [done] Add dry-run cleanup plan for unapproved remote GSC screenshots
 - [done] Remove unapproved remote GSC screenshot files from GitHub main
 - [done] Add CI evidence artifact guard for private GSC screenshot boundary
+- [done] Add CI-safe AI endpoint security evidence guard

@@ -26,4 +26,18 @@ describe("AI cost abuse evidence command", () => {
     expect(scriptSource).toContain("crossOriginBlocked");
     expect(scriptSource).toContain("selfProbeRequestCount: 2");
   });
+
+  it("adds a CI-safe AI security evidence command without Vercel log access", () => {
+    const packageJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), "package.json"), "utf8"));
+    const scriptSource = fs.readFileSync(path.join(process.cwd(), "scripts/ai-security-evidence.mjs"), "utf8");
+
+    expect(packageJson.scripts["ops:ai-security-evidence"]).toBe("node scripts/ai-security-evidence.mjs");
+    expect(scriptSource).toContain("ai-security-evidence");
+    expect(scriptSource).toContain("crossOriginProbeBlocked");
+    expect(scriptSource).toContain("homepageCspBlocksBrowserOpenAi");
+    expect(scriptSource).toContain("paidModelFuseRetained");
+    expect(scriptSource).toContain("Provider billing or usage consoles remain the source of truth");
+    expect(scriptSource).not.toContain("vercel logs");
+    expect(scriptSource).not.toMatch(/sk-[A-Za-z0-9_-]+/);
+  });
 });
