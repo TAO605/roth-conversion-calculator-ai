@@ -145,7 +145,7 @@ export function HomeCalculatorClient() {
                 </p>
               </div>
             </div>
-            <ResultScopeBadges taxYear={input.taxYear} />
+            {isFeatureEnabled("result-scope-boundary") ? <ResultScopeBadges taxYear={input.taxYear} /> : null}
             <ResultSummary result={result} />
             <div
               aria-label="Result actions"

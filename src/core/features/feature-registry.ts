@@ -164,6 +164,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Disable tax-payment-comparison in the feature registry and remove the homepage Tax Payment Method Comparison panel while keeping result summary, warnings, projection, and professional handoff available.",
   },
   {
+    id: "result-scope-boundary",
+    label: "Result scope and tax-advice boundary",
+    version: "1.0.184",
+    layer: "feature",
+    enabled: true,
+    locked: true,
+    grayRate: 100,
+    ownerArea: "src/features/result-scope and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Locked YMYL boundary: do not disable through feature flags. Any rollback must keep equivalent visible tax-year, educational-estimate, input-based, and not-tax-advice boundary copy before the result summary.",
+  },
+  {
     id: "faq-schema",
     label: "FAQPage structured data",
     version: "1.0.6",

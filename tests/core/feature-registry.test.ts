@@ -43,6 +43,7 @@ describe("feature registry", () => {
     expect(getEnabledFeatureIds()).toContain("projection-chart");
     expect(getEnabledFeatureIds()).toContain("calculation-breakdown");
     expect(getEnabledFeatureIds()).toContain("tax-payment-comparison");
+    expect(getEnabledFeatureIds()).toContain("result-scope-boundary");
     expect(getEnabledFeatureIds()).toContain("tax-data-freshness");
     expect(getEnabledFeatureIds()).toContain("ai-compliance-gateway");
     expect(getEnabledFeatureIds()).toContain("seo-structured-content");
@@ -140,10 +141,23 @@ describe("feature registry", () => {
     expect(homePage).toContain('isFeatureEnabled("projection-chart")');
     expect(homePage).toContain('isFeatureEnabled("calculation-breakdown")');
     expect(homePage).toContain('isFeatureEnabled("tax-payment-comparison")');
+    expect(homePage).toContain('isFeatureEnabled("result-scope-boundary")');
     expect(homePage).toContain('isFeatureEnabled("privacy-safe-analytics")');
     expect(homePage).toContain('isFeatureEnabled("homepage-howto-structured-data")');
     expect(homePage).not.toContain('isFeatureEnabled("copy-summary")');
     expect(homePage).not.toContain('isFeatureEnabled("scenario-history")');
     expect(homePage).not.toContain('isFeatureEnabled("conversion-sensitivity")');
+  });
+
+  it("keeps the result scope boundary locked because it is a YMYL disclosure", () => {
+    expect(getFeatureById("result-scope-boundary")).toMatchObject({
+      locked: true,
+      enabled: true,
+      grayRate: 100,
+    });
+
+    withFeatureOverride("result-scope-boundary", { enabled: false, grayRate: 0 }, () => {
+      expect(isFeatureEnabled("result-scope-boundary")).toBe(true);
+    });
   });
 });

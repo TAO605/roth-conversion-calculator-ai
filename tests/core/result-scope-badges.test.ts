@@ -20,11 +20,14 @@ describe("result scope badges", () => {
 
   it("places result scope before the primary result summary", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
+    const gateIndex = source.indexOf('isFeatureEnabled("result-scope-boundary")');
     const scopeIndex = source.indexOf("<ResultScopeBadges");
     const summaryIndex = source.indexOf("<ResultSummary result={result} />");
     const warningIndex = source.indexOf("<TaxImpactWarnings input={input} result={result} />");
 
+    expect(gateIndex).toBeGreaterThan(-1);
     expect(scopeIndex).toBeGreaterThan(-1);
+    expect(gateIndex).toBeLessThan(scopeIndex);
     expect(scopeIndex).toBeLessThan(summaryIndex);
     expect(scopeIndex).toBeLessThan(warningIndex);
   });

@@ -142,3 +142,4 @@
 - [done] Register projection chart in the main feature registry
 - [done] Register calculation breakdown in the main feature registry
 - [done] Register tax payment comparison in the main feature registry
+- [done] Register result scope boundary in the main feature registry

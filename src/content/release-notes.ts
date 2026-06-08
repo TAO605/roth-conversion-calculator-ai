@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.184",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Result scope boundary feature registry",
+    summary:
+      "Registered the homepage result scope badges as a locked YMYL boundary in the main feature registry and routed the mount through that locked registry entry so tax-year, educational-estimate, input-based, and not-tax-advice copy cannot be disabled by normal feature overrides.",
+    affectedArea:
+      "Feature registry, homepage result scope boundary, release notes, result-scope guard, and task tracking",
+    rollbackPath:
+      "Keep equivalent visible result-boundary copy before the result summary, then revert the registry entry, homepage mount, release note, task, progress, and tests only after a reviewed replacement is in place.",
+  },
+  {
     version: "1.0.183",
     date: "2026-06-08",
     type: "patch",
