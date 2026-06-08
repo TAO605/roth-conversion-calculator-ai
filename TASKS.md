@@ -139,3 +139,4 @@
 - [done] Register report export in the main feature registry
 - [done] Register share link in the main feature registry
 - [done] Register professional handoff in the main feature registry
+- [done] Register projection chart in the main feature registry

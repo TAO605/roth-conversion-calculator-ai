@@ -128,6 +128,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Disable professional-handoff in the feature registry, remove CopyProfessionalHandoffButton from the homepage result actions, and keep the professional review packet page available.",
   },
   {
+    id: "projection-chart",
+    label: "Projection chart",
+    version: "1.0.181",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/charts and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Disable projection-chart in the feature registry and remove the homepage Projection card while keeping numerical result estimates available.",
+  },
+  {
     id: "faq-schema",
     label: "FAQPage structured data",
     version: "1.0.6",

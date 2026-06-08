@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.181",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Projection chart feature registry",
+    summary:
+      "Registered the homepage projection chart in the main feature registry and gated the Projection card through that registry so projection-chart rollback is visible in the modular rollback map.",
+    affectedArea:
+      "Feature registry, homepage projection card, homepage performance guard, release notes, and task tracking",
+    rollbackPath:
+      "Remove the projection-chart feature registry entry, restore the always-rendered Projection card in HomeCalculatorClient, then revert the release note, task, progress, and tests.",
+  },
+  {
     version: "1.0.180",
     date: "2026-06-08",
     type: "patch",

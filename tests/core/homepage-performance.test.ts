@@ -13,6 +13,7 @@ describe("homepage performance boundaries", () => {
     expect(calculatorClient).toContain('from "next/dynamic"');
     expect(calculatorClient).toContain("LazyPanelFallback");
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/charts\/ProjectionChart"\)/);
+    expect(calculatorClient).toContain('isFeatureEnabled("projection-chart")');
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/ai-assistant\/AiExplainer"\)/);
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/calculation-breakdown\/CalculationBreakdown"\)/);
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/pdf-report\/PdfReportButton"\)/);

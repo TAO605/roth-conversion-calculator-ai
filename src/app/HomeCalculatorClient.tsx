@@ -181,10 +181,12 @@ export function HomeCalculatorClient() {
               <AiExplainer input={input} result={result} />
             </div>
           ) : null}
-          <Card>
-            <h2 className="mb-4 text-2xl font-bold text-neutral-950 dark:text-white">Projection</h2>
-            <ProjectionChart projection={result.projection} />
-          </Card>
+          {isFeatureEnabled("projection-chart") ? (
+            <Card>
+              <h2 className="mb-4 text-2xl font-bold text-neutral-950 dark:text-white">Projection</h2>
+              <ProjectionChart projection={result.projection} />
+            </Card>
+          ) : null}
           <details className="rounded border border-neutral-200 bg-white p-6 shadow-none dark:border-white/10 dark:bg-neutral-950">
             <summary className="cursor-pointer text-base font-semibold text-neutral-950 dark:text-white">
               Advanced calculation details
