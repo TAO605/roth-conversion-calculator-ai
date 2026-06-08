@@ -146,3 +146,4 @@
 - [done] Register tax impact warnings boundary in the main feature registry
 - [done] Add withheld-tax boundary guard for core penalty calculation
 - [done] Add IRA withholding cap boundary to tax payment comparison
+- [done] Pause result modules when calculator inputs are invalid

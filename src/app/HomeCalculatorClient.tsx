@@ -14,10 +14,12 @@ import {
 import { CalculatorInput } from "@/features/calculator-input/CalculatorInput";
 import { ResultScopeBadges } from "@/features/result-scope/ResultScopeBadges";
 import { ResultSummary } from "@/features/result-summary/ResultSummary";
+import { ResultInputValidationNotice } from "@/features/result-validation/ResultInputValidationNotice";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
 import { TaxPaymentComparison } from "@/features/tax-payment-comparison/TaxPaymentComparison";
 import { ShareResultButton } from "@/features/share-link/ShareResultButton";
 import { calculateRothConversion } from "@/core/calculator/roth-conversion";
+import { validateCalculatorInput } from "@/core/calculator/validation";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { isFeatureEnabled } from "@/core/features/feature-registry";
 
@@ -96,6 +98,8 @@ export function HomeCalculatorClient() {
   const [input, setInput] = useState<RothConversionInput>(initialInput);
   const [hasLoadedPersistedInput, setHasLoadedPersistedInput] = useState(false);
   const result = useMemo(() => calculateRothConversion(input), [input]);
+  const inputErrors = useMemo(() => validateCalculatorInput(input), [input]);
+  const hasInputErrors = Object.keys(inputErrors).length > 0;
 
   useEffect(() => {
     const shared = loadShareInputFromHash(window.location.hash);
@@ -146,14 +150,14 @@ export function HomeCalculatorClient() {
               </div>
             </div>
             {isFeatureEnabled("result-scope-boundary") ? <ResultScopeBadges taxYear={input.taxYear} /> : null}
-            <ResultSummary result={result} />
+            {hasInputErrors ? <ResultInputValidationNotice errors={inputErrors} /> : <ResultSummary result={result} />}
             <div
               aria-label="Result actions"
               className="mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-4 [&>button]:w-full"
             >
-              {isFeatureEnabled("share-link") ? <ShareResultButton input={input} /> : null}
-              {isFeatureEnabled("pdf-report") ? <PdfReportButton input={input} result={result} /> : null}
-              {isFeatureEnabled("professional-handoff") ? (
+              {!hasInputErrors && isFeatureEnabled("share-link") ? <ShareResultButton input={input} /> : null}
+              {!hasInputErrors && isFeatureEnabled("pdf-report") ? <PdfReportButton input={input} result={result} /> : null}
+              {!hasInputErrors && isFeatureEnabled("professional-handoff") ? (
                 <CopyProfessionalHandoffButton input={input} result={result} />
               ) : null}
               <button
@@ -169,29 +173,29 @@ export function HomeCalculatorClient() {
                 Reset
               </button>
             </div>
-            {isFeatureEnabled("tax-impact-warnings-boundary") ? (
+            {!hasInputErrors && isFeatureEnabled("tax-impact-warnings-boundary") ? (
               <div className="mt-4">
                 <TaxImpactWarnings input={input} result={result} />
               </div>
             ) : null}
-            {isFeatureEnabled("tax-payment-comparison") ? (
+            {!hasInputErrors && isFeatureEnabled("tax-payment-comparison") ? (
               <div className="mt-4">
                 <TaxPaymentComparison input={input} result={result} />
               </div>
             ) : null}
           </Card>
-          {isFeatureEnabled("ai-explainer") ? (
+          {!hasInputErrors && isFeatureEnabled("ai-explainer") ? (
             <div id="ai-explainer">
               <AiExplainer input={input} result={result} />
             </div>
           ) : null}
-          {isFeatureEnabled("projection-chart") ? (
+          {!hasInputErrors && isFeatureEnabled("projection-chart") ? (
             <Card>
               <h2 className="mb-4 text-2xl font-bold text-neutral-950 dark:text-white">Projection</h2>
               <ProjectionChart projection={result.projection} />
             </Card>
           ) : null}
-          {isFeatureEnabled("calculation-breakdown") ? (
+          {!hasInputErrors && isFeatureEnabled("calculation-breakdown") ? (
             <details className="rounded border border-neutral-200 bg-white p-6 shadow-none dark:border-white/10 dark:bg-neutral-950">
               <summary className="cursor-pointer text-base font-semibold text-neutral-950 dark:text-white">
                 Advanced calculation details

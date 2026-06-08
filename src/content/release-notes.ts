@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.188",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Invalid input result pause",
+    summary:
+      "Added a result-area validation boundary so invalid calculator inputs pause estimates, reports, projections, tax-payment comparison, professional handoff, and AI explanations until the user fixes the input errors.",
+    affectedArea:
+      "Homepage calculator results, input validation display, report actions, AI explanation boundary, projection display, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Restore the prior always-rendered result modules only if a reviewed replacement still prevents invalid calculator inputs from showing normal-looking tax estimates or exportable reports.",
+  },
+  {
     version: "1.0.187",
     date: "2026-06-08",
     type: "patch",
