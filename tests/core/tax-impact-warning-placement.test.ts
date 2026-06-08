@@ -5,6 +5,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
+import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 const baseInput: RothConversionInput = {
@@ -67,6 +68,12 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Review before planning");
     expect(panel.textContent).toContain("Tax Impact Warnings");
     expect(panel.textContent).toContain("Medicare IRMAA");
+    expect(panel.textContent).toContain("IRMAA Review Prep");
+    expect(panel.textContent).toContain("Usual lookback tax year");
+    expect(panel.textContent).toContain("2024");
+    expect(panel.textContent).toContain("Inputs still needed before amount review");
+    expect(panel.textContent).toContain("Medicare.gov Part B costs and IRMAA");
+    expect(panel.textContent).toContain("SSA-44 life-changing event form");
     expect(panel.textContent).toContain("ACA premium tax credits");
     expect(panel.textContent).toContain("Required Minimum Distributions");
     expect(panel.textContent).toContain("input-triggered review items");
@@ -85,6 +92,24 @@ describe("tax impact warning placement", () => {
     expect(triggeredLabels).toContain("State-specific retirement income rules");
     expect(items.find((item) => item.id === "niit")?.reason).toContain("taxable-income proxy");
     expect(items.find((item) => item.id === "niit")?.reason).not.toContain("NIIT amount");
+  });
+
+  it("builds IRMAA review prep without calculating Medicare premium amounts", () => {
+    const prep = buildIrmaaReviewPrep(baseInput, baseResult);
+
+    expect(prep.premiumYear).toBe(2026);
+    expect(prep.usualLookbackTaxYear).toBe(2024);
+    expect(prep.priority).toBe("higher_priority_review");
+    expect(prep.thresholdLabel).toContain("$109,000");
+    expect(prep.summary).toContain("income proxy after conversion");
+    expect(prep.summary).toContain("not this calculator's taxable-income input");
+    expect(prep.missingInputs).toEqual(
+      expect.arrayContaining([
+        "Medicare enrollment status and whether Part B or Part D applies.",
+        "Whether a life-changing event may support SSA Form SSA-44 review.",
+      ]),
+    );
+    expect(JSON.stringify(prep)).not.toMatch(/surcharge amount|premium increase|you should|strongly recommend/i);
   });
 
   it("keeps the warnings directly inside the results card before AI, projection, and advanced details", () => {

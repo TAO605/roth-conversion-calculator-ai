@@ -2004,3 +2004,29 @@ Targeted SEO monitoring, release-note, and feature-registry tests passed with 3 
 **Future trigger words:**
 
 SEO artifact count mismatch; production-seo-evidence new file; manifestFileCount drift; artifact review checklist stale; CI evidence contract changed
+
+### 2026-06-08 - IRMAA needs review prep before amount calculation
+
+**Symptom:**
+
+The engineering roadmap identified IRMAA as a high-value hidden-cost feature, but the current calculator does not collect Medicare enrollment, MAGI, SSA notice, Part B, Part D, or life-changing-event inputs.
+
+**Root cause:**
+
+IRMAA depends on Medicare-specific data and lookback-year MAGI, while the calculator's current taxable-income input is only a user-provided income assumption.
+
+**Fix:**
+
+Added an `IRMAA Review Prep` helper and result-panel section that records premium year, usual lookback tax year, income proxy, missing inputs, and official reference links without calculating Medicare premium amounts.
+
+**Guard:**
+
+Tax-impact and professional-handoff tests require the review-prep copy, lookback year, missing-input list, and no unsupported premium amount language.
+
+**Validation:**
+
+Targeted tax-impact warning, professional handoff, and YMYL language guard tests passed with 3 files / 8 tests.
+
+**Future trigger words:**
+
+IRMAA amount calculator; Medicare premium surcharge; Part B IRMAA; Part D IRMAA; MAGI lookback; SSA-44; hidden Medicare cost

@@ -169,6 +169,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
     rollbackPath: "Route AI requests back through the previous ai-guardrails-only flow and disable the rate-limit wrapper.",
   },
   {
+    id: "irmaa-review-prep",
+    label: "IRMAA review prep",
+    version: "1.0.175",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/tax-impact-warnings and src/features/professional-handoff",
+    rollbackPath:
+      "Remove the IRMAA review-prep helper, remove the result-panel IRMAA prep section, and remove the IRMAA prep lines from the CPA packet while keeping the standard IRMAA guide available.",
+  },
+  {
     id: "seo-structured-content",
     label: "Article, breadcrumb, and long-tail content matrix",
     version: "1.0.124",

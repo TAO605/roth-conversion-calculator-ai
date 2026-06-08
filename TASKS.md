@@ -133,3 +133,4 @@
 - [done] Add CI evidence artifact guard for private GSC screenshot boundary
 - [done] Add CI-safe AI endpoint security evidence guard
 - [done] Surface private evidence and AI security artifacts in SEO monitoring review
+- [done] Add IRMAA review prep without Medicare premium amount calculation

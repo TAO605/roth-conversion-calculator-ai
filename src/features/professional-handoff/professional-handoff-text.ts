@@ -1,6 +1,7 @@
 import { formatCurrency, formatPercent } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
+import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 function formatBreakEven(result: RothConversionResult) {
@@ -11,6 +12,7 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
   const reviewItems = buildTaxImpactReviewItems(input, result);
   const triggeredItems = reviewItems.filter((item) => item.level === "input_triggered_review");
   const standardItems = reviewItems.filter((item) => item.level === "standard_review");
+  const irmaaPrep = buildIrmaaReviewPrep(input, result);
 
   return [
     "Roth Conversion Professional Review Packet",
@@ -49,6 +51,15 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     "",
     "Additional review items",
     ...standardItems.map((item) => `- ${item.label}: ${item.reason}`),
+    "",
+    "IRMAA review prep",
+    `Premium year reviewed by the calculator context: ${irmaaPrep.premiumYear}`,
+    `Usual lookback tax year to verify: ${irmaaPrep.usualLookbackTaxYear}`,
+    `Calculator income proxy after conversion: ${formatCurrency(irmaaPrep.incomeProxy)}`,
+    `IRMAA threshold note: ${irmaaPrep.thresholdLabel}`,
+    `IRMAA prep summary: ${irmaaPrep.summary}`,
+    "Inputs still needed before any premium amount review:",
+    ...irmaaPrep.missingInputs.map((item) => `- ${item}`),
     "",
     "Documents and questions to bring",
     "- Most recent federal and state tax returns.",

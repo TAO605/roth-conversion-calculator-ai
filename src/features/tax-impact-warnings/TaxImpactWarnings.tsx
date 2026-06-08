@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { AlertTriangle, CircleHelp } from "lucide-react";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
+import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 export function TaxImpactWarnings({ input, result }: { input: RothConversionInput; result: RothConversionResult }) {
   const reviewItems = buildTaxImpactReviewItems(input, result);
   const triggeredCount = reviewItems.filter((item) => item.level === "input_triggered_review").length;
+  const irmaaPrep = buildIrmaaReviewPrep(input, result);
 
   return (
     <aside
@@ -24,6 +26,39 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         A Roth conversion can increase current-year taxable income. These items are outside this calculator&apos;s current
         calculation scope; the labels below use your inputs only to prioritize review.
       </p>
+      <section className="mt-3 rounded border border-blue-100 bg-blue-50 p-3 text-xs leading-5 text-neutral-700 dark:border-blue-400/30 dark:bg-neutral-950 dark:text-neutral-200">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{irmaaPrep.title}</h4>
+          <span className="rounded border border-blue-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-systemBlue dark:border-blue-400/30 dark:bg-neutral-950">
+            {irmaaPrep.premiumYear} review
+          </span>
+        </div>
+        <p className="mt-2">{irmaaPrep.summary}</p>
+        <p className="mt-2">
+          Usual lookback tax year: <strong>{irmaaPrep.usualLookbackTaxYear}</strong>. {irmaaPrep.thresholdLabel}
+        </p>
+        <div className="mt-2 grid gap-1">
+          <span className="font-semibold text-neutral-950 dark:text-white">Inputs still needed before amount review:</span>
+          <ul className="list-disc space-y-1 pl-4">
+            {irmaaPrep.missingInputs.slice(0, 3).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-3">
+          {irmaaPrep.officialReferences.map((reference) => (
+            <a
+              className="font-semibold text-systemBlue hover:text-blue-700"
+              href={reference.href}
+              key={reference.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {reference.label}
+            </a>
+          ))}
+        </div>
+      </section>
       <ul className="mt-3 grid gap-2">
         {reviewItems.map((item) => (
           <li className="rounded border border-neutral-200 bg-white p-3 shadow-none dark:border-white/10 dark:bg-neutral-950" key={item.id}>

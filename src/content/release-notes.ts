@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.175",
+    date: "2026-06-08",
+    type: "patch",
+    title: "IRMAA review prep",
+    summary:
+      "Added an IRMAA review-prep module inside Tax Impact Warnings and the CPA packet so Medicare-related review now captures the usual lookback tax year, missing MAGI and Medicare inputs, official Medicare/SSA references, and a clear no-premium-amount boundary.",
+    affectedArea:
+      "Tax Impact Warnings, professional handoff packet, IRMAA review-prep helper, release notes, feature registry, task tracking, and engineering documentation",
+    rollbackPath:
+      "Remove buildIrmaaReviewPrep, remove the IRMAA Review Prep panel from TaxImpactWarnings, remove the IRMAA prep section from the professional handoff packet, then revert related tests, release note, feature registry entry, task, progress, and documentation updates.",
+  },
+  {
     version: "1.0.174",
     date: "2026-06-08",
     type: "patch",

@@ -37,6 +37,9 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("Modeled calculator output");
     expect(packet).toContain("Input-triggered review items");
     expect(packet).toContain("Medicare IRMAA");
+    expect(packet).toContain("IRMAA review prep");
+    expect(packet).toContain("Usual lookback tax year to verify: 2024");
+    expect(packet).toContain("Inputs still needed before any premium amount review");
     expect(packet).toContain("NIIT MAGI-side review");
     expect(packet).toContain("Form 8606 records");
     expect(packet).toContain(REQUIRED_DISCLAIMER);
