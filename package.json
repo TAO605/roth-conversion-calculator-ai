@@ -44,6 +44,7 @@
     "seo:evidence-validate": "node scripts/validate-seo-evidence.mjs",
     "seo:evidence-manifest": "node scripts/generate-seo-evidence-manifest.mjs",
     "seo:evidence-manifest-validate": "node scripts/validate-seo-evidence-manifest.mjs",
+    "ops:ai-cost-abuse-evidence": "node scripts/ai-cost-abuse-evidence.mjs",
     "lint": "next lint"
   },
   "dependencies": {

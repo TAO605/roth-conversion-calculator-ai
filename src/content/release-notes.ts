@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.172",
+    date: "2026-06-08",
+    type: "patch",
+    title: "AI cost abuse evidence command",
+    summary:
+      "Added a repeatable operations command that checks recent Vercel AI endpoint logs, verifies same-origin fallback behavior, verifies cross-origin blocking, and clearly separates request evidence from OpenAI and Anthropic account-spend evidence.",
+    affectedArea:
+      "AI cost-abuse evidence command, operations scripts, package scripts, release notes, feature registry, task tracking, and recurrence documentation",
+    rollbackPath:
+      "Remove the AI cost-abuse evidence command and package script, then revert the release note, feature registry version, task, progress, and recurrence documentation updates.",
+  },
+  {
     version: "1.0.171",
     date: "2026-06-06",
     type: "patch",

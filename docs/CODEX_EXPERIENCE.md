@@ -1900,3 +1900,29 @@ Targeted AI/security/release/feature tests passed with 6 files / 18 tests; full 
 **Future trigger words:**
 
 API key abuse; users are using my API key; AI endpoint cost spike; public OpenAI endpoint; Claude key abuse; short visits API spend; paid model fuse; fallback-only AI
+
+### 2026-06-08 - Windows ops scripts should shell CLI commands deliberately
+
+**Symptom:**
+
+The first AI cost-abuse evidence command passed production probes but failed to fetch Vercel logs on Windows with `spawn vercel ENOENT` and then `spawn EINVAL`.
+
+**Root cause:**
+
+The script used `execFile` for a globally installed CLI. On Windows, command shims such as `vercel` / `vercel.cmd` can behave differently from POSIX binaries when launched without a shell.
+
+**Fix:**
+
+Changed the Vercel log collection path to use a shell command through `exec`, with a conservative character whitelist for the user-controlled `--since` value.
+
+**Guard:**
+
+The AI cost-abuse evidence command now has source tests requiring the package script, endpoint guard checks, manual account-evidence boundary, and privacy boundary. Production execution also proves the Vercel log path works on the current Windows workspace.
+
+**Validation:**
+
+`npm test -- tests/core/ai-cost-abuse-evidence.test.ts tests/core/ai-api-security.test.ts tests/core/ai-rate-limit.test.ts` passed with 3 files / 10 tests. `npm run ops:ai-cost-abuse-evidence -- --since 24h --out ai-cost-abuse-evidence-result.json` returned `ok: true`.
+
+**Future trigger words:**
+
+spawn vercel ENOENT; spawn EINVAL; Windows CLI script; execFile CLI shim; Vercel logs script; ops command failed on Windows

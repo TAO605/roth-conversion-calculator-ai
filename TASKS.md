@@ -125,3 +125,4 @@
 - [done] Add sanitized GSC validation action evidence guard
 - [done] Add sanitized GSC validation follow-up plan guard
 - [done] Add AI explainer cost-abuse guard
+- [done] Add AI cost-abuse evidence command

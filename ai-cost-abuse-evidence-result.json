@@ -1,0 +1,47 @@
+{
+  "baseUrl": "https://www.roth-conversion-calculator-ai.shop",
+  "checks": {
+    "crossOriginBlocked": true,
+    "sameOriginFallbackOnly": true,
+    "vercelLogsAvailable": true
+  },
+  "conclusion": "Recent AI endpoint traffic is low in Vercel logs, and production probes confirm fallback-only behavior plus cross-origin blocking; account usage consoles are still required to prove historical spend.",
+  "evidenceType": "ai-cost-abuse-evidence",
+  "fetchedAt": "2026-06-08T01:31:54.717Z",
+  "logSummary": {
+    "deploymentIds": [
+      "dpl_A1TFzWk7ujkNd93HQwMvyW9EMiTQ",
+      "dpl_FgvNPCD31cHjuigH1EFBZRVrpNNr"
+    ],
+    "domains": [
+      "www.roth-conversion-calculator-ai.shop"
+    ],
+    "endpointLogCount": 7,
+    "statusCounts": {
+      "200": 4,
+      "403": 3
+    }
+  },
+  "manualAccountEvidenceRequired": {
+    "anthropicUsageConsole": true,
+    "openAiUsageConsole": true,
+    "reason": "Vercel request logs can show endpoint traffic and guard behavior, but only provider usage consoles can prove historical paid-token spend."
+  },
+  "ok": true,
+  "probes": {
+    "crossOrigin": {
+      "provider": "fallback",
+      "rateLimitRemaining": "",
+      "status": 403
+    },
+    "sameOrigin": {
+      "provider": "fallback",
+      "rateLimitRemaining": "1",
+      "status": 200
+    },
+    "selfProbeRequestCount": 2
+  },
+  "privacyBoundary": "This evidence excludes API keys, bearer tokens, cookies, raw IP addresses, account identifiers, and request bodies from production users.",
+  "since": "24h",
+  "vercelLogError": ""
+}
