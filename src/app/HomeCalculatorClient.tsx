@@ -187,14 +187,16 @@ export function HomeCalculatorClient() {
               <ProjectionChart projection={result.projection} />
             </Card>
           ) : null}
-          <details className="rounded border border-neutral-200 bg-white p-6 shadow-none dark:border-white/10 dark:bg-neutral-950">
-            <summary className="cursor-pointer text-base font-semibold text-neutral-950 dark:text-white">
-              Advanced calculation details
-            </summary>
-            <div className="mt-5">
-              <CalculationBreakdown input={input} result={result} />
-            </div>
-          </details>
+          {isFeatureEnabled("calculation-breakdown") ? (
+            <details className="rounded border border-neutral-200 bg-white p-6 shadow-none dark:border-white/10 dark:bg-neutral-950">
+              <summary className="cursor-pointer text-base font-semibold text-neutral-950 dark:text-white">
+                Advanced calculation details
+              </summary>
+              <div className="mt-5">
+                <CalculationBreakdown input={input} result={result} />
+              </div>
+            </details>
+          ) : null}
         </article>
       </section>
     </>

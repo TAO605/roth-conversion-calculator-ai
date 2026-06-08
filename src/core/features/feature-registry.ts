@@ -140,6 +140,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Disable projection-chart in the feature registry and remove the homepage Projection card while keeping numerical result estimates available.",
   },
   {
+    id: "calculation-breakdown",
+    label: "Advanced calculation breakdown",
+    version: "1.0.182",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/calculation-breakdown and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Disable calculation-breakdown in the feature registry and remove the homepage Advanced calculation details disclosure while keeping summary estimates, projection, and professional handoff available.",
+  },
+  {
     id: "faq-schema",
     label: "FAQPage structured data",
     version: "1.0.6",

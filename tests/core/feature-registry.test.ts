@@ -41,6 +41,7 @@ describe("feature registry", () => {
     expect(getEnabledFeatureIds()).toContain("pdf-report");
     expect(getEnabledFeatureIds()).toContain("professional-handoff");
     expect(getEnabledFeatureIds()).toContain("projection-chart");
+    expect(getEnabledFeatureIds()).toContain("calculation-breakdown");
     expect(getEnabledFeatureIds()).toContain("tax-data-freshness");
     expect(getEnabledFeatureIds()).toContain("ai-compliance-gateway");
     expect(getEnabledFeatureIds()).toContain("seo-structured-content");
@@ -136,6 +137,7 @@ describe("feature registry", () => {
     expect(homePage).toContain('isFeatureEnabled("pdf-report")');
     expect(homePage).toContain('isFeatureEnabled("professional-handoff")');
     expect(homePage).toContain('isFeatureEnabled("projection-chart")');
+    expect(homePage).toContain('isFeatureEnabled("calculation-breakdown")');
     expect(homePage).toContain('isFeatureEnabled("privacy-safe-analytics")');
     expect(homePage).toContain('isFeatureEnabled("homepage-howto-structured-data")');
     expect(homePage).not.toContain('isFeatureEnabled("copy-summary")');

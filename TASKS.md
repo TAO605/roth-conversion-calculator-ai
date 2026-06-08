@@ -140,3 +140,4 @@
 - [done] Register share link in the main feature registry
 - [done] Register professional handoff in the main feature registry
 - [done] Register projection chart in the main feature registry
+- [done] Register calculation breakdown in the main feature registry

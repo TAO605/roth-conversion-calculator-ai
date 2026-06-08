@@ -16,6 +16,7 @@ describe("homepage performance boundaries", () => {
     expect(calculatorClient).toContain('isFeatureEnabled("projection-chart")');
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/ai-assistant\/AiExplainer"\)/);
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/calculation-breakdown\/CalculationBreakdown"\)/);
+    expect(calculatorClient).toContain('isFeatureEnabled("calculation-breakdown")');
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/pdf-report\/PdfReportButton"\)/);
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/analytics\/CalculatorAnalyticsBeacon"\)/);
 

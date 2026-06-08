@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.182",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Calculation breakdown feature registry",
+    summary:
+      "Registered the homepage Advanced calculation details module in the main feature registry and gated the disclosure through that registry so calculation-breakdown rollback is visible in the modular rollback map.",
+    affectedArea:
+      "Feature registry, homepage Advanced calculation details, homepage performance guard, release notes, and task tracking",
+    rollbackPath:
+      "Remove the calculation-breakdown feature registry entry, restore the always-rendered Advanced calculation details disclosure in HomeCalculatorClient, then revert the release note, task, progress, and tests.",
+  },
+  {
     version: "1.0.181",
     date: "2026-06-08",
     type: "patch",
