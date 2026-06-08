@@ -34,6 +34,8 @@ describe("result summary layout", () => {
     expect(screen.getByText("Modeled bracket room")).toBeTruthy();
     expect(screen.getByText("Projected after-tax difference")).toBeTruthy();
     expect(screen.getByText("Scenario reading")).toBeTruthy();
+    expect(screen.getByText(/Modeled break-even:/)).toBeTruthy();
+    expect(screen.getByText(/not guaranteed outcomes or recommendations/i)).toBeTruthy();
     expect(screen.getByText("Federal tax")).toBeTruthy();
   });
 

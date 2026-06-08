@@ -28,7 +28,8 @@ export function ProjectionChart({ projection }: ProjectionChartProps) {
         ))}
       </div>
       <p className="mt-3 text-sm text-neutral-600 dark:text-neutral-300">
-        Blue bars show projected Roth value. Green bars show projected traditional IRA after-tax value.
+        Blue bars show projected Roth value. Green bars show projected traditional IRA after-tax value.{" "}
+        These bars use the same future-return and retirement-tax assumptions entered; they are not guaranteed outcomes.
       </p>
     </div>
   );

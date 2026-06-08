@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.190",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Projection result boundary copy",
+    summary:
+      "Added visible homepage result copy clarifying that modeled break-even, projected after-tax difference, and projection bars are scenario estimates based on user-entered assumptions, not guaranteed outcomes or recommendations.",
+    affectedArea:
+      "Homepage result summary, projection chart, long-term result display wording, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove this copy only if an equivalent reviewed boundary remains visible near break-even, projected after-tax difference, and projection outputs.",
+  },
+  {
     version: "1.0.189",
     date: "2026-06-08",
     type: "patch",

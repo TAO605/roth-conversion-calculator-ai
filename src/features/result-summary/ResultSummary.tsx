@@ -87,12 +87,16 @@ export function ResultSummary({ result }: ResultSummaryProps) {
             </p>
           </div>
           <div className="shrink-0 rounded border border-neutral-200 bg-white px-3 py-2 text-sm font-semibold text-neutral-950 shadow-none dark:border-white/10 dark:bg-neutral-950 dark:text-white">
-            Break-even:{" "}
+            Modeled break-even:{" "}
             {result.breakEvenYear === null
               ? "not reached in projection"
               : `${result.breakEvenYear} years`}
           </div>
         </div>
+        <p className="mt-3 text-xs leading-5 text-neutral-500 dark:text-neutral-400">
+          Break-even and projected after-tax difference are scenario estimates based on the future return and retirement
+          tax-rate assumptions entered. They are not guaranteed outcomes or recommendations.
+        </p>
       </div>
 
       <div className="grid gap-2 sm:grid-cols-2 sm:gap-3 xl:grid-cols-5">

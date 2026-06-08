@@ -7,11 +7,11 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.189",
+      version: "1.0.190",
       type: "patch",
-      title: "Upfront cost result label",
+      title: "Projection result boundary copy",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("estimated upfront cost");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("not guaranteed outcomes");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

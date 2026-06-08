@@ -17,5 +17,6 @@ describe("projection chart layout", () => {
 
     expect(groups).toHaveLength(2);
     expect(groups[0].className).toContain("h-full");
+    expect(screen.getByText(/not guaranteed outcomes/i)).toBeTruthy();
   });
 });
