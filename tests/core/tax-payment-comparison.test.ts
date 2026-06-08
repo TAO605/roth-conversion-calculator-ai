@@ -32,10 +32,31 @@ describe("tax payment comparison", () => {
     const comparison = buildTaxPaymentComparison(input, result);
 
     expect(comparison.taxToPay).toBe(result.federalTax + result.stateTax);
+    expect(comparison.modeledIraWithholding).toBe(comparison.taxToPay);
+    expect(comparison.unfundedTaxAmount).toBe(0);
     expect(comparison.outsideFunds.rothPrincipal).toBe(input.conversionAmount);
     expect(comparison.iraWithholding.rothPrincipal).toBeLessThan(input.conversionAmount);
     expect(comparison.projectedValueDifference).toBeGreaterThan(0);
     expect(comparison.iraWithholding.modeledPenalty).toBeGreaterThan(0);
+  });
+
+  it("caps IRA withholding and modeled penalty when estimated tax is larger than the conversion", () => {
+    const smallConversionInput = {
+      ...input,
+      conversionAmount: 5000,
+    };
+    const result = {
+      ...calculateRothConversion(smallConversionInput),
+      federalTax: 4500,
+      stateTax: 1500,
+    };
+    const comparison = buildTaxPaymentComparison(smallConversionInput, result);
+
+    expect(comparison.taxToPay).toBeGreaterThan(smallConversionInput.conversionAmount);
+    expect(comparison.modeledIraWithholding).toBe(smallConversionInput.conversionAmount);
+    expect(comparison.unfundedTaxAmount).toBeGreaterThan(0);
+    expect(comparison.iraWithholding.rothPrincipal).toBe(0);
+    expect(comparison.iraWithholding.modeledPenalty).toBe(500);
   });
 
   it("renders a comparison without recommendation language", () => {
@@ -51,6 +72,25 @@ describe("tax payment comparison", () => {
     expect(copy).not.toMatch(/\bstrongly recommend\b/i);
     expect(copy).not.toMatch(/\bbest move\b/i);
   });
+
+  it("renders the withholding cap boundary when estimated tax exceeds the conversion", () => {
+    const smallConversionInput = {
+      ...input,
+      conversionAmount: 5000,
+    };
+    const result = {
+      ...calculateRothConversion(smallConversionInput),
+      federalTax: 4500,
+      stateTax: 1500,
+    };
+    const { container } = render(React.createElement(TaxPaymentComparison, { input: smallConversionInput, result }));
+    const copy = container.textContent ?? "";
+
+    expect(copy).toContain("withheld from the IRA before Roth growth");
+    expect(copy).toContain("estimated tax is outside this withholding model");
+    expect(copy).toContain("penalty basis is capped");
+  });
+
 
   it("is gated through the main feature registry on the homepage", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.187",
+    date: "2026-06-08",
+    type: "patch",
+    title: "Tax payment withholding cap boundary",
+    summary:
+      "Updated the tax payment method comparison so IRA withholding is capped at the conversion amount, any tax amount outside that cap is identified as outside the withholding model, and the modeled penalty basis follows the same cap.",
+    affectedArea:
+      "Tax payment method comparison, result display boundaries, early-distribution penalty display, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Restore the prior tax payment comparison only if a reviewed replacement still prevents the IRA withholding scenario from implying that more than the conversion amount can be withheld from the IRA.",
+  },
+  {
     version: "1.0.186",
     date: "2026-06-08",
     type: "patch",

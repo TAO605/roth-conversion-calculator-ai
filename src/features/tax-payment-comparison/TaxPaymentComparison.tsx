@@ -45,8 +45,10 @@ export function TaxPaymentComparison({ input, result }: TaxPaymentComparisonProp
             {formatCurrency(comparison.iraWithholding.projectedRothValue)}
           </p>
           <p className="mt-2 text-xs leading-5 text-neutral-600 dark:text-neutral-300">
-            Models {formatCurrency(comparison.taxToPay)} withheld for estimated federal and state taxes before Roth
-            growth.
+            Models {formatCurrency(comparison.modeledIraWithholding)} withheld from the IRA before Roth growth.
+            {comparison.unfundedTaxAmount > 0
+              ? ` The remaining ${formatCurrency(comparison.unfundedTaxAmount)} estimated tax is outside this withholding model.`
+              : null}
           </p>
         </div>
       </div>
@@ -59,7 +61,7 @@ export function TaxPaymentComparison({ input, result }: TaxPaymentComparisonProp
             {" "}
             A separate possible early-distribution penalty of{" "}
             <strong>{formatCurrency(comparison.iraWithholding.modeledPenalty)}</strong> may apply to IRA withholding
-            before age 59.5.
+            before age 59.5. The penalty basis is capped at the modeled IRA withholding amount.
           </>
         ) : null}
       </div>

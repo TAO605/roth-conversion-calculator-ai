@@ -2,6 +2,8 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 
 export interface TaxPaymentComparison {
   taxToPay: number;
+  modeledIraWithholding: number;
+  unfundedTaxAmount: number;
   outsideFunds: {
     rothPrincipal: number;
     projectedRothValue: number;
@@ -29,13 +31,17 @@ export function buildTaxPaymentComparison(
   const yearsToRetirement = Math.max(0, Math.round(input.retirementAge - input.age));
   const taxToPay = Math.max(0, result.federalTax + result.stateTax);
   const outsidePrincipal = Math.max(0, input.conversionAmount);
-  const withheldPrincipal = Math.max(0, input.conversionAmount - taxToPay);
-  const modeledPenalty = input.age < 59.5 && !input.penaltyException ? taxToPay * 0.1 : 0;
+  const modeledIraWithholding = Math.min(taxToPay, outsidePrincipal);
+  const unfundedTaxAmount = Math.max(0, taxToPay - modeledIraWithholding);
+  const withheldPrincipal = Math.max(0, input.conversionAmount - modeledIraWithholding);
+  const modeledPenalty = input.age < 59.5 && !input.penaltyException ? modeledIraWithholding * 0.1 : 0;
   const outsideProjectedValue = futureValue(outsidePrincipal, input.expectedAnnualReturn, yearsToRetirement);
   const withheldProjectedValue = futureValue(withheldPrincipal, input.expectedAnnualReturn, yearsToRetirement);
 
   return {
     taxToPay: roundMoney(taxToPay),
+    modeledIraWithholding: roundMoney(modeledIraWithholding),
+    unfundedTaxAmount: roundMoney(unfundedTaxAmount),
     outsideFunds: {
       rothPrincipal: roundMoney(outsidePrincipal),
       projectedRothValue: roundMoney(outsideProjectedValue),
