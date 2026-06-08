@@ -160,7 +160,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "ai-compliance-gateway",
     label: "AI compliance gateway and rate limit",
-    version: "1.0.172",
+    version: "1.0.173",
     layer: "common",
     enabled: true,
     locked: false,

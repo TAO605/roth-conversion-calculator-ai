@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.173",
+    date: "2026-06-08",
+    type: "patch",
+    title: "AI provider usage evidence records",
+    summary:
+      "Added sanitized OpenAI, Anthropic, and provider usage evidence templates plus validation and readiness commands so account-console spend observations can be reviewed without pasting API keys, tokens, cookies, card data, or private request bodies.",
+    affectedArea:
+      "AI provider usage evidence template, provider usage validators, operations scripts, package scripts, release notes, feature registry, task tracking, and recurrence documentation",
+    rollbackPath:
+      "Remove the provider usage evidence template and validation/readiness commands, then revert the package scripts, release note, feature registry version, task, progress, and recurrence documentation updates.",
+  },
+  {
     version: "1.0.172",
     date: "2026-06-08",
     type: "patch",

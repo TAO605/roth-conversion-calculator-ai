@@ -1,0 +1,50 @@
+{
+  "ok": true,
+  "evidenceType": "ai-provider-usage-evidence",
+  "recordStatus": "template",
+  "createdAt": "2026-06-08T00:00:00.000Z",
+  "site": {
+    "domain": "https://www.roth-conversion-calculator-ai.shop",
+    "relatedEndpoint": "/api/ai/explain",
+    "siteEvidencePath": "ai-cost-abuse-evidence-result.json"
+  },
+  "provider": {
+    "name": "",
+    "accountLabel": "",
+    "sourceType": "usage_console",
+    "observedDateRange": {
+      "start": "",
+      "end": ""
+    }
+  },
+  "usage": {
+    "totalRequests": null,
+    "totalInputTokens": null,
+    "totalOutputTokens": null,
+    "totalCostUsd": null,
+    "largestDailyCostUsd": null,
+    "largestDailyRequestCount": null
+  },
+  "models": [],
+  "suspiciousSignals": {
+    "unexpectedSpend": false,
+    "unexpectedModel": false,
+    "unexpectedRequestSpike": false,
+    "requestsAfterPaidModelDisabled": false,
+    "notes": ""
+  },
+  "evidence": {
+    "screenshotOrExportPath": "",
+    "capturedBy": "",
+    "capturedAt": "",
+    "openAiUsageUrl": "https://platform.openai.com/usage",
+    "anthropicUsageUrl": "https://console.anthropic.com/settings/usage"
+  },
+  "decision": {
+    "status": "needs_review",
+    "nextAction": "Copy real provider usage or cost evidence from the account console. Do not paste API keys.",
+    "owner": "",
+    "nextReviewDate": ""
+  },
+  "privacyBoundary": "This record must not include API keys, bearer tokens, cookies, raw account identifiers, full card data, private customer data, or raw user request bodies."
+}

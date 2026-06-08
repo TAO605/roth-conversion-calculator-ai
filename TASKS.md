@@ -126,3 +126,4 @@
 - [done] Add sanitized GSC validation follow-up plan guard
 - [done] Add AI explainer cost-abuse guard
 - [done] Add AI cost-abuse evidence command
+- [done] Add AI provider usage evidence records

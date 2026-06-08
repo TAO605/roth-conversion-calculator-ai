@@ -1926,3 +1926,29 @@ The AI cost-abuse evidence command now has source tests requiring the package sc
 **Future trigger words:**
 
 spawn vercel ENOENT; spawn EINVAL; Windows CLI script; execFile CLI shim; Vercel logs script; ops command failed on Windows
+
+### 2026-06-08 - Secret scanners must distinguish examples from real tokens
+
+**Symptom:**
+
+The first AI provider usage evidence validator rejected the safe template because the privacy-boundary sentence contained the words "bearer tokens".
+
+**Root cause:**
+
+The Bearer-token pattern matched explanatory prose instead of requiring a real token-shaped value after `Bearer`.
+
+**Fix:**
+
+Narrowed the pattern from any word after `Bearer` to `Bearer` followed by at least eight token characters. The validator still blocks real bearer values, API key field shapes, authorization fields, cookies, passwords, card-number language, and long payment-card-like numbers.
+
+**Guard:**
+
+The provider usage evidence tests require the template to validate, require recorded sanitized OpenAI evidence to validate, and require a fake `sk-...` value to be blocked.
+
+**Validation:**
+
+`npm run ops:ai-provider-usage-validate` returned `ok: true`; `npm run ops:ai-provider-usage-ready` returned `ok: true`; targeted provider/cost/security/release/feature tests passed with 5 files / 17 tests.
+
+**Future trigger words:**
+
+Bearer token false positive; secret scanner prose; provider usage evidence template; privacyBoundary false positive; API key evidence validator
