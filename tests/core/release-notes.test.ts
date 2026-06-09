@@ -7,9 +7,9 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.203",
+      version: "1.0.204",
       type: "patch",
-      title: "AI response verifier",
+      title: "AI verifier regression evidence",
     });
     expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("deterministic");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);

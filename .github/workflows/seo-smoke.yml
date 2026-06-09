@@ -143,6 +143,11 @@ jobs:
           set -o pipefail
           node scripts/ai-security-evidence.mjs | tee ai-security-evidence-result.json
 
+      - name: Run AI verifier regression evidence check
+        run: |
+          set -o pipefail
+          node scripts/ai-verifier-regression-evidence.mjs | tee ai-verifier-regression-evidence-result.json
+
       - name: Validate SEO evidence artifact
         run: |
           set -o pipefail
@@ -181,6 +186,7 @@ jobs:
             professional-ui-evidence-result.json
             privacy-evidence-boundary-result.json
             ai-security-evidence-result.json
+            ai-verifier-regression-evidence-result.json
             seo-evidence-validation-result.json
             seo-evidence-manifest.json
             seo-evidence-manifest-validation-result.json

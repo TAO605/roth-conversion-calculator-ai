@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.204",
+    date: "2026-06-09",
+    type: "patch",
+    title: "AI verifier regression evidence",
+    summary:
+      "Added deterministic AI verifier regression evidence to production SEO Smoke so pass, fail, and fallback coverage for AI explanations is retained without calling paid models or storing user prompts.",
+    affectedArea:
+      "AI compliance audit page, AI verifier evidence command, SEO Smoke artifact contract, evidence manifest, release notes, feature registry, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the regression evidence wiring only if another deterministic production artifact proves AI verifier pass, fail, and fallback coverage without provider calls or sensitive prompt retention.",
+  },
+  {
     version: "1.0.203",
     date: "2026-06-09",
     type: "patch",

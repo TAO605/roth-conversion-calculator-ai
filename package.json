@@ -46,6 +46,7 @@
     "seo:evidence-manifest-validate": "node scripts/validate-seo-evidence-manifest.mjs",
     "ops:ai-cost-abuse-evidence": "node scripts/ai-cost-abuse-evidence.mjs",
     "ops:ai-security-evidence": "node scripts/ai-security-evidence.mjs",
+    "ops:ai-verifier-regression": "node scripts/ai-verifier-regression-evidence.mjs",
     "ops:ai-provider-usage-validate": "node scripts/validate-ai-provider-usage-evidence.mjs",
     "ops:ai-provider-usage-ready": "node scripts/ai-provider-usage-readiness.mjs",
     "ops:privacy-evidence-boundary": "node scripts/privacy-evidence-boundary.mjs",

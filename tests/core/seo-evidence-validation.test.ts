@@ -49,6 +49,7 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("blog-discovery-evidence-result.json");
     expect(script).toContain("privacy-evidence-boundary-result.json");
     expect(script).toContain("ai-security-evidence-result.json");
+    expect(script).toContain("ai-verifier-regression-evidence-result.json");
     expect(script).toContain("fileURLToPath(import.meta.url)");
     expect(script).toContain("lastmodFresh");
     expect(script).toContain("priorityUrlCount");
@@ -60,6 +61,7 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("validateBlogDiscoveryEvidence");
     expect(script).toContain("validatePrivacyEvidenceBoundary");
     expect(script).toContain("validateAiSecurityEvidence");
+    expect(script).toContain("validateAiVerifierRegressionEvidence");
     expect(script).toContain("validateDnsEvidence");
     expect(script).toContain("validateGscDiscoveredSampleEvidence");
     expect(script).toContain("gscDiscoveredSampleCount");
@@ -118,6 +120,8 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("privacyEvidenceBoundaryOk");
     expect(script).toContain("privacyUnapprovedRemoteEvidenceCount");
     expect(script).toContain("aiSecurityOk");
+    expect(script).toContain("aiVerifierRegressionOk");
+    expect(script).toContain("aiVerifierRegressionScenarioCount");
     expect(script).toContain("pageCount");
     expect(script).toContain("STATIC_STRUCTURED_DATA_PAGE_COUNT");
     expect(script).toContain("readBlogSlugCount");
@@ -197,6 +201,10 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("node scripts/privacy-evidence-boundary.mjs | tee privacy-evidence-boundary-result.json");
     expect(workflow).toContain("Run AI security evidence check");
     expect(workflow).toContain("node scripts/ai-security-evidence.mjs | tee ai-security-evidence-result.json");
+    expect(workflow).toContain("Run AI verifier regression evidence check");
+    expect(workflow).toContain(
+      "node scripts/ai-verifier-regression-evidence.mjs | tee ai-verifier-regression-evidence-result.json",
+    );
     expect(workflow).toContain("Validate SEO evidence artifact");
     expect(workflow).toContain("node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json");
     expect(workflow).toContain("Generate SEO evidence manifest");
@@ -217,6 +225,7 @@ describe("SEO evidence artifact validation", () => {
     expect(manifestScript).toContain("blog-discovery-evidence-result.json");
     expect(manifestScript).toContain("privacy-evidence-boundary-result.json");
     expect(manifestScript).toContain("ai-security-evidence-result.json");
+    expect(manifestScript).toContain("ai-verifier-regression-evidence-result.json");
     expect(manifestScript).toContain("seo-evidence-manifest-validation-result.json");
     expect(manifestScript).toContain("postManifestValidation");
     expect(manifestScript).toContain("GITHUB_RUN_ID");
@@ -300,6 +309,9 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("node scripts/blog-discovery-evidence.mjs | tee blog-discovery-evidence-result.json");
     expect(workflow).toContain("node scripts/privacy-evidence-boundary.mjs | tee privacy-evidence-boundary-result.json");
     expect(workflow).toContain("node scripts/ai-security-evidence.mjs | tee ai-security-evidence-result.json");
+    expect(workflow).toContain(
+      "node scripts/ai-verifier-regression-evidence.mjs | tee ai-verifier-regression-evidence-result.json",
+    );
     expect(workflow).toContain("node scripts/validate-seo-evidence.mjs | tee seo-evidence-validation-result.json");
     expect(workflow).toContain("node scripts/generate-seo-evidence-manifest.mjs | tee seo-evidence-manifest.json");
     expect(workflow).toContain("node scripts/validate-seo-evidence-manifest.mjs | tee seo-evidence-manifest-validation-result.json");
@@ -319,6 +331,7 @@ describe("SEO evidence artifact validation", () => {
     expect(workflow).toContain("blog-discovery-evidence-result.json");
     expect(workflow).toContain("privacy-evidence-boundary-result.json");
     expect(workflow).toContain("ai-security-evidence-result.json");
+    expect(workflow).toContain("ai-verifier-regression-evidence-result.json");
     expect(workflow).toContain("seo-evidence-validation-result.json");
     expect(workflow).toContain("seo-evidence-manifest.json");
     expect(workflow).toContain("seo-evidence-manifest-validation-result.json");

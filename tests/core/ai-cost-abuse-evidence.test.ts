@@ -42,4 +42,28 @@ describe("AI cost abuse evidence command", () => {
     expect(scriptSource).not.toContain("vercel logs");
     expect(scriptSource).not.toMatch(/sk-[A-Za-z0-9_-]+/);
   });
+
+  it("adds a deterministic AI verifier regression evidence command without provider calls", () => {
+    const packageJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), "package.json"), "utf8"));
+    const scriptSource = fs.readFileSync(
+      path.join(process.cwd(), "scripts/ai-verifier-regression-evidence.mjs"),
+      "utf8",
+    );
+
+    expect(packageJson.scripts["ops:ai-verifier-regression"]).toBe(
+      "node scripts/ai-verifier-regression-evidence.mjs",
+    );
+    expect(scriptSource).toContain("ai-verifier-regression-evidence");
+    expect(scriptSource).toContain("safe-calculator-output-with-required-disclaimer");
+    expect(scriptSource).toContain("personalized-advice-language");
+    expect(scriptSource).toContain("unsupported-dollar-output");
+    expect(scriptSource).toContain("production-default-paid-model-disabled");
+    expect(scriptSource).toContain("routeFailsClosedToFallback");
+    expect(scriptSource).toContain("sameOriginFallbackProbeRetained");
+    expect(scriptSource).toContain("excludes API keys, cookies, account identifiers");
+    expect(scriptSource).not.toMatch(/sk-[A-Za-z0-9_-]+/);
+    expect(scriptSource).not.toContain("OPENAI_API_KEY=");
+    expect(scriptSource).not.toContain("ANTHROPIC_API_KEY=");
+    expect(scriptSource).not.toContain("fetch(");
+  });
 });

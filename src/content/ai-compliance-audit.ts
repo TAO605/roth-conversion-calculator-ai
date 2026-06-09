@@ -12,6 +12,12 @@ export interface AiComplianceAuditGroup {
   checks: AiComplianceAuditCheck[];
 }
 
+export interface AiVerifierRegressionCoverage {
+  label: string;
+  expectedOutcome: "pass" | "fail" | "fallback";
+  retainedEvidence: string;
+}
+
 function check(
   label: string,
   riskControl: string,
@@ -153,4 +159,39 @@ export function getAiComplianceAuditSummary(groups: AiComplianceAuditGroup[]) {
     totalChecks: checks.length,
     riskControls: Array.from(new Set(checks.map((check) => check.riskControl))),
   };
+}
+
+export function buildAiVerifierRegressionCoverage(): AiVerifierRegressionCoverage[] {
+  return [
+    {
+      expectedOutcome: "pass",
+      label: "Safe calculator explanation",
+      retainedEvidence: "Required disclaimer and calculator-dollar consistency pass.",
+    },
+    {
+      expectedOutcome: "fail",
+      label: "Advice-language output",
+      retainedEvidence: "forbidden_advice verifier reason is retained.",
+    },
+    {
+      expectedOutcome: "fail",
+      label: "Sensitive-data output",
+      retainedEvidence: "sensitive_data verifier reason is retained.",
+    },
+    {
+      expectedOutcome: "fail",
+      label: "Unsupported dollar output",
+      retainedEvidence: "unsupported_dollar_amount verifier reason is retained.",
+    },
+    {
+      expectedOutcome: "fail",
+      label: "Missing disclaimer output",
+      retainedEvidence: "missing_disclaimer verifier reason is retained.",
+    },
+    {
+      expectedOutcome: "fallback",
+      label: "Production fallback mode",
+      retainedEvidence: "Same-origin production probe retains fallback verifier evidence.",
+    },
+  ];
 }

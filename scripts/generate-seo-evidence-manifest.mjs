@@ -19,6 +19,7 @@ const DEFAULT_FILES = [
   "professional-ui-evidence-result.json",
   "privacy-evidence-boundary-result.json",
   "ai-security-evidence-result.json",
+  "ai-verifier-regression-evidence-result.json",
   "seo-evidence-validation-result.json",
   "seo-evidence-manifest.json",
   "seo-evidence-manifest-validation-result.json",

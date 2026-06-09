@@ -3,7 +3,11 @@ import fs from "node:fs";
 import path from "node:path";
 import sitemap from "@/app/sitemap";
 import { blogPosts } from "@/content/blog";
-import { buildAiComplianceAuditGroups, getAiComplianceAuditSummary } from "@/content/ai-compliance-audit";
+import {
+  buildAiComplianceAuditGroups,
+  buildAiVerifierRegressionCoverage,
+  getAiComplianceAuditSummary,
+} from "@/content/ai-compliance-audit";
 import { buildSiteIndexGroups } from "@/content/site-index";
 import { buildLlmsText } from "@/core/seo/llms";
 
@@ -40,5 +44,29 @@ describe("AI compliance audit playbook", () => {
     expect(homePage).toContain('href="/ai-compliance-audit"');
     expect(siteIndexUrls).toContain("/ai-compliance-audit");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/ai-compliance-audit");
+  });
+
+  it("surfaces deterministic AI verifier regression evidence for production review", () => {
+    const coverage = buildAiVerifierRegressionCoverage();
+    const pageFile = fs.readFileSync(path.join(process.cwd(), "src/app/ai-compliance-audit/page.tsx"), "utf8");
+
+    expect(coverage).toHaveLength(6);
+    expect(coverage.map((item) => item.expectedOutcome)).toEqual(
+      expect.arrayContaining(["pass", "fail", "fallback"]),
+    );
+    expect(coverage.map((item) => item.label)).toEqual(
+      expect.arrayContaining([
+        "Safe calculator explanation",
+        "Advice-language output",
+        "Sensitive-data output",
+        "Unsupported dollar output",
+        "Missing disclaimer output",
+        "Production fallback mode",
+      ]),
+    );
+    expect(pageFile).toContain("AI Verifier Regression Evidence");
+    expect(pageFile).toContain("buildAiVerifierRegressionCoverage");
+    expect(pageFile).toContain("ops:ai-verifier-regression");
+    expect(pageFile).toContain("ai-verifier-regression-evidence-result.json");
   });
 });

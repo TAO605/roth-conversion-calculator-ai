@@ -2056,3 +2056,29 @@ Sequential `npm run build` passed with 131 static pages, and Playwright E2E pass
 **Future trigger words:**
 
 PageNotFoundError during build; required-server-files missing; .next race; build and Playwright parallel; Next generated artifact conflict
+
+### 2026-06-09 - Generate JSON evidence with direct node commands when teeing to files
+
+**Symptom:**
+
+`npm run seo:evidence-manifest | Tee-Object -FilePath seo-evidence-manifest.json` saved npm lifecycle banner text before the JSON payload, so the manifest validator failed with `Unexpected token '>'`.
+
+**Root cause:**
+
+`npm run` writes command metadata to stdout before the script output. When stdout is captured as an evidence JSON file, the file is no longer a single JSON object.
+
+**Fix:**
+
+Use direct script execution for evidence files that must be pure JSON, such as `node scripts/generate-seo-evidence-manifest.mjs | Tee-Object -FilePath seo-evidence-manifest.json`.
+
+**Guard:**
+
+When retaining local JSON evidence, prefer direct `node scripts/...` commands or scripts that provide an explicit `--output` option. Use `npm run` for pass/fail validation, not for teeing machine-readable artifacts.
+
+**Validation:**
+
+Direct node generation produced a valid manifest, and `node scripts/validate-seo-evidence-manifest.mjs` passed with `checkedFileCount: 19`, `sha256CheckedCount: 19`, and `manifestFileCount: 21`.
+
+**Future trigger words:**
+
+Unexpected token greater-than in JSON; npm banner in evidence file; Tee-Object JSON artifact; manifest parse failure; pure JSON evidence output

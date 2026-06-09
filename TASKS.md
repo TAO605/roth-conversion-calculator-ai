@@ -163,3 +163,4 @@
 - [done] Add CA NY NJ selected-state readiness input fields
 - [done] Add selected-state readiness completeness scoring
 - [done] Add deterministic AI response verifier
+- [done] Add AI verifier regression evidence to production SEO artifacts

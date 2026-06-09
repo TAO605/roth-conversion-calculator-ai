@@ -1,5 +1,9 @@
 ﻿import Link from "next/link";
-import { buildAiComplianceAuditGroups, getAiComplianceAuditSummary } from "@/content/ai-compliance-audit";
+import {
+  buildAiComplianceAuditGroups,
+  buildAiVerifierRegressionCoverage,
+  getAiComplianceAuditSummary,
+} from "@/content/ai-compliance-audit";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { breadcrumbJsonLd } from "@/core/seo/json-ld";
 
@@ -12,6 +16,7 @@ export const metadata = {
 
 export default function AiComplianceAuditPage() {
   const groups = buildAiComplianceAuditGroups();
+  const verifierCoverage = buildAiVerifierRegressionCoverage();
   const summary = getAiComplianceAuditSummary(groups);
 
   return (
@@ -94,6 +99,43 @@ export default function AiComplianceAuditPage() {
             </div>
           </article>
         ))}
+      </section>
+
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">AI Verifier Regression Evidence</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              Production SEO Smoke retains a deterministic verifier evidence file that covers passing educational output,
+              failing unsafe output, and fallback mode without calling paid models or storing user prompts.
+            </p>
+          </div>
+          <span className="rounded-full bg-neutral-950 px-3 py-1 text-xs font-semibold text-white dark:bg-white dark:text-neutral-950">
+            {verifierCoverage.length} fixtures
+          </span>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {verifierCoverage.map((item) => (
+            <div
+              className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"
+              key={item.label}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="font-semibold text-neutral-950 dark:text-white">{item.label}</h3>
+                <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-systemBlue">
+                  {item.expectedOutcome}
+                </span>
+              </div>
+              <p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+                {item.retainedEvidence}
+              </p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-xs leading-5 text-neutral-500 dark:text-neutral-400">
+          Evidence command: <code>npm run ops:ai-verifier-regression</code>. Artifact file:{" "}
+          <code>ai-verifier-regression-evidence-result.json</code>.
+        </p>
       </section>
 
       <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">

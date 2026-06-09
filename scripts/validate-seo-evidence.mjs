@@ -19,6 +19,7 @@ const DEFAULT_BLOG_DISCOVERY_PATH = "blog-discovery-evidence-result.json";
 const DEFAULT_PROFESSIONAL_UI_PATH = "professional-ui-evidence-result.json";
 const DEFAULT_PRIVACY_EVIDENCE_BOUNDARY_PATH = "privacy-evidence-boundary-result.json";
 const DEFAULT_AI_SECURITY_PATH = "ai-security-evidence-result.json";
+const DEFAULT_AI_VERIFIER_REGRESSION_PATH = "ai-verifier-regression-evidence-result.json";
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
 const BLOG_SOURCE_PATH = path.join(PROJECT_ROOT, "src/content/blog.ts");
@@ -40,6 +41,7 @@ const blogDiscoveryPath = process.argv[15] || DEFAULT_BLOG_DISCOVERY_PATH;
 const professionalUiPath = process.argv[16] || DEFAULT_PROFESSIONAL_UI_PATH;
 const privacyEvidenceBoundaryPath = process.argv[17] || DEFAULT_PRIVACY_EVIDENCE_BOUNDARY_PATH;
 const aiSecurityPath = process.argv[18] || DEFAULT_AI_SECURITY_PATH;
+const aiVerifierRegressionPath = process.argv[19] || DEFAULT_AI_VERIFIER_REGRESSION_PATH;
 
 const freshnessCriticalPaths = new Set([
   "/",
@@ -591,6 +593,36 @@ function validateAiSecurityEvidence(aiSecurity, expectedBaseUrl) {
   );
 }
 
+function validateAiVerifierRegressionEvidence(aiVerifierRegression) {
+  assert(aiVerifierRegression.ok === true, "AI verifier regression evidence must be ok");
+  assert(
+    aiVerifierRegression.evidenceType === "ai-verifier-regression-evidence",
+    "AI verifier regression evidence type changed unexpectedly",
+  );
+  assert(aiVerifierRegression.checks?.verifierModuleRetained === true, "AI verifier module must be retained");
+  assert(aiVerifierRegression.checks?.forbiddenAdviceReasonRetained === true, "AI verifier must retain forbidden advice guard");
+  assert(aiVerifierRegression.checks?.sensitiveDataReasonRetained === true, "AI verifier must retain sensitive data guard");
+  assert(
+    aiVerifierRegression.checks?.unsupportedDollarReasonRetained === true,
+    "AI verifier must retain unsupported dollar guard",
+  );
+  assert(
+    aiVerifierRegression.checks?.missingDisclaimerReasonRetained === true,
+    "AI verifier must retain missing disclaimer guard",
+  );
+  assert(aiVerifierRegression.checks?.routeFailsClosedToFallback === true, "AI route must fail closed to fallback");
+  assert(aiVerifierRegression.checks?.routeVerifierHeadersRetained === true, "AI route must retain verifier headers");
+  assert(
+    aiVerifierRegression.checks?.sameOriginFallbackProbeRetained === true,
+    "AI verifier evidence must retain same-origin fallback probe linkage",
+  );
+  assert(aiVerifierRegression.summary?.pass >= 1, "AI verifier regression evidence must include pass coverage");
+  assert(aiVerifierRegression.summary?.fail >= 4, "AI verifier regression evidence must include fail coverage");
+  assert(aiVerifierRegression.summary?.fallback >= 1, "AI verifier regression evidence must include fallback coverage");
+  assert(Array.isArray(aiVerifierRegression.regressionMatrix), "AI verifier regression matrix must be retained");
+  assert(aiVerifierRegression.regressionMatrix.length >= 6, "AI verifier regression matrix coverage is too low");
+}
+
 function run() {
   const smoke = readJson(smokePath);
   const gsc = readJson(gscPath);
@@ -609,6 +641,7 @@ function run() {
   const professionalUi = readJson(professionalUiPath);
   const privacyEvidenceBoundary = readJson(privacyEvidenceBoundaryPath);
   const aiSecurity = readJson(aiSecurityPath);
+  const aiVerifierRegression = readJson(aiVerifierRegressionPath);
 
   validateSmokeEvidence(smoke);
   validateGscEvidence(gsc, smoke.baseUrl);
@@ -627,6 +660,7 @@ function run() {
   validateProfessionalUiEvidence(professionalUi);
   validatePrivacyEvidenceBoundary(privacyEvidenceBoundary);
   validateAiSecurityEvidence(aiSecurity, smoke.baseUrl);
+  validateAiVerifierRegressionEvidence(aiVerifierRegression);
 
   console.log(
     JSON.stringify(
@@ -649,8 +683,11 @@ function run() {
           professionalUiPath,
           privacyEvidenceBoundaryPath,
           aiSecurityPath,
+          aiVerifierRegressionPath,
         ],
         aiSecurityOk: aiSecurity.ok === true,
+        aiVerifierRegressionOk: aiVerifierRegression.ok === true,
+        aiVerifierRegressionScenarioCount: aiVerifierRegression.regressionMatrix.length,
         baseUrl: smoke.baseUrl,
         blogDiscoveryCount: blogDiscovery.blogPostCount,
         crawlDiscoveryUrlCount: crawlDiscovery.sitemap.urlCount,

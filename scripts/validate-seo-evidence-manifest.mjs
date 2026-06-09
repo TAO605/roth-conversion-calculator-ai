@@ -25,6 +25,7 @@ const EXPECTED_SOURCE_FILES = [
   "professional-ui-evidence-result.json",
   "privacy-evidence-boundary-result.json",
   "ai-security-evidence-result.json",
+  "ai-verifier-regression-evidence-result.json",
   "seo-evidence-validation-result.json",
 ];
 const SELF_FILE = "seo-evidence-manifest.json";
