@@ -313,7 +313,23 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
               </span>
               <p>
                 {stateRulesPrep.userStateReadinessInputs.summary} Status:{" "}
-                {stateRulesPrep.userStateReadinessInputs.status}.
+                {stateRulesPrep.userStateReadinessInputs.statusLabel}.
+              </p>
+              <p>
+                Completeness score: {stateRulesPrep.userStateReadinessInputs.scorePercent}%.
+              </p>
+              <p>{stateRulesPrep.userStateReadinessInputs.nextReviewStep}</p>
+              {stateRulesPrep.userStateReadinessInputs.missingFields.length > 0 ? (
+                <p>
+                  Missing readiness fields: {stateRulesPrep.userStateReadinessInputs.missingFields.join(", ")}.
+                </p>
+              ) : (
+                <p>
+                  Provided readiness fields: {stateRulesPrep.userStateReadinessInputs.providedFields.join(", ")}.
+                </p>
+              )}
+              <p className="text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
+                This is a document-readiness score only, not a state-law amount calculation.
               </p>
               <ul className="list-disc space-y-1 pl-4">
                 {stateRulesPrep.userStateReadinessInputs.rows.map((row) => (

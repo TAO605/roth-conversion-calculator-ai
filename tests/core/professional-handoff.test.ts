@@ -115,6 +115,10 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("Compare the federal taxable IRA distribution with California taxable IRA distribution rules");
     expect(packet).toContain("Inputs still needed before selected-state amount review");
     expect(packet).toContain("User-provided state readiness field status: ready_for_professional_review");
+    expect(packet).toContain("User-provided state readiness field label: Ready for professional review");
+    expect(packet).toContain("User-provided state readiness completeness score: 100%");
+    expect(packet).toContain("Missing state readiness fields: None");
+    expect(packet).toContain("State readiness score boundary: This is a document-readiness score only");
     expect(packet).toContain("State adjusted gross income: $210,000");
     expect(packet).toContain("State review notes: Moved during the tax year");
     expect(packet).toContain("California Schedule CA adjustment detail");

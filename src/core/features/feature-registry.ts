@@ -178,7 +178,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "tax-impact-warnings-boundary",
     label: "Tax impact warnings boundary",
-    version: "1.0.185",
+    version: "1.0.202",
     layer: "feature",
     enabled: true,
     locked: true,

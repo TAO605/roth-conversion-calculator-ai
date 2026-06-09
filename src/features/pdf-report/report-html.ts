@@ -273,7 +273,23 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
               : `${row("Selected-state amount readiness status", stateRulesPrep.selectedStateAmountReadiness.status)}
           ${row("Selected-state readiness summary", stateRulesPrep.selectedStateAmountReadiness.summary)}
           ${row("User-provided state readiness field status", stateRulesPrep.userStateReadinessInputs.status)}
-          ${row("User-provided state readiness field summary", stateRulesPrep.userStateReadinessInputs.summary)}`
+          ${row("User-provided state readiness field label", stateRulesPrep.userStateReadinessInputs.statusLabel)}
+          ${row("User-provided state readiness completeness score", `${stateRulesPrep.userStateReadinessInputs.scorePercent}%`)}
+          ${row("User-provided state readiness field summary", stateRulesPrep.userStateReadinessInputs.summary)}
+          ${row("User-provided state readiness next review step", stateRulesPrep.userStateReadinessInputs.nextReviewStep)}
+          ${row(
+            "Provided state readiness fields",
+            stateRulesPrep.userStateReadinessInputs.providedFields.length
+              ? stateRulesPrep.userStateReadinessInputs.providedFields.join(", ")
+              : "None",
+          )}
+          ${row(
+            "Missing state readiness fields",
+            stateRulesPrep.userStateReadinessInputs.missingFields.length
+              ? stateRulesPrep.userStateReadinessInputs.missingFields.join(", ")
+              : "None",
+          )}
+          ${row("State readiness score boundary", "This is a document-readiness score only, not a state-law amount calculation.")}`
           }
         </tbody>
       </table>

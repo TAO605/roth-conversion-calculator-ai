@@ -161,3 +161,4 @@
 - [done] Add state rule registry scaffold for supported state examples
 - [done] Add CA NY NJ state amount readiness worksheets
 - [done] Add CA NY NJ selected-state readiness input fields
+- [done] Add selected-state readiness completeness scoring

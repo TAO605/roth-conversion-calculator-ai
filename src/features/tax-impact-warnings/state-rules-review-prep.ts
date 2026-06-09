@@ -32,8 +32,13 @@ export interface StateRulesReviewPrep {
 export interface StateReadinessInputSummary {
   providedCount: number;
   totalCount: number;
+  scorePercent: number;
   status: "not_started" | "partially_provided" | "ready_for_professional_review";
+  statusLabel: string;
   rows: { label: string; value: string; provided: boolean }[];
+  providedFields: string[];
+  missingFields: string[];
+  nextReviewStep: string;
   summary: string;
 }
 
@@ -149,12 +154,32 @@ function buildUserStateReadinessInputSummary(input: RothConversionInput): StateR
       : providedCount === rows.length
         ? "ready_for_professional_review"
         : "partially_provided";
+  const missingFields = rows.filter((row) => !row.provided).map((row) => row.label);
+  const providedFields = rows.filter((row) => row.provided).map((row) => row.label);
+  const scorePercent = Math.round((providedCount / rows.length) * 100);
+  const statusLabel =
+    status === "not_started"
+      ? "Not started"
+      : status === "ready_for_professional_review"
+        ? "Ready for professional review"
+        : "Partially provided";
+  const nextReviewStep =
+    missingFields.length === 0
+      ? "Carry these user-provided fields into professional review with the official state checklist; they still do not determine a final state-specific tax amount."
+      : `Collect the next missing selected-state readiness fields before professional state amount review: ${missingFields
+          .slice(0, 3)
+          .join(", ")}.`;
 
   return {
+    missingFields,
+    nextReviewStep,
     providedCount,
+    providedFields,
     rows,
+    scorePercent,
     status,
-    summary: `${providedCount} of ${rows.length} selected-state readiness inputs have been provided for professional review. These inputs are not used by the state tax formula.`,
+    statusLabel,
+    summary: `${providedCount} of ${rows.length} selected-state readiness inputs have been provided for professional review (${scorePercent}% complete). These inputs are not used by the state tax formula.`,
     totalCount: rows.length,
   };
 }

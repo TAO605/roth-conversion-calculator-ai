@@ -121,6 +121,14 @@ describe("print-ready report export", () => {
     expect(html).toContain("state_specific_inputs_missing");
     expect(html).toContain("User-provided state readiness field status");
     expect(html).toContain("ready_for_professional_review");
+    expect(html).toContain("User-provided state readiness field label");
+    expect(html).toContain("Ready for professional review");
+    expect(html).toContain("User-provided state readiness completeness score");
+    expect(html).toContain("100%");
+    expect(html).toContain("Missing state readiness fields");
+    expect(html).toContain("None");
+    expect(html).toContain("State readiness score boundary");
+    expect(html).toContain("document-readiness score only");
     expect(html).toContain("California State Amount Readiness Official Checklist");
     expect(html).toContain("User-Provided Selected-State Readiness Fields");
     expect(html).toContain("State adjusted gross income: $210,000");

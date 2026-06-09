@@ -7,11 +7,11 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.201",
+      version: "1.0.202",
       type: "patch",
-      title: "State readiness input fields",
+      title: "State readiness completeness scoring",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("residency");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("missing fields");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

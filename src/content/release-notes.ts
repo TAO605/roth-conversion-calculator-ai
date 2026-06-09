@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.202",
+    date: "2026-06-09",
+    type: "patch",
+    title: "State readiness completeness scoring",
+    summary:
+      "Added selected-state readiness completeness scoring for CA, NY, and NJ so users and tax professionals can see the percentage complete, provided fields, missing fields, and next review step before any state-specific amount review.",
+    affectedArea:
+      "State rules readiness prep, tax impact warnings, report export, professional handoff packet, release notes, feature registry, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the completeness score only if selected-state worksheets retain another clear provided-field and missing-field handoff path that does not imply a final state-law amount calculation.",
+  },
+  {
     version: "1.0.201",
     date: "2026-06-09",
     type: "patch",

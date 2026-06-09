@@ -211,7 +211,19 @@ describe("tax impact warning placement", () => {
     );
 
     expect(prep.userStateReadinessInputs.status).toBe("ready_for_professional_review");
+    expect(prep.userStateReadinessInputs.statusLabel).toBe("Ready for professional review");
     expect(prep.userStateReadinessInputs.providedCount).toBe(6);
+    expect(prep.userStateReadinessInputs.scorePercent).toBe(100);
+    expect(prep.userStateReadinessInputs.providedFields).toEqual([
+      "Residency status",
+      "State adjusted gross income",
+      "State IRA basis or already-taxed amount",
+      "Local tax may apply",
+      "Other-state tax credit may apply",
+      "State review notes",
+    ]);
+    expect(prep.userStateReadinessInputs.missingFields).toEqual([]);
+    expect(prep.userStateReadinessInputs.nextReviewStep).toContain("professional review");
     expect(prep.userStateReadinessInputs.summary).toContain("not used by the state tax formula");
     expect(prep.userStateReadinessInputs.rows.map((row) => `${row.label}: ${row.value}`)).toEqual(
       expect.arrayContaining([
@@ -223,6 +235,55 @@ describe("tax impact warning placement", () => {
         "State review notes: Moved during the tax year",
       ]),
     );
+  });
+
+  it("scores empty and partial selected-state readiness fields for professional handoff", () => {
+    const empty = buildStateRulesReviewPrep(
+      { ...baseInput, selectedState: "california", stateMarginalTaxRate: 0.093 },
+      { ...baseResult, stateTax: 5580 },
+    );
+    const partial = buildStateRulesReviewPrep(
+      {
+        ...baseInput,
+        selectedState: "new-york",
+        stateReadinessInputs: {
+          residencyStatus: "resident",
+          stateAdjustedGrossIncome: 180000,
+        },
+        stateMarginalTaxRate: 0.0685,
+      },
+      { ...baseResult, stateTax: 4110 },
+    );
+
+    expect(empty.userStateReadinessInputs.status).toBe("not_started");
+    expect(empty.userStateReadinessInputs.statusLabel).toBe("Not started");
+    expect(empty.userStateReadinessInputs.scorePercent).toBe(0);
+    expect(empty.userStateReadinessInputs.providedFields).toEqual([]);
+    expect(empty.userStateReadinessInputs.missingFields).toEqual([
+      "Residency status",
+      "State adjusted gross income",
+      "State IRA basis or already-taxed amount",
+      "Local tax may apply",
+      "Other-state tax credit may apply",
+      "State review notes",
+    ]);
+    expect(empty.userStateReadinessInputs.nextReviewStep).toContain("Residency status");
+
+    expect(partial.userStateReadinessInputs.status).toBe("partially_provided");
+    expect(partial.userStateReadinessInputs.statusLabel).toBe("Partially provided");
+    expect(partial.userStateReadinessInputs.providedCount).toBe(2);
+    expect(partial.userStateReadinessInputs.scorePercent).toBe(33);
+    expect(partial.userStateReadinessInputs.providedFields).toEqual([
+      "Residency status",
+      "State adjusted gross income",
+    ]);
+    expect(partial.userStateReadinessInputs.missingFields).toEqual([
+      "State IRA basis or already-taxed amount",
+      "Local tax may apply",
+      "Other-state tax credit may apply",
+      "State review notes",
+    ]);
+    expect(JSON.stringify([empty, partial])).not.toMatch(/final state tax|complete state-law|state-law amount calculation is complete|you should|strongly recommend/i);
   });
 
   it("renders selected-state worksheet details only when a supported worksheet state is selected", () => {
@@ -239,6 +300,9 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Official source checklist");
     expect(panel.textContent).toContain("Inputs needed before selected-state amount review");
     expect(panel.textContent).toContain("User-provided readiness fields");
+    expect(panel.textContent).toContain("Completeness score: 0%");
+    expect(panel.textContent).toContain("Missing readiness fields: Residency status");
+    expect(panel.textContent).toContain("document-readiness score only");
     expect(panel.textContent).toContain("California FTB Publication 1005 Pension and Annuity Guidelines");
     expect(panel.textContent).not.toMatch(/final state tax|complete state-law/i);
   });
