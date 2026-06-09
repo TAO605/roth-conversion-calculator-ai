@@ -7,6 +7,7 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep, estimateIrmaaPartBFromIncomeProxy } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 const baseInput: RothConversionInput = {
@@ -86,9 +87,36 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Inputs needed before subsidy amount review");
     expect(panel.textContent).toContain("Marketplace coverage months");
     expect(panel.textContent).toContain("HealthCare.gov premium tax credit and Marketplace savings");
+    expect(panel.textContent).toContain("Social Security Benefit Taxation Review Prep");
+    expect(panel.textContent).toContain("Inputs needed before taxable-benefit amount review");
+    expect(panel.textContent).toContain("Form SSA-1099 box 5");
+    expect(panel.textContent).toContain("IRS Publication 915 Social Security");
+    expect(panel.textContent).toContain("SSA taxes on Social Security benefits FAQ");
     expect(panel.textContent).toContain("Required Minimum Distributions");
     expect(panel.textContent).toContain("input-triggered review items");
     expect(panel.textContent).toContain("Open guide");
+  });
+
+  it("builds Social Security benefit taxation review prep without fake taxable-benefit dollar estimates", () => {
+    const prep = buildSocialSecurityTaxationReviewPrep(baseInput, baseResult);
+
+    expect(prep.nonSocialSecurityIncomeProxyBeforeConversion).toBe(195000);
+    expect(prep.taxableConversionIncrease).toBe(60000);
+    expect(prep.nonSocialSecurityIncomeProxyAfterConversion).toBe(255000);
+    expect(prep.amountEstimateStatus).toBe("missing_social_security_inputs");
+    expect(prep.summary).toContain("$60,000");
+    expect(prep.summary).toContain("$195,000");
+    expect(prep.summary).toContain("$255,000");
+    expect(prep.thresholdNote).toContain("$25,000");
+    expect(prep.thresholdNote).toContain("$34,000");
+    expect(prep.boundaryNote).toContain("cannot estimate taxable Social Security benefit dollars");
+    expect(prep.missingInputs).toEqual(
+      expect.arrayContaining([
+        "Annual Social Security benefit amount from Form SSA-1099 box 5, or equivalent Tier 1 railroad retirement benefit records.",
+        "Tax-exempt interest and other income items used in IRS Publication 915 combined-income review.",
+      ]),
+    );
+    expect(JSON.stringify(prep)).not.toMatch(/taxable benefit amount:|benefit tax owed|you should|strongly recommend/i);
   });
 
   it("builds ACA premium tax credit review prep without fake subsidy dollar estimates", () => {

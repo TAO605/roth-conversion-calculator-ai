@@ -3,6 +3,7 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 function formatBreakEven(result: RothConversionResult) {
@@ -15,6 +16,7 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
   const standardItems = reviewItems.filter((item) => item.level === "standard_review");
   const irmaaPrep = buildIrmaaReviewPrep(input, result);
   const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
+  const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
 
   return [
     "Roth Conversion Professional Review Packet",
@@ -78,6 +80,20 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `ACA boundary: ${acaPrep.boundaryNote}`,
     "Inputs still needed before any subsidy amount review:",
     ...acaPrep.missingInputs.map((item) => `- ${item}`),
+    "",
+    "Social Security benefit taxation review prep",
+    `Non-Social-Security income proxy before conversion: ${formatCurrency(
+      socialSecurityPrep.nonSocialSecurityIncomeProxyBeforeConversion,
+    )}`,
+    `Taxable conversion income increase: ${formatCurrency(socialSecurityPrep.taxableConversionIncrease)}`,
+    `Non-Social-Security income proxy after conversion: ${formatCurrency(
+      socialSecurityPrep.nonSocialSecurityIncomeProxyAfterConversion,
+    )}`,
+    `Social Security taxable-benefit amount estimate status: ${socialSecurityPrep.amountEstimateStatus}`,
+    `Social Security threshold note: ${socialSecurityPrep.thresholdNote}`,
+    `Social Security boundary: ${socialSecurityPrep.boundaryNote}`,
+    "Inputs still needed before any taxable-benefit amount review:",
+    ...socialSecurityPrep.missingInputs.map((item) => `- ${item}`),
     "",
     "Documents and questions to bring",
     "- Most recent federal and state tax returns.",

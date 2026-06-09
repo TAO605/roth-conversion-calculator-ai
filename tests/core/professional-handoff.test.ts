@@ -49,6 +49,11 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("ACA amount estimate status: missing_marketplace_inputs");
     expect(packet).toContain("cannot estimate ACA premium tax credit dollars from taxable income alone");
     expect(packet).toContain("Inputs still needed before any subsidy amount review");
+    expect(packet).toContain("Social Security benefit taxation review prep");
+    expect(packet).toContain("Non-Social-Security income proxy before conversion: $195,000");
+    expect(packet).toContain("Social Security taxable-benefit amount estimate status: missing_social_security_inputs");
+    expect(packet).toContain("cannot estimate taxable Social Security benefit dollars");
+    expect(packet).toContain("Inputs still needed before any taxable-benefit amount review");
     expect(packet).toContain("NIIT MAGI-side review");
     expect(packet).toContain("Form 8606 records");
     expect(packet).toContain(REQUIRED_DISCLAIMER);

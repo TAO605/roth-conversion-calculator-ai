@@ -3,6 +3,7 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 function escapeHtml(value: string): string {
@@ -30,6 +31,7 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
   const reviewItems = buildTaxImpactReviewItems(input, result);
   const irmaaPrep = buildIrmaaReviewPrep(input, result);
   const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
+  const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
   const generatedAt = new Date().toISOString().slice(0, 10);
 
   return `<!doctype html>
@@ -149,6 +151,28 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
       ${list(acaPrep.missingInputs)}
     </section>
 
+    <section aria-labelledby="social-security-heading">
+      <h2 id="social-security-heading">Social Security Benefit Taxation Review Prep</h2>
+      <table>
+        <tbody>
+          ${row(
+            "Non-Social-Security income proxy before conversion",
+            formatCurrency(socialSecurityPrep.nonSocialSecurityIncomeProxyBeforeConversion),
+          )}
+          ${row("Taxable conversion income increase", formatCurrency(socialSecurityPrep.taxableConversionIncrease))}
+          ${row(
+            "Non-Social-Security income proxy after conversion",
+            formatCurrency(socialSecurityPrep.nonSocialSecurityIncomeProxyAfterConversion),
+          )}
+          ${row("Taxable-benefit amount estimate status", socialSecurityPrep.amountEstimateStatus)}
+          ${row("Social Security threshold note", socialSecurityPrep.thresholdNote)}
+          ${row("Social Security boundary", socialSecurityPrep.boundaryNote)}
+        </tbody>
+      </table>
+      <h2>Inputs Still Needed Before Any Taxable-Benefit Amount Review</h2>
+      ${list(socialSecurityPrep.missingInputs)}
+    </section>
+
     <section aria-labelledby="sources-heading">
       <h2 id="sources-heading">Review Sources</h2>
       <ul>
@@ -156,6 +180,8 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
         <li><a href="https://www.ssa.gov/forms/ssa-44.pdf">SSA Form SSA-44 for life-changing event review</a></li>
         <li><a href="https://www.healthcare.gov/lower-costs/save-on-monthly-premiums/">HealthCare.gov premium tax credit and Marketplace savings</a></li>
         <li><a href="https://www.irs.gov/forms-pubs/about-form-8962">IRS Form 8962 premium tax credit</a></li>
+        <li><a href="https://www.irs.gov/publications/p915">IRS Publication 915 Social Security and equivalent railroad retirement benefits</a></li>
+        <li><a href="https://www.ssa.gov/faqs/en/questions/KA-02471.html">SSA taxes on Social Security benefits FAQ</a></li>
         <li><a href="https://www.irs.gov/publications/p590a">IRS Publication 590-A</a></li>
         <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B</a></li>
       </ul>

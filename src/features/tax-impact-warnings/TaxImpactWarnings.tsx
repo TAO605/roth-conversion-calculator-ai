@@ -4,6 +4,7 @@ import { formatCurrencyWithCents } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 export function TaxImpactWarnings({ input, result }: { input: RothConversionInput; result: RothConversionResult }) {
@@ -11,6 +12,7 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
   const triggeredCount = reviewItems.filter((item) => item.level === "input_triggered_review").length;
   const irmaaPrep = buildIrmaaReviewPrep(input, result);
   const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
+  const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
 
   return (
     <aside
@@ -96,6 +98,42 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         </div>
         <div className="mt-2 flex flex-wrap gap-3">
           {acaPrep.officialReferences.map((reference) => (
+            <a
+              className="font-semibold text-systemBlue hover:text-blue-700"
+              href={reference.href}
+              key={reference.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {reference.label}
+            </a>
+          ))}
+        </div>
+      </section>
+      <section className="mt-3 rounded border border-violet-100 bg-violet-50 p-3 text-xs leading-5 text-neutral-700 dark:border-violet-400/30 dark:bg-neutral-950 dark:text-neutral-200">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{socialSecurityPrep.title}</h4>
+          <span className="rounded border border-violet-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-violet-800 dark:border-violet-400/30 dark:bg-neutral-950 dark:text-violet-200">
+            Amount not estimated
+          </span>
+        </div>
+        <p className="mt-2">{socialSecurityPrep.summary}</p>
+        <p className="mt-2">{socialSecurityPrep.thresholdNote}</p>
+        <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
+          {socialSecurityPrep.boundaryNote}
+        </p>
+        <div className="mt-2 grid gap-1">
+          <span className="font-semibold text-neutral-950 dark:text-white">
+            Inputs needed before taxable-benefit amount review:
+          </span>
+          <ul className="list-disc space-y-1 pl-4">
+            {socialSecurityPrep.missingInputs.slice(0, 4).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-3">
+          {socialSecurityPrep.officialReferences.map((reference) => (
             <a
               className="font-semibold text-systemBlue hover:text-blue-700"
               href={reference.href}

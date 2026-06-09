@@ -49,6 +49,12 @@ describe("print-ready report export", () => {
     expect(html).toContain("cannot estimate ACA premium tax credit dollars from taxable income alone");
     expect(html).toContain("Inputs Still Needed Before Any Subsidy Amount Review");
     expect(html).toContain("IRS Form 8962 premium tax credit");
+    expect(html).toContain("Social Security Benefit Taxation Review Prep");
+    expect(html).toContain("Taxable-benefit amount estimate status");
+    expect(html).toContain("missing_social_security_inputs");
+    expect(html).toContain("cannot estimate taxable Social Security benefit dollars");
+    expect(html).toContain("Inputs Still Needed Before Any Taxable-Benefit Amount Review");
+    expect(html).toContain("IRS Publication 915 Social Security and equivalent railroad retirement benefits");
     expect(html).toContain("Medicare.gov Part B costs and IRMAA overview");
     expect(html).toContain(REQUIRED_DISCLAIMER);
     expect(html).not.toMatch(/\byou should convert\b/i);

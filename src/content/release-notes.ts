@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.193",
+    date: "2026-06-09",
+    type: "patch",
+    title: "Social Security taxation review prep",
+    summary:
+      "Added a Social Security benefit taxation review-prep worksheet that shows the conversion-driven non-Social-Security income proxy change, keeps taxable-benefit dollars unestimated until SSA-1099 and IRS Publication 915 inputs are available, and carries the boundary into the report and CPA handoff packet.",
+    affectedArea:
+      "Tax impact warnings, Social Security benefit taxation review prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the Social Security review-prep worksheet only if an equivalent reviewed boundary still prevents the calculator from implying taxable Social Security benefit dollar changes without SSA-1099, tax-exempt interest, and Publication 915 context.",
+  },
+  {
     version: "1.0.192",
     date: "2026-06-08",
     type: "patch",
