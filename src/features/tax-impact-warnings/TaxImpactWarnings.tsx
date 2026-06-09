@@ -307,6 +307,22 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
                 ))}
               </ul>
             </div>
+            <div className="mt-2 grid gap-1">
+              <span className="font-semibold text-neutral-950 dark:text-white">
+                User-provided readiness fields:
+              </span>
+              <p>
+                {stateRulesPrep.userStateReadinessInputs.summary} Status:{" "}
+                {stateRulesPrep.userStateReadinessInputs.status}.
+              </p>
+              <ul className="list-disc space-y-1 pl-4">
+                {stateRulesPrep.userStateReadinessInputs.rows.map((row) => (
+                  <li key={row.label}>
+                    {row.label}: {row.value}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         )}
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">

@@ -5,7 +5,7 @@ import {
   type StateRuleStatus,
 } from "@/content/state-rule-registry";
 import { statePages } from "@/content/state-pages";
-import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
+import type { RothConversionInput, RothConversionResult, StateReadinessInputs } from "@/core/calculator/types";
 
 export interface StateRulesReviewPrep {
   id: "state-rules-review-prep";
@@ -21,11 +21,20 @@ export interface StateRulesReviewPrep {
   stateRuleStatusLabel: string;
   stateRuleBoundaryNote: string;
   selectedStateAmountReadiness: StateRuleAmountReadiness | null;
+  userStateReadinessInputs: StateReadinessInputSummary;
   amountEstimateStatus: "manual_rate_only";
   summary: string;
   boundaryNote: string;
   missingInputs: string[];
   officialReferences: { label: string; href: string }[];
+}
+
+export interface StateReadinessInputSummary {
+  providedCount: number;
+  totalCount: number;
+  status: "not_started" | "partially_provided" | "ready_for_professional_review";
+  rows: { label: string; value: string; provided: boolean }[];
+  summary: string;
 }
 
 export interface StateRulesStateExample {
@@ -70,6 +79,86 @@ const STATE_RULES_OFFICIAL_REFERENCES = [
   },
 ];
 
+function formatOptionalCurrencyValue(value: number | null | undefined): string {
+  return typeof value === "number" && Number.isFinite(value) ? formatCurrency(value) : "Not provided";
+}
+
+function formatOptionalBoolean(value: boolean | null | undefined): string {
+  if (value === true) {
+    return "Yes";
+  }
+
+  if (value === false) {
+    return "No";
+  }
+
+  return "Not provided";
+}
+
+function residencyStatusLabel(value: StateReadinessInputs["residencyStatus"] | undefined): string {
+  switch (value) {
+    case "resident":
+      return "Resident";
+    case "part_year":
+      return "Part-year resident";
+    case "nonresident":
+      return "Nonresident";
+    default:
+      return "Not provided";
+  }
+}
+
+function buildUserStateReadinessInputSummary(input: RothConversionInput): StateReadinessInputSummary {
+  const values = input.stateReadinessInputs;
+  const rows = [
+    {
+      label: "Residency status",
+      provided: values?.residencyStatus !== undefined && values.residencyStatus !== "not_provided",
+      value: residencyStatusLabel(values?.residencyStatus),
+    },
+    {
+      label: "State adjusted gross income",
+      provided: typeof values?.stateAdjustedGrossIncome === "number" && Number.isFinite(values.stateAdjustedGrossIncome),
+      value: formatOptionalCurrencyValue(values?.stateAdjustedGrossIncome),
+    },
+    {
+      label: "State IRA basis or already-taxed amount",
+      provided: typeof values?.stateIraBasis === "number" && Number.isFinite(values.stateIraBasis),
+      value: formatOptionalCurrencyValue(values?.stateIraBasis),
+    },
+    {
+      label: "Local tax may apply",
+      provided: typeof values?.localTaxApplies === "boolean",
+      value: formatOptionalBoolean(values?.localTaxApplies),
+    },
+    {
+      label: "Other-state tax credit may apply",
+      provided: typeof values?.otherStateTaxCreditApplies === "boolean",
+      value: formatOptionalBoolean(values?.otherStateTaxCreditApplies),
+    },
+    {
+      label: "State review notes",
+      provided: typeof values?.notes === "string" && values.notes.trim().length > 0,
+      value: values?.notes?.trim() ? values.notes.trim() : "Not provided",
+    },
+  ];
+  const providedCount = rows.filter((row) => row.provided).length;
+  const status =
+    providedCount === 0
+      ? "not_started"
+      : providedCount === rows.length
+        ? "ready_for_professional_review"
+        : "partially_provided";
+
+  return {
+    providedCount,
+    rows,
+    status,
+    summary: `${providedCount} of ${rows.length} selected-state readiness inputs have been provided for professional review. These inputs are not used by the state tax formula.`,
+    totalCount: rows.length,
+  };
+}
+
 export function buildStateRulesReviewPrep(
   input: RothConversionInput,
   result: RothConversionResult,
@@ -89,6 +178,7 @@ export function buildStateRulesReviewPrep(
   }));
   const selectedState = supportedStateExamples.find((state) => state.slug === input.selectedState) ?? null;
   const stateRuleEntry = selectedState === null ? getStateRuleRegistryEntry(null) : getStateRuleRegistryEntry(selectedState.slug);
+  const userStateReadinessInputs = buildUserStateReadinessInputSummary(input);
 
   return {
     amountEstimateStatus: "manual_rate_only",
@@ -128,5 +218,6 @@ export function buildStateRulesReviewPrep(
     taxableConversionIncrease,
     taxYear: input.taxYear,
     title: "State Rules Readiness",
+    userStateReadinessInputs,
   };
 }

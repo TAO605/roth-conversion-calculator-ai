@@ -3,7 +3,14 @@
 import { ChevronDown } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 import { SelectField, TextField } from "@/common/ui/field";
-import type { FilingStatus, RothConversionInput, TaxPaymentMethod } from "@/core/calculator/types";
+import { getStateRuleRegistryEntry } from "@/content/state-rule-registry";
+import type {
+  FilingStatus,
+  RothConversionInput,
+  StateReadinessInputs,
+  StateResidencyStatus,
+  TaxPaymentMethod,
+} from "@/core/calculator/types";
 import { validateCalculatorInput } from "@/core/calculator/validation";
 import { PresetPanel } from "@/features/calculator-input/PresetPanel";
 
@@ -26,6 +33,53 @@ function percentDisplayValue(value: number): string {
   return Number(percent.toFixed(4)).toString();
 }
 
+function optionalNumberValue(value: string): number | null {
+  if (value.trim() === "") {
+    return null;
+  }
+
+  return Number.isFinite(Number(value)) ? Number(value) : null;
+}
+
+function optionalNumberDisplayValue(value: number | null | undefined): string {
+  return typeof value === "number" && Number.isFinite(value) ? String(value) : "";
+}
+
+function defaultStateReadinessInputs(): StateReadinessInputs {
+  return {
+    localTaxApplies: null,
+    notes: "",
+    otherStateTaxCreditApplies: null,
+    residencyStatus: "not_provided",
+    stateAdjustedGrossIncome: null,
+    stateIraBasis: null,
+  };
+}
+
+function yesNoUnknown(value: boolean | null | undefined): string {
+  if (value === true) {
+    return "yes";
+  }
+
+  if (value === false) {
+    return "no";
+  }
+
+  return "unknown";
+}
+
+function yesNoUnknownValue(value: string): boolean | null {
+  if (value === "yes") {
+    return true;
+  }
+
+  if (value === "no") {
+    return false;
+  }
+
+  return null;
+}
+
 function DisclosureSummary({ children }: { children: string }) {
   return (
     <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-neutral-950 marker:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A2463] focus-visible:ring-offset-2 dark:text-white dark:focus-visible:ring-offset-neutral-950 [&::-webkit-details-marker]:hidden">
@@ -41,6 +95,9 @@ function DisclosureSummary({ children }: { children: string }) {
 
 export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
   const errors = validateCalculatorInput(value);
+  const selectedStateRule = getStateRuleRegistryEntry(value.selectedState);
+  const showStateReadinessInputs = selectedStateRule.amountReadiness !== undefined;
+  const readinessInputs = value.stateReadinessInputs ?? defaultStateReadinessInputs();
 
   const update = <K extends keyof RothConversionInput>(key: K, nextValue: RothConversionInput[K]) => {
     onChange((current) => ({ ...current, [key]: nextValue }));
@@ -96,6 +153,7 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
               onChange((current) => ({
                 ...current,
                 selectedState: null,
+                stateReadinessInputs: undefined,
                 stateMarginalTaxRate: numberValue(event.target.value) / 100,
               }))
             }
@@ -197,6 +255,105 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
             />
           </label>
           <PresetPanel onChange={onChange} value={value} />
+          {showStateReadinessInputs ? (
+            <details
+              className="group rounded border border-neutral-200 bg-white px-3 py-1 shadow-none dark:border-white/10 dark:bg-neutral-950"
+              data-testid="state-readiness-inputs"
+            >
+              <DisclosureSummary>{selectedStateRule.amountReadiness?.worksheetTitle ?? "State amount readiness"}</DisclosureSummary>
+              <div className="mt-3 grid gap-4">
+                <SelectField
+                  label="Residency status for selected state"
+                  value={readinessInputs.residencyStatus}
+                  description="Used only for professional review readiness, not by the calculator formula."
+                  onChange={(event) =>
+                    update("stateReadinessInputs", {
+                      ...readinessInputs,
+                      residencyStatus: event.target.value as StateResidencyStatus,
+                    })
+                  }
+                >
+                  <option value="not_provided">Not provided</option>
+                  <option value="resident">Resident</option>
+                  <option value="part_year">Part-year resident</option>
+                  <option value="nonresident">Nonresident</option>
+                </SelectField>
+                <TextField
+                  label="State adjusted gross income"
+                  type="number"
+                  inputMode="decimal"
+                  value={optionalNumberDisplayValue(readinessInputs.stateAdjustedGrossIncome)}
+                  description="Optional worksheet input. Leave blank if you only have federal taxable income."
+                  onChange={(event) =>
+                    update("stateReadinessInputs", {
+                      ...readinessInputs,
+                      stateAdjustedGrossIncome: optionalNumberValue(event.target.value),
+                    })
+                  }
+                />
+                <TextField
+                  label="State IRA basis or already-taxed amount"
+                  type="number"
+                  inputMode="decimal"
+                  value={optionalNumberDisplayValue(readinessInputs.stateIraBasis)}
+                  description="Optional state-specific basis value for professional review."
+                  onChange={(event) =>
+                    update("stateReadinessInputs", {
+                      ...readinessInputs,
+                      stateIraBasis: optionalNumberValue(event.target.value),
+                    })
+                  }
+                />
+                <SelectField
+                  label="Local tax may apply"
+                  value={yesNoUnknown(readinessInputs.localTaxApplies)}
+                  onChange={(event) =>
+                    update("stateReadinessInputs", {
+                      ...readinessInputs,
+                      localTaxApplies: yesNoUnknownValue(event.target.value),
+                    })
+                  }
+                >
+                  <option value="unknown">Unknown</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </SelectField>
+                <SelectField
+                  label="Other-state tax credit may apply"
+                  value={yesNoUnknown(readinessInputs.otherStateTaxCreditApplies)}
+                  onChange={(event) =>
+                    update("stateReadinessInputs", {
+                      ...readinessInputs,
+                      otherStateTaxCreditApplies: yesNoUnknownValue(event.target.value),
+                    })
+                  }
+                >
+                  <option value="unknown">Unknown</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </SelectField>
+                <label className="grid gap-2">
+                  <span className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                    State review notes
+                  </span>
+                  <textarea
+                    className="min-h-24 w-full min-w-0 rounded border border-neutral-200 bg-white px-3 py-2 text-base text-neutral-950 outline-none transition-colors focus:border-[#0A2463] focus:ring-1 focus:ring-[#0A2463] dark:border-white/15 dark:bg-neutral-950 dark:text-white"
+                    maxLength={500}
+                    value={readinessInputs.notes}
+                    onChange={(event) =>
+                      update("stateReadinessInputs", {
+                        ...readinessInputs,
+                        notes: event.target.value.slice(0, 500),
+                      })
+                    }
+                  />
+                  <span className="text-xs leading-5 text-neutral-500 dark:text-neutral-400">
+                    Optional notes for CPA handoff. Do not enter account numbers, SSNs, or private credentials.
+                  </span>
+                </label>
+              </div>
+            </details>
+          ) : null}
         </div>
       </details>
     </div>

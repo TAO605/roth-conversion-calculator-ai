@@ -1,11 +1,18 @@
 import { decodeShareCode, encodeShareCode } from "@/common/storage/share-code";
 import { statePages } from "@/content/state-pages";
-import type { FilingStatus, RothConversionInput, TaxPaymentMethod } from "@/core/calculator/types";
+import type {
+  FilingStatus,
+  RothConversionInput,
+  StateReadinessInputs,
+  StateResidencyStatus,
+  TaxPaymentMethod,
+} from "@/core/calculator/types";
 
 const STORAGE_KEY = "roth-conversion-calculator:v1";
 
 const filingStatuses = new Set<FilingStatus>(["single", "married_joint", "married_separate", "head_of_household"]);
 const taxPaymentMethods = new Set<TaxPaymentMethod>(["outside_funds", "withhold_from_ira", "not_sure"]);
+const stateResidencyStatuses = new Set<StateResidencyStatus>(["not_provided", "resident", "part_year", "nonresident"]);
 const stateSlugs = new Set(statePages.map((page) => page.slug));
 
 function finiteNumber(value: unknown, fallback: number): number {
@@ -14,6 +21,57 @@ function finiteNumber(value: unknown, fallback: number): number {
 
 function selectedState(value: unknown, fallback: string | null | undefined): string | null {
   return typeof value === "string" && stateSlugs.has(value) ? value : fallback ?? null;
+}
+
+function nullableFiniteNumber(value: unknown, fallback: number | null | undefined): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  return fallback ?? null;
+}
+
+function nullableBoolean(value: unknown, fallback: boolean | null | undefined): boolean | null {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  return fallback ?? null;
+}
+
+function safeNotes(value: unknown, fallback: string | undefined): string {
+  const source = typeof value === "string" ? value : fallback ?? "";
+
+  return source.slice(0, 500);
+}
+
+function stateReadinessInputs(
+  value: unknown,
+  fallback: StateReadinessInputs | undefined,
+): StateReadinessInputs | undefined {
+  if (typeof value !== "object" || value === null) {
+    return fallback;
+  }
+
+  const partial = value as Partial<StateReadinessInputs>;
+
+  return {
+    localTaxApplies: nullableBoolean(partial.localTaxApplies, fallback?.localTaxApplies),
+    notes: safeNotes(partial.notes, fallback?.notes),
+    otherStateTaxCreditApplies: nullableBoolean(
+      partial.otherStateTaxCreditApplies,
+      fallback?.otherStateTaxCreditApplies,
+    ),
+    residencyStatus:
+      partial.residencyStatus && stateResidencyStatuses.has(partial.residencyStatus)
+        ? partial.residencyStatus
+        : fallback?.residencyStatus ?? "not_provided",
+    stateAdjustedGrossIncome: nullableFiniteNumber(
+      partial.stateAdjustedGrossIncome,
+      fallback?.stateAdjustedGrossIncome,
+    ),
+    stateIraBasis: nullableFiniteNumber(partial.stateIraBasis, fallback?.stateIraBasis),
+  };
 }
 
 export function mergeCalculatorInput(
@@ -28,6 +86,7 @@ export function mergeCalculatorInput(
       partial.filingStatus && filingStatuses.has(partial.filingStatus) ? partial.filingStatus : defaults.filingStatus,
     currentTaxableIncome: finiteNumber(partial.currentTaxableIncome, defaults.currentTaxableIncome),
     selectedState: selectedState(partial.selectedState, defaults.selectedState),
+    stateReadinessInputs: stateReadinessInputs(partial.stateReadinessInputs, defaults.stateReadinessInputs),
     stateMarginalTaxRate: finiteNumber(partial.stateMarginalTaxRate, defaults.stateMarginalTaxRate),
     age: finiteNumber(partial.age, defaults.age),
     penaltyException:

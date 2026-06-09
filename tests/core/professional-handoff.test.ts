@@ -30,6 +30,14 @@ const input: RothConversionInput = {
 const californiaInput: RothConversionInput = {
   ...input,
   selectedState: "california",
+  stateReadinessInputs: {
+    localTaxApplies: true,
+    notes: "Moved during the tax year",
+    otherStateTaxCreditApplies: false,
+    residencyStatus: "part_year",
+    stateAdjustedGrossIncome: 210000,
+    stateIraBasis: 8000,
+  },
   stateMarginalTaxRate: 0.093,
 };
 
@@ -106,6 +114,9 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("Official source checklist");
     expect(packet).toContain("Compare the federal taxable IRA distribution with California taxable IRA distribution rules");
     expect(packet).toContain("Inputs still needed before selected-state amount review");
+    expect(packet).toContain("User-provided state readiness field status: ready_for_professional_review");
+    expect(packet).toContain("State adjusted gross income: $210,000");
+    expect(packet).toContain("State review notes: Moved during the tax year");
     expect(packet).toContain("California Schedule CA adjustment detail");
     expect(packet).not.toMatch(/final state tax|complete state-law|you should|strongly recommend/i);
   });

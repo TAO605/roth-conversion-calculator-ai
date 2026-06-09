@@ -61,6 +61,48 @@ describe("calculator persistence and share URLs", () => {
     expect(merged.stateMarginalTaxRate).toBe(0.08);
   });
 
+  it("sanitizes selected-state readiness inputs from decoded share or storage payloads", () => {
+    const merged = mergeCalculatorInput(defaults, {
+      stateReadinessInputs: {
+        localTaxApplies: true,
+        notes: "x".repeat(650),
+        otherStateTaxCreditApplies: false,
+        residencyStatus: "resident",
+        stateAdjustedGrossIncome: 120000,
+        stateIraBasis: 7000,
+      },
+    });
+
+    expect(merged.stateReadinessInputs).toMatchObject({
+      localTaxApplies: true,
+      otherStateTaxCreditApplies: false,
+      residencyStatus: "resident",
+      stateAdjustedGrossIncome: 120000,
+      stateIraBasis: 7000,
+    });
+    expect(merged.stateReadinessInputs?.notes).toHaveLength(500);
+
+    const unsafe = mergeCalculatorInput(defaults, {
+      stateReadinessInputs: {
+        localTaxApplies: "yes" as unknown as boolean,
+        notes: 123 as unknown as string,
+        otherStateTaxCreditApplies: null,
+        residencyStatus: "bad-status" as "resident",
+        stateAdjustedGrossIncome: Number.NaN,
+        stateIraBasis: null,
+      },
+    });
+
+    expect(unsafe.stateReadinessInputs).toMatchObject({
+      localTaxApplies: null,
+      notes: "",
+      otherStateTaxCreditApplies: null,
+      residencyStatus: "not_provided",
+      stateAdjustedGrossIncome: null,
+      stateIraBasis: null,
+    });
+  });
+
   it("builds a share URL with hash encoded calculator input", () => {
     const url = buildShareUrl("https://www.roth-conversion-calculator-ai.shop/calculator", defaults);
 

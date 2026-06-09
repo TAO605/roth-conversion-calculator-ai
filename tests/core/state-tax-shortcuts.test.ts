@@ -34,6 +34,7 @@ describe("state tax shortcuts", () => {
     expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
     expect(onChange.mock.lastCall?.[0](input)).toMatchObject({
       selectedState: "california",
+      stateReadinessInputs: undefined,
       stateMarginalTaxRate: 0.093,
     });
 
@@ -41,6 +42,7 @@ describe("state tax shortcuts", () => {
     expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
     expect(onChange.mock.lastCall?.[0]({ ...input, stateMarginalTaxRate: 0.093 })).toMatchObject({
       selectedState: "texas",
+      stateReadinessInputs: undefined,
       stateMarginalTaxRate: 0,
     });
   });
@@ -53,8 +55,67 @@ describe("state tax shortcuts", () => {
     fireEvent.change(screen.getByLabelText(/state marginal tax rate/i), { target: { value: "4.5" } });
 
     expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
-    expect(onChange.mock.lastCall?.[0]({ ...input, selectedState: "california", stateMarginalTaxRate: 0.093 })).toMatchObject({
+    expect(
+      onChange.mock.lastCall?.[0]({
+        ...input,
+        selectedState: "california",
+        stateReadinessInputs: {
+          localTaxApplies: true,
+          notes: "CA review",
+          otherStateTaxCreditApplies: false,
+          residencyStatus: "resident",
+          stateAdjustedGrossIncome: 120000,
+          stateIraBasis: 7000,
+        },
+        stateMarginalTaxRate: 0.093,
+      }),
+    ).toMatchObject({
       selectedState: null,
+      stateReadinessInputs: undefined,
+    });
+  });
+
+  it("shows selected-state readiness fields for worksheet states only", () => {
+    const onChange = vi.fn();
+
+    const { rerender } = render(
+      React.createElement(CalculatorInput, {
+        value: { ...input, selectedState: "california", stateMarginalTaxRate: 0.093 },
+        onChange,
+      }),
+    );
+
+    expect(screen.getByTestId("state-readiness-inputs").textContent).toContain("California State Amount Readiness");
+    expect(screen.getByLabelText(/residency status for selected state/i)).toBeTruthy();
+    expect(screen.getByLabelText(/state adjusted gross income/i)).toBeTruthy();
+
+    rerender(
+      React.createElement(CalculatorInput, {
+        value: { ...input, selectedState: "texas", stateMarginalTaxRate: 0 },
+        onChange,
+      }),
+    );
+
+    expect(screen.queryByTestId("state-readiness-inputs")).toBeNull();
+  });
+
+  it("updates selected-state readiness fields without changing the state tax rate", () => {
+    const onChange = vi.fn();
+    const value = { ...input, selectedState: "california", stateMarginalTaxRate: 0.093 };
+
+    render(React.createElement(CalculatorInput, { value, onChange }));
+
+    fireEvent.change(screen.getByLabelText(/residency status for selected state/i), {
+      target: { value: "resident" },
+    });
+
+    expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
+    expect(onChange.mock.lastCall?.[0](value)).toMatchObject({
+      selectedState: "california",
+      stateMarginalTaxRate: 0.093,
+      stateReadinessInputs: {
+        residencyStatus: "resident",
+      },
     });
   });
 });

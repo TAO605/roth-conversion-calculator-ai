@@ -82,6 +82,21 @@ describe("calculator input layout", () => {
     expect(source).toContain("[&::-webkit-details-marker]:hidden");
   });
 
+  it("keeps selected-state readiness fields collapsed inside advanced assumptions", () => {
+    render(
+      React.createElement(CalculatorInput, {
+        value: { ...value, selectedState: "california", stateMarginalTaxRate: 0.093 },
+        onChange: vi.fn(),
+      }),
+    );
+
+    const readiness = screen.getByTestId("state-readiness-inputs") as HTMLDetailsElement;
+
+    expect(readiness.open).toBe(false);
+    expect(readiness.textContent).toContain("California State Amount Readiness");
+    expect(readiness.textContent).toContain("State review notes");
+  });
+
   it("uses functional updates so rapid input changes do not overwrite earlier fields", () => {
     const onChange = vi.fn();
 

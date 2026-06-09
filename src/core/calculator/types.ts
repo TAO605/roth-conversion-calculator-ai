@@ -4,6 +4,17 @@ export type TaxYear = 2026;
 
 export type TaxPaymentMethod = "outside_funds" | "withhold_from_ira" | "not_sure";
 
+export type StateResidencyStatus = "not_provided" | "resident" | "part_year" | "nonresident";
+
+export interface StateReadinessInputs {
+  residencyStatus: StateResidencyStatus;
+  stateAdjustedGrossIncome: number | null;
+  stateIraBasis: number | null;
+  localTaxApplies: boolean | null;
+  otherStateTaxCreditApplies: boolean | null;
+  notes: string;
+}
+
 export interface TaxBracket {
   min: number;
   max: number | null;
@@ -24,6 +35,7 @@ export interface RothConversionInput {
   filingStatus: FilingStatus;
   currentTaxableIncome: number;
   selectedState?: string | null;
+  stateReadinessInputs?: StateReadinessInputs;
   stateMarginalTaxRate: number;
   age: number;
   penaltyException: boolean;

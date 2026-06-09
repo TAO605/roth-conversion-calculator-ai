@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.201",
+    date: "2026-06-09",
+    type: "patch",
+    title: "State readiness input fields",
+    summary:
+      "Added optional selected-state readiness input fields for CA, NY, and NJ so users can carry residency, state AGI, state IRA basis, local tax, other-state credit, and notes into warnings, reports, and CPA handoff without changing the state tax formula.",
+    affectedArea:
+      "Calculator input model, storage and share merge, state readiness input UI, state rules readiness prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the readiness input fields only if selected-state worksheets retain another user-provided information path for professional review handoff.",
+  },
+  {
     version: "1.0.200",
     date: "2026-06-09",
     type: "patch",

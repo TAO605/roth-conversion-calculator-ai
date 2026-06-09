@@ -28,6 +28,14 @@ const input: RothConversionInput = {
 const californiaInput: RothConversionInput = {
   ...input,
   selectedState: "california",
+  stateReadinessInputs: {
+    localTaxApplies: true,
+    notes: "Moved during the tax year",
+    otherStateTaxCreditApplies: false,
+    residencyStatus: "part_year",
+    stateAdjustedGrossIncome: 210000,
+    stateIraBasis: 8000,
+  },
   stateMarginalTaxRate: 0.093,
 };
 
@@ -111,7 +119,12 @@ describe("print-ready report export", () => {
     expect(html).toContain("Needs state review (needs-review)");
     expect(html).toContain("Selected-state amount readiness status");
     expect(html).toContain("state_specific_inputs_missing");
+    expect(html).toContain("User-provided state readiness field status");
+    expect(html).toContain("ready_for_professional_review");
     expect(html).toContain("California State Amount Readiness Official Checklist");
+    expect(html).toContain("User-Provided Selected-State Readiness Fields");
+    expect(html).toContain("State adjusted gross income: $210,000");
+    expect(html).toContain("State review notes: Moved during the tax year");
     expect(html).toContain("California Schedule CA adjustment detail");
     expect(html).toContain("California FTB Publication 1005 Pension and Annuity Guidelines");
     expect(html).not.toMatch(/final state tax|complete state-law|you should|strongly recommend/i);

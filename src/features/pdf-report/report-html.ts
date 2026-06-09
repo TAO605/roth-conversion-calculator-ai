@@ -271,7 +271,9 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
             stateRulesPrep.selectedStateAmountReadiness === null
               ? ""
               : `${row("Selected-state amount readiness status", stateRulesPrep.selectedStateAmountReadiness.status)}
-          ${row("Selected-state readiness summary", stateRulesPrep.selectedStateAmountReadiness.summary)}`
+          ${row("Selected-state readiness summary", stateRulesPrep.selectedStateAmountReadiness.summary)}
+          ${row("User-provided state readiness field status", stateRulesPrep.userStateReadinessInputs.status)}
+          ${row("User-provided state readiness field summary", stateRulesPrep.userStateReadinessInputs.summary)}`
           }
         </tbody>
       </table>
@@ -281,7 +283,9 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
           : `<h2>${escapeHtml(stateRulesPrep.selectedStateAmountReadiness.worksheetTitle)} Official Checklist</h2>
       ${list(stateRulesPrep.selectedStateAmountReadiness.officialChecklist)}
       <h2>Inputs Still Needed Before Selected-State Amount Review</h2>
-      ${list(stateRulesPrep.selectedStateAmountReadiness.missingInputs)}`
+      ${list(stateRulesPrep.selectedStateAmountReadiness.missingInputs)}
+      <h2>User-Provided Selected-State Readiness Fields</h2>
+      ${list(stateRulesPrep.userStateReadinessInputs.rows.map((item) => `${item.label}: ${item.value}`))}`
       }
       <h2>Inputs Still Needed Before Any State-Specific Amount Review</h2>
       ${list(stateRulesPrep.missingInputs)}

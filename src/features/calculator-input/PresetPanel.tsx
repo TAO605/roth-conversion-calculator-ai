@@ -43,7 +43,12 @@ export function PresetPanel({ value, onChange }: PresetPanelProps) {
           onChange={(event) => {
             const preset = statePresets.find((item) => item.slug === event.target.value);
             if (preset) {
-              onChange((current) => ({ ...current, selectedState: preset.slug, stateMarginalTaxRate: preset.rate }));
+              onChange((current) => ({
+                ...current,
+                selectedState: preset.slug,
+                stateReadinessInputs: undefined,
+                stateMarginalTaxRate: preset.rate,
+              }));
             }
           }}
           value={value.selectedState ?? ""}

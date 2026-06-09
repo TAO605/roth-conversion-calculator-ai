@@ -192,6 +192,39 @@ describe("tax impact warning placement", () => {
     );
   });
 
+  it("summarizes user-provided selected-state readiness fields without using them as final state tax", () => {
+    const prep = buildStateRulesReviewPrep(
+      {
+        ...baseInput,
+        selectedState: "california",
+        stateReadinessInputs: {
+          localTaxApplies: true,
+          notes: "Moved during the tax year",
+          otherStateTaxCreditApplies: false,
+          residencyStatus: "part_year",
+          stateAdjustedGrossIncome: 210000,
+          stateIraBasis: 8000,
+        },
+        stateMarginalTaxRate: 0.093,
+      },
+      { ...baseResult, stateTax: 5580 },
+    );
+
+    expect(prep.userStateReadinessInputs.status).toBe("ready_for_professional_review");
+    expect(prep.userStateReadinessInputs.providedCount).toBe(6);
+    expect(prep.userStateReadinessInputs.summary).toContain("not used by the state tax formula");
+    expect(prep.userStateReadinessInputs.rows.map((row) => `${row.label}: ${row.value}`)).toEqual(
+      expect.arrayContaining([
+        "Residency status: Part-year resident",
+        "State adjusted gross income: $210,000",
+        "State IRA basis or already-taxed amount: $8,000",
+        "Local tax may apply: Yes",
+        "Other-state tax credit may apply: No",
+        "State review notes: Moved during the tax year",
+      ]),
+    );
+  });
+
   it("renders selected-state worksheet details only when a supported worksheet state is selected", () => {
     render(
       React.createElement(TaxImpactWarnings, {
@@ -205,6 +238,7 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("California State Amount Readiness");
     expect(panel.textContent).toContain("Official source checklist");
     expect(panel.textContent).toContain("Inputs needed before selected-state amount review");
+    expect(panel.textContent).toContain("User-provided readiness fields");
     expect(panel.textContent).toContain("California FTB Publication 1005 Pension and Annuity Guidelines");
     expect(panel.textContent).not.toMatch(/final state tax|complete state-law/i);
   });
