@@ -18,6 +18,15 @@ export interface AiVerifierRegressionCoverage {
   retainedEvidence: string;
 }
 
+export interface AiVerifierRegressionSummary {
+  totalFixtures: number;
+  passFixtures: number;
+  failFixtures: number;
+  fallbackFixtures: number;
+  deterministicCoverage: string;
+  privacyBoundary: string;
+}
+
 function check(
   label: string,
   riskControl: string,
@@ -194,4 +203,20 @@ export function buildAiVerifierRegressionCoverage(): AiVerifierRegressionCoverag
       retainedEvidence: "Same-origin production probe retains fallback verifier evidence.",
     },
   ];
+}
+
+export function getAiVerifierRegressionSummary(
+  coverage: AiVerifierRegressionCoverage[] = buildAiVerifierRegressionCoverage(),
+): AiVerifierRegressionSummary {
+  const count = (expectedOutcome: AiVerifierRegressionCoverage["expectedOutcome"]) =>
+    coverage.filter((item) => item.expectedOutcome === expectedOutcome).length;
+
+  return {
+    deterministicCoverage: "pass/fail/fallback",
+    failFixtures: count("fail"),
+    fallbackFixtures: count("fallback"),
+    passFixtures: count("pass"),
+    privacyBoundary: "No paid model calls, API keys, cookies, account identifiers, raw user prompts, or provider usage data.",
+    totalFixtures: coverage.length,
+  };
 }

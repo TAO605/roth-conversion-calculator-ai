@@ -74,6 +74,13 @@ function run() {
     },
     { fail: 0, fallback: 0, pass: 0 },
   );
+  const statsPanel = {
+    deterministicCoverage: "pass/fail/fallback",
+    failFixtures: summary.fail,
+    fallbackFixtures: summary.fallback,
+    passFixtures: summary.pass,
+    totalFixtures: regressionMatrix.length,
+  };
 
   const result = {
     checks,
@@ -83,6 +90,7 @@ function run() {
     privacyBoundary:
       "This evidence uses source inspection and named synthetic regression fixtures only. It excludes API keys, cookies, account identifiers, raw user prompts, and provider usage data.",
     regressionMatrix,
+    statsPanel,
     summary,
   };
 

@@ -619,6 +619,26 @@ function validateAiVerifierRegressionEvidence(aiVerifierRegression) {
   assert(aiVerifierRegression.summary?.pass >= 1, "AI verifier regression evidence must include pass coverage");
   assert(aiVerifierRegression.summary?.fail >= 4, "AI verifier regression evidence must include fail coverage");
   assert(aiVerifierRegression.summary?.fallback >= 1, "AI verifier regression evidence must include fallback coverage");
+  assert(
+    aiVerifierRegression.statsPanel?.deterministicCoverage === "pass/fail/fallback",
+    "AI verifier regression evidence must include pass/fail/fallback stats panel coverage",
+  );
+  assert(
+    aiVerifierRegression.statsPanel?.totalFixtures === aiVerifierRegression.regressionMatrix.length,
+    "AI verifier regression stats panel total must match regression matrix length",
+  );
+  assert(
+    aiVerifierRegression.statsPanel?.passFixtures === aiVerifierRegression.summary.pass,
+    "AI verifier regression stats panel pass count must match summary",
+  );
+  assert(
+    aiVerifierRegression.statsPanel?.failFixtures === aiVerifierRegression.summary.fail,
+    "AI verifier regression stats panel fail count must match summary",
+  );
+  assert(
+    aiVerifierRegression.statsPanel?.fallbackFixtures === aiVerifierRegression.summary.fallback,
+    "AI verifier regression stats panel fallback count must match summary",
+  );
   assert(Array.isArray(aiVerifierRegression.regressionMatrix), "AI verifier regression matrix must be retained");
   assert(aiVerifierRegression.regressionMatrix.length >= 6, "AI verifier regression matrix coverage is too low");
 }

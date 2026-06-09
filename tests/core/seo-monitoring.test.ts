@@ -242,12 +242,13 @@ describe("SEO monitoring playbook", () => {
         "professional-ui-evidence-result.json",
         "privacy-evidence-boundary-result.json",
         "ai-security-evidence-result.json",
+        "ai-verifier-regression-evidence-result.json",
         "seo-evidence-validation-result.json",
         "seo-evidence-manifest.json",
         "seo-evidence-manifest-validation-result.json",
       ]),
     );
-    expect(review.length).toBe(19);
+    expect(review.length).toBe(20);
     expect(combined).toContain("production-seo-evidence");
     expect(combined).toContain("gscDiscoveredSampleCount");
     expect(combined).toContain("sourceIssueState: discovered_not_indexed");
@@ -318,6 +319,16 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("crossOriginProbeProvider: fallback");
     expect(combined).toContain("crossOriginProbeReason: origin_blocked");
     expect(combined).toContain("homepageCspBlocksBrowserOpenAi: true");
+    expect(combined).toContain("ai-verifier-regression-evidence-result.json");
+    expect(combined).toContain("aiVerifierRegressionOk: true");
+    expect(combined).toContain("aiVerifierRegressionScenarioCount: 6");
+    expect(combined).toContain("statsPanel.totalFixtures: 6");
+    expect(combined).toContain("statsPanel.passFixtures: 1");
+    expect(combined).toContain("statsPanel.failFixtures: 4");
+    expect(combined).toContain("statsPanel.fallbackFixtures: 1");
+    expect(combined).toContain("deterministicCoverage: pass/fail/fallback");
+    expect(combined).toContain("routeFailsClosedToFallback: true");
+    expect(combined).toContain("sameOriginFallbackProbeRetained: true");
     expect(combined).toContain("pageTermsRetained: true");
     expect(combined).toContain("healthPendingReviewRetained: true");
     expect(combined).toContain("taxYearRetained: true");
@@ -354,9 +365,9 @@ describe("SEO monitoring playbook", () => {
     expect(combined).toContain("gitHubServerUrlRetained: true");
     expect(combined).toContain("gitHubWorkflowRetained: true");
     expect(combined).toContain("runAttemptRetained: true");
-    expect(combined).toContain("checkedFileCount: 18");
-    expect(combined).toContain("sha256CheckedCount: 18");
-    expect(combined).toContain("manifestFileCount: 20");
+    expect(combined).toContain("checkedFileCount: 19");
+    expect(combined).toContain("sha256CheckedCount: 19");
+    expect(combined).toContain("manifestFileCount: 21");
     expect(combined).toContain("selfDescribing: true");
     expect(combined).toContain("Search Console-side");
     expect(combined).toContain("URL Inspection");

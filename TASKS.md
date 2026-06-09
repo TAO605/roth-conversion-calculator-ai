@@ -164,3 +164,4 @@
 - [done] Add selected-state readiness completeness scoring
 - [done] Add deterministic AI response verifier
 - [done] Add AI verifier regression evidence to production SEO artifacts
+- [done] Add AI verifier pass fail fallback stats panel

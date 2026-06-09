@@ -60,6 +60,9 @@ describe("AI cost abuse evidence command", () => {
     expect(scriptSource).toContain("production-default-paid-model-disabled");
     expect(scriptSource).toContain("routeFailsClosedToFallback");
     expect(scriptSource).toContain("sameOriginFallbackProbeRetained");
+    expect(scriptSource).toContain("statsPanel");
+    expect(scriptSource).toContain("deterministicCoverage");
+    expect(scriptSource).toContain("totalFixtures");
     expect(scriptSource).toContain("excludes API keys, cookies, account identifiers");
     expect(scriptSource).not.toMatch(/sk-[A-Za-z0-9_-]+/);
     expect(scriptSource).not.toContain("OPENAI_API_KEY=");

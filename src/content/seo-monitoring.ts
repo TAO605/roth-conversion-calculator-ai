@@ -877,12 +877,22 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
         "Use before diagnosing API-key abuse, changing AI explainer model settings, or treating short site visits as paid provider spend evidence.",
     },
     {
+      label: "Confirm AI verifier regression stats",
+      artifactFile: "ai-verifier-regression-evidence-result.json",
+      check:
+        "Review deterministic AI verifier pass, fail, and fallback evidence after AI route, verifier, disclaimer, or model-fuse changes.",
+      passSignal:
+        "The AI verifier regression evidence has ok: true, aiVerifierRegressionOk: true, aiVerifierRegressionScenarioCount: 6, statsPanel.totalFixtures: 6, statsPanel.passFixtures: 1, statsPanel.failFixtures: 4, statsPanel.fallbackFixtures: 1, deterministicCoverage: pass/fail/fallback, routeFailsClosedToFallback: true, and sameOriginFallbackProbeRetained: true.",
+      useBefore:
+        "Use before enabling paid-model explainer output, reviewing AI compliance changes, or treating model-generated explanations as production-safe.",
+    },
+    {
       label: "Confirm validator summary",
       artifactFile: "seo-evidence-validation-result.json",
       check:
-        "Confirm the retained validator result reports ok: true after checking smoke, GSC priority URLs, GSC discovered samples, DNS, security headers, health, crawl discovery, internal links, HTML quality, professional review packet, performance, structured data, blog discovery, professional UI evidence, private evidence boundary, and AI security evidence together.",
+        "Confirm the retained validator result reports ok: true after checking smoke, GSC priority URLs, GSC discovered samples, DNS, security headers, health, crawl discovery, internal links, HTML quality, professional review packet, performance, structured data, blog discovery, professional UI evidence, private evidence boundary, AI security evidence, and AI verifier regression evidence together.",
       passSignal:
-        "The validation summary records the expected host, gscDiscoveredSampleCount, searchConsoleVerificationOk: true, dnsCanonicalOk: true, securityHeadersOk: true, healthEndpointOk: true, crawlDiscoveryUrlCount, internalLinkCheckedUrlCount, htmlQualityPageCount, professionalReviewPacketOk: true, professionalUiScannedFileCount, privacyEvidenceBoundaryOk: true, privacyUnapprovedRemoteEvidenceCount: 0, aiSecurityOk: true, and no contract failures.",
+        "The validation summary records the expected host, gscDiscoveredSampleCount, searchConsoleVerificationOk: true, dnsCanonicalOk: true, securityHeadersOk: true, healthEndpointOk: true, crawlDiscoveryUrlCount, internalLinkCheckedUrlCount, htmlQualityPageCount, professionalReviewPacketOk: true, professionalUiScannedFileCount, privacyEvidenceBoundaryOk: true, privacyUnapprovedRemoteEvidenceCount: 0, aiSecurityOk: true, aiVerifierRegressionOk: true, aiVerifierRegressionScenarioCount: 6, and no contract failures.",
       useBefore: "Use before attaching the artifact to incident review or a GSC retry note.",
     },
     {
@@ -904,7 +914,7 @@ export function buildSeoEvidenceArtifactReview(): SeoEvidenceArtifactReview[] {
       artifactFile: "seo-evidence-manifest-validation-result.json",
       check: "Open the retained manifest checksum validation result after downloading the production-seo-evidence artifact.",
       passSignal:
-        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 18, sha256CheckedCount: 18, manifestFileCount: 20, and manifestValidationResultRetained: true.",
+        "The validation result has ok: true, generatedAtRetained: true, gitHubProvenanceConsistent: true, gitHubRepositoryRetained: true, gitHubServerUrlRetained: true, gitHubWorkflowRetained: true, runAttemptRetained: true, checkedFileCount: 19, sha256CheckedCount: 19, manifestFileCount: 21, and manifestValidationResultRetained: true.",
       useBefore: "Use before relying on the manifest checksum contract in Search Console retry notes or incident review.",
     },
   ];

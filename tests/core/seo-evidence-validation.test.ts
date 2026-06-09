@@ -122,6 +122,9 @@ describe("SEO evidence artifact validation", () => {
     expect(script).toContain("aiSecurityOk");
     expect(script).toContain("aiVerifierRegressionOk");
     expect(script).toContain("aiVerifierRegressionScenarioCount");
+    expect(script).toContain("statsPanel");
+    expect(script).toContain("deterministicCoverage");
+    expect(script).toContain("totalFixtures");
     expect(script).toContain("pageCount");
     expect(script).toContain("STATIC_STRUCTURED_DATA_PAGE_COUNT");
     expect(script).toContain("readBlogSlugCount");

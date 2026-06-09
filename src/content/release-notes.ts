@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.205",
+    date: "2026-06-09",
+    type: "patch",
+    title: "AI verifier stats panel",
+    summary:
+      "Added a deterministic AI verifier pass, fail, and fallback statistics panel to the compliance audit page and machine-readable regression evidence, then aligned the SEO monitoring artifact review checklist with the expanded 19-file evidence contract.",
+    affectedArea:
+      "AI compliance audit page, AI verifier regression evidence command, SEO evidence validation, SEO monitoring artifact review, release notes, feature registry, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the stats panel only if AI verifier regression evidence still exposes equivalent pass, fail, fallback, privacy-boundary, and artifact-contract coverage for human and machine review.",
+  },
+  {
     version: "1.0.204",
     date: "2026-06-09",
     type: "patch",

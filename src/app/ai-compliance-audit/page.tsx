@@ -3,6 +3,7 @@ import {
   buildAiComplianceAuditGroups,
   buildAiVerifierRegressionCoverage,
   getAiComplianceAuditSummary,
+  getAiVerifierRegressionSummary,
 } from "@/content/ai-compliance-audit";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { breadcrumbJsonLd } from "@/core/seo/json-ld";
@@ -17,6 +18,7 @@ export const metadata = {
 export default function AiComplianceAuditPage() {
   const groups = buildAiComplianceAuditGroups();
   const verifierCoverage = buildAiVerifierRegressionCoverage();
+  const verifierSummary = getAiVerifierRegressionSummary(verifierCoverage);
   const summary = getAiComplianceAuditSummary(groups);
 
   return (
@@ -115,6 +117,46 @@ export default function AiComplianceAuditPage() {
           </span>
         </div>
         <div className="mt-5 grid gap-3 md:grid-cols-2">
+          <div className="rounded-md border border-neutral-200 bg-neutral-50 p-4 dark:border-white/10 dark:bg-white/10">
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">
+              Verifier Stats
+            </p>
+            <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <dt className="text-neutral-500 dark:text-neutral-400">Total fixtures</dt>
+                <dd className="mt-1 text-2xl font-bold text-neutral-950 dark:text-white">
+                  {verifierSummary.totalFixtures}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-neutral-500 dark:text-neutral-400">Coverage</dt>
+                <dd className="mt-1 text-2xl font-bold text-neutral-950 dark:text-white">
+                  {verifierSummary.deterministicCoverage}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-neutral-500 dark:text-neutral-400">Pass</dt>
+                <dd className="mt-1 text-xl font-bold text-emerald-700 dark:text-emerald-300">
+                  {verifierSummary.passFixtures}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-neutral-500 dark:text-neutral-400">Fail</dt>
+                <dd className="mt-1 text-xl font-bold text-amber-800 dark:text-amber-200">
+                  {verifierSummary.failFixtures}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-neutral-500 dark:text-neutral-400">Fallback</dt>
+                <dd className="mt-1 text-xl font-bold text-systemBlue">
+                  {verifierSummary.fallbackFixtures}
+                </dd>
+              </div>
+            </dl>
+            <p className="mt-3 text-xs leading-5 text-neutral-500 dark:text-neutral-400">
+              {verifierSummary.privacyBoundary}
+            </p>
+          </div>
           {verifierCoverage.map((item) => (
             <div
               className="rounded-md border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950"

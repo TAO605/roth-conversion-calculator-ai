@@ -7,6 +7,7 @@ import {
   buildAiComplianceAuditGroups,
   buildAiVerifierRegressionCoverage,
   getAiComplianceAuditSummary,
+  getAiVerifierRegressionSummary,
 } from "@/content/ai-compliance-audit";
 import { buildSiteIndexGroups } from "@/content/site-index";
 import { buildLlmsText } from "@/core/seo/llms";
@@ -48,9 +49,18 @@ describe("AI compliance audit playbook", () => {
 
   it("surfaces deterministic AI verifier regression evidence for production review", () => {
     const coverage = buildAiVerifierRegressionCoverage();
+    const stats = getAiVerifierRegressionSummary(coverage);
     const pageFile = fs.readFileSync(path.join(process.cwd(), "src/app/ai-compliance-audit/page.tsx"), "utf8");
 
     expect(coverage).toHaveLength(6);
+    expect(stats).toMatchObject({
+      deterministicCoverage: "pass/fail/fallback",
+      failFixtures: 4,
+      fallbackFixtures: 1,
+      passFixtures: 1,
+      totalFixtures: 6,
+    });
+    expect(stats.privacyBoundary).toContain("No paid model calls");
     expect(coverage.map((item) => item.expectedOutcome)).toEqual(
       expect.arrayContaining(["pass", "fail", "fallback"]),
     );
@@ -65,6 +75,8 @@ describe("AI compliance audit playbook", () => {
       ]),
     );
     expect(pageFile).toContain("AI Verifier Regression Evidence");
+    expect(pageFile).toContain("Verifier Stats");
+    expect(pageFile).toContain("getAiVerifierRegressionSummary");
     expect(pageFile).toContain("buildAiVerifierRegressionCoverage");
     expect(pageFile).toContain("ops:ai-verifier-regression");
     expect(pageFile).toContain("ai-verifier-regression-evidence-result.json");
