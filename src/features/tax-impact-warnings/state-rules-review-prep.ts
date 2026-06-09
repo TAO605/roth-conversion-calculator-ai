@@ -1,5 +1,9 @@
 import { formatCurrency, formatPercent } from "@/common/format/currency";
-import { getStateRuleRegistryEntry, type StateRuleStatus } from "@/content/state-rule-registry";
+import {
+  getStateRuleRegistryEntry,
+  type StateRuleAmountReadiness,
+  type StateRuleStatus,
+} from "@/content/state-rule-registry";
 import { statePages } from "@/content/state-pages";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 
@@ -16,6 +20,7 @@ export interface StateRulesReviewPrep {
   stateRuleStatus: StateRuleStatus;
   stateRuleStatusLabel: string;
   stateRuleBoundaryNote: string;
+  selectedStateAmountReadiness: StateRuleAmountReadiness | null;
   amountEstimateStatus: "manual_rate_only";
   summary: string;
   boundaryNote: string;
@@ -31,6 +36,7 @@ export interface StateRulesStateExample {
   ruleStatus: StateRuleStatus;
   ruleStatusLabel: string;
   ruleBoundaryNote: string;
+  hasAmountReadinessWorksheet: boolean;
 }
 
 const STATE_RULES_OFFICIAL_REFERENCES = [
@@ -74,6 +80,7 @@ export function buildStateRulesReviewPrep(
   const supportedStateExamples = statePages.map((page) => ({
     code: page.stateCode,
     exampleRate: page.stateTaxRateExample,
+    hasAmountReadinessWorksheet: getStateRuleRegistryEntry(page.slug).amountReadiness !== undefined,
     name: page.stateName,
     ruleBoundaryNote: getStateRuleRegistryEntry(page.slug).boundaryNote,
     ruleStatus: getStateRuleRegistryEntry(page.slug).status,
@@ -100,6 +107,7 @@ export function buildStateRulesReviewPrep(
     modeledStateTaxFromManualRate,
     officialReferences: STATE_RULES_OFFICIAL_REFERENCES,
     selectedState,
+    selectedStateAmountReadiness: stateRuleEntry.amountReadiness ?? null,
     stateRuleBoundaryNote: stateRuleEntry.boundaryNote,
     stateRuleStatus: stateRuleEntry.status,
     stateRuleStatusLabel: stateRuleEntry.statusLabel,

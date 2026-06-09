@@ -116,7 +116,7 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Manual rate only");
     expect(panel.textContent).toContain("State rule registry boundary");
     expect(panel.textContent).toContain("Supported state example pages, not full rules");
-    expect(panel.textContent).toContain("California (9.3%, Needs state review)");
+    expect(panel.textContent).toContain("California (9.3%, Needs state review, worksheet ready)");
     expect(panel.textContent).toContain("Texas (0%, No broad individual income tax)");
     expect(panel.textContent).toContain("Inputs needed before state-specific amount review");
     expect(panel.textContent).toContain("IRS state government websites directory");
@@ -158,6 +158,55 @@ describe("tax impact warning placement", () => {
     expect(prep.stateRuleBoundaryNote).toContain("capital-gains excise tax");
     expect(prep.summary).toContain("rule status: No broad individual income tax");
     expect(JSON.stringify(prep)).not.toMatch(/final state tax|complete state-law|full state-law engine is active/i);
+  });
+
+  it("adds CA, NY, and NJ selected-state amount-readiness worksheets without estimating final state tax", () => {
+    const california = buildStateRulesReviewPrep(
+      { ...baseInput, selectedState: "california", stateMarginalTaxRate: 0.093 },
+      { ...baseResult, stateTax: 5580 },
+    );
+    const newYork = buildStateRulesReviewPrep(
+      { ...baseInput, selectedState: "new-york", stateMarginalTaxRate: 0.0685 },
+      { ...baseResult, stateTax: 4110 },
+    );
+    const newJersey = buildStateRulesReviewPrep(
+      { ...baseInput, selectedState: "new-jersey", stateMarginalTaxRate: 0.0637 },
+      { ...baseResult, stateTax: 3822 },
+    );
+    const texas = buildStateRulesReviewPrep(
+      { ...baseInput, selectedState: "texas", stateMarginalTaxRate: 0 },
+      { ...baseResult, stateTax: 0 },
+    );
+
+    expect(california.selectedStateAmountReadiness?.worksheetTitle).toBe("California State Amount Readiness");
+    expect(california.selectedStateAmountReadiness?.officialChecklist.join(" ")).toContain("FTB Pub. 1005");
+    expect(newYork.selectedStateAmountReadiness?.worksheetTitle).toBe("New York State Amount Readiness");
+    expect(newYork.selectedStateAmountReadiness?.missingInputs.join(" ")).toContain("New York City or Yonkers");
+    expect(newJersey.selectedStateAmountReadiness?.worksheetTitle).toBe("New Jersey State Amount Readiness");
+    expect(newJersey.selectedStateAmountReadiness?.officialReferences.map((reference) => reference.href).join(" ")).toContain(
+      "nj.gov",
+    );
+    expect(texas.selectedStateAmountReadiness).toBeNull();
+    expect(JSON.stringify([california, newYork, newJersey])).not.toMatch(
+      /final state tax|complete state-law|full state-law engine is active|you should|strongly recommend/i,
+    );
+  });
+
+  it("renders selected-state worksheet details only when a supported worksheet state is selected", () => {
+    render(
+      React.createElement(TaxImpactWarnings, {
+        input: { ...baseInput, selectedState: "california", stateMarginalTaxRate: 0.093 },
+        result: { ...baseResult, stateTax: 5580 },
+      }),
+    );
+
+    const panel = screen.getByTestId("tax-impact-warnings");
+
+    expect(panel.textContent).toContain("California State Amount Readiness");
+    expect(panel.textContent).toContain("Official source checklist");
+    expect(panel.textContent).toContain("Inputs needed before selected-state amount review");
+    expect(panel.textContent).toContain("California FTB Publication 1005 Pension and Annuity Guidelines");
+    expect(panel.textContent).not.toMatch(/final state tax|complete state-law/i);
   });
 
   it("builds AMT impact review prep without fake AMT owed dollar estimates", () => {

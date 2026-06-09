@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.200",
+    date: "2026-06-09",
+    type: "patch",
+    title: "State amount readiness worksheets",
+    summary:
+      "Added selected-state amount-readiness worksheets for California, New York, and New Jersey with official source checklists and missing inputs, while keeping full state-law dollar calculation inactive.",
+    affectedArea:
+      "State rule registry, state rules readiness prep, tax impact warnings, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the selected-state worksheets only if CA, NY, and NJ keep another reviewed handoff path that prevents users from treating manual-rate state estimates as reviewed state-specific amounts.",
+  },
+  {
     version: "1.0.199",
     date: "2026-06-09",
     type: "patch",
@@ -19,7 +31,7 @@ export const releaseNotes: ReleaseNote[] = [
     affectedArea:
       "State rule registry, state rules readiness prep, tax impact warnings, report export, professional handoff packet, release notes, task tracking, and regression tests",
     rollbackPath:
-      "Remove the registry scaffold only if selected-state examples retain another reviewed status boundary that prevents no-income-tax and needs-review states from being treated as a complete state-law calculator.",
+      "Remove the registry scaffold only if selected-state examples retain another reviewed status boundary that prevents no-income-tax and needs-review states from being treated as reviewed state-specific amount support.",
   },
   {
     version: "1.0.198",

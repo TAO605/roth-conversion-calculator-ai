@@ -27,6 +27,12 @@ const input: RothConversionInput = {
   withheldForTaxes: 0,
 };
 
+const californiaInput: RothConversionInput = {
+  ...input,
+  selectedState: "california",
+  stateMarginalTaxRate: 0.093,
+};
+
 describe("professional handoff packet", () => {
   it("builds a CPA-friendly review packet without unsupported advice language", () => {
     const packet = buildProfessionalHandoffText(input, calculateRothConversion(input));
@@ -79,7 +85,7 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("Modeled state tax from manual rate: $2,950");
     expect(packet).toContain("State amount estimate status: manual_rate_only");
     expect(packet).toContain(
-      "Supported state example pages: California (CA, Needs state review), Texas (TX, No broad individual income tax), Florida (FL, No broad individual income tax), New York (NY, Needs state review), Washington (WA, No broad individual income tax), New Jersey (NJ, Needs state review)",
+      "Supported state example pages: California (CA, Needs state review, worksheet ready), Texas (TX, No broad individual income tax), Florida (FL, No broad individual income tax), New York (NY, Needs state review, worksheet ready), Washington (WA, No broad individual income tax), New Jersey (NJ, Needs state review, worksheet ready)",
     );
     expect(packet).toContain("does not determine residency");
     expect(packet).toContain("Inputs still needed before any state-specific amount review");
@@ -89,6 +95,19 @@ describe("professional handoff packet", () => {
     expect(packet).not.toMatch(/\bstrongly recommend\b/i);
     expect(packet).not.toMatch(/\b100%\s+accurate\b/i);
     expect(packet).not.toMatch(/full state-law engine is active|final state tax/i);
+  });
+
+  it("adds selected-state amount-readiness worksheet details to the CPA packet", () => {
+    const packet = buildProfessionalHandoffText(californiaInput, calculateRothConversion(californiaInput));
+
+    expect(packet).toContain("State rule registry status: Needs state review (needs-review)");
+    expect(packet).toContain("California State Amount Readiness");
+    expect(packet).toContain("Selected-state amount readiness status: state_specific_inputs_missing");
+    expect(packet).toContain("Official source checklist");
+    expect(packet).toContain("Compare the federal taxable IRA distribution with California taxable IRA distribution rules");
+    expect(packet).toContain("Inputs still needed before selected-state amount review");
+    expect(packet).toContain("California Schedule CA adjustment detail");
+    expect(packet).not.toMatch(/final state tax|complete state-law|you should|strongly recommend/i);
   });
 
   it("copies the packet to the clipboard", async () => {

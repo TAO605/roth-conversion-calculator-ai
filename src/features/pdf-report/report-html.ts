@@ -258,12 +258,31 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
           ${row(
             "Supported state example pages",
             stateRulesPrep.supportedStateExamples
-              .map((state) => `${state.name} (${state.code}, ${state.ruleStatusLabel})`)
+              .map(
+                (state) =>
+                  `${state.name} (${state.code}, ${state.ruleStatusLabel}${
+                    state.hasAmountReadinessWorksheet ? ", worksheet ready" : ""
+                  })`,
+              )
               .join(", "),
           )}
           ${row("State rules boundary", stateRulesPrep.boundaryNote)}
+          ${
+            stateRulesPrep.selectedStateAmountReadiness === null
+              ? ""
+              : `${row("Selected-state amount readiness status", stateRulesPrep.selectedStateAmountReadiness.status)}
+          ${row("Selected-state readiness summary", stateRulesPrep.selectedStateAmountReadiness.summary)}`
+          }
         </tbody>
       </table>
+      ${
+        stateRulesPrep.selectedStateAmountReadiness === null
+          ? ""
+          : `<h2>${escapeHtml(stateRulesPrep.selectedStateAmountReadiness.worksheetTitle)} Official Checklist</h2>
+      ${list(stateRulesPrep.selectedStateAmountReadiness.officialChecklist)}
+      <h2>Inputs Still Needed Before Selected-State Amount Review</h2>
+      ${list(stateRulesPrep.selectedStateAmountReadiness.missingInputs)}`
+      }
       <h2>Inputs Still Needed Before Any State-Specific Amount Review</h2>
       ${list(stateRulesPrep.missingInputs)}
     </section>
@@ -285,8 +304,12 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
         <li><a href="https://www.irs.gov/instructions/i6251">IRS Instructions for Form 6251</a></li>
         <li><a href="https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites">IRS state government websites directory</a></li>
         <li><a href="https://www.ftb.ca.gov/">California Franchise Tax Board</a></li>
+        <li><a href="https://www.ftb.ca.gov/forms/2025/2025-1005-publication.pdf">California FTB Publication 1005 Pension and Annuity Guidelines</a></li>
+        <li><a href="https://www.ftb.ca.gov/file/personal/income-types/early-distributions.html">California FTB early distributions</a></li>
         <li><a href="https://www.tax.ny.gov/">New York State Department of Taxation and Finance</a></li>
+        <li><a href="https://www.tax.ny.gov/pit/file/information_for_seniors.htm">New York Tax Department information for retired persons</a></li>
         <li><a href="https://www.nj.gov/treasury/taxation/">New Jersey Division of Taxation</a></li>
+        <li><a href="https://nj.gov/njbonds/treasury/taxation/njit6.shtml">New Jersey retirement income guidance</a></li>
         <li><a href="https://www.irs.gov/publications/p590a">IRS Publication 590-A</a></li>
         <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B</a></li>
       </ul>

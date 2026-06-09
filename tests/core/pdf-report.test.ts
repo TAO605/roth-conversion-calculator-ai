@@ -25,6 +25,12 @@ const input: RothConversionInput = {
   withheldForTaxes: 0,
 };
 
+const californiaInput: RothConversionInput = {
+  ...input,
+  selectedState: "california",
+  stateMarginalTaxRate: 0.093,
+};
+
 describe("print-ready report export", () => {
   it("builds a printable HTML report with YMYL boundaries and IRMAA prep", () => {
     vi.useFakeTimers();
@@ -83,7 +89,7 @@ describe("print-ready report export", () => {
     expect(html).toContain("State amount estimate status");
     expect(html).toContain("manual_rate_only");
     expect(html).toContain(
-      "California (CA, Needs state review), Texas (TX, No broad individual income tax), Florida (FL, No broad individual income tax), New York (NY, Needs state review), Washington (WA, No broad individual income tax), New Jersey (NJ, Needs state review)",
+      "California (CA, Needs state review, worksheet ready), Texas (TX, No broad individual income tax), Florida (FL, No broad individual income tax), New York (NY, Needs state review, worksheet ready), Washington (WA, No broad individual income tax), New Jersey (NJ, Needs state review, worksheet ready)",
     );
     expect(html).toContain("does not determine residency");
     expect(html).toContain("Inputs Still Needed Before Any State-Specific Amount Review");
@@ -96,6 +102,19 @@ describe("print-ready report export", () => {
     expect(html).not.toMatch(/full state-law engine is active|final state tax/i);
 
     vi.useRealTimers();
+  });
+
+  it("carries the selected-state amount-readiness worksheet into the printable report", () => {
+    const html = buildReportHtml(californiaInput, calculateRothConversion(californiaInput));
+
+    expect(html).toContain("State rule registry status");
+    expect(html).toContain("Needs state review (needs-review)");
+    expect(html).toContain("Selected-state amount readiness status");
+    expect(html).toContain("state_specific_inputs_missing");
+    expect(html).toContain("California State Amount Readiness Official Checklist");
+    expect(html).toContain("California Schedule CA adjustment detail");
+    expect(html).toContain("California FTB Publication 1005 Pension and Annuity Guidelines");
+    expect(html).not.toMatch(/final state tax|complete state-law|you should|strongly recommend/i);
   });
 
   it("downloads the report as a local HTML file for browser PDF printing", () => {

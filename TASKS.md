@@ -159,3 +159,4 @@
 - [done] Add state rules readiness worksheet
 - [done] Add selected state data model for future state rules
 - [done] Add state rule registry scaffold for supported state examples
+- [done] Add CA NY NJ state amount readiness worksheets

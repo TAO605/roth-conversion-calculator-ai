@@ -154,9 +154,25 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `Modeled state tax from manual rate: ${formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate)}`,
     `State amount estimate status: ${stateRulesPrep.amountEstimateStatus}`,
     `Supported state example pages: ${stateRulesPrep.supportedStateExamples
-      .map((state) => `${state.name} (${state.code}, ${state.ruleStatusLabel})`)
+      .map(
+        (state) =>
+          `${state.name} (${state.code}, ${state.ruleStatusLabel}${
+            state.hasAmountReadinessWorksheet ? ", worksheet ready" : ""
+          })`,
+      )
       .join(", ")}`,
     `State rules boundary: ${stateRulesPrep.boundaryNote}`,
+    ...(stateRulesPrep.selectedStateAmountReadiness === null
+      ? []
+      : [
+          `${stateRulesPrep.selectedStateAmountReadiness.worksheetTitle}`,
+          `Selected-state amount readiness status: ${stateRulesPrep.selectedStateAmountReadiness.status}`,
+          `Selected-state readiness summary: ${stateRulesPrep.selectedStateAmountReadiness.summary}`,
+          "Official source checklist:",
+          ...stateRulesPrep.selectedStateAmountReadiness.officialChecklist.map((item) => `- ${item}`),
+          "Inputs still needed before selected-state amount review:",
+          ...stateRulesPrep.selectedStateAmountReadiness.missingInputs.map((item) => `- ${item}`),
+        ]),
     "Inputs still needed before any state-specific amount review:",
     ...stateRulesPrep.missingInputs.map((item) => `- ${item}`),
     "",

@@ -57,4 +57,18 @@ describe("state SEO pages", () => {
     expect(getStateRuleRegistryEntry("texas").status).toBe("no-income-tax");
     expect(getStateRuleRegistryEntry("california").status).toBe("needs-review");
   });
+
+  it("scopes selected-state amount readiness worksheets to CA, NY, and NJ", () => {
+    const worksheetSlugs = stateRuleRegistry
+      .filter((entry) => entry.amountReadiness !== undefined)
+      .map((entry) => entry.slug);
+
+    expect(worksheetSlugs).toEqual(["california", "new-york", "new-jersey"]);
+    expect(getStateRuleRegistryEntry("california").amountReadiness?.officialChecklist.length).toBeGreaterThanOrEqual(3);
+    expect(getStateRuleRegistryEntry("new-york").amountReadiness?.officialReferences[0]?.href).toContain("tax.ny.gov");
+    expect(getStateRuleRegistryEntry("new-jersey").amountReadiness?.missingInputs.join(" ")).toContain(
+      "New Jersey taxable and excludable IRA distribution",
+    );
+    expect(getStateRuleRegistryEntry("texas").amountReadiness).toBeUndefined();
+  });
 });

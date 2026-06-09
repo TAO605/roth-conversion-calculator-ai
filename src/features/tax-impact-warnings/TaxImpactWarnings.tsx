@@ -283,6 +283,32 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
           State rule registry boundary: {stateRulesPrep.stateRuleBoundaryNote}
         </p>
+        {stateRulesPrep.selectedStateAmountReadiness === null ? null : (
+          <div className="mt-2 rounded border border-lime-200 bg-white p-3 dark:border-lime-400/30 dark:bg-neutral-950">
+            <p className="font-semibold text-neutral-950 dark:text-white">
+              {stateRulesPrep.selectedStateAmountReadiness.worksheetTitle}
+            </p>
+            <p className="mt-1">{stateRulesPrep.selectedStateAmountReadiness.summary}</p>
+            <div className="mt-2 grid gap-1">
+              <span className="font-semibold text-neutral-950 dark:text-white">Official source checklist:</span>
+              <ul className="list-disc space-y-1 pl-4">
+                {stateRulesPrep.selectedStateAmountReadiness.officialChecklist.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-2 grid gap-1">
+              <span className="font-semibold text-neutral-950 dark:text-white">
+                Inputs needed before selected-state amount review:
+              </span>
+              <ul className="list-disc space-y-1 pl-4">
+                {stateRulesPrep.selectedStateAmountReadiness.missingInputs.slice(0, 4).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
           {stateRulesPrep.boundaryNote}
         </p>
@@ -292,7 +318,12 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
           </span>
           <p>
             {stateRulesPrep.supportedStateExamples
-              .map((state) => `${state.name} (${formatPercent(state.exampleRate)}, ${state.ruleStatusLabel})`)
+              .map(
+                (state) =>
+                  `${state.name} (${formatPercent(state.exampleRate)}, ${state.ruleStatusLabel}${
+                    state.hasAmountReadinessWorksheet ? ", worksheet ready" : ""
+                  })`,
+              )
               .join(", ")}
           </p>
         </div>
@@ -307,7 +338,10 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
           </ul>
         </div>
         <div className="mt-2 flex flex-wrap gap-3">
-          {stateRulesPrep.officialReferences.slice(0, 4).map((reference) => (
+          {[
+            ...stateRulesPrep.officialReferences.slice(0, 4),
+            ...(stateRulesPrep.selectedStateAmountReadiness?.officialReferences ?? []),
+          ].map((reference) => (
             <a
               className="font-semibold text-systemBlue hover:text-blue-700"
               href={reference.href}
