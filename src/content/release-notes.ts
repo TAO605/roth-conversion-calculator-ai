@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.196",
+    date: "2026-06-09",
+    type: "patch",
+    title: "AMT impact review prep",
+    summary:
+      "Added an AMT amount-readiness worksheet that shows the conversion-driven AMT income proxy change, Form 6251 formula boundary, and missing adjustment, preference, exemption, phaseout, and regular-tax comparison inputs while keeping AMT dollars unestimated.",
+    affectedArea:
+      "Tax impact warnings, AMT impact review prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the AMT review-prep worksheet only if an equivalent reviewed boundary still prevents the calculator from implying AMT owed without Form 6251 adjustment, preference, exemption, phaseout, tentative-minimum-tax, and regular-tax comparison inputs.",
+  },
+  {
     version: "1.0.195",
     date: "2026-06-09",
     type: "patch",

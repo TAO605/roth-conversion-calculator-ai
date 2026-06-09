@@ -155,3 +155,4 @@
 - [done] Add Social Security benefit taxation amount-readiness worksheet
 - [done] Add NIIT amount-readiness worksheet
 - [done] Add bounded RMD Uniform Lifetime preview
+- [done] Add AMT impact amount-readiness worksheet

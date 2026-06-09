@@ -3,6 +3,7 @@ import { AlertTriangle, CircleHelp } from "lucide-react";
 import { formatCurrencyWithCents } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
+import { buildAmtReviewPrep } from "@/features/tax-impact-warnings/amt-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
@@ -17,6 +18,7 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
   const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
   const niitPrep = buildNiitReviewPrep(input, result);
   const rmdPrep = buildRmdReviewPrep(input);
+  const amtPrep = buildAmtReviewPrep(input, result);
 
   return (
     <aside
@@ -211,6 +213,40 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         </div>
         <div className="mt-2 flex flex-wrap gap-3">
           {rmdPrep.officialReferences.map((reference) => (
+            <a
+              className="font-semibold text-systemBlue hover:text-blue-700"
+              href={reference.href}
+              key={reference.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {reference.label}
+            </a>
+          ))}
+        </div>
+      </section>
+      <section className="mt-3 rounded border border-neutral-200 bg-neutral-50 p-3 text-xs leading-5 text-neutral-700 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-200">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{amtPrep.title}</h4>
+          <span className="rounded border border-neutral-300 bg-white px-2 py-0.5 text-[11px] font-semibold text-neutral-800 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-200">
+            Amount not estimated
+          </span>
+        </div>
+        <p className="mt-2">{amtPrep.summary}</p>
+        <p className="mt-2">{amtPrep.formulaNote}</p>
+        <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">{amtPrep.boundaryNote}</p>
+        <div className="mt-2 grid gap-1">
+          <span className="font-semibold text-neutral-950 dark:text-white">
+            Inputs needed before AMT amount review:
+          </span>
+          <ul className="list-disc space-y-1 pl-4">
+            {amtPrep.missingInputs.slice(0, 4).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-3">
+          {amtPrep.officialReferences.map((reference) => (
             <a
               className="font-semibold text-systemBlue hover:text-blue-700"
               href={reference.href}

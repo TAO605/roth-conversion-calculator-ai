@@ -2,6 +2,7 @@ import { formatCurrency, formatCurrencyWithCents, formatPercent } from "@/common
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
+import { buildAmtReviewPrep } from "@/features/tax-impact-warnings/amt-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
@@ -21,6 +22,7 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
   const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
   const niitPrep = buildNiitReviewPrep(input, result);
   const rmdPrep = buildRmdReviewPrep(input);
+  const amtPrep = buildAmtReviewPrep(input, result);
 
   return [
     "Roth Conversion Professional Review Packet",
@@ -127,12 +129,22 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     "Inputs still needed before any required amount review:",
     ...rmdPrep.missingInputs.map((item) => `- ${item}`),
     "",
+    "AMT impact review prep",
+    `AMT income proxy before conversion: ${formatCurrency(amtPrep.amtIncomeProxyBeforeConversion)}`,
+    `Taxable conversion income increase: ${formatCurrency(amtPrep.taxableConversionIncrease)}`,
+    `AMT income proxy after conversion: ${formatCurrency(amtPrep.amtIncomeProxyAfterConversion)}`,
+    `AMT amount estimate status: ${amtPrep.amountEstimateStatus}`,
+    `AMT formula note: ${amtPrep.formulaNote}`,
+    `AMT boundary: ${amtPrep.boundaryNote}`,
+    "Inputs still needed before any AMT amount review:",
+    ...amtPrep.missingInputs.map((item) => `- ${item}`),
+    "",
     "Documents and questions to bring",
     "- Most recent federal and state tax returns.",
     "- Form 8606 records for nondeductible IRA basis, if any.",
     "- Traditional, SEP, SIMPLE, and Roth IRA year-end balances and custodian statements.",
     "- Current-year income estimate, withholding records, and estimated tax payments.",
-    "- Medicare, Marketplace coverage, Social Security, investment income, and RMD context if any item above applies.",
+    "- Medicare, Marketplace coverage, Social Security, investment income, RMD, and AMT context if any item above applies.",
     "",
     "Boundary note",
     "This packet does not determine whether a Roth conversion is appropriate for a specific person. It summarizes calculator inputs, modeled outputs, and review topics.",

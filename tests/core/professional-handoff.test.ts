@@ -67,6 +67,11 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("Annual RMD preview: Not estimated");
     expect(packet).toContain("prior December 31 adjusted balance");
     expect(packet).toContain("Inputs still needed before any required amount review");
+    expect(packet).toContain("AMT impact review prep");
+    expect(packet).toContain("AMT income proxy before conversion: $195,000");
+    expect(packet).toContain("AMT amount estimate status: missing_form_6251_inputs");
+    expect(packet).toContain("cannot estimate AMT owed");
+    expect(packet).toContain("Inputs still needed before any AMT amount review");
     expect(packet).toContain("Form 8606 records");
     expect(packet).toContain(REQUIRED_DISCLAIMER);
     expect(packet).not.toMatch(/\byou should convert\b/i);

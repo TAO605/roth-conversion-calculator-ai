@@ -68,6 +68,12 @@ describe("print-ready report export", () => {
     expect(html).toContain("Not estimated");
     expect(html).toContain("prior December 31 adjusted balance");
     expect(html).toContain("IRS RMD FAQs");
+    expect(html).toContain("AMT Impact Review Prep");
+    expect(html).toContain("AMT amount estimate status");
+    expect(html).toContain("missing_form_6251_inputs");
+    expect(html).toContain("cannot estimate AMT owed");
+    expect(html).toContain("Inputs Still Needed Before Any AMT Amount Review");
+    expect(html).toContain("IRS Form 6251 Alternative Minimum Tax");
     expect(html).toContain("Medicare.gov Part B costs and IRMAA overview");
     expect(html).toContain(REQUIRED_DISCLAIMER);
     expect(html).not.toMatch(/\byou should convert\b/i);

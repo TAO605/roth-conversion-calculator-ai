@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
+import { buildAmtReviewPrep } from "@/features/tax-impact-warnings/amt-review-prep";
 import { buildIrmaaReviewPrep, estimateIrmaaPartBFromIncomeProxy } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
@@ -104,8 +105,33 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Inputs needed before required amount review");
     expect(panel.textContent).toContain("IRS Publication 590-B distributions from IRAs");
     expect(panel.textContent).toContain("IRS RMD FAQs");
+    expect(panel.textContent).toContain("AMT Impact Review Prep");
+    expect(panel.textContent).toContain("Inputs needed before AMT amount review");
+    expect(panel.textContent).toContain("IRS Form 6251 Alternative Minimum Tax");
+    expect(panel.textContent).toContain("IRS Instructions for Form 6251");
     expect(panel.textContent).toContain("input-triggered review items");
     expect(panel.textContent).toContain("Open guide");
+  });
+
+  it("builds AMT impact review prep without fake AMT owed dollar estimates", () => {
+    const prep = buildAmtReviewPrep(baseInput, baseResult);
+
+    expect(prep.amtIncomeProxyBeforeConversion).toBe(195000);
+    expect(prep.taxableConversionIncrease).toBe(60000);
+    expect(prep.amtIncomeProxyAfterConversion).toBe(255000);
+    expect(prep.amountEstimateStatus).toBe("missing_form_6251_inputs");
+    expect(prep.summary).toContain("$60,000");
+    expect(prep.summary).toContain("$195,000");
+    expect(prep.summary).toContain("$255,000");
+    expect(prep.formulaNote).toContain("Form 6251");
+    expect(prep.boundaryNote).toContain("cannot estimate AMT owed");
+    expect(prep.missingInputs).toEqual(
+      expect.arrayContaining([
+        "Form 6251 adjustment and preference items, including ISO, depreciation, private activity bond interest, and other AMT-specific items.",
+        "Regular tax liability and tentative minimum tax comparison from Form 6251.",
+      ]),
+    );
+    expect(JSON.stringify(prep)).not.toMatch(/amt owed:|tax due:|you should|strongly recommend/i);
   });
 
   it("builds a bounded RMD preview from age and IRA balance only when the Uniform Lifetime Table applies", () => {

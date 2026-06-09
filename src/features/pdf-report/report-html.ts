@@ -2,6 +2,7 @@ import { formatCurrency, formatCurrencyWithCents, formatPercent } from "@/common
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
+import { buildAmtReviewPrep } from "@/features/tax-impact-warnings/amt-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
@@ -36,6 +37,7 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
   const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
   const niitPrep = buildNiitReviewPrep(input, result);
   const rmdPrep = buildRmdReviewPrep(input);
+  const amtPrep = buildAmtReviewPrep(input, result);
   const generatedAt = new Date().toISOString().slice(0, 10);
 
   return `<!doctype html>
@@ -219,6 +221,22 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
       ${list(rmdPrep.missingInputs)}
     </section>
 
+    <section aria-labelledby="amt-heading">
+      <h2 id="amt-heading">AMT Impact Review Prep</h2>
+      <table>
+        <tbody>
+          ${row("AMT income proxy before conversion", formatCurrency(amtPrep.amtIncomeProxyBeforeConversion))}
+          ${row("Taxable conversion income increase", formatCurrency(amtPrep.taxableConversionIncrease))}
+          ${row("AMT income proxy after conversion", formatCurrency(amtPrep.amtIncomeProxyAfterConversion))}
+          ${row("AMT amount estimate status", amtPrep.amountEstimateStatus)}
+          ${row("AMT formula note", amtPrep.formulaNote)}
+          ${row("AMT boundary", amtPrep.boundaryNote)}
+        </tbody>
+      </table>
+      <h2>Inputs Still Needed Before Any AMT Amount Review</h2>
+      ${list(amtPrep.missingInputs)}
+    </section>
+
     <section aria-labelledby="sources-heading">
       <h2 id="sources-heading">Review Sources</h2>
       <ul>
@@ -232,6 +250,8 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
         <li><a href="https://www.irs.gov/forms-pubs/about-form-8960">IRS Form 8960 Net Investment Income Tax</a></li>
         <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B distributions from IRAs</a></li>
         <li><a href="https://www.irs.gov/retirement-plans/retirement-plan-and-ira-required-minimum-distributions-faqs">IRS RMD FAQs</a></li>
+        <li><a href="https://www.irs.gov/forms-pubs/about-form-6251">IRS Form 6251 Alternative Minimum Tax</a></li>
+        <li><a href="https://www.irs.gov/instructions/i6251">IRS Instructions for Form 6251</a></li>
         <li><a href="https://www.irs.gov/publications/p590a">IRS Publication 590-A</a></li>
         <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B</a></li>
       </ul>
