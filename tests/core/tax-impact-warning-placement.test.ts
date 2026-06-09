@@ -5,6 +5,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
+import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep, estimateIrmaaPartBFromIncomeProxy } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -80,9 +81,34 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Medicare.gov Part B costs and IRMAA");
     expect(panel.textContent).toContain("SSA-44 life-changing event form");
     expect(panel.textContent).toContain("ACA premium tax credits");
+    expect(panel.textContent).toContain("ACA Premium Tax Credit Review Prep");
+    expect(panel.textContent).toContain("Amount not estimated");
+    expect(panel.textContent).toContain("Inputs needed before subsidy amount review");
+    expect(panel.textContent).toContain("Marketplace coverage months");
+    expect(panel.textContent).toContain("HealthCare.gov premium tax credit and Marketplace savings");
     expect(panel.textContent).toContain("Required Minimum Distributions");
     expect(panel.textContent).toContain("input-triggered review items");
     expect(panel.textContent).toContain("Open guide");
+  });
+
+  it("builds ACA premium tax credit review prep without fake subsidy dollar estimates", () => {
+    const prep = buildAcaPremiumTaxCreditReviewPrep(baseInput, baseResult);
+
+    expect(prep.incomeProxyBeforeConversion).toBe(195000);
+    expect(prep.conversionIncomeIncrease).toBe(60000);
+    expect(prep.incomeProxyAfterConversion).toBe(255000);
+    expect(prep.amountEstimateStatus).toBe("missing_marketplace_inputs");
+    expect(prep.summary).toContain("$60,000");
+    expect(prep.summary).toContain("$195,000");
+    expect(prep.summary).toContain("$255,000");
+    expect(prep.boundaryNote).toContain("cannot estimate ACA premium tax credit dollars from taxable income alone");
+    expect(prep.missingInputs).toEqual(
+      expect.arrayContaining([
+        "Marketplace coverage months and whether advance premium tax credits were used.",
+        "Form 1095-A, Form 8962, and any Marketplace notices for reconciliation review.",
+      ]),
+    );
+    expect(JSON.stringify(prep)).not.toMatch(/subsidy savings|premium tax credit amount|you should|strongly recommend/i);
   });
 
   it("prioritizes review items from inputs without calculating external tax amounts", () => {

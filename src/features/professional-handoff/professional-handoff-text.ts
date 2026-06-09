@@ -1,6 +1,7 @@
 import { formatCurrency, formatCurrencyWithCents, formatPercent } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
+import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -13,6 +14,7 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
   const triggeredItems = reviewItems.filter((item) => item.level === "input_triggered_review");
   const standardItems = reviewItems.filter((item) => item.level === "standard_review");
   const irmaaPrep = buildIrmaaReviewPrep(input, result);
+  const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
 
   return [
     "Roth Conversion Professional Review Packet",
@@ -67,6 +69,15 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `IRMAA prep summary: ${irmaaPrep.summary}`,
     "Inputs still needed before any premium amount review:",
     ...irmaaPrep.missingInputs.map((item) => `- ${item}`),
+    "",
+    "ACA premium tax credit review prep",
+    `Calculator income proxy before conversion: ${formatCurrency(acaPrep.incomeProxyBeforeConversion)}`,
+    `Taxable conversion income increase: ${formatCurrency(acaPrep.conversionIncomeIncrease)}`,
+    `Calculator income proxy after conversion: ${formatCurrency(acaPrep.incomeProxyAfterConversion)}`,
+    `ACA amount estimate status: ${acaPrep.amountEstimateStatus}`,
+    `ACA boundary: ${acaPrep.boundaryNote}`,
+    "Inputs still needed before any subsidy amount review:",
+    ...acaPrep.missingInputs.map((item) => `- ${item}`),
     "",
     "Documents and questions to bring",
     "- Most recent federal and state tax returns.",

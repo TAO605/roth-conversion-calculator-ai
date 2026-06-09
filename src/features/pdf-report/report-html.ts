@@ -1,6 +1,7 @@
 import { formatCurrency, formatCurrencyWithCents, formatPercent } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
+import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -28,6 +29,7 @@ function list(items: string[]): string {
 export function buildReportHtml(input: RothConversionInput, result: RothConversionResult): string {
   const reviewItems = buildTaxImpactReviewItems(input, result);
   const irmaaPrep = buildIrmaaReviewPrep(input, result);
+  const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
   const generatedAt = new Date().toISOString().slice(0, 10);
 
   return `<!doctype html>
@@ -132,11 +134,28 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
       ${list(irmaaPrep.missingInputs)}
     </section>
 
+    <section aria-labelledby="aca-heading">
+      <h2 id="aca-heading">ACA Premium Tax Credit Review Prep</h2>
+      <table>
+        <tbody>
+          ${row("Calculator income proxy before conversion", formatCurrency(acaPrep.incomeProxyBeforeConversion))}
+          ${row("Taxable conversion income increase", formatCurrency(acaPrep.conversionIncomeIncrease))}
+          ${row("Calculator income proxy after conversion", formatCurrency(acaPrep.incomeProxyAfterConversion))}
+          ${row("ACA amount estimate status", acaPrep.amountEstimateStatus)}
+          ${row("ACA boundary", acaPrep.boundaryNote)}
+        </tbody>
+      </table>
+      <h2>Inputs Still Needed Before Any Subsidy Amount Review</h2>
+      ${list(acaPrep.missingInputs)}
+    </section>
+
     <section aria-labelledby="sources-heading">
       <h2 id="sources-heading">Review Sources</h2>
       <ul>
         <li><a href="https://www.medicare.gov/basics/costs/medicare-costs/part-b-costs">Medicare.gov Part B costs and IRMAA overview</a></li>
         <li><a href="https://www.ssa.gov/forms/ssa-44.pdf">SSA Form SSA-44 for life-changing event review</a></li>
+        <li><a href="https://www.healthcare.gov/lower-costs/save-on-monthly-premiums/">HealthCare.gov premium tax credit and Marketplace savings</a></li>
+        <li><a href="https://www.irs.gov/forms-pubs/about-form-8962">IRS Form 8962 premium tax credit</a></li>
         <li><a href="https://www.irs.gov/publications/p590a">IRS Publication 590-A</a></li>
         <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B</a></li>
       </ul>

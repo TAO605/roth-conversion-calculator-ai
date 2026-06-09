@@ -43,6 +43,12 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("$649.20 per month using calculator income proxy");
     expect(packet).toContain("not SSA's actual lookback-year MAGI determination");
     expect(packet).toContain("Inputs still needed before any premium amount review");
+    expect(packet).toContain("ACA premium tax credit review prep");
+    expect(packet).toContain("Calculator income proxy before conversion: $195,000");
+    expect(packet).toContain("Taxable conversion income increase: $59,000");
+    expect(packet).toContain("ACA amount estimate status: missing_marketplace_inputs");
+    expect(packet).toContain("cannot estimate ACA premium tax credit dollars from taxable income alone");
+    expect(packet).toContain("Inputs still needed before any subsidy amount review");
     expect(packet).toContain("NIIT MAGI-side review");
     expect(packet).toContain("Form 8606 records");
     expect(packet).toContain(REQUIRED_DISCLAIMER);

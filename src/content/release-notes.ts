@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.192",
+    date: "2026-06-08",
+    type: "patch",
+    title: "ACA premium tax credit review prep",
+    summary:
+      "Added an ACA premium tax credit review-prep worksheet that shows the conversion-driven income proxy change, keeps subsidy dollars unestimated until Marketplace-specific inputs are available, and carries the boundary into the report and CPA handoff packet.",
+    affectedArea:
+      "Tax impact warnings, ACA premium tax credit review prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the ACA review-prep worksheet only if an equivalent reviewed boundary still prevents the calculator from implying ACA subsidy dollar changes without Marketplace, Form 1095-A, and Form 8962 context.",
+  },
+  {
     version: "1.0.191",
     date: "2026-06-08",
     type: "patch",

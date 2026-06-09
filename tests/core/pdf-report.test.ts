@@ -43,6 +43,12 @@ describe("print-ready report export", () => {
     expect(html).toContain("2026 Part B proxy preview");
     expect(html).toContain("$649.20 per month using calculator income proxy");
     expect(html).toContain("not SSA&#39;s actual lookback-year MAGI determination");
+    expect(html).toContain("ACA Premium Tax Credit Review Prep");
+    expect(html).toContain("ACA amount estimate status");
+    expect(html).toContain("missing_marketplace_inputs");
+    expect(html).toContain("cannot estimate ACA premium tax credit dollars from taxable income alone");
+    expect(html).toContain("Inputs Still Needed Before Any Subsidy Amount Review");
+    expect(html).toContain("IRS Form 8962 premium tax credit");
     expect(html).toContain("Medicare.gov Part B costs and IRMAA overview");
     expect(html).toContain(REQUIRED_DISCLAIMER);
     expect(html).not.toMatch(/\byou should convert\b/i);
