@@ -5,6 +5,7 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
+import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -15,6 +16,7 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
   const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
   const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
   const niitPrep = buildNiitReviewPrep(input, result);
+  const rmdPrep = buildRmdReviewPrep(input);
 
   return (
     <aside
@@ -170,6 +172,45 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         </div>
         <div className="mt-2 flex flex-wrap gap-3">
           {niitPrep.officialReferences.map((reference) => (
+            <a
+              className="font-semibold text-systemBlue hover:text-blue-700"
+              href={reference.href}
+              key={reference.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {reference.label}
+            </a>
+          ))}
+        </div>
+      </section>
+      <section className="mt-3 rounded border border-amber-100 bg-amber-50 p-3 text-xs leading-5 text-neutral-700 dark:border-amber-400/30 dark:bg-neutral-950 dark:text-neutral-200">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{rmdPrep.title}</h4>
+          <span className="rounded border border-amber-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-amber-800 dark:border-amber-400/30 dark:bg-neutral-950 dark:text-amber-200">
+            {rmdPrep.previewStatus === "preview_available" ? "Bounded preview" : "Review only"}
+          </span>
+        </div>
+        <p className="mt-2">{rmdPrep.summary}</p>
+        {rmdPrep.annualRmdPreview !== null && rmdPrep.uniformLifetimeDistributionPeriod !== null ? (
+          <p className="mt-2">
+            Distribution period: <strong>{rmdPrep.uniformLifetimeDistributionPeriod.toFixed(1)}</strong>. Annual RMD
+            preview: <strong>{formatCurrencyWithCents(rmdPrep.annualRmdPreview)}</strong>.
+          </p>
+        ) : null}
+        <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">{rmdPrep.boundaryNote}</p>
+        <div className="mt-2 grid gap-1">
+          <span className="font-semibold text-neutral-950 dark:text-white">
+            Inputs needed before required amount review:
+          </span>
+          <ul className="list-disc space-y-1 pl-4">
+            {rmdPrep.missingInputs.slice(0, 4).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-3">
+          {rmdPrep.officialReferences.map((reference) => (
             <a
               className="font-semibold text-systemBlue hover:text-blue-700"
               href={reference.href}

@@ -4,6 +4,7 @@ import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
+import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -19,6 +20,7 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
   const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
   const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
   const niitPrep = buildNiitReviewPrep(input, result);
+  const rmdPrep = buildRmdReviewPrep(input);
 
   return [
     "Roth Conversion Professional Review Packet",
@@ -108,6 +110,22 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `NIIT boundary: ${niitPrep.boundaryNote}`,
     "Inputs still needed before any NIIT amount review:",
     ...niitPrep.missingInputs.map((item) => `- ${item}`),
+    "",
+    "RMD Uniform Lifetime preview",
+    `Owner age entered: ${rmdPrep.ownerAge}`,
+    `Traditional IRA balance proxy entered: ${formatCurrency(rmdPrep.balanceProxy)}`,
+    `RMD preview status: ${rmdPrep.previewStatus}`,
+    `Uniform Lifetime Table distribution period: ${
+      rmdPrep.uniformLifetimeDistributionPeriod === null
+        ? "Not available in this bounded preview"
+        : rmdPrep.uniformLifetimeDistributionPeriod.toFixed(1)
+    }`,
+    `Annual RMD preview: ${
+      rmdPrep.annualRmdPreview === null ? "Not estimated" : formatCurrency(rmdPrep.annualRmdPreview)
+    }`,
+    `RMD boundary: ${rmdPrep.boundaryNote}`,
+    "Inputs still needed before any required amount review:",
+    ...rmdPrep.missingInputs.map((item) => `- ${item}`),
     "",
     "Documents and questions to bring",
     "- Most recent federal and state tax returns.",

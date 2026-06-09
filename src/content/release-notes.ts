@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.195",
+    date: "2026-06-09",
+    type: "patch",
+    title: "RMD Uniform Lifetime preview",
+    summary:
+      "Added a bounded RMD Uniform Lifetime Table preview using the entered age and traditional IRA balance proxy, while keeping prior-year balance, account-type, spouse-beneficiary, inherited-account, and custodian-record boundaries visible in warnings, reports, and CPA handoff.",
+    affectedArea:
+      "Tax impact warnings, RMD review prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the RMD preview only if an equivalent reviewed boundary still prevents the calculator from implying a final required distribution amount without prior December 31 balance, account type, table, beneficiary, and custodian context.",
+  },
+  {
     version: "1.0.194",
     date: "2026-06-09",
     type: "patch",

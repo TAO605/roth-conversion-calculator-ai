@@ -61,6 +61,12 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("NIIT amount estimate status: missing_net_investment_income_inputs");
     expect(packet).toContain("cannot estimate NIIT owed from the MAGI proxy alone");
     expect(packet).toContain("Inputs still needed before any NIIT amount review");
+    expect(packet).toContain("RMD Uniform Lifetime preview");
+    expect(packet).toContain("Traditional IRA balance proxy entered: $300,000");
+    expect(packet).toContain("RMD preview status: below_rmd_age");
+    expect(packet).toContain("Annual RMD preview: Not estimated");
+    expect(packet).toContain("prior December 31 adjusted balance");
+    expect(packet).toContain("Inputs still needed before any required amount review");
     expect(packet).toContain("Form 8606 records");
     expect(packet).toContain(REQUIRED_DISCLAIMER);
     expect(packet).not.toMatch(/\byou should convert\b/i);

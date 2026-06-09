@@ -4,6 +4,7 @@ import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
+import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -34,6 +35,7 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
   const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
   const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
   const niitPrep = buildNiitReviewPrep(input, result);
+  const rmdPrep = buildRmdReviewPrep(input);
   const generatedAt = new Date().toISOString().slice(0, 10);
 
   return `<!doctype html>
@@ -193,6 +195,30 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
       ${list(niitPrep.missingInputs)}
     </section>
 
+    <section aria-labelledby="rmd-heading">
+      <h2 id="rmd-heading">RMD Uniform Lifetime Preview</h2>
+      <table>
+        <tbody>
+          ${row("Owner age entered", String(rmdPrep.ownerAge))}
+          ${row("Traditional IRA balance proxy entered", formatCurrency(rmdPrep.balanceProxy))}
+          ${row("RMD preview status", rmdPrep.previewStatus)}
+          ${row(
+            "Uniform Lifetime Table distribution period",
+            rmdPrep.uniformLifetimeDistributionPeriod === null
+              ? "Not available in this bounded preview"
+              : rmdPrep.uniformLifetimeDistributionPeriod.toFixed(1),
+          )}
+          ${row(
+            "Annual RMD preview",
+            rmdPrep.annualRmdPreview === null ? "Not estimated" : formatCurrencyWithCents(rmdPrep.annualRmdPreview),
+          )}
+          ${row("RMD boundary", rmdPrep.boundaryNote)}
+        </tbody>
+      </table>
+      <h2>Inputs Still Needed Before Any Required Amount Review</h2>
+      ${list(rmdPrep.missingInputs)}
+    </section>
+
     <section aria-labelledby="sources-heading">
       <h2 id="sources-heading">Review Sources</h2>
       <ul>
@@ -204,6 +230,8 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
         <li><a href="https://www.ssa.gov/faqs/en/questions/KA-02471.html">SSA taxes on Social Security benefits FAQ</a></li>
         <li><a href="https://www.irs.gov/newsroom/net-investment-income-tax">IRS Net Investment Income Tax</a></li>
         <li><a href="https://www.irs.gov/forms-pubs/about-form-8960">IRS Form 8960 Net Investment Income Tax</a></li>
+        <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B distributions from IRAs</a></li>
+        <li><a href="https://www.irs.gov/retirement-plans/retirement-plan-and-ira-required-minimum-distributions-faqs">IRS RMD FAQs</a></li>
         <li><a href="https://www.irs.gov/publications/p590a">IRS Publication 590-A</a></li>
         <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B</a></li>
       </ul>

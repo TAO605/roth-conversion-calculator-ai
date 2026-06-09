@@ -61,6 +61,13 @@ describe("print-ready report export", () => {
     expect(html).toContain("cannot estimate NIIT owed from the MAGI proxy alone");
     expect(html).toContain("Inputs Still Needed Before Any NIIT Amount Review");
     expect(html).toContain("IRS Form 8960 Net Investment Income Tax");
+    expect(html).toContain("RMD Uniform Lifetime Preview");
+    expect(html).toContain("RMD preview status");
+    expect(html).toContain("below_rmd_age");
+    expect(html).toContain("Annual RMD preview");
+    expect(html).toContain("Not estimated");
+    expect(html).toContain("prior December 31 adjusted balance");
+    expect(html).toContain("IRS RMD FAQs");
     expect(html).toContain("Medicare.gov Part B costs and IRMAA overview");
     expect(html).toContain(REQUIRED_DISCLAIMER);
     expect(html).not.toMatch(/\byou should convert\b/i);

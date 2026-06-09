@@ -8,6 +8,7 @@ import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarni
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep, estimateIrmaaPartBFromIncomeProxy } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
+import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -98,8 +99,45 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("IRS Net Investment Income Tax");
     expect(panel.textContent).toContain("IRS Form 8960 Net Investment Income Tax");
     expect(panel.textContent).toContain("Required Minimum Distributions");
+    expect(panel.textContent).toContain("RMD Uniform Lifetime Preview");
+    expect(panel.textContent).toContain("Review only");
+    expect(panel.textContent).toContain("Inputs needed before required amount review");
+    expect(panel.textContent).toContain("IRS Publication 590-B distributions from IRAs");
+    expect(panel.textContent).toContain("IRS RMD FAQs");
     expect(panel.textContent).toContain("input-triggered review items");
     expect(panel.textContent).toContain("Open guide");
+  });
+
+  it("builds a bounded RMD preview from age and IRA balance only when the Uniform Lifetime Table applies", () => {
+    const prep = buildRmdReviewPrep({
+      ...baseInput,
+      age: 75,
+      traditionalIraBalance: 300000,
+    });
+
+    expect(prep.previewStatus).toBe("preview_available");
+    expect(prep.ownerAge).toBe(75);
+    expect(prep.uniformLifetimeDistributionPeriod).toBe(24.6);
+    expect(prep.annualRmdPreview).toBe(12195.12);
+    expect(prep.summary).toContain("$300,000");
+    expect(prep.summary).toContain("24.6");
+    expect(prep.boundaryNote).toContain("prior December 31 adjusted balance");
+    expect(prep.missingInputs).toEqual(
+      expect.arrayContaining([
+        "Prior December 31 adjusted account balance for each IRA or plan account.",
+        "Whether the spouse is the sole beneficiary and more than 10 years younger, which can require a different table.",
+      ]),
+    );
+    expect(JSON.stringify(prep)).not.toMatch(/final required amount|you should|strongly recommend/i);
+  });
+
+  it("keeps RMD as review-only when the entered age is below the retained RMD preview range", () => {
+    const prep = buildRmdReviewPrep(baseInput);
+
+    expect(prep.previewStatus).toBe("below_rmd_age");
+    expect(prep.uniformLifetimeDistributionPeriod).toBeNull();
+    expect(prep.annualRmdPreview).toBeNull();
+    expect(prep.summary).toContain("below the current age-73 RMD review trigger");
   });
 
   it("builds NIIT review prep without fake NIIT owed dollar estimates", () => {
