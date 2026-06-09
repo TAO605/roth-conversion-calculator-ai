@@ -3,6 +3,7 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -17,6 +18,7 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
   const irmaaPrep = buildIrmaaReviewPrep(input, result);
   const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
   const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
+  const niitPrep = buildNiitReviewPrep(input, result);
 
   return [
     "Roth Conversion Professional Review Packet",
@@ -94,6 +96,18 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `Social Security boundary: ${socialSecurityPrep.boundaryNote}`,
     "Inputs still needed before any taxable-benefit amount review:",
     ...socialSecurityPrep.missingInputs.map((item) => `- ${item}`),
+    "",
+    "NIIT amount review prep",
+    `MAGI proxy before conversion: ${formatCurrency(niitPrep.magiProxyBeforeConversion)}`,
+    `Taxable conversion income increase: ${formatCurrency(niitPrep.taxableConversionIncrease)}`,
+    `MAGI proxy after conversion: ${formatCurrency(niitPrep.magiProxyAfterConversion)}`,
+    `Filing-status NIIT threshold: ${formatCurrency(niitPrep.filingStatusThreshold)}`,
+    `MAGI proxy excess after conversion: ${formatCurrency(niitPrep.magiProxyExcessAfterConversion)}`,
+    `NIIT amount estimate status: ${niitPrep.amountEstimateStatus}`,
+    `NIIT formula note: ${niitPrep.formulaNote}`,
+    `NIIT boundary: ${niitPrep.boundaryNote}`,
+    "Inputs still needed before any NIIT amount review:",
+    ...niitPrep.missingInputs.map((item) => `- ${item}`),
     "",
     "Documents and questions to bring",
     "- Most recent federal and state tax returns.",

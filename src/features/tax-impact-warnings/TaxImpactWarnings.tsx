@@ -4,6 +4,7 @@ import { formatCurrencyWithCents } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -13,6 +14,7 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
   const irmaaPrep = buildIrmaaReviewPrep(input, result);
   const acaPrep = buildAcaPremiumTaxCreditReviewPrep(input, result);
   const socialSecurityPrep = buildSocialSecurityTaxationReviewPrep(input, result);
+  const niitPrep = buildNiitReviewPrep(input, result);
 
   return (
     <aside
@@ -134,6 +136,40 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         </div>
         <div className="mt-2 flex flex-wrap gap-3">
           {socialSecurityPrep.officialReferences.map((reference) => (
+            <a
+              className="font-semibold text-systemBlue hover:text-blue-700"
+              href={reference.href}
+              key={reference.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {reference.label}
+            </a>
+          ))}
+        </div>
+      </section>
+      <section className="mt-3 rounded border border-sky-100 bg-sky-50 p-3 text-xs leading-5 text-neutral-700 dark:border-sky-400/30 dark:bg-neutral-950 dark:text-neutral-200">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{niitPrep.title}</h4>
+          <span className="rounded border border-sky-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-sky-800 dark:border-sky-400/30 dark:bg-neutral-950 dark:text-sky-200">
+            Amount not estimated
+          </span>
+        </div>
+        <p className="mt-2">{niitPrep.summary}</p>
+        <p className="mt-2">{niitPrep.formulaNote}</p>
+        <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">{niitPrep.boundaryNote}</p>
+        <div className="mt-2 grid gap-1">
+          <span className="font-semibold text-neutral-950 dark:text-white">
+            Inputs needed before NIIT amount review:
+          </span>
+          <ul className="list-disc space-y-1 pl-4">
+            {niitPrep.missingInputs.slice(0, 4).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-3">
+          {niitPrep.officialReferences.map((reference) => (
             <a
               className="font-semibold text-systemBlue hover:text-blue-700"
               href={reference.href}

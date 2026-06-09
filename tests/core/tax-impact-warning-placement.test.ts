@@ -7,6 +7,7 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep, estimateIrmaaPartBFromIncomeProxy } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -92,9 +93,36 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Form SSA-1099 box 5");
     expect(panel.textContent).toContain("IRS Publication 915 Social Security");
     expect(panel.textContent).toContain("SSA taxes on Social Security benefits FAQ");
+    expect(panel.textContent).toContain("NIIT Amount Review Prep");
+    expect(panel.textContent).toContain("Inputs needed before NIIT amount review");
+    expect(panel.textContent).toContain("IRS Net Investment Income Tax");
+    expect(panel.textContent).toContain("IRS Form 8960 Net Investment Income Tax");
     expect(panel.textContent).toContain("Required Minimum Distributions");
     expect(panel.textContent).toContain("input-triggered review items");
     expect(panel.textContent).toContain("Open guide");
+  });
+
+  it("builds NIIT review prep without fake NIIT owed dollar estimates", () => {
+    const prep = buildNiitReviewPrep(baseInput, baseResult);
+
+    expect(prep.magiProxyBeforeConversion).toBe(195000);
+    expect(prep.taxableConversionIncrease).toBe(60000);
+    expect(prep.magiProxyAfterConversion).toBe(255000);
+    expect(prep.filingStatusThreshold).toBe(200000);
+    expect(prep.magiProxyExcessAfterConversion).toBe(55000);
+    expect(prep.niitRate).toBe(0.038);
+    expect(prep.amountEstimateStatus).toBe("missing_net_investment_income_inputs");
+    expect(prep.summary).toContain("$55,000");
+    expect(prep.formulaNote).toContain("3.8%");
+    expect(prep.formulaNote).toContain("lesser of net investment income");
+    expect(prep.boundaryNote).toContain("cannot estimate NIIT owed from the MAGI proxy alone");
+    expect(prep.missingInputs).toEqual(
+      expect.arrayContaining([
+        "Net investment income categories for Form 8960, such as interest, dividends, annuities, royalties, rents, capital gains, and passive activity income.",
+        "Investment-income deductions and adjustments used on Form 8960.",
+      ]),
+    );
+    expect(JSON.stringify(prep)).not.toMatch(/niit owed:|tax due:|you should|strongly recommend/i);
   });
 
   it("builds Social Security benefit taxation review prep without fake taxable-benefit dollar estimates", () => {

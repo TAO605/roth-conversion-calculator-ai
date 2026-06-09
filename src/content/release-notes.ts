@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.194",
+    date: "2026-06-09",
+    type: "patch",
+    title: "NIIT amount review prep",
+    summary:
+      "Added a NIIT amount-readiness worksheet that shows the conversion-driven MAGI proxy change, filing-status NIIT threshold, proxy excess, and 3.8% formula boundary while keeping NIIT dollars unestimated until net investment income and Form 8960 inputs are available.",
+    affectedArea:
+      "Tax impact warnings, NIIT amount review prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the NIIT review-prep worksheet only if an equivalent reviewed boundary still prevents the calculator from implying NIIT owed without net investment income, MAGI, and Form 8960 context.",
+  },
+  {
     version: "1.0.193",
     date: "2026-06-09",
     type: "patch",

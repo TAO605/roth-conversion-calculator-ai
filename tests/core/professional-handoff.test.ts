@@ -55,6 +55,12 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("cannot estimate taxable Social Security benefit dollars");
     expect(packet).toContain("Inputs still needed before any taxable-benefit amount review");
     expect(packet).toContain("NIIT MAGI-side review");
+    expect(packet).toContain("NIIT amount review prep");
+    expect(packet).toContain("MAGI proxy before conversion: $195,000");
+    expect(packet).toContain("MAGI proxy excess after conversion: $54,000");
+    expect(packet).toContain("NIIT amount estimate status: missing_net_investment_income_inputs");
+    expect(packet).toContain("cannot estimate NIIT owed from the MAGI proxy alone");
+    expect(packet).toContain("Inputs still needed before any NIIT amount review");
     expect(packet).toContain("Form 8606 records");
     expect(packet).toContain(REQUIRED_DISCLAIMER);
     expect(packet).not.toMatch(/\byou should convert\b/i);

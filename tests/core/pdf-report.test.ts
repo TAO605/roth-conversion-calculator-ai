@@ -55,6 +55,12 @@ describe("print-ready report export", () => {
     expect(html).toContain("cannot estimate taxable Social Security benefit dollars");
     expect(html).toContain("Inputs Still Needed Before Any Taxable-Benefit Amount Review");
     expect(html).toContain("IRS Publication 915 Social Security and equivalent railroad retirement benefits");
+    expect(html).toContain("NIIT Amount Review Prep");
+    expect(html).toContain("NIIT amount estimate status");
+    expect(html).toContain("missing_net_investment_income_inputs");
+    expect(html).toContain("cannot estimate NIIT owed from the MAGI proxy alone");
+    expect(html).toContain("Inputs Still Needed Before Any NIIT Amount Review");
+    expect(html).toContain("IRS Form 8960 Net Investment Income Tax");
     expect(html).toContain("Medicare.gov Part B costs and IRMAA overview");
     expect(html).toContain(REQUIRED_DISCLAIMER);
     expect(html).not.toMatch(/\byou should convert\b/i);
