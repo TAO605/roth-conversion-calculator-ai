@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.199",
+    date: "2026-06-09",
+    type: "patch",
+    title: "State rule registry scaffold",
+    summary:
+      "Added a state rule registry scaffold with manual-only, no broad individual income tax, and needs-review statuses so selected state examples carry machine-readable review boundaries without activating a full state-law amount engine.",
+    affectedArea:
+      "State rule registry, state rules readiness prep, tax impact warnings, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the registry scaffold only if selected-state examples retain another reviewed status boundary that prevents no-income-tax and needs-review states from being treated as a complete state-law calculator.",
+  },
+  {
     version: "1.0.198",
     date: "2026-06-09",
     type: "patch",

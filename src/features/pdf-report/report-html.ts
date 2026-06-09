@@ -249,13 +249,17 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
               ? "None"
               : `${stateRulesPrep.selectedState.name} (${stateRulesPrep.selectedState.code})`,
           )}
+          ${row("State rule registry status", `${stateRulesPrep.stateRuleStatusLabel} (${stateRulesPrep.stateRuleStatus})`)}
+          ${row("State rule registry boundary", stateRulesPrep.stateRuleBoundaryNote)}
           ${row("Manual state marginal rate entered", formatPercent(stateRulesPrep.manualStateRate))}
           ${row("Taxable conversion income increase", formatCurrency(stateRulesPrep.taxableConversionIncrease))}
           ${row("Modeled state tax from manual rate", formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate))}
           ${row("State amount estimate status", stateRulesPrep.amountEstimateStatus)}
           ${row(
             "Supported state example pages",
-            stateRulesPrep.supportedStateExamples.map((state) => `${state.name} (${state.code})`).join(", "),
+            stateRulesPrep.supportedStateExamples
+              .map((state) => `${state.name} (${state.code}, ${state.ruleStatusLabel})`)
+              .join(", "),
           )}
           ${row("State rules boundary", stateRulesPrep.boundaryNote)}
         </tbody>

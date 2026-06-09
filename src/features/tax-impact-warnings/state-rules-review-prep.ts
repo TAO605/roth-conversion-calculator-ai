@@ -1,4 +1,5 @@
 import { formatCurrency, formatPercent } from "@/common/format/currency";
+import { getStateRuleRegistryEntry, type StateRuleStatus } from "@/content/state-rule-registry";
 import { statePages } from "@/content/state-pages";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 
@@ -8,15 +9,28 @@ export interface StateRulesReviewPrep {
   taxYear: 2026;
   basis: "manual_state_marginal_rate";
   manualStateRate: number;
-  selectedState: { code: string; name: string; slug: string; exampleRate: number } | null;
+  selectedState: StateRulesStateExample | null;
   taxableConversionIncrease: number;
   modeledStateTaxFromManualRate: number;
-  supportedStateExamples: { code: string; name: string; slug: string; exampleRate: number }[];
+  supportedStateExamples: StateRulesStateExample[];
+  stateRuleStatus: StateRuleStatus;
+  stateRuleStatusLabel: string;
+  stateRuleBoundaryNote: string;
   amountEstimateStatus: "manual_rate_only";
   summary: string;
   boundaryNote: string;
   missingInputs: string[];
   officialReferences: { label: string; href: string }[];
+}
+
+export interface StateRulesStateExample {
+  code: string;
+  name: string;
+  slug: string;
+  exampleRate: number;
+  ruleStatus: StateRuleStatus;
+  ruleStatusLabel: string;
+  ruleBoundaryNote: string;
 }
 
 const STATE_RULES_OFFICIAL_REFERENCES = [
@@ -61,9 +75,13 @@ export function buildStateRulesReviewPrep(
     code: page.stateCode,
     exampleRate: page.stateTaxRateExample,
     name: page.stateName,
+    ruleBoundaryNote: getStateRuleRegistryEntry(page.slug).boundaryNote,
+    ruleStatus: getStateRuleRegistryEntry(page.slug).status,
+    ruleStatusLabel: getStateRuleRegistryEntry(page.slug).statusLabel,
     slug: page.slug,
   }));
   const selectedState = supportedStateExamples.find((state) => state.slug === input.selectedState) ?? null;
+  const stateRuleEntry = selectedState === null ? getStateRuleRegistryEntry(null) : getStateRuleRegistryEntry(selectedState.slug);
 
   return {
     amountEstimateStatus: "manual_rate_only",
@@ -82,6 +100,9 @@ export function buildStateRulesReviewPrep(
     modeledStateTaxFromManualRate,
     officialReferences: STATE_RULES_OFFICIAL_REFERENCES,
     selectedState,
+    stateRuleBoundaryNote: stateRuleEntry.boundaryNote,
+    stateRuleStatus: stateRuleEntry.status,
+    stateRuleStatusLabel: stateRuleEntry.statusLabel,
     summary: `The calculator used ${
       selectedState === null ? "the manually entered state marginal rate" : `the ${selectedState.name} example rate`
     } of ${formatPercent(
@@ -93,8 +114,8 @@ export function buildStateRulesReviewPrep(
     )}. ${
       selectedState === null
         ? "No supported state example is selected."
-        : `${selectedState.name} is selected as an educational state example.`
-    } The supported state pages are educational examples only; a full state-law engine is not active.`,
+        : `${selectedState.name} is selected as an educational state example with rule status: ${stateRuleEntry.statusLabel}.`
+    } ${stateRuleEntry.boundaryNote} The supported state pages are educational examples only; a full state-law engine is not active.`,
     supportedStateExamples,
     taxableConversionIncrease,
     taxYear: input.taxYear,

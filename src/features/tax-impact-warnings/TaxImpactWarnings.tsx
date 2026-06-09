@@ -276,8 +276,12 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
               ? "None"
               : `${stateRulesPrep.selectedState.name} (${stateRulesPrep.selectedState.code})`}
           </strong>
-          . Manual rate: <strong>{formatPercent(stateRulesPrep.manualStateRate)}</strong>. Modeled state tax from that rate:{" "}
+          . Rule status: <strong>{stateRulesPrep.stateRuleStatusLabel}</strong>. Manual rate:{" "}
+          <strong>{formatPercent(stateRulesPrep.manualStateRate)}</strong>. Modeled state tax from that rate:{" "}
           <strong>{formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate)}</strong>.
+        </p>
+        <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
+          State rule registry boundary: {stateRulesPrep.stateRuleBoundaryNote}
         </p>
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
           {stateRulesPrep.boundaryNote}
@@ -288,7 +292,7 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
           </span>
           <p>
             {stateRulesPrep.supportedStateExamples
-              .map((state) => `${state.name} (${formatPercent(state.exampleRate)})`)
+              .map((state) => `${state.name} (${formatPercent(state.exampleRate)}, ${state.ruleStatusLabel})`)
               .join(", ")}
           </p>
         </div>

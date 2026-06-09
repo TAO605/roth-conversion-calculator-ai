@@ -73,10 +73,14 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("cannot estimate AMT owed");
     expect(packet).toContain("Inputs still needed before any AMT amount review");
     expect(packet).toContain("State rules readiness");
+    expect(packet).toContain("State rule registry status: Manual rate only (manual-only)");
+    expect(packet).toContain("State rule registry boundary");
     expect(packet).toContain("Manual state marginal rate entered: 5%");
     expect(packet).toContain("Modeled state tax from manual rate: $2,950");
     expect(packet).toContain("State amount estimate status: manual_rate_only");
-    expect(packet).toContain("Supported state example pages: California (CA), Texas (TX), Florida (FL), New York (NY), Washington (WA), New Jersey (NJ)");
+    expect(packet).toContain(
+      "Supported state example pages: California (CA, Needs state review), Texas (TX, No broad individual income tax), Florida (FL, No broad individual income tax), New York (NY, Needs state review), Washington (WA, No broad individual income tax), New Jersey (NJ, Needs state review)",
+    );
     expect(packet).toContain("does not determine residency");
     expect(packet).toContain("Inputs still needed before any state-specific amount review");
     expect(packet).toContain("Form 8606 records");
@@ -84,6 +88,7 @@ describe("professional handoff packet", () => {
     expect(packet).not.toMatch(/\byou should convert\b/i);
     expect(packet).not.toMatch(/\bstrongly recommend\b/i);
     expect(packet).not.toMatch(/\b100%\s+accurate\b/i);
+    expect(packet).not.toMatch(/full state-law engine is active|final state tax/i);
   });
 
   it("copies the packet to the clipboard", async () => {

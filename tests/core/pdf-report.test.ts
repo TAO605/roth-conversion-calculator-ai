@@ -75,11 +75,16 @@ describe("print-ready report export", () => {
     expect(html).toContain("Inputs Still Needed Before Any AMT Amount Review");
     expect(html).toContain("IRS Form 6251 Alternative Minimum Tax");
     expect(html).toContain("State Rules Readiness");
+    expect(html).toContain("State rule registry status");
+    expect(html).toContain("Manual rate only (manual-only)");
+    expect(html).toContain("State rule registry boundary");
     expect(html).toContain("Manual state marginal rate entered");
     expect(html).toContain("5%");
     expect(html).toContain("State amount estimate status");
     expect(html).toContain("manual_rate_only");
-    expect(html).toContain("California (CA), Texas (TX), Florida (FL), New York (NY), Washington (WA), New Jersey (NJ)");
+    expect(html).toContain(
+      "California (CA, Needs state review), Texas (TX, No broad individual income tax), Florida (FL, No broad individual income tax), New York (NY, Needs state review), Washington (WA, No broad individual income tax), New Jersey (NJ, Needs state review)",
+    );
     expect(html).toContain("does not determine residency");
     expect(html).toContain("Inputs Still Needed Before Any State-Specific Amount Review");
     expect(html).toContain("IRS state government websites directory");
@@ -88,6 +93,7 @@ describe("print-ready report export", () => {
     expect(html).not.toMatch(/\byou should convert\b/i);
     expect(html).not.toMatch(/\bstrongly recommend\b/i);
     expect(html).not.toMatch(/\b100%\s+accurate\b/i);
+    expect(html).not.toMatch(/full state-law engine is active|final state tax/i);
 
     vi.useRealTimers();
   });

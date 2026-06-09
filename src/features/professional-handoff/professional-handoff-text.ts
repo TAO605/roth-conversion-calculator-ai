@@ -147,12 +147,14 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
         ? "None"
         : `${stateRulesPrep.selectedState.name} (${stateRulesPrep.selectedState.code})`
     }`,
+    `State rule registry status: ${stateRulesPrep.stateRuleStatusLabel} (${stateRulesPrep.stateRuleStatus})`,
+    `State rule registry boundary: ${stateRulesPrep.stateRuleBoundaryNote}`,
     `Manual state marginal rate entered: ${formatPercent(stateRulesPrep.manualStateRate)}`,
     `Taxable conversion income increase: ${formatCurrency(stateRulesPrep.taxableConversionIncrease)}`,
     `Modeled state tax from manual rate: ${formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate)}`,
     `State amount estimate status: ${stateRulesPrep.amountEstimateStatus}`,
     `Supported state example pages: ${stateRulesPrep.supportedStateExamples
-      .map((state) => `${state.name} (${state.code})`)
+      .map((state) => `${state.name} (${state.code}, ${state.ruleStatusLabel})`)
       .join(", ")}`,
     `State rules boundary: ${stateRulesPrep.boundaryNote}`,
     "Inputs still needed before any state-specific amount review:",

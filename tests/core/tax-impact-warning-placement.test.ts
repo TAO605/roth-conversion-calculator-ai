@@ -112,9 +112,12 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("IRS Instructions for Form 6251");
     expect(panel.textContent).toContain("State Rules Readiness");
     expect(panel.textContent).toContain("Manual-rate estimate");
+    expect(panel.textContent).toContain("Rule status");
+    expect(panel.textContent).toContain("Manual rate only");
+    expect(panel.textContent).toContain("State rule registry boundary");
     expect(panel.textContent).toContain("Supported state example pages, not full rules");
-    expect(panel.textContent).toContain("California (9.3%)");
-    expect(panel.textContent).toContain("Texas (0%)");
+    expect(panel.textContent).toContain("California (9.3%, Needs state review)");
+    expect(panel.textContent).toContain("Texas (0%, No broad individual income tax)");
     expect(panel.textContent).toContain("Inputs needed before state-specific amount review");
     expect(panel.textContent).toContain("IRS state government websites directory");
     expect(panel.textContent).toContain("input-triggered review items");
@@ -128,7 +131,12 @@ describe("tax impact warning placement", () => {
     expect(prep.taxableConversionIncrease).toBe(60000);
     expect(prep.modeledStateTaxFromManualRate).toBe(3000);
     expect(prep.amountEstimateStatus).toBe("manual_rate_only");
+    expect(prep.stateRuleStatus).toBe("manual-only");
+    expect(prep.stateRuleStatusLabel).toBe("Manual rate only");
+    expect(prep.stateRuleBoundaryNote).toContain("manually entered state marginal rate");
     expect(prep.supportedStateExamples.map((state) => state.code)).toEqual(["CA", "TX", "FL", "NY", "WA", "NJ"]);
+    expect(prep.supportedStateExamples.find((state) => state.code === "TX")?.ruleStatus).toBe("no-income-tax");
+    expect(prep.supportedStateExamples.find((state) => state.code === "CA")?.ruleStatus).toBe("needs-review");
     expect(prep.summary).toContain("manually entered state marginal rate");
     expect(prep.summary).toContain("$3,000");
     expect(prep.boundaryNote).toContain("does not determine residency");
@@ -139,6 +147,17 @@ describe("tax impact warning placement", () => {
       ]),
     );
     expect(JSON.stringify(prep)).not.toMatch(/full state-law engine is active|you should|strongly recommend/i);
+  });
+
+  it("exposes selected state rule status without activating a full state-law engine", () => {
+    const prep = buildStateRulesReviewPrep({ ...baseInput, selectedState: "washington" }, { ...baseResult, stateTax: 0 });
+
+    expect(prep.selectedState?.code).toBe("WA");
+    expect(prep.stateRuleStatus).toBe("no-income-tax");
+    expect(prep.stateRuleStatusLabel).toBe("No broad individual income tax");
+    expect(prep.stateRuleBoundaryNote).toContain("capital-gains excise tax");
+    expect(prep.summary).toContain("rule status: No broad individual income tax");
+    expect(JSON.stringify(prep)).not.toMatch(/final state tax|complete state-law|full state-law engine is active/i);
   });
 
   it("builds AMT impact review prep without fake AMT owed dollar estimates", () => {
