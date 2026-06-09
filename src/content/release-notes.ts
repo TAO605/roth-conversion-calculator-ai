@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.197",
+    date: "2026-06-09",
+    type: "patch",
+    title: "State rules readiness",
+    summary:
+      "Added a state-rules readiness worksheet that shows the manual state marginal rate, simplified state tax estimate, supported state example pages, and missing residency, state AGI, deductions, credits, exclusions, local tax, and multi-state inputs before any full state-law amount review.",
+    affectedArea:
+      "Tax impact warnings, state rules readiness prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the state-rules readiness worksheet only if an equivalent reviewed boundary still prevents the calculator from implying full state-law modeling from a manually entered state marginal rate.",
+  },
+  {
     version: "1.0.196",
     date: "2026-06-09",
     type: "patch",

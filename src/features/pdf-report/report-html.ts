@@ -6,6 +6,7 @@ import { buildAmtReviewPrep } from "@/features/tax-impact-warnings/amt-review-pr
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
+import { buildStateRulesReviewPrep } from "@/features/tax-impact-warnings/state-rules-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -38,6 +39,7 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
   const niitPrep = buildNiitReviewPrep(input, result);
   const rmdPrep = buildRmdReviewPrep(input);
   const amtPrep = buildAmtReviewPrep(input, result);
+  const stateRulesPrep = buildStateRulesReviewPrep(input, result);
   const generatedAt = new Date().toISOString().slice(0, 10);
 
   return `<!doctype html>
@@ -237,6 +239,25 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
       ${list(amtPrep.missingInputs)}
     </section>
 
+    <section aria-labelledby="state-rules-heading">
+      <h2 id="state-rules-heading">State Rules Readiness</h2>
+      <table>
+        <tbody>
+          ${row("Manual state marginal rate entered", formatPercent(stateRulesPrep.manualStateRate))}
+          ${row("Taxable conversion income increase", formatCurrency(stateRulesPrep.taxableConversionIncrease))}
+          ${row("Modeled state tax from manual rate", formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate))}
+          ${row("State amount estimate status", stateRulesPrep.amountEstimateStatus)}
+          ${row(
+            "Supported state example pages",
+            stateRulesPrep.supportedStateExamples.map((state) => `${state.name} (${state.code})`).join(", "),
+          )}
+          ${row("State rules boundary", stateRulesPrep.boundaryNote)}
+        </tbody>
+      </table>
+      <h2>Inputs Still Needed Before Any State-Specific Amount Review</h2>
+      ${list(stateRulesPrep.missingInputs)}
+    </section>
+
     <section aria-labelledby="sources-heading">
       <h2 id="sources-heading">Review Sources</h2>
       <ul>
@@ -252,6 +273,10 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
         <li><a href="https://www.irs.gov/retirement-plans/retirement-plan-and-ira-required-minimum-distributions-faqs">IRS RMD FAQs</a></li>
         <li><a href="https://www.irs.gov/forms-pubs/about-form-6251">IRS Form 6251 Alternative Minimum Tax</a></li>
         <li><a href="https://www.irs.gov/instructions/i6251">IRS Instructions for Form 6251</a></li>
+        <li><a href="https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites">IRS state government websites directory</a></li>
+        <li><a href="https://www.ftb.ca.gov/">California Franchise Tax Board</a></li>
+        <li><a href="https://www.tax.ny.gov/">New York State Department of Taxation and Finance</a></li>
+        <li><a href="https://www.nj.gov/treasury/taxation/">New Jersey Division of Taxation</a></li>
         <li><a href="https://www.irs.gov/publications/p590a">IRS Publication 590-A</a></li>
         <li><a href="https://www.irs.gov/publications/p590b">IRS Publication 590-B</a></li>
       </ul>

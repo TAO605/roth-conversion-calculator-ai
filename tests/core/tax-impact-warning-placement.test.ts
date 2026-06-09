@@ -11,6 +11,7 @@ import { buildIrmaaReviewPrep, estimateIrmaaPartBFromIncomeProxy } from "@/featu
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
+import { buildStateRulesReviewPrep } from "@/features/tax-impact-warnings/state-rules-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 const baseInput: RothConversionInput = {
@@ -109,8 +110,35 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Inputs needed before AMT amount review");
     expect(panel.textContent).toContain("IRS Form 6251 Alternative Minimum Tax");
     expect(panel.textContent).toContain("IRS Instructions for Form 6251");
+    expect(panel.textContent).toContain("State Rules Readiness");
+    expect(panel.textContent).toContain("Manual-rate estimate");
+    expect(panel.textContent).toContain("Supported state example pages, not full rules");
+    expect(panel.textContent).toContain("California (9.3%)");
+    expect(panel.textContent).toContain("Texas (0%)");
+    expect(panel.textContent).toContain("Inputs needed before state-specific amount review");
+    expect(panel.textContent).toContain("IRS state government websites directory");
     expect(panel.textContent).toContain("input-triggered review items");
     expect(panel.textContent).toContain("Open guide");
+  });
+
+  it("builds state rules readiness from the manual state rate without claiming full state-law modeling", () => {
+    const prep = buildStateRulesReviewPrep(baseInput, baseResult);
+
+    expect(prep.manualStateRate).toBe(0.05);
+    expect(prep.taxableConversionIncrease).toBe(60000);
+    expect(prep.modeledStateTaxFromManualRate).toBe(3000);
+    expect(prep.amountEstimateStatus).toBe("manual_rate_only");
+    expect(prep.supportedStateExamples.map((state) => state.code)).toEqual(["CA", "TX", "FL", "NY", "WA", "NJ"]);
+    expect(prep.summary).toContain("manually entered state marginal rate");
+    expect(prep.summary).toContain("$3,000");
+    expect(prep.boundaryNote).toContain("does not determine residency");
+    expect(prep.missingInputs).toEqual(
+      expect.arrayContaining([
+        "Resident, part-year resident, or nonresident filing status for each state involved during the tax year.",
+        "State adjusted gross income, additions, subtractions, deductions, credits, and retirement-income exclusions.",
+      ]),
+    );
+    expect(JSON.stringify(prep)).not.toMatch(/full state-law engine is active|you should|strongly recommend/i);
   });
 
   it("builds AMT impact review prep without fake AMT owed dollar estimates", () => {

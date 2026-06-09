@@ -74,6 +74,15 @@ describe("print-ready report export", () => {
     expect(html).toContain("cannot estimate AMT owed");
     expect(html).toContain("Inputs Still Needed Before Any AMT Amount Review");
     expect(html).toContain("IRS Form 6251 Alternative Minimum Tax");
+    expect(html).toContain("State Rules Readiness");
+    expect(html).toContain("Manual state marginal rate entered");
+    expect(html).toContain("5%");
+    expect(html).toContain("State amount estimate status");
+    expect(html).toContain("manual_rate_only");
+    expect(html).toContain("California (CA), Texas (TX), Florida (FL), New York (NY), Washington (WA), New Jersey (NJ)");
+    expect(html).toContain("does not determine residency");
+    expect(html).toContain("Inputs Still Needed Before Any State-Specific Amount Review");
+    expect(html).toContain("IRS state government websites directory");
     expect(html).toContain("Medicare.gov Part B costs and IRMAA overview");
     expect(html).toContain(REQUIRED_DISCLAIMER);
     expect(html).not.toMatch(/\byou should convert\b/i);

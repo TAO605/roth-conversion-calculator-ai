@@ -6,6 +6,7 @@ import { buildAmtReviewPrep } from "@/features/tax-impact-warnings/amt-review-pr
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
+import { buildStateRulesReviewPrep } from "@/features/tax-impact-warnings/state-rules-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -23,6 +24,7 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
   const niitPrep = buildNiitReviewPrep(input, result);
   const rmdPrep = buildRmdReviewPrep(input);
   const amtPrep = buildAmtReviewPrep(input, result);
+  const stateRulesPrep = buildStateRulesReviewPrep(input, result);
 
   return [
     "Roth Conversion Professional Review Packet",
@@ -138,6 +140,18 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `AMT boundary: ${amtPrep.boundaryNote}`,
     "Inputs still needed before any AMT amount review:",
     ...amtPrep.missingInputs.map((item) => `- ${item}`),
+    "",
+    "State rules readiness",
+    `Manual state marginal rate entered: ${formatPercent(stateRulesPrep.manualStateRate)}`,
+    `Taxable conversion income increase: ${formatCurrency(stateRulesPrep.taxableConversionIncrease)}`,
+    `Modeled state tax from manual rate: ${formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate)}`,
+    `State amount estimate status: ${stateRulesPrep.amountEstimateStatus}`,
+    `Supported state example pages: ${stateRulesPrep.supportedStateExamples
+      .map((state) => `${state.name} (${state.code})`)
+      .join(", ")}`,
+    `State rules boundary: ${stateRulesPrep.boundaryNote}`,
+    "Inputs still needed before any state-specific amount review:",
+    ...stateRulesPrep.missingInputs.map((item) => `- ${item}`),
     "",
     "Documents and questions to bring",
     "- Most recent federal and state tax returns.",

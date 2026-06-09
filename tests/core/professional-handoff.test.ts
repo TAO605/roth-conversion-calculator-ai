@@ -72,6 +72,13 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("AMT amount estimate status: missing_form_6251_inputs");
     expect(packet).toContain("cannot estimate AMT owed");
     expect(packet).toContain("Inputs still needed before any AMT amount review");
+    expect(packet).toContain("State rules readiness");
+    expect(packet).toContain("Manual state marginal rate entered: 5%");
+    expect(packet).toContain("Modeled state tax from manual rate: $2,950");
+    expect(packet).toContain("State amount estimate status: manual_rate_only");
+    expect(packet).toContain("Supported state example pages: California (CA), Texas (TX), Florida (FL), New York (NY), Washington (WA), New Jersey (NJ)");
+    expect(packet).toContain("does not determine residency");
+    expect(packet).toContain("Inputs still needed before any state-specific amount review");
     expect(packet).toContain("Form 8606 records");
     expect(packet).toContain(REQUIRED_DISCLAIMER);
     expect(packet).not.toMatch(/\byou should convert\b/i);

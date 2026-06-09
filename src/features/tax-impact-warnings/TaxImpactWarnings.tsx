@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { AlertTriangle, CircleHelp } from "lucide-react";
-import { formatCurrencyWithCents } from "@/common/format/currency";
+import { formatCurrency, formatCurrencyWithCents, formatPercent } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildAmtReviewPrep } from "@/features/tax-impact-warnings/amt-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
+import { buildStateRulesReviewPrep } from "@/features/tax-impact-warnings/state-rules-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
@@ -19,6 +20,7 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
   const niitPrep = buildNiitReviewPrep(input, result);
   const rmdPrep = buildRmdReviewPrep(input);
   const amtPrep = buildAmtReviewPrep(input, result);
+  const stateRulesPrep = buildStateRulesReviewPrep(input, result);
 
   return (
     <aside
@@ -247,6 +249,55 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         </div>
         <div className="mt-2 flex flex-wrap gap-3">
           {amtPrep.officialReferences.map((reference) => (
+            <a
+              className="font-semibold text-systemBlue hover:text-blue-700"
+              href={reference.href}
+              key={reference.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {reference.label}
+            </a>
+          ))}
+        </div>
+      </section>
+      <section className="mt-3 rounded border border-lime-100 bg-lime-50 p-3 text-xs leading-5 text-neutral-700 dark:border-lime-400/30 dark:bg-neutral-950 dark:text-neutral-200">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{stateRulesPrep.title}</h4>
+          <span className="rounded border border-lime-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-lime-800 dark:border-lime-400/30 dark:bg-neutral-950 dark:text-lime-200">
+            Manual-rate estimate
+          </span>
+        </div>
+        <p className="mt-2">{stateRulesPrep.summary}</p>
+        <p className="mt-2">
+          Manual rate: <strong>{formatPercent(stateRulesPrep.manualStateRate)}</strong>. Modeled state tax from that
+          rate: <strong>{formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate)}</strong>.
+        </p>
+        <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
+          {stateRulesPrep.boundaryNote}
+        </p>
+        <div className="mt-2 grid gap-1">
+          <span className="font-semibold text-neutral-950 dark:text-white">
+            Supported state example pages, not full rules:
+          </span>
+          <p>
+            {stateRulesPrep.supportedStateExamples
+              .map((state) => `${state.name} (${formatPercent(state.exampleRate)})`)
+              .join(", ")}
+          </p>
+        </div>
+        <div className="mt-2 grid gap-1">
+          <span className="font-semibold text-neutral-950 dark:text-white">
+            Inputs needed before state-specific amount review:
+          </span>
+          <ul className="list-disc space-y-1 pl-4">
+            {stateRulesPrep.missingInputs.slice(0, 4).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-3">
+          {stateRulesPrep.officialReferences.slice(0, 4).map((reference) => (
             <a
               className="font-semibold text-systemBlue hover:text-blue-700"
               href={reference.href}
