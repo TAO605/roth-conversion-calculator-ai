@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AlertTriangle, CircleHelp } from "lucide-react";
+import { formatCurrencyWithCents } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
@@ -37,6 +38,19 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         <p className="mt-2">
           Usual lookback tax year: <strong>{irmaaPrep.usualLookbackTaxYear}</strong>. {irmaaPrep.thresholdLabel}
         </p>
+        <div className="mt-2 rounded border border-blue-100 bg-white p-3 dark:border-blue-400/30 dark:bg-neutral-950">
+          <p className="font-semibold text-neutral-950 dark:text-white">2026 Part B proxy preview</p>
+          <p className="mt-1">
+            Using the calculator income proxy, the CMS 2026 full Part B table maps this scenario to{" "}
+            <strong>{formatCurrencyWithCents(irmaaPrep.partBEstimate.totalMonthlyPremium)}</strong> per month, including{" "}
+            <strong>{formatCurrencyWithCents(irmaaPrep.partBEstimate.monthlyAdjustmentAmount)}</strong> of IRMAA
+            adjustment.
+          </p>
+          <p className="mt-1">{irmaaPrep.partBEstimate.bracketLabel}.</p>
+          <p className="mt-1 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
+            {irmaaPrep.partBEstimate.boundaryNote}
+          </p>
+        </div>
         <div className="mt-2 grid gap-1">
           <span className="font-semibold text-neutral-950 dark:text-white">Inputs still needed before amount review:</span>
           <ul className="list-disc space-y-1 pl-4">

@@ -5,7 +5,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
-import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import { buildIrmaaReviewPrep, estimateIrmaaPartBFromIncomeProxy } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildTaxImpactReviewItems } from "@/features/tax-impact-warnings/tax-impact-review";
 
 const baseInput: RothConversionInput = {
@@ -69,6 +69,11 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Tax Impact Warnings");
     expect(panel.textContent).toContain("Medicare IRMAA");
     expect(panel.textContent).toContain("IRMAA Review Prep");
+    expect(panel.textContent).toContain("2026 Part B proxy preview");
+    expect(panel.textContent).toContain("$649.20");
+    expect(panel.textContent).toContain("$446.30");
+    expect(panel.textContent).toContain("of IRMAA adjustment");
+    expect(panel.textContent).toContain("not SSA's actual lookback-year MAGI determination");
     expect(panel.textContent).toContain("Usual lookback tax year");
     expect(panel.textContent).toContain("2024");
     expect(panel.textContent).toContain("Inputs still needed before amount review");
@@ -94,7 +99,7 @@ describe("tax impact warning placement", () => {
     expect(items.find((item) => item.id === "niit")?.reason).not.toContain("NIIT amount");
   });
 
-  it("builds IRMAA review prep without calculating Medicare premium amounts", () => {
+  it("builds IRMAA review prep with a bounded Part B proxy preview", () => {
     const prep = buildIrmaaReviewPrep(baseInput, baseResult);
 
     expect(prep.premiumYear).toBe(2026);
@@ -103,6 +108,10 @@ describe("tax impact warning placement", () => {
     expect(prep.thresholdLabel).toContain("$109,000");
     expect(prep.summary).toContain("income proxy after conversion");
     expect(prep.summary).toContain("not this calculator's taxable-income input");
+    expect(prep.partBEstimate.totalMonthlyPremium).toBe(649.2);
+    expect(prep.partBEstimate.monthlyAdjustmentAmount).toBe(446.3);
+    expect(prep.partBEstimate.boundaryNote).toContain("not SSA's actual lookback-year MAGI determination");
+    expect(prep.partBEstimate.sourceHref).toContain("cms.gov");
     expect(prep.missingInputs).toEqual(
       expect.arrayContaining([
         "Medicare enrollment status and whether Part B or Part D applies.",
@@ -110,6 +119,14 @@ describe("tax impact warning placement", () => {
       ]),
     );
     expect(JSON.stringify(prep)).not.toMatch(/surcharge amount|premium increase|you should|strongly recommend/i);
+  });
+
+  it("maps 2026 Part B IRMAA brackets from official CMS amounts", () => {
+    expect(estimateIrmaaPartBFromIncomeProxy("single", 108000).totalMonthlyPremium).toBe(202.9);
+    expect(estimateIrmaaPartBFromIncomeProxy("single", 150000).totalMonthlyPremium).toBe(405.8);
+    expect(estimateIrmaaPartBFromIncomeProxy("married_joint", 500000).totalMonthlyPremium).toBe(649.2);
+    expect(estimateIrmaaPartBFromIncomeProxy("married_separate", 200000).totalMonthlyPremium).toBe(649.2);
+    expect(estimateIrmaaPartBFromIncomeProxy("married_separate", 400000).totalMonthlyPremium).toBe(689.9);
   });
 
   it("keeps the warnings directly inside the results card before AI, projection, and advanced details", () => {

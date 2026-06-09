@@ -7,11 +7,11 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.190",
+      version: "1.0.191",
       type: "patch",
-      title: "Projection result boundary copy",
+      title: "IRMAA Part B proxy estimator",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("not guaranteed outcomes");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("official CMS");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

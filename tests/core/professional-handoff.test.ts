@@ -39,6 +39,9 @@ describe("professional handoff packet", () => {
     expect(packet).toContain("Medicare IRMAA");
     expect(packet).toContain("IRMAA review prep");
     expect(packet).toContain("Usual lookback tax year to verify: 2024");
+    expect(packet).toContain("2026 Part B proxy preview");
+    expect(packet).toContain("$649.20 per month using calculator income proxy");
+    expect(packet).toContain("not SSA's actual lookback-year MAGI determination");
     expect(packet).toContain("Inputs still needed before any premium amount review");
     expect(packet).toContain("NIIT MAGI-side review");
     expect(packet).toContain("Form 8606 records");

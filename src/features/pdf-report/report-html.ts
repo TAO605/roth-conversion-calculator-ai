@@ -1,4 +1,4 @@
-import { formatCurrency, formatPercent } from "@/common/format/currency";
+import { formatCurrency, formatCurrencyWithCents, formatPercent } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
@@ -116,6 +116,14 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
           ${row("Premium year context", String(irmaaPrep.premiumYear))}
           ${row("Usual lookback tax year to verify", String(irmaaPrep.usualLookbackTaxYear))}
           ${row("Calculator income proxy after conversion", formatCurrency(irmaaPrep.incomeProxy))}
+          ${row(
+            "2026 Part B proxy preview",
+            `${formatCurrencyWithCents(irmaaPrep.partBEstimate.totalMonthlyPremium)} per month using calculator income proxy; includes ${formatCurrencyWithCents(
+              irmaaPrep.partBEstimate.monthlyAdjustmentAmount,
+            )} of IRMAA adjustment in the CMS full Part B table.`,
+          )}
+          ${row("Part B proxy bracket", irmaaPrep.partBEstimate.bracketLabel)}
+          ${row("Part B proxy boundary", irmaaPrep.partBEstimate.boundaryNote)}
           ${row("IRMAA threshold note", irmaaPrep.thresholdLabel)}
           ${row("Prep summary", irmaaPrep.summary)}
         </tbody>

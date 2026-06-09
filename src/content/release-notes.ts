@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.191",
+    date: "2026-06-08",
+    type: "patch",
+    title: "IRMAA Part B proxy estimator",
+    summary:
+      "Added a bounded 2026 Medicare Part B IRMAA proxy preview using official CMS monthly premium and adjustment amounts, while clearly stating that the preview uses calculator income proxy rather than SSA lookback-year MAGI.",
+    affectedArea:
+      "Tax impact warnings, IRMAA review prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the Part B proxy preview and keep the prior IRMAA review-prep warning if CMS amounts or professional-review boundaries cannot be verified.",
+  },
+  {
     version: "1.0.190",
     date: "2026-06-08",
     type: "patch",

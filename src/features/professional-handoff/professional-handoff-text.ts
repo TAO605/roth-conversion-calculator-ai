@@ -1,4 +1,4 @@
-import { formatCurrency, formatPercent } from "@/common/format/currency";
+import { formatCurrency, formatCurrencyWithCents, formatPercent } from "@/common/format/currency";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
@@ -56,6 +56,13 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `Premium year reviewed by the calculator context: ${irmaaPrep.premiumYear}`,
     `Usual lookback tax year to verify: ${irmaaPrep.usualLookbackTaxYear}`,
     `Calculator income proxy after conversion: ${formatCurrency(irmaaPrep.incomeProxy)}`,
+    `2026 Part B proxy preview: ${formatCurrencyWithCents(
+      irmaaPrep.partBEstimate.totalMonthlyPremium,
+    )} per month using calculator income proxy; includes ${formatCurrencyWithCents(
+      irmaaPrep.partBEstimate.monthlyAdjustmentAmount,
+    )} of IRMAA adjustment in the CMS full Part B table.`,
+    `Part B proxy bracket: ${irmaaPrep.partBEstimate.bracketLabel}`,
+    `Part B proxy boundary: ${irmaaPrep.partBEstimate.boundaryNote}`,
     `IRMAA threshold note: ${irmaaPrep.thresholdLabel}`,
     `IRMAA prep summary: ${irmaaPrep.summary}`,
     "Inputs still needed before any premium amount review:",

@@ -150,3 +150,4 @@
 - [done] Guard invalid share/localStorage restore and valid-input result recovery
 - [done] Rename primary result total from upfront tax to upfront cost
 - [done] Add visible break-even and projection outcome boundary copy
+- [done] Add bounded 2026 IRMAA Part B proxy estimator

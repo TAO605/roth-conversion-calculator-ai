@@ -40,6 +40,9 @@ describe("print-ready report export", () => {
     expect(html).toContain("Tax Impact Review Items");
     expect(html).toContain("IRMAA Review Prep");
     expect(html).toContain("Usual lookback tax year to verify");
+    expect(html).toContain("2026 Part B proxy preview");
+    expect(html).toContain("$649.20 per month using calculator income proxy");
+    expect(html).toContain("not SSA&#39;s actual lookback-year MAGI determination");
     expect(html).toContain("Medicare.gov Part B costs and IRMAA overview");
     expect(html).toContain(REQUIRED_DISCLAIMER);
     expect(html).not.toMatch(/\byou should convert\b/i);
