@@ -29,6 +29,7 @@ const initialInput: RothConversionInput = {
   basis: 0,
   filingStatus: "single",
   currentTaxableIncome: 85000,
+  selectedState: null,
   stateMarginalTaxRate: 0,
   age: 45,
   penaltyException: false,

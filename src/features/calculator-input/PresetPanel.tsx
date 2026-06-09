@@ -43,10 +43,10 @@ export function PresetPanel({ value, onChange }: PresetPanelProps) {
           onChange={(event) => {
             const preset = statePresets.find((item) => item.slug === event.target.value);
             if (preset) {
-              onChange((current) => ({ ...current, stateMarginalTaxRate: preset.rate }));
+              onChange((current) => ({ ...current, selectedState: preset.slug, stateMarginalTaxRate: preset.rate }));
             }
           }}
-          value=""
+          value={value.selectedState ?? ""}
         >
           <option value="">Choose a state example</option>
           {statePresets.map((preset) => (

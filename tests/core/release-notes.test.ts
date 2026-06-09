@@ -7,11 +7,11 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.197",
+      version: "1.0.198",
       type: "patch",
-      title: "State rules readiness",
+      title: "Selected state data model",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("state-rules readiness");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("selectedState");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

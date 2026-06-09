@@ -40,13 +40,25 @@ describe("calculator persistence and share URLs", () => {
     const merged = mergeCalculatorInput(defaults, {
       conversionAmount: 75000,
       filingStatus: "married_joint",
+      selectedState: "new-york",
       taxPaymentMethod: "withhold_from_ira",
     });
 
     expect(merged.conversionAmount).toBe(75000);
     expect(merged.filingStatus).toBe("married_joint");
+    expect(merged.selectedState).toBe("new-york");
     expect(merged.taxPaymentMethod).toBe("withhold_from_ira");
     expect(merged.taxYear).toBe(2026);
+  });
+
+  it("drops unsupported selectedState values from decoded share or storage payloads", () => {
+    const merged = mergeCalculatorInput(defaults, {
+      selectedState: "not-a-supported-state",
+      stateMarginalTaxRate: 0.08,
+    });
+
+    expect(merged.selectedState).toBeNull();
+    expect(merged.stateMarginalTaxRate).toBe(0.08);
   });
 
   it("builds a share URL with hash encoded calculator input", () => {

@@ -8,6 +8,7 @@ export interface StateRulesReviewPrep {
   taxYear: 2026;
   basis: "manual_state_marginal_rate";
   manualStateRate: number;
+  selectedState: { code: string; name: string; slug: string; exampleRate: number } | null;
   taxableConversionIncrease: number;
   modeledStateTaxFromManualRate: number;
   supportedStateExamples: { code: string; name: string; slug: string; exampleRate: number }[];
@@ -62,6 +63,7 @@ export function buildStateRulesReviewPrep(
     name: page.stateName,
     slug: page.slug,
   }));
+  const selectedState = supportedStateExamples.find((state) => state.slug === input.selectedState) ?? null;
 
   return {
     amountEstimateStatus: "manual_rate_only",
@@ -79,13 +81,20 @@ export function buildStateRulesReviewPrep(
     ],
     modeledStateTaxFromManualRate,
     officialReferences: STATE_RULES_OFFICIAL_REFERENCES,
-    summary: `The calculator used the manually entered state marginal rate of ${formatPercent(
+    selectedState,
+    summary: `The calculator used ${
+      selectedState === null ? "the manually entered state marginal rate" : `the ${selectedState.name} example rate`
+    } of ${formatPercent(
       manualStateRate,
     )} against ${formatCurrency(
       taxableConversionIncrease,
     )} of taxable conversion income, producing a simplified state tax estimate of ${formatCurrency(
       modeledStateTaxFromManualRate,
-    )}. The supported state pages are educational examples only; a full state-law engine is not active.`,
+    )}. ${
+      selectedState === null
+        ? "No supported state example is selected."
+        : `${selectedState.name} is selected as an educational state example.`
+    } The supported state pages are educational examples only; a full state-law engine is not active.`,
     supportedStateExamples,
     taxableConversionIncrease,
     taxYear: input.taxYear,

@@ -32,12 +32,29 @@ describe("state tax shortcuts", () => {
 
     fireEvent.change(stateShortcut, { target: { value: "california" } });
     expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
-    expect(onChange.mock.lastCall?.[0](input)).toMatchObject({ stateMarginalTaxRate: 0.093 });
+    expect(onChange.mock.lastCall?.[0](input)).toMatchObject({
+      selectedState: "california",
+      stateMarginalTaxRate: 0.093,
+    });
 
     fireEvent.change(stateShortcut, { target: { value: "texas" } });
     expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
     expect(onChange.mock.lastCall?.[0]({ ...input, stateMarginalTaxRate: 0.093 })).toMatchObject({
+      selectedState: "texas",
       stateMarginalTaxRate: 0,
+    });
+  });
+
+  it("clears selectedState when the state marginal rate is manually edited", () => {
+    const onChange = vi.fn();
+
+    render(React.createElement(CalculatorInput, { value: { ...input, selectedState: "california", stateMarginalTaxRate: 0.093 }, onChange }));
+
+    fireEvent.change(screen.getByLabelText(/state marginal tax rate/i), { target: { value: "4.5" } });
+
+    expect(onChange).toHaveBeenLastCalledWith(expect.any(Function));
+    expect(onChange.mock.lastCall?.[0]({ ...input, selectedState: "california", stateMarginalTaxRate: 0.093 })).toMatchObject({
+      selectedState: null,
     });
   });
 });

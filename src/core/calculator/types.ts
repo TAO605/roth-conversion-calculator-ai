@@ -23,6 +23,7 @@ export interface RothConversionInput {
   basis: number;
   filingStatus: FilingStatus;
   currentTaxableIncome: number;
+  selectedState?: string | null;
   stateMarginalTaxRate: number;
   age: number;
   penaltyException: boolean;

@@ -142,6 +142,11 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     ...amtPrep.missingInputs.map((item) => `- ${item}`),
     "",
     "State rules readiness",
+    `Selected state example: ${
+      stateRulesPrep.selectedState === null
+        ? "None"
+        : `${stateRulesPrep.selectedState.name} (${stateRulesPrep.selectedState.code})`
+    }`,
     `Manual state marginal rate entered: ${formatPercent(stateRulesPrep.manualStateRate)}`,
     `Taxable conversion income increase: ${formatCurrency(stateRulesPrep.taxableConversionIncrease)}`,
     `Modeled state tax from manual rate: ${formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate)}`,

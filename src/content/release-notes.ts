@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.198",
+    date: "2026-06-09",
+    type: "patch",
+    title: "Selected state data model",
+    summary:
+      "Added a selectedState calculator input so state shortcuts, share links, local storage, state readiness warnings, reports, and CPA handoff can carry the selected state example separately from the manually editable state marginal tax rate.",
+    affectedArea:
+      "Calculator input model, state shortcut selector, share and localStorage merge, state rules readiness prep, report export, professional handoff packet, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove selectedState only if state shortcut selection still cannot be confused with a manually edited state marginal tax rate and future state-rule branches retain another validated state identifier.",
+  },
+  {
     version: "1.0.197",
     date: "2026-06-09",
     type: "patch",

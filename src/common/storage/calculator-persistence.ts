@@ -1,13 +1,19 @@
 import { decodeShareCode, encodeShareCode } from "@/common/storage/share-code";
+import { statePages } from "@/content/state-pages";
 import type { FilingStatus, RothConversionInput, TaxPaymentMethod } from "@/core/calculator/types";
 
 const STORAGE_KEY = "roth-conversion-calculator:v1";
 
 const filingStatuses = new Set<FilingStatus>(["single", "married_joint", "married_separate", "head_of_household"]);
 const taxPaymentMethods = new Set<TaxPaymentMethod>(["outside_funds", "withhold_from_ira", "not_sure"]);
+const stateSlugs = new Set(statePages.map((page) => page.slug));
 
 function finiteNumber(value: unknown, fallback: number): number {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+}
+
+function selectedState(value: unknown, fallback: string | null | undefined): string | null {
+  return typeof value === "string" && stateSlugs.has(value) ? value : fallback ?? null;
 }
 
 export function mergeCalculatorInput(
@@ -21,6 +27,7 @@ export function mergeCalculatorInput(
     filingStatus:
       partial.filingStatus && filingStatuses.has(partial.filingStatus) ? partial.filingStatus : defaults.filingStatus,
     currentTaxableIncome: finiteNumber(partial.currentTaxableIncome, defaults.currentTaxableIncome),
+    selectedState: selectedState(partial.selectedState, defaults.selectedState),
     stateMarginalTaxRate: finiteNumber(partial.stateMarginalTaxRate, defaults.stateMarginalTaxRate),
     age: finiteNumber(partial.age, defaults.age),
     penaltyException:

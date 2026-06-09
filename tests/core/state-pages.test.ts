@@ -30,6 +30,7 @@ describe("state SEO pages", () => {
 
     expect(href.startsWith("/#")).toBe(true);
     expect(decodeShareCode(hash)).toMatchObject({
+      selectedState: "california",
       stateMarginalTaxRate: 0.093,
       taxYear: 2026,
     });

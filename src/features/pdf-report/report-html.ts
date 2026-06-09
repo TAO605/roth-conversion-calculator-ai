@@ -243,6 +243,12 @@ export function buildReportHtml(input: RothConversionInput, result: RothConversi
       <h2 id="state-rules-heading">State Rules Readiness</h2>
       <table>
         <tbody>
+          ${row(
+            "Selected state example",
+            stateRulesPrep.selectedState === null
+              ? "None"
+              : `${stateRulesPrep.selectedState.name} (${stateRulesPrep.selectedState.code})`,
+          )}
           ${row("Manual state marginal rate entered", formatPercent(stateRulesPrep.manualStateRate))}
           ${row("Taxable conversion income increase", formatCurrency(stateRulesPrep.taxableConversionIncrease))}
           ${row("Modeled state tax from manual rate", formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate))}

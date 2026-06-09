@@ -92,7 +92,13 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
             value={percentDisplayValue(value.stateMarginalTaxRate)}
             error={errors.stateMarginalTaxRate}
             description="Enter 0 for no-income-tax states."
-            onChange={(event) => update("stateMarginalTaxRate", numberValue(event.target.value) / 100)}
+            onChange={(event) =>
+              onChange((current) => ({
+                ...current,
+                selectedState: null,
+                stateMarginalTaxRate: numberValue(event.target.value) / 100,
+              }))
+            }
           />
           <TextField
             label="Traditional IRA balance"

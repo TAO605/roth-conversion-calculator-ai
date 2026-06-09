@@ -157,3 +157,4 @@
 - [done] Add bounded RMD Uniform Lifetime preview
 - [done] Add AMT impact amount-readiness worksheet
 - [done] Add state rules readiness worksheet
+- [done] Add selected state data model for future state rules
