@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { finalizeAiAnswer, validateAiExplainRequest } from "@/core/compliance/ai-compliance-gateway";
+import { verifyAiResponse } from "@/core/compliance/ai-response-verifier";
 import type { RothConversionInput, RothConversionResult } from "@/core/calculator/types";
 import { createOpenAiExplanation } from "@/core/ai/openai-provider";
 import {
@@ -100,8 +101,9 @@ export async function POST(request: Request) {
 
   const apiKey = process.env.OPENAI_API_KEY;
   const paidModelEnabled = process.env.AI_EXPLAINER_PAID_MODEL_ENABLED === "true";
+  const fallbackAnswer = finalizeAiAnswer(fallbackExplanation);
 
-  if (paidModelEnabled && apiKey) {
+  if (paidModelEnabled && apiKey && result) {
     try {
       const model = process.env.OPENAI_MODEL || "gpt-5";
       const answer = await createOpenAiExplanation({
@@ -110,23 +112,79 @@ export async function POST(request: Request) {
         question,
         calculatorSummary: fallbackExplanation,
       });
+      const finalizedAnswer = finalizeAiAnswer(answer || fallbackExplanation);
+      const verification = verifyAiResponse(finalizedAnswer, result);
+
+      if (!verification.ok) {
+        return NextResponse.json(
+          {
+            answer: fallbackAnswer,
+            verifier: {
+              ok: false,
+              reasons: verification.reasons,
+            },
+          },
+          {
+            headers: {
+              "X-AI-Provider": "fallback",
+              "X-AI-Verifier": "failed",
+              "X-AI-Verifier-Reasons": verification.reasons.join(","),
+              "X-RateLimit-Remaining": String(rateLimit.remaining),
+            },
+          },
+        );
+      }
 
       return NextResponse.json(
-        { answer: finalizeAiAnswer(answer || fallbackExplanation) },
-        { headers: { "X-AI-Provider": "openai", "X-RateLimit-Remaining": String(rateLimit.remaining) } },
+        {
+          answer: finalizedAnswer,
+          verifier: {
+            ok: true,
+            reasons: [],
+          },
+        },
+        {
+          headers: {
+            "X-AI-Provider": "openai",
+            "X-AI-Verifier": "passed",
+            "X-RateLimit-Remaining": String(rateLimit.remaining),
+          },
+        },
       );
     } catch {
       return NextResponse.json(
-        { answer: finalizeAiAnswer(fallbackExplanation) },
-        { headers: { "X-AI-Provider": "fallback", "X-RateLimit-Remaining": String(rateLimit.remaining) } },
+        {
+          answer: fallbackAnswer,
+          verifier: {
+            ok: true,
+            reasons: [],
+          },
+        },
+        {
+          headers: {
+            "X-AI-Provider": "fallback",
+            "X-AI-Verifier": "fallback",
+            "X-RateLimit-Remaining": String(rateLimit.remaining),
+          },
+        },
       );
     }
   }
 
   return NextResponse.json(
     {
-      answer: finalizeAiAnswer(fallbackExplanation),
+      answer: fallbackAnswer,
+      verifier: {
+        ok: true,
+        reasons: [],
+      },
     },
-    { headers: { "X-AI-Provider": "fallback", "X-RateLimit-Remaining": String(rateLimit.remaining) } },
+    {
+      headers: {
+        "X-AI-Provider": "fallback",
+        "X-AI-Verifier": "fallback",
+        "X-RateLimit-Remaining": String(rateLimit.remaining),
+      },
+    },
   );
 }

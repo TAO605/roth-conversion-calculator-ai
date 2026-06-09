@@ -7,11 +7,11 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.202",
+      version: "1.0.203",
       type: "patch",
-      title: "State readiness completeness scoring",
+      title: "AI response verifier",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("missing fields");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("deterministic");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

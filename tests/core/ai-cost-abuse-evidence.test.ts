@@ -36,6 +36,8 @@ describe("AI cost abuse evidence command", () => {
     expect(scriptSource).toContain("crossOriginProbeBlocked");
     expect(scriptSource).toContain("homepageCspBlocksBrowserOpenAi");
     expect(scriptSource).toContain("paidModelFuseRetained");
+    expect(scriptSource).toContain("responseVerifierRetained");
+    expect(scriptSource).toContain("sameOriginFallbackVerifierRetained");
     expect(scriptSource).toContain("Provider billing or usage consoles remain the source of truth");
     expect(scriptSource).not.toContain("vercel logs");
     expect(scriptSource).not.toMatch(/sk-[A-Za-z0-9_-]+/);

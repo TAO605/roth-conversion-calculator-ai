@@ -15,6 +15,9 @@ describe("AI API security and cost guard", () => {
     expect(routeSource).toContain("isAllowedAiRequestOrigin");
     expect(routeSource).toContain("origin_blocked");
     expect(routeSource).toContain("X-AI-Provider");
+    expect(routeSource).toContain("verifyAiResponse");
+    expect(routeSource).toContain("X-AI-Verifier");
+    expect(routeSource).toContain("X-AI-Verifier-Reasons");
   });
 
   it("does not grant browser connect-src access to the OpenAI API", () => {

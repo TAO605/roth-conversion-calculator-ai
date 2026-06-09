@@ -1,6 +1,27 @@
 import { describe, expect, it } from "vitest";
 import { appendDisclaimer, classifyAiQuestion, containsForbiddenAdvice } from "@/core/compliance/ai-guardrails";
+import { verifyAiResponse } from "@/core/compliance/ai-response-verifier";
+import { calculateRothConversion } from "@/core/calculator/roth-conversion";
+import type { RothConversionInput } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
+
+const input: RothConversionInput = {
+  age: 64,
+  basis: 5000,
+  conversionAmount: 60000,
+  currentTaxableIncome: 195000,
+  expectedAnnualReturn: 0.06,
+  filingStatus: "single",
+  inflationRate: 0.025,
+  penaltyException: false,
+  retirementAge: 65,
+  retirementMarginalTaxRate: 0.22,
+  stateMarginalTaxRate: 0.05,
+  taxPaymentMethod: "outside_funds",
+  taxYear: 2026,
+  traditionalIraBalance: 300000,
+  withheldForTaxes: 0,
+};
 
 describe("AI guardrails", () => {
   it("rejects personalized conversion decisions", () => {
@@ -33,5 +54,28 @@ describe("AI guardrails", () => {
 
   it("appends the required disclaimer", () => {
     expect(appendDisclaimer("Educational explanation.")).toContain(REQUIRED_DISCLAIMER);
+  });
+
+  it("verifies AI answers for disclaimer, advice language, sensitive data, and unsupported dollar amounts", () => {
+    const result = calculateRothConversion(input);
+    const safe = verifyAiResponse(
+      `The calculator estimates a taxable conversion of $59,000 and an upfront cost of $21,288. ${REQUIRED_DISCLAIMER}`,
+      result,
+    );
+    const unsafe = verifyAiResponse(
+      `You should convert $123,456. My SSN is 123-45-6789.`,
+      result,
+    );
+
+    expect(safe).toMatchObject({
+      ok: true,
+      reasons: [],
+      unsupportedDollarAmounts: [],
+    });
+    expect(unsafe.ok).toBe(false);
+    expect(unsafe.reasons).toEqual(
+      expect.arrayContaining(["forbidden_advice", "sensitive_data", "unsupported_dollar_amount", "missing_disclaimer"]),
+    );
+    expect(unsafe.unsupportedDollarAmounts).toContain("$123,456");
   });
 });

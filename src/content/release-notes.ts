@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.203",
+    date: "2026-06-09",
+    type: "patch",
+    title: "AI response verifier",
+    summary:
+      "Added a deterministic AI response verifier so paid-model explainer output must pass advice-language, sensitive-data, disclaimer, length, and calculator-dollar consistency checks before it can be returned; otherwise the endpoint falls back to the static educational explanation.",
+    affectedArea:
+      "AI explainer API route, AI response verifier, AI security evidence, release notes, feature registry, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the verifier only if paid-model explainer output retains an equivalent deterministic pass/fail guard before any model-generated answer reaches users.",
+  },
+  {
     version: "1.0.202",
     date: "2026-06-09",
     type: "patch",

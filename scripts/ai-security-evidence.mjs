@@ -66,6 +66,48 @@ async function postCrossOriginProbe(baseUrl) {
   };
 }
 
+async function postSameOriginProbe(baseUrl) {
+  const origin = baseUrl.replace(/\/$/, "");
+  const response = await fetch(`${origin}/api/ai/explain`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: origin,
+    },
+    body: JSON.stringify({
+      question: "What does the Roth conversion break-even estimate mean?",
+      input: { taxPaymentMethod: "outside_funds" },
+      result: {
+        afterTaxDifference: 0,
+        bracketImpact: {
+          incomeTaxedInHigherBrackets: 0,
+        },
+        breakEvenYear: null,
+        earlyDistributionPenalty: 0,
+        federalTax: 2200,
+        stateTax: 0,
+        taxableConversion: 10000,
+        totalUpfrontCost: 2200,
+      },
+    }),
+  });
+  let verifierOk = null;
+
+  try {
+    const payload = await response.json();
+    verifierOk = typeof payload.verifier?.ok === "boolean" ? payload.verifier.ok : null;
+  } catch {
+    verifierOk = null;
+  }
+
+  return {
+    provider: response.headers.get("x-ai-provider") || "",
+    status: response.status,
+    verifier: response.headers.get("x-ai-verifier") || "",
+    verifierOk,
+  };
+}
+
 function sourceChecks() {
   const routeSource = readSource("src/app/api/ai/explain/route.ts");
   const nextConfigSource = readSource("next.config.ts");
@@ -82,6 +124,10 @@ function sourceChecks() {
       routeSource.includes('process.env.AI_EXPLAINER_PAID_MODEL_ENABLED === "true"') &&
       routeSource.includes("paidModelEnabled && apiKey"),
     rateLimitRetained: routeSource.includes("createInMemoryRateLimiter") && routeSource.includes("getAiExplainerMaxRequestsPerHour"),
+    responseVerifierRetained:
+      routeSource.includes("verifyAiResponse") &&
+      routeSource.includes("X-AI-Verifier") &&
+      routeSource.includes("X-AI-Verifier-Reasons"),
   };
 }
 
@@ -90,6 +136,7 @@ async function run() {
   const source = sourceChecks();
   const homepage = await fetchHomepage(args.baseUrl);
   const crossOriginProbe = await postCrossOriginProbe(args.baseUrl);
+  const sameOriginProbe = await postSameOriginProbe(args.baseUrl);
 
   const checks = {
     ...source,
@@ -98,6 +145,11 @@ async function run() {
       homepage.status === 200 &&
       homepage.contentSecurityPolicy.includes("connect-src 'self'") &&
       !homepage.contentSecurityPolicy.includes("https://api.openai.com"),
+    sameOriginFallbackVerifierRetained:
+      sameOriginProbe.status === 200 &&
+      sameOriginProbe.provider === "fallback" &&
+      sameOriginProbe.verifier === "fallback" &&
+      sameOriginProbe.verifierOk === true,
   };
 
   const result = {
@@ -109,7 +161,8 @@ async function run() {
     homepage,
     ok: Object.values(checks).every(Boolean),
     privacyBoundary:
-      "This evidence uses source inspection plus one cross-origin production probe. It excludes API keys, bearer tokens, cookies, raw IP addresses, account identifiers, provider usage data, and production user request bodies.",
+      "This evidence uses source inspection plus cross-origin and same-origin production probes. It excludes API keys, bearer tokens, cookies, raw IP addresses, account identifiers, provider usage data, and production user request bodies.",
+    sameOriginProbe,
     spendBoundary:
       "This check proves the public endpoint guard and fallback-only source posture. Provider billing or usage consoles remain the source of truth for historical paid-token spend.",
   };

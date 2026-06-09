@@ -2030,3 +2030,29 @@ Targeted tax-impact warning, professional handoff, and YMYL language guard tests
 **Future trigger words:**
 
 IRMAA amount calculator; Medicare premium surcharge; Part B IRMAA; Part D IRMAA; MAGI lookback; SSA-44; hidden Medicare cost
+
+### 2026-06-09 - Do not run Next build and Playwright dev server in parallel
+
+**Symptom:**
+
+`npm run build` failed with `PageNotFoundError` and `.next/required-server-files.json` errors while Playwright E2E was running at the same time.
+
+**Root cause:**
+
+`next build` and the Playwright web server both read and write generated `.next` files. Running them in parallel can corrupt or delete build artifacts during page-data collection.
+
+**Fix:**
+
+Cleared the generated `.next` directory and reran validation sequentially: full tests, build, then E2E.
+
+**Guard:**
+
+For future rounds, do not parallelize `npm run build` with Playwright or any command that starts a Next dev/server process. Parallelize read-only inspections and independent tests only.
+
+**Validation:**
+
+Sequential `npm run build` passed with 131 static pages, and Playwright E2E passed with 10 tests on an isolated port.
+
+**Future trigger words:**
+
+PageNotFoundError during build; required-server-files missing; .next race; build and Playwright parallel; Next generated artifact conflict

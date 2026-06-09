@@ -162,3 +162,4 @@
 - [done] Add CA NY NJ state amount readiness worksheets
 - [done] Add CA NY NJ selected-state readiness input fields
 - [done] Add selected-state readiness completeness scoring
+- [done] Add deterministic AI response verifier
