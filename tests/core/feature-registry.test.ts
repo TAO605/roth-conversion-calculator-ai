@@ -144,10 +144,10 @@ describe("feature registry", () => {
     expect(homePage).toContain('isFeatureEnabled("tax-payment-comparison")');
     expect(homePage).toContain('isFeatureEnabled("result-scope-boundary")');
     expect(homePage).toContain('isFeatureEnabled("tax-impact-warnings-boundary")');
+    expect(homePage).toContain('isFeatureEnabled("scenario-history")');
     expect(homePage).toContain('isFeatureEnabled("privacy-safe-analytics")');
     expect(homePage).toContain('isFeatureEnabled("homepage-howto-structured-data")');
     expect(homePage).not.toContain('isFeatureEnabled("copy-summary")');
-    expect(homePage).not.toContain('isFeatureEnabled("scenario-history")');
     expect(homePage).not.toContain('isFeatureEnabled("conversion-sensitivity")');
   });
 

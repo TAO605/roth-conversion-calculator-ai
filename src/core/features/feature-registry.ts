@@ -38,7 +38,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "scenario-history",
     label: "Saved scenarios",
-    version: "1.0.2",
+    version: "1.0.222",
     layer: "feature",
     enabled: true,
     locked: false,

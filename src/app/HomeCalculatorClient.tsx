@@ -29,6 +29,13 @@ const initialInput: RothConversionInput = {
   basis: 0,
   filingStatus: "single",
   currentTaxableIncome: 85000,
+  netInvestmentIncome: null,
+  annualSocialSecurityBenefits: null,
+  taxExemptInterest: null,
+  annualAdvancePremiumTaxCredit: null,
+  marketplaceCoverageMonths: null,
+  amtTentativeMinimumTax: null,
+  amtRegularTaxLiability: null,
   selectedState: null,
   stateReadinessInputs: undefined,
   stateMarginalTaxRate: 0,
@@ -94,6 +101,14 @@ const CalculationBreakdown = dynamic<{ input: RothConversionInput; result: RothC
 const CalculatorAnalyticsBeacon = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
   () => import("@/features/analytics/CalculatorAnalyticsBeacon").then((module) => module.CalculatorAnalyticsBeacon),
   { loading: () => null, ssr: false },
+);
+
+const ScenarioHistoryPanel = dynamic<{
+  input: RothConversionInput;
+  onRestore: (input: RothConversionInput) => void;
+}>(
+  () => import("@/features/scenario-history/ScenarioHistoryPanel").then((module) => module.ScenarioHistoryPanel),
+  { loading: () => <LazyPanelFallback className="min-h-[12rem]" label="Loading saved scenarios..." /> },
 );
 
 export function HomeCalculatorClient() {
@@ -206,6 +221,9 @@ export function HomeCalculatorClient() {
                 <CalculationBreakdown input={input} result={result} />
               </div>
             </details>
+          ) : null}
+          {!hasInputErrors && isFeatureEnabled("scenario-history") ? (
+            <ScenarioHistoryPanel input={input} onRestore={setInput} />
           ) : null}
         </article>
       </section>

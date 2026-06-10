@@ -33,7 +33,12 @@ describe("ScenarioHistoryPanel", () => {
     const { rerender } = render(React.createElement(ScenarioHistoryPanel, { input, onRestore: restore }));
     fireEvent.click(screen.getByRole("button", { name: /save scenario/i }));
 
-    expect(screen.getByText("$50,000 conversion")).toBeTruthy();
+    expect(screen.getAllByText("$50,000 conversion").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText("Local saved scenario comparison")).toBeTruthy();
+    expect(screen.getAllByText("$50,000").length).toBeGreaterThan(0);
+    expect(screen.getByText("Upfront cost")).toBeTruthy();
+    expect(screen.getByText("Break-even")).toBeTruthy();
+    expect(screen.getByText(/local educational estimates only/i)).toBeTruthy();
 
     rerender(
       React.createElement(ScenarioHistoryPanel, {

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.222",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Local scenario comparison",
+    summary:
+      "Mounted the saved-scenarios module on the calculator and added a local multi-scenario comparison table for conversion amount, income, federal tax, state tax, upfront cost, and break-even review without uploading user inputs.",
+    affectedArea:
+      "Homepage calculator client, saved scenario panel, local scenario comparison UI, feature registry, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Disable scenario-history in the feature registry or remove ScenarioHistoryPanel from the homepage while keeping the calculator, reports, and professional handoff available.",
+  },
+  {
     version: "1.0.221",
     date: "2026-06-10",
     type: "patch",

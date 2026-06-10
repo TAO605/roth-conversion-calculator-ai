@@ -7,12 +7,12 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.221",
+      version: "1.0.222",
       type: "patch",
-      title: "Health review status evidence",
+      title: "Local scenario comparison",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("AI model cross-checks");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("qualified CPA");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("saved-scenarios");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("local multi-scenario comparison");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 
