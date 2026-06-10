@@ -183,3 +183,4 @@
 - [done] Mount local saved scenarios and add multi-scenario comparison summary
 - [done] Add local email report draft action without server-side email sending
 - [done] Upgrade share link to Web Share API with clipboard fallback
+- [done] Add browser-only voice input assist for supported numeric fields

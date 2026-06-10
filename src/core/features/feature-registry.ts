@@ -70,6 +70,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Restore retirement age and expected annual return to the always-visible Quick Estimate field list and remove the enhanced disclosure summary treatment.",
   },
   {
+    id: "voice-input-assist",
+    label: "Browser voice input assist",
+    version: "1.0.225",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/voice-input and src/features/calculator-input",
+    rollbackPath:
+      "Disable voice-input-assist in the feature registry or remove VoiceInputAssist from CalculatorInput while keeping all manual inputs available.",
+  },
+  {
     id: "theme-toggle",
     label: "Light and dark mode toggle",
     version: "1.0.4",

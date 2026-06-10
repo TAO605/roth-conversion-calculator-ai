@@ -12,7 +12,9 @@ import type {
   TaxPaymentMethod,
 } from "@/core/calculator/types";
 import { validateCalculatorInput } from "@/core/calculator/validation";
+import { isFeatureEnabled } from "@/core/features/feature-registry";
 import { PresetPanel } from "@/features/calculator-input/PresetPanel";
+import { VoiceInputAssist } from "@/features/voice-input/VoiceInputAssist";
 
 interface CalculatorInputProps {
   value: RothConversionInput;
@@ -50,6 +52,7 @@ function defaultStateReadinessInputs(): StateReadinessInputs {
     localTaxApplies: null,
     notes: "",
     otherStateTaxCreditApplies: null,
+    reviewedStateTaxEstimate: null,
     residencyStatus: "not_provided",
     stateAdjustedGrossIncome: null,
     stateIraBasis: null,
@@ -116,6 +119,7 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
           </p>
         </div>
         <div className="grid gap-4" data-testid="quick-estimate-fields">
+          {isFeatureEnabled("voice-input-assist") ? <VoiceInputAssist onChange={onChange} /> : null}
           <TextField
             label="Conversion amount"
             type="number"
@@ -216,6 +220,69 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
             onChange={(event) => update("age", numberValue(event.target.value))}
           />
           <TextField
+            label="Net investment income for NIIT review"
+            type="number"
+            inputMode="decimal"
+            value={optionalNumberDisplayValue(value.netInvestmentIncome)}
+            error={errors.netInvestmentIncome}
+            description="Optional Form 8960 review input. Leave blank if you do not know this amount."
+            onChange={(event) => update("netInvestmentIncome", optionalNumberValue(event.target.value))}
+          />
+          <TextField
+            label="Annual Social Security benefits"
+            type="number"
+            inputMode="decimal"
+            value={optionalNumberDisplayValue(value.annualSocialSecurityBenefits)}
+            error={errors.annualSocialSecurityBenefits}
+            description="Optional Form SSA-1099 box 5 input for taxable-benefit review."
+            onChange={(event) => update("annualSocialSecurityBenefits", optionalNumberValue(event.target.value))}
+          />
+          <TextField
+            label="Tax-exempt interest for Social Security review"
+            type="number"
+            inputMode="decimal"
+            value={optionalNumberDisplayValue(value.taxExemptInterest)}
+            error={errors.taxExemptInterest}
+            description="Optional Publication 915 combined-income input. Leave blank if none or unknown."
+            onChange={(event) => update("taxExemptInterest", optionalNumberValue(event.target.value))}
+          />
+          <TextField
+            label="Annual advance premium tax credit"
+            type="number"
+            inputMode="decimal"
+            value={optionalNumberDisplayValue(value.annualAdvancePremiumTaxCredit)}
+            error={errors.annualAdvancePremiumTaxCredit}
+            description="Optional Form 1095-A / Form 8962 APTC amount for Marketplace reconciliation review."
+            onChange={(event) => update("annualAdvancePremiumTaxCredit", optionalNumberValue(event.target.value))}
+          />
+          <TextField
+            label="Marketplace coverage months"
+            type="number"
+            inputMode="numeric"
+            value={optionalNumberDisplayValue(value.marketplaceCoverageMonths)}
+            error={errors.marketplaceCoverageMonths}
+            description="Optional count from Marketplace coverage records. Use 0-12."
+            onChange={(event) => update("marketplaceCoverageMonths", optionalNumberValue(event.target.value))}
+          />
+          <TextField
+            label="Form 6251 tentative minimum tax"
+            type="number"
+            inputMode="decimal"
+            value={optionalNumberDisplayValue(value.amtTentativeMinimumTax)}
+            error={errors.amtTentativeMinimumTax}
+            description="Optional Form 6251 comparison input. This does not calculate AMTI or exemptions."
+            onChange={(event) => update("amtTentativeMinimumTax", optionalNumberValue(event.target.value))}
+          />
+          <TextField
+            label="Regular tax liability for AMT comparison"
+            type="number"
+            inputMode="decimal"
+            value={optionalNumberDisplayValue(value.amtRegularTaxLiability)}
+            error={errors.amtRegularTaxLiability}
+            description="Optional regular-tax comparison amount from tax software or Form 6251 review."
+            onChange={(event) => update("amtRegularTaxLiability", optionalNumberValue(event.target.value))}
+          />
+          <TextField
             label="Retirement marginal tax rate"
             type="number"
             inputMode="decimal"
@@ -301,6 +368,19 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
                     update("stateReadinessInputs", {
                       ...readinessInputs,
                       stateIraBasis: optionalNumberValue(event.target.value),
+                    })
+                  }
+                />
+                <TextField
+                  label="Reviewed state tax estimate"
+                  type="number"
+                  inputMode="decimal"
+                  value={optionalNumberDisplayValue(readinessInputs.reviewedStateTaxEstimate)}
+                  description="Optional tax software or CPA-reviewed state tax amount. It is compared with the manual-rate estimate only."
+                  onChange={(event) =>
+                    update("stateReadinessInputs", {
+                      ...readinessInputs,
+                      reviewedStateTaxEstimate: optionalNumberValue(event.target.value),
                     })
                   }
                 />

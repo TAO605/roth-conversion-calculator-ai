@@ -55,6 +55,13 @@ describe("calculator input layout", () => {
     expect(advanced.open).toBe(false);
     expect(advanced.textContent).toContain("Advanced assumptions");
     expect(advanced.textContent).toContain("After-tax basis");
+    expect(advanced.textContent).toContain("Net investment income for NIIT review");
+    expect(advanced.textContent).toContain("Annual Social Security benefits");
+    expect(advanced.textContent).toContain("Tax-exempt interest for Social Security review");
+    expect(advanced.textContent).toContain("Annual advance premium tax credit");
+    expect(advanced.textContent).toContain("Marketplace coverage months");
+    expect(advanced.textContent).toContain("Form 6251 tentative minimum tax");
+    expect(advanced.textContent).toContain("Regular tax liability for AMT comparison");
   });
 
   it("keeps projection assumptions available without making the mobile quick form longer by default", () => {
@@ -63,7 +70,7 @@ describe("calculator input layout", () => {
     const sourceFields = screen.getByTestId("quick-estimate-fields");
     const projectionAssumptions = screen.getByTestId("projection-assumptions") as HTMLDetailsElement;
 
-    expect(sourceFields.children).toHaveLength(6);
+    expect(sourceFields.children).toHaveLength(7);
     expect(projectionAssumptions.querySelectorAll("input")).toHaveLength(2);
     expect(projectionAssumptions.open).toBe(false);
   });
@@ -80,6 +87,19 @@ describe("calculator input layout", () => {
     expect(source).toContain("ChevronDown");
     expect(source).toContain("group-open:rotate-180");
     expect(source).toContain("[&::-webkit-details-marker]:hidden");
+  });
+
+  it("mounts browser voice input assist in the quick estimate area without replacing manual inputs", () => {
+    render(React.createElement(CalculatorInput, { value, onChange: vi.fn() }));
+
+    const quickFields = screen.getByTestId("quick-estimate-fields");
+    const source = fs.readFileSync(path.join(process.cwd(), "src/features/calculator-input/CalculatorInput.tsx"), "utf8");
+
+    expect(quickFields.textContent).toContain("Voice input assist");
+    expect(quickFields.textContent).toContain("Conversion amount");
+    expect(quickFields.textContent).toContain("Current taxable income");
+    expect(source).toContain('isFeatureEnabled("voice-input-assist")');
+    expect(source).toContain("VoiceInputAssist");
   });
 
   it("keeps selected-state readiness fields collapsed inside advanced assumptions", () => {

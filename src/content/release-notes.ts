@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.225",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Browser voice input assist",
+    summary:
+      "Added an optional browser-only voice input helper for supported numeric calculator fields. The helper uses the user's browser speech recognition when available, sends no audio to the site, and requires the user to review the filled value before relying on the estimate.",
+    affectedArea:
+      "Voice input assist, calculator input layout, feature registry, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Disable voice-input-assist in the feature registry or remove VoiceInputAssist from CalculatorInput while preserving every manual calculator input.",
+  },
+  {
     version: "1.0.224",
     date: "2026-06-10",
     type: "patch",
