@@ -92,7 +92,7 @@ function normalizeHeader(header) {
     .trim()
     .toLowerCase()
     .replace(/[%]/g, " percent")
-    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim();
 }
 
@@ -158,17 +158,18 @@ function buildImport({
   const selectedRows = rows
     .map((row) => {
       const query = getField(row, ["query", "queries", "top queries"]);
-      const clicks = normalizeMetric(getField(row, ["clicks"]));
-      const impressions = normalizeMetric(getField(row, ["impressions"]));
-      const ctr = normalizeMetric(getField(row, ["ctr", "ctr percent"]));
-      const position = normalizeMetric(getField(row, ["position", "average position", "avg position"]));
+      const clicks = normalizeMetric(getField(row, ["clicks", "点击次数"]));
+      const impressions = normalizeMetric(getField(row, ["impressions", "展示"]));
+      const ctr = normalizeMetric(getField(row, ["ctr", "ctr percent", "点击率"]));
+      const position = normalizeMetric(getField(row, ["position", "average position", "avg position", "排名"]));
+      const observedQuery = query || getField(row, ["热门查询"]);
 
       return {
         clicks,
         ctr,
         impressions,
         position,
-        query,
+        query: observedQuery,
         sortImpressions: Number(impressions || 0),
       };
     })

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.207",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Chinese GSC CSV import support",
+    summary:
+      "Added Chinese Google Search Console Performance CSV header support and retained a sanitized zero-query export evidence record so query-driven SEO work stays blocked until real query rows appear.",
+    affectedArea:
+      "GSC query opportunity import command, GSC zero-query evidence, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Remove Chinese CSV support only if the query importer keeps another tested path for localized Search Console exports and zero-query evidence remains recorded without private account data.",
+  },
+  {
     version: "1.0.206",
     date: "2026-06-09",
     type: "patch",

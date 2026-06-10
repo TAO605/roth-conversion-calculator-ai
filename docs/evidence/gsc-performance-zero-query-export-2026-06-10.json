@@ -1,0 +1,29 @@
+{
+    "evidenceType":  "gsc-performance-zero-query-export",
+    "ok":  true,
+    "recordedAt":  "2026-06-10T04:24:23.475Z",
+    "property":  "https://www.roth-conversion-calculator-ai.shop/",
+    "source":  "user-provided Google Search Console Performance CSV export",
+    "sourceFolderName":  "https___www.roth-conversion-calculator-ai.shop_-Performance-on-Search-2026-06-10",
+    "dateRange":  {
+                      "start":  "2026-05-29",
+                      "end":  "2026-06-07"
+                  },
+    "queryRowCount":  0,
+    "pageRowCount":  0,
+    "chartRowCount":  10,
+    "totalClicks":  0,
+    "totalImpressions":  0,
+    "actionableQueryRows":  0,
+    "conclusion":  "The exported GSC Performance query table contains no query rows and the chart export reports zero clicks and zero impressions for the exported date range, so query-opportunity content work remains blocked until real query rows appear.",
+    "privacyBoundary":  "This retained evidence stores only aggregate counts, date range, file labels, and conclusion. It does not store account identifiers, cookies, tokens, raw private UI text, screenshots, or Google account data.",
+    "filesReviewed":  [
+                          "查询数.csv",
+                          "网页.csv",
+                          "图表.csv",
+                          "国家_地区.csv",
+                          "设备.csv",
+                          "搜索结果呈现.csv",
+                          "过滤器.csv"
+                      ]
+}

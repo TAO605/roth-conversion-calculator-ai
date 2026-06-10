@@ -171,6 +171,39 @@ describe("GSC query opportunity record validator", () => {
     }
   });
 
+  it("imports a Chinese-language GSC Performance CSV export", () => {
+    const tmpDir = path.join(process.cwd(), "test-results", "gsc-query-import-zh");
+    const csvPath = path.join(tmpDir, "queries.csv");
+
+    fs.rmSync(tmpDir, { force: true, recursive: true });
+    fs.mkdirSync(tmpDir, { recursive: true });
+    fs.writeFileSync(
+      csvPath,
+      ["热门查询,点击次数,展示,点击率,排名", "roth conversion irmaa impact,2,44,4.5%,9.4"].join("\n"),
+      "utf8",
+    );
+
+    const result = buildGscQueryOpportunityImport({
+      csvPath,
+      dateEnd: "2026-06-09",
+      dateStart: "2026-06-01",
+      outputDir: tmpDir,
+      owner: "SEO/content",
+    });
+
+    expect(result).toMatchObject({
+      ok: true,
+      importedCount: 1,
+      actionableCount: 1,
+    });
+    expect(result.records[0]).toMatchObject({
+      query: "roth conversion irmaa impact",
+      impressions: 44,
+      clicks: 2,
+      matchedCluster: "Hidden tax interaction questions",
+    });
+  });
+
   it("maps observed queries to the nearest safe opportunity cluster", () => {
     expect(pickGscQueryOpportunityCluster("pay roth conversion tax with outside funds").cluster).toBe(
       "Payment and withholding questions",
