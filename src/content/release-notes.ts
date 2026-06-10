@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.224",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Native share fallback",
+    summary:
+      "Upgraded the share action to use the browser Web Share API when available, giving supported iOS and macOS browsers access to the system share sheet while keeping clipboard-copy fallback for other browsers.",
+    affectedArea:
+      "Share result button, native share payload, clipboard fallback, feature registry, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Disable share-link in the feature registry or restore ShareResultButton to clipboard-only behavior while keeping share URL encoding and local calculator persistence intact.",
+  },
+  {
     version: "1.0.223",
     date: "2026-06-10",
     type: "patch",

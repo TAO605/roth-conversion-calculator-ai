@@ -94,7 +94,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "share-link",
     label: "Share result link",
-    version: "1.0.179",
+    version: "1.0.224",
     layer: "feature",
     enabled: true,
     locked: false,

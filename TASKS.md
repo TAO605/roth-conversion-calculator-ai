@@ -182,3 +182,4 @@
 - [done] Add AI cross-check and qualified professional review status to health evidence
 - [done] Mount local saved scenarios and add multi-scenario comparison summary
 - [done] Add local email report draft action without server-side email sending
+- [done] Upgrade share link to Web Share API with clipboard fallback

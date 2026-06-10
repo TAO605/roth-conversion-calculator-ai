@@ -7,12 +7,12 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.223",
+      version: "1.0.224",
       type: "patch",
-      title: "Local email report draft",
+      title: "Native share fallback",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("Email draft");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("without collecting recipient");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("Web Share API");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("clipboard-copy fallback");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 
