@@ -43,7 +43,11 @@ export function buildLaunchReadinessGroups(): LaunchReadinessGroup[] {
           "Production evidence verifies the Search Console ownership signal; query-driven content work remains blocked until real query rows appear.",
           "complete",
         ),
-        item("GA4 measurement ID", "Set NEXT_PUBLIC_GA_MEASUREMENT_ID and confirm privacy-safe calculator events."),
+        item(
+          "GA4 measurement ID",
+          "Production homepage includes the GA4 measurement ID with deferred privacy-safe analytics loading and bucketed calculator events.",
+          "complete",
+        ),
       ],
     },
     {

@@ -26,6 +26,7 @@ describe("launch readiness checklist", () => {
         "Production domain",
         "Vercel production deployment",
         "Google Search Console",
+        "GA4 measurement ID",
         "Sitemap submission",
         "Robots and feeds",
         "Disclaimer review",
@@ -36,10 +37,10 @@ describe("launch readiness checklist", () => {
         "Rollback path",
       ]),
     );
-    expect(pendingLabels).toEqual(expect.arrayContaining(["GA4 measurement ID", "CPA review"]));
+    expect(pendingLabels).toEqual(["CPA review"]);
     expect(summary.total).toBeGreaterThanOrEqual(12);
     expect(summary.completed).toBeGreaterThan(0);
-    expect(summary.pending).toBe(2);
+    expect(summary.pending).toBe(1);
   });
 
   it("adds a launch readiness page to sitemap and homepage discovery", () => {

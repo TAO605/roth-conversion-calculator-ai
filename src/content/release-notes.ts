@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.218",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Launch readiness GA4 evidence",
+    summary:
+      "Updated the launch readiness checklist so the GA4 measurement ID is marked complete alongside the other production evidence-backed launch items, while the qualified tax professional review item remains pending.",
+    affectedArea:
+      "Launch readiness checklist, analytics status copy, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Revert only if the launch readiness page must again treat the privacy-safe GA4 integration as pending external setup rather than production evidence.",
+  },
+  {
     version: "1.0.217",
     date: "2026-06-10",
     type: "patch",

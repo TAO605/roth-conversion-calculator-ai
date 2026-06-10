@@ -7,12 +7,12 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.217",
+      version: "1.0.218",
       type: "patch",
-      title: "Launch readiness status evidence",
+      title: "Launch readiness GA4 evidence",
     });
     expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("launch readiness");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("production evidence");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("GA4");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 
