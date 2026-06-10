@@ -177,3 +177,4 @@
 - [done] Align professional review packet copy with bounded advanced previews
 - [done] Align Social Security tax-impact trigger copy with bounded preview
 - [done] Align missing-input bounded preview copy across ACA NIIT Social Security and AMT
+- [done] Align launch readiness checklist with production evidence status

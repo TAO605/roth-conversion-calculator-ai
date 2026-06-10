@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.217",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Launch readiness status evidence",
+    summary:
+      "Updated the launch readiness checklist so production domain, Vercel deployment, Search Console verification, sitemap discovery, robots/feed discovery, automated compliance checks, tests, Lighthouse evidence, health endpoint, and rollback path reflect current production evidence instead of remaining marked as pending.",
+    affectedArea:
+      "Launch readiness checklist, operations status copy, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Revert only if the launch readiness page continues to distinguish evidence-backed complete items from GA4 setup and qualified tax professional review items that still require external or human action.",
+  },
+  {
     version: "1.0.216",
     date: "2026-06-10",
     type: "patch",

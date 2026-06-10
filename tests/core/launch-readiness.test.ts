@@ -17,9 +17,29 @@ describe("launch readiness checklist", () => {
       expect.arrayContaining(["domain", "analytics", "seo", "compliance", "testing", "operations"]),
     );
     expect(groups.every((group) => group.items.length >= 2)).toBe(true);
-    expect(groups.flatMap((group) => group.items).every((item) => item.status === "pending")).toBe(true);
+    const items = groups.flatMap((group) => group.items);
+    const completedLabels = items.filter((item) => item.status === "complete").map((item) => item.label);
+    const pendingLabels = items.filter((item) => item.status === "pending").map((item) => item.label);
+
+    expect(completedLabels).toEqual(
+      expect.arrayContaining([
+        "Production domain",
+        "Vercel production deployment",
+        "Google Search Console",
+        "Sitemap submission",
+        "Robots and feeds",
+        "Disclaimer review",
+        "Unit and integration tests",
+        "E2E browser tests",
+        "Lighthouse audit",
+        "Health endpoint",
+        "Rollback path",
+      ]),
+    );
+    expect(pendingLabels).toEqual(expect.arrayContaining(["GA4 measurement ID", "CPA review"]));
     expect(summary.total).toBeGreaterThanOrEqual(12);
-    expect(summary.completed).toBe(0);
+    expect(summary.completed).toBeGreaterThan(0);
+    expect(summary.pending).toBe(2);
   });
 
   it("adds a launch readiness page to sitemap and homepage discovery", () => {

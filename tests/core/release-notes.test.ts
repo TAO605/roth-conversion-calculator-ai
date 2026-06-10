@@ -7,12 +7,12 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.216",
+      version: "1.0.217",
       type: "patch",
-      title: "Social Security review trigger wording",
+      title: "Launch readiness status evidence",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("Social Security");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("Publication 915");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("launch readiness");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("production evidence");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 
