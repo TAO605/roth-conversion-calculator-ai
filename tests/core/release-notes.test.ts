@@ -7,11 +7,11 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.205",
+      version: "1.0.206",
       type: "patch",
-      title: "AI verifier stats panel",
+      title: "GSC query CSV importer",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("deterministic");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("CSV importer");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

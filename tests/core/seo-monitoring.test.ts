@@ -432,6 +432,7 @@ describe("SEO monitoring playbook", () => {
     );
     expect(combined).toContain("docs/search-console-query-opportunity-template.json");
     expect(combined).toContain("seo:gsc-query-opportunity-draft");
+    expect(combined).toContain("seo:gsc-query-opportunity-import");
     expect(combined).toContain("seo:gsc-query-opportunity-backlog");
     expect(combined).toContain("seo:gsc-query-opportunity-ready");
     expect(combined).toContain("seo:gsc-query-opportunity-validate");

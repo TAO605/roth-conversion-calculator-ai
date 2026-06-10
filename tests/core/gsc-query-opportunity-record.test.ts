@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { buildGscQueryOpportunityBacklogSummary } from "../../scripts/gsc-query-opportunity-backlog-summary.mjs";
 import { buildGscQueryOpportunityDraft, pickGscQueryOpportunityCluster } from "../../scripts/generate-gsc-query-opportunity-draft.mjs";
+import { buildGscQueryOpportunityImport } from "../../scripts/import-gsc-query-opportunities.mjs";
 import { buildGscQueryOpportunityReadiness } from "../../scripts/gsc-query-opportunity-readiness.mjs";
 import { validateGscQueryOpportunityRecord } from "../../scripts/validate-gsc-query-opportunity-record.mjs";
 
@@ -117,6 +118,57 @@ describe("GSC query opportunity record validator", () => {
       query: "roth conversion state tax calculator",
       readyForRecordedEvidence: false,
     });
+  });
+
+  it("imports a GSC Performance CSV export into safe query opportunity records", () => {
+    const tmpDir = path.join(process.cwd(), "test-results", "gsc-query-import");
+    const csvPath = path.join(tmpDir, "performance.csv");
+
+    fs.rmSync(tmpDir, { force: true, recursive: true });
+    fs.mkdirSync(tmpDir, { recursive: true });
+    fs.writeFileSync(
+      csvPath,
+      [
+        "Query,Clicks,Impressions,CTR,Position",
+        '"roth conversion irmaa impact",2,44,4.5%,9.4',
+        '"roth conversion state tax calculator",1,20,5%,12.3',
+        '"tiny one-off query",0,0,0%,0',
+      ].join("\n"),
+      "utf8",
+    );
+
+    const result = buildGscQueryOpportunityImport({
+      csvPath,
+      dateEnd: "2026-06-09",
+      dateStart: "2026-06-01",
+      exportedAt: "2026-06-09T13:45:00.000Z",
+      limit: "10",
+      minImpressions: "1",
+      outputDir: tmpDir,
+      owner: "SEO/content",
+    });
+
+    expect(result).toMatchObject({
+      ok: true,
+      evidenceType: "gsc-query-opportunity-import",
+      importedCount: 2,
+      actionableCount: 2,
+      rowCount: 3,
+    });
+    expect(result.privacyBoundary).toContain("does not control Search Console");
+    expect(result.records.map((record) => record.matchedCluster)).toEqual(
+      expect.arrayContaining(["Hidden tax interaction questions", "State and filing-status questions"]),
+    );
+    expect(result.backlog.templateOnly).toBe(false);
+    expect(result.backlog.actionableRecords.map((record) => record.query)).toEqual(
+      expect.arrayContaining(["roth conversion irmaa impact", "roth conversion state tax calculator"]),
+    );
+
+    for (const record of result.records) {
+      const parsed = JSON.parse(fs.readFileSync(record.filePath, "utf8"));
+      expect(validateGscQueryOpportunityRecord(parsed).ok).toBe(true);
+      expect(parsed.evidence.screenshotOrExportPath).toBe(csvPath);
+    }
   });
 
   it("maps observed queries to the nearest safe opportunity cluster", () => {

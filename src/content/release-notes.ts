@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.206",
+    date: "2026-06-09",
+    type: "patch",
+    title: "GSC query CSV importer",
+    summary:
+      "Added a Search Console Performance CSV importer so query opportunity records and backlog summaries can be generated from user-provided exports when logged-in browser control is unavailable.",
+    affectedArea:
+      "GSC query opportunity import command, SEO monitoring playbook, release notes, feature registry, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the importer only if GSC query opportunity records still have another repeatable, privacy-safe path from real query rows to review-gated backlog records without depending on browser automation.",
+  },
+  {
     version: "1.0.205",
     date: "2026-06-09",
     type: "patch",

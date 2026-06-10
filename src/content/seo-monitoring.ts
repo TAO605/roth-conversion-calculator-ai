@@ -413,7 +413,7 @@ export function buildSearchConsoleQueryOpportunityRecordTemplate(): SearchConsol
       source: "Reviewer",
       requiredWhen: "Always",
       validation:
-        "Use docs/search-console-query-opportunity-template.json with recordStatus template before capture, npm run seo:gsc-query-opportunity-draft after a reviewer supplies a real query row, npm run seo:gsc-query-opportunity-ready to list missing reviewer fields, recorded only after a real GSC query row or screenshot is attached, and npm run seo:gsc-query-opportunity-validate before content work begins.",
+        "Use docs/search-console-query-opportunity-template.json with recordStatus template before capture, npm run seo:gsc-query-opportunity-import when a GSC Performance CSV export is available, npm run seo:gsc-query-opportunity-draft after a reviewer supplies a single real query row, npm run seo:gsc-query-opportunity-ready to list missing reviewer fields, recorded only after a real GSC query row or screenshot is attached, and npm run seo:gsc-query-opportunity-validate before content work begins.",
     },
     {
       field: "source",
@@ -469,14 +469,14 @@ export function buildSearchConsoleQueryOpportunityRecordTemplate(): SearchConsol
       source: "GSC screenshot or export plus production SEO evidence",
       requiredWhen: "Recorded status",
       validation:
-        "Attach screenshotOrExportPath and, when used for production work, link the latest production SEO evidence run id and commit SHA.",
+        "Attach screenshotOrExportPath and, when used for production work, link the latest production SEO evidence run id and commit SHA. If browser control is unavailable, export GSC Performance to CSV and run npm run seo:gsc-query-opportunity-import -- --csv <path> --start YYYY-MM-DD --end YYYY-MM-DD.",
     },
     {
       field: "decision",
       source: "Content operations",
       requiredWhen: "Always",
       validation:
-        "Use needs_review, planned, published, deferred, or rejected so query observations become an auditable backlog instead of ad hoc keyword chasing. Run npm run seo:gsc-query-opportunity-backlog to summarize local query records by status, risk, cluster, and next action before content planning.",
+        "Use needs_review, planned, published, deferred, or rejected so query observations become an auditable backlog instead of ad hoc keyword chasing. Run npm run seo:gsc-query-opportunity-import for CSV batches and npm run seo:gsc-query-opportunity-backlog to summarize local query records by status, risk, cluster, and next action before content planning.",
     },
   ];
 }
