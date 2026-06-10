@@ -53,6 +53,9 @@ export default function HomePage() {
         <h1 className="text-2xl font-bold tracking-normal text-neutral-950 dark:text-white sm:text-3xl">
           Roth Conversion Calculator 2026
         </h1>
+        <p className="text-xs font-medium leading-5 text-neutral-500 dark:text-neutral-400">
+          Educational estimate. Tax professional review pending.
+        </p>
       </header>
 
       <HomeCalculatorClient />
