@@ -23,11 +23,12 @@ describe("homepage no-AI professional UI pass", () => {
     expect(source).toContain("bg-[#0A2463]");
   });
 
-  it("keeps the homepage hero focused on the calculator rather than AI branding", () => {
+  it("keeps the homepage focused on the calculator rather than AI branding or marketing hero copy", () => {
     const source = readSource("src/app/page.tsx");
 
     expect(source).toContain("Roth Conversion Calculator 2026");
-    expect(source).toContain("2026 tax estimate");
+    expect(source).not.toContain("Start calculating");
+    expect(source).not.toContain("Review explanation");
     expect(source).not.toContain("AI-powered 2026 estimate");
     expect(source).not.toContain("AI Roth Conversion Calculator");
     expect(source).not.toContain("Ask AI after results");

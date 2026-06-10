@@ -7,12 +7,12 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.226",
+      version: "1.0.227",
       type: "patch",
-      title: "Browser result read aloud",
+      title: "Tool-only homepage",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("browser-only Read aloud");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("without sending data to a server");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("calculator tool itself");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("FAQ structured-data");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

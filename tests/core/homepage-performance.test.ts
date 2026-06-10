@@ -35,13 +35,12 @@ describe("homepage performance boundaries", () => {
     expect(calculatorClient).toContain('className="min-h-[18rem]" label="Loading calculation details..."');
   });
 
-  it("keeps FAQ structured data available without statically bundling FAQ UI", () => {
+  it("keeps FAQ structured data off the tool-only homepage when the visible FAQ is not mounted", () => {
     const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
-    const faqSection = fs.readFileSync(path.join(process.cwd(), "src/features/faq/FaqSection.tsx"), "utf8");
 
-    expect(homePage).toContain('import { faqItems } from "@/features/faq/faq-items"');
-    expect(homePage).toContain("faqJsonLd(faqItems)");
-    expect(faqSection).toContain('import { faqItems } from "@/features/faq/faq-items"');
+    expect(homePage).not.toContain('import { faqItems } from "@/features/faq/faq-items"');
+    expect(homePage).not.toContain("faqJsonLd(faqItems)");
+    expect(homePage).not.toContain("<FaqSection />");
   });
 
   it("uses a lighter mobile background paint path for LCP stability", () => {
@@ -63,12 +62,13 @@ describe("homepage performance boundaries", () => {
     expect(homePage).not.toContain("backdrop-blur");
   });
 
-  it("places the calculator before workflow explainer cards for mobile first-screen density", () => {
+  it("places the calculator before footer discovery content for mobile first-screen density", () => {
     const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
 
     expect(homePage.indexOf("<HomeCalculatorClient />")).toBeLessThan(
-      homePage.indexOf('aria-label="Calculator workflow"'),
+      homePage.indexOf('aria-label="Footer navigation and disclaimer"'),
     );
+    expect(homePage).not.toContain('aria-label="Calculator workflow"');
   });
 
   it("keeps mobile result summary compact before secondary actions", () => {

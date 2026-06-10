@@ -426,7 +426,7 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
 
   assert(structuredData.ok === true, "Structured data evidence must be ok");
   assert(structuredData.baseUrl === expectedBaseUrl, "Structured data evidence baseUrl must match SEO smoke baseUrl");
-  assert(structuredData.jsonLdScriptCount >= 6, "Structured data evidence must include homepage JSON-LD scripts");
+  assert(structuredData.jsonLdScriptCount >= 5, "Structured data evidence must include homepage JSON-LD scripts");
   assert(
     structuredData.pageCount >= expectedStructuredDataPageCount,
     `Structured data evidence must include at least ${expectedStructuredDataPageCount} priority content and blog pages`,
@@ -439,7 +439,7 @@ function validateStructuredDataEvidence(structuredData, expectedBaseUrl) {
   assert(structuredData.forbiddenTextMatches.length === 0, "Structured data must not include unsafe YMYL text");
   assert(structuredData.siteUrlCount > 0, "Structured data must include canonical site URLs");
 
-  for (const type of ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization", "FAQPage"]) {
+  for (const type of ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization"]) {
     assert(structuredData.types.includes(type), `Structured data evidence missing ${type}`);
   }
 

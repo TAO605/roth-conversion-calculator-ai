@@ -1,25 +1,19 @@
 import Link from "next/link";
-import { Card } from "@/common/ui/card";
 import { HomeCalculatorClient } from "@/app/HomeCalculatorClient";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { isFeatureEnabled } from "@/core/features/feature-registry";
 import {
   calculatorHowToJsonLd,
-  faqJsonLd,
   homepageWebPageJsonLd,
   organizationJsonLd,
   webApplicationJsonLd,
   websiteJsonLd,
 } from "@/core/seo/json-ld";
-import { faqItems } from "@/features/faq/faq-items";
-import { FaqSection } from "@/features/faq/FaqSection";
-import { TaxDataFreshnessCard } from "@/features/tax-data-freshness/TaxDataFreshnessCard";
 import { ThemeToggle } from "@/features/theme-toggle/ThemeToggle";
-import { TAX_DATA_FRESHNESS } from "@/core/tax-data/freshness";
 
 export default function HomePage() {
   return (
-    <main className="mx-auto grid w-full max-w-7xl gap-8 overflow-x-clip px-4 py-6 sm:px-6 lg:px-8">
+    <main className="mx-auto grid w-full max-w-7xl gap-5 overflow-x-clip px-4 py-4 sm:px-6 lg:px-8">
       <script
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationJsonLd()) }}
         type="application/ld+json"
@@ -44,10 +38,7 @@ export default function HomePage() {
           />
         </>
       ) : null}
-      {isFeatureEnabled("faq-schema") ? (
-        <script dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqItems)) }} type="application/ld+json" />
-      ) : null}
-      <header className="grid w-full min-w-0 max-w-full gap-4 pt-4">
+      <header className="grid w-full min-w-0 max-w-full gap-4 pt-2">
         <nav
           aria-label="Primary navigation"
           className="flex w-full min-w-0 flex-col items-start justify-between gap-3 rounded border border-neutral-200 bg-white px-4 py-3 text-sm shadow-none dark:border-white/10 dark:bg-neutral-950 sm:flex-row sm:items-center"
@@ -56,132 +47,15 @@ export default function HomePage() {
             RothCalc
           </Link>
           <div className="flex w-full min-w-0 flex-none flex-wrap items-center justify-start gap-3 text-neutral-600 dark:text-neutral-300 sm:w-auto sm:flex-1 sm:justify-end">
-            <div className="flex min-w-0 max-w-full flex-wrap items-center justify-start gap-3 sm:justify-end">
-              <a className="hover:text-systemBlue" href="#calculator">
-                Calculator
-              </a>
-              <a className="hover:text-systemBlue" href="#ai-explainer">
-                Explanation
-              </a>
-              <a className="hover:text-systemBlue" href="#method-and-sources">
-                Sources
-              </a>
-            </div>
             {isFeatureEnabled("theme-toggle") ? <ThemeToggle /> : null}
           </div>
         </nav>
-        <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">2026 tax estimate</p>
-        <div className="grid gap-4 lg:grid-cols-[1fr_0.72fr] lg:items-end">
-          <div>
-            <h1 className="max-w-4xl text-4xl font-bold tracking-normal text-neutral-950 dark:text-white sm:text-5xl">
-              Roth Conversion Calculator 2026
-            </h1>
-            <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
-              Estimate Roth conversion taxes, bracket impact, break-even years, and projected after-tax value. The
-              result explains the assumptions and limits in plain English without giving personal tax advice.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-              <a className="rounded bg-[#0A2463] px-5 py-3 text-white transition-colors hover:bg-[#081f55]" href="#calculator">
-                Start calculating
-              </a>
-              <a className="rounded border border-neutral-200 bg-white px-5 py-3 text-neutral-800 transition-colors hover:bg-neutral-50 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-100 dark:hover:bg-neutral-900" href="#ai-explainer">
-                Review explanation
-              </a>
-            </div>
-          </div>
-          <div className="rounded border border-neutral-200 bg-white p-4 text-sm leading-6 text-neutral-600 shadow-none dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-300">
-            <strong>One focused workflow.</strong> Calculate the tax estimate, review what the numbers mean, then
-            check the method and IRS sources. Your financial inputs stay in this browser.
-          </div>
-        </div>
+        <h1 className="text-2xl font-bold tracking-normal text-neutral-950 dark:text-white sm:text-3xl">
+          Roth Conversion Calculator 2026
+        </h1>
       </header>
 
       <HomeCalculatorClient />
-
-      <section className="grid gap-3 text-sm text-neutral-600 dark:text-neutral-300 sm:grid-cols-3" aria-label="Calculator workflow">
-        <div className="rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
-          <strong className="block text-neutral-950 dark:text-white">1. Calculate</strong>
-          Enter conversion amount, income, basis, state tax, age, and expected return.
-        </div>
-        <div className="rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
-          <strong className="block text-neutral-950 dark:text-white">2. Review</strong>
-          Read a plain-English explanation of break-even years, penalties, basis, and assumptions.
-        </div>
-        <div className="rounded border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-950">
-          <strong className="block text-neutral-950 dark:text-white">3. Verify</strong>
-          Check the transparent method, official sources, and compliance limits before acting.
-        </div>
-      </section>
-
-      <section className="grid w-full min-w-0 max-w-full gap-5 lg:grid-cols-2" id="method-and-sources" aria-label="Trust and calculation methodology">
-        {isFeatureEnabled("tax-data-freshness") ? <TaxDataFreshnessCard compact /> : null}
-        <Card>
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">Calculator transparency</p>
-          <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">Transparent calculation method</h2>
-          <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
-            The estimate is intentionally plain: it shows the core math, the assumptions you entered, and the limits a
-            CPA or tax professional should review before any real decision.
-          </p>
-          <div className="mt-4 grid gap-3 text-sm leading-6 text-neutral-700 dark:text-neutral-200">
-            <p className="rounded border border-neutral-200 bg-neutral-50 px-3 py-2 dark:border-white/10 dark:bg-neutral-900">
-              Taxable conversion = conversion amount minus pro-rata after-tax basis.
-            </p>
-            <p className="rounded border border-neutral-200 bg-neutral-50 px-3 py-2 dark:border-white/10 dark:bg-neutral-900">
-              Current-year cost = estimated federal income tax plus user-entered state tax plus any modeled early
-              distribution penalty.
-            </p>
-            <p className="rounded border border-neutral-200 bg-neutral-50 px-3 py-2 dark:border-white/10 dark:bg-neutral-900">
-              Future comparison = Roth tax-free projection versus traditional IRA projection after the selected
-              retirement marginal tax rate.
-            </p>
-          </div>
-        </Card>
-
-        <Card>
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-systemBlue">E-E-A-T reference base</p>
-          <h2 className="mt-2 text-2xl font-bold text-neutral-950 dark:text-white">Official sources reviewed</h2>
-          <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
-            This page is maintained for tax year 2026, updated {TAX_DATA_FRESHNESS.lastUpdated}, and grounded in official IRS materials. The
-            content is educational and does not replace individualized tax advice.
-          </p>
-          <div className="mt-4 grid gap-2 text-sm">
-            <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill/"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IRS tax inflation adjustments for tax year 2026
-            </a>
-            <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/publications/p590a"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IRS Publication 590-A
-            </a>
-            <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/publications/p590b"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IRS Publication 590-B
-            </a>
-            <a
-              className="rounded-[12px] bg-neutral-50 px-3 py-2 text-neutral-700 transition hover:text-systemBlue dark:bg-white/10 dark:text-neutral-200"
-              href="https://www.irs.gov/forms-pubs/about-form-8606"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IRS Form 8606 basis reporting
-            </a>
-          </div>
-        </Card>
-      </section>
-
-      <FaqSection />
 
       <footer
         aria-label="Footer navigation and disclaimer"

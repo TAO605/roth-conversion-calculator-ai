@@ -146,7 +146,7 @@ describe("SEO evidence artifact validation", () => {
     expect(structuredDataScript).toContain("WebPage");
     expect(structuredDataScript).toContain("HowTo");
     expect(structuredDataScript).toContain("Organization");
-    expect(structuredDataScript).toContain("FAQPage");
+    expect(structuredDataScript).not.toContain('requiredTypes: ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization", "FAQPage"]');
     expect(structuredDataScript).toContain("aggregateRating");
     expect(structuredDataScript).toContain("reviewRating");
     expect(structuredDataScript).toContain("100%\\s+accurate");

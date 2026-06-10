@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.227",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Tool-only homepage",
+    summary:
+      "Simplified the homepage so the first experience is the calculator tool itself. Removed the homepage explanation/source navigation, marketing hero, workflow cards, source blocks, and visible FAQ while keeping structured calculator metadata, footer discovery links, and compliance pages available.",
+    affectedArea:
+      "Homepage layout, primary navigation, FAQ structured-data mounting, release notes, task tracking, progress records, and homepage regression tests",
+    rollbackPath:
+      "Restore the previous homepage explainer, source, and FAQ sections only if a future SEO or usability review shows the tool-only homepage under-serves users.",
+  },
+  {
     version: "1.0.226",
     date: "2026-06-10",
     type: "patch",

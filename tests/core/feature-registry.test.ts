@@ -137,7 +137,6 @@ describe("feature registry", () => {
     ].join("\n");
 
     expect(homePage).toContain('isFeatureEnabled("ai-explainer")');
-    expect(homePage).toContain('isFeatureEnabled("tax-data-freshness")');
     expect(homePage).toContain('isFeatureEnabled("theme-toggle")');
     expect(homePage).toContain('isFeatureEnabled("share-link")');
     expect(homePage).toContain('isFeatureEnabled("pdf-report")');
@@ -152,6 +151,7 @@ describe("feature registry", () => {
     expect(homePage).toContain('isFeatureEnabled("scenario-history")');
     expect(homePage).toContain('isFeatureEnabled("privacy-safe-analytics")');
     expect(homePage).toContain('isFeatureEnabled("homepage-howto-structured-data")');
+    expect(homePage).not.toContain('isFeatureEnabled("tax-data-freshness")');
     expect(
       fs.readFileSync(path.join(process.cwd(), "src/features/calculator-input/CalculatorInput.tsx"), "utf8"),
     ).toContain('isFeatureEnabled("voice-input-assist")');

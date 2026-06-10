@@ -33,7 +33,7 @@ describe("homepage SEO and UX upgrades", () => {
     expect(screen.queryByDisplayValue("7.000000000000001")).toBeNull();
   });
 
-  it("keeps the homepage navigation focused while preserving crawlable secondary links", () => {
+  it("keeps the homepage navigation tool-only while preserving crawlable secondary links", () => {
     const source = [
       fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8"),
       fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8"),
@@ -41,9 +41,11 @@ describe("homepage SEO and UX upgrades", () => {
 
     const navSource = source.slice(source.indexOf("<nav"), source.indexOf("</nav>"));
 
-    expect(navSource).toContain("Calculator");
-    expect(navSource).toContain("Explanation");
-    expect(navSource).toContain("Sources");
+    expect(navSource).toContain("RothCalc");
+    expect(navSource).toContain("ThemeToggle");
+    expect(navSource).not.toContain("Explanation");
+    expect(navSource).not.toContain("Sources");
+    expect(navSource).not.toContain('href="#calculator"');
     expect(navSource).not.toContain("IRMAA");
     expect(navSource).not.toContain("Production launch");
     expect(source).toContain("More planning guides");
@@ -52,14 +54,14 @@ describe("homepage SEO and UX upgrades", () => {
     expect(source).toContain("/roth-conversion-social-security-tax-guide");
   });
 
-  it("adds official source and transparent methodology sections to the homepage", () => {
+  it("keeps source and methodology content off the homepage tool surface", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
 
-    expect(source).toContain("Official sources reviewed");
-    expect(source).toContain("https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026");
-    expect(source).toContain("https://www.irs.gov/publications/p590a");
-    expect(source).toContain("Transparent calculation method");
-    expect(source).toContain("Taxable conversion = conversion amount minus pro-rata after-tax basis");
+    expect(source).not.toContain("Official sources reviewed");
+    expect(source).not.toContain("Transparent calculation method");
+    expect(source).not.toContain("Taxable conversion = conversion amount minus pro-rata after-tax basis");
+    expect(source).toContain("/calculator-assumptions-guide");
+    expect(source).toContain("/tax-data-update");
   });
 
   it("keeps homepage semantic landmarks explicit for crawlers and assistive technology", () => {

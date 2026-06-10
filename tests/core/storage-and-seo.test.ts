@@ -40,15 +40,59 @@ describe("calculator persistence and share URLs", () => {
     const merged = mergeCalculatorInput(defaults, {
       conversionAmount: 75000,
       filingStatus: "married_joint",
+      netInvestmentIncome: 22000,
       selectedState: "new-york",
       taxPaymentMethod: "withhold_from_ira",
     });
 
     expect(merged.conversionAmount).toBe(75000);
     expect(merged.filingStatus).toBe("married_joint");
+    expect(merged.netInvestmentIncome).toBe(22000);
     expect(merged.selectedState).toBe("new-york");
     expect(merged.taxPaymentMethod).toBe("withhold_from_ira");
     expect(merged.taxYear).toBe(2026);
+  });
+
+  it("sanitizes optional NIIT net investment income from decoded share or storage payloads", () => {
+    expect(mergeCalculatorInput(defaults, { netInvestmentIncome: 18000 }).netInvestmentIncome).toBe(18000);
+    expect(mergeCalculatorInput(defaults, { netInvestmentIncome: -1 }).netInvestmentIncome).toBeNull();
+    expect(mergeCalculatorInput(defaults, { netInvestmentIncome: Number.NaN }).netInvestmentIncome).toBeNull();
+  });
+
+  it("sanitizes optional Social Security taxable-benefit review inputs from decoded payloads", () => {
+    const merged = mergeCalculatorInput(defaults, {
+      annualSocialSecurityBenefits: 30000,
+      taxExemptInterest: 1000,
+    });
+
+    expect(merged.annualSocialSecurityBenefits).toBe(30000);
+    expect(merged.taxExemptInterest).toBe(1000);
+    expect(mergeCalculatorInput(defaults, { annualSocialSecurityBenefits: -1 }).annualSocialSecurityBenefits).toBeNull();
+    expect(mergeCalculatorInput(defaults, { taxExemptInterest: Number.NaN }).taxExemptInterest).toBeNull();
+  });
+
+  it("sanitizes optional ACA Marketplace review inputs from decoded payloads", () => {
+    const merged = mergeCalculatorInput(defaults, {
+      annualAdvancePremiumTaxCredit: 7200,
+      marketplaceCoverageMonths: 12,
+    });
+
+    expect(merged.annualAdvancePremiumTaxCredit).toBe(7200);
+    expect(merged.marketplaceCoverageMonths).toBe(12);
+    expect(mergeCalculatorInput(defaults, { annualAdvancePremiumTaxCredit: -1 }).annualAdvancePremiumTaxCredit).toBeNull();
+    expect(mergeCalculatorInput(defaults, { marketplaceCoverageMonths: 13 }).marketplaceCoverageMonths).toBeNull();
+  });
+
+  it("sanitizes optional AMT comparison inputs from decoded payloads", () => {
+    const merged = mergeCalculatorInput(defaults, {
+      amtRegularTaxLiability: 28000,
+      amtTentativeMinimumTax: 31000,
+    });
+
+    expect(merged.amtTentativeMinimumTax).toBe(31000);
+    expect(merged.amtRegularTaxLiability).toBe(28000);
+    expect(mergeCalculatorInput(defaults, { amtTentativeMinimumTax: -1 }).amtTentativeMinimumTax).toBeNull();
+    expect(mergeCalculatorInput(defaults, { amtRegularTaxLiability: Number.NaN }).amtRegularTaxLiability).toBeNull();
   });
 
   it("drops unsupported selectedState values from decoded share or storage payloads", () => {
@@ -67,6 +111,7 @@ describe("calculator persistence and share URLs", () => {
         localTaxApplies: true,
         notes: "x".repeat(650),
         otherStateTaxCreditApplies: false,
+        reviewedStateTaxEstimate: 6200,
         residencyStatus: "resident",
         stateAdjustedGrossIncome: 120000,
         stateIraBasis: 7000,
@@ -76,6 +121,7 @@ describe("calculator persistence and share URLs", () => {
     expect(merged.stateReadinessInputs).toMatchObject({
       localTaxApplies: true,
       otherStateTaxCreditApplies: false,
+      reviewedStateTaxEstimate: 6200,
       residencyStatus: "resident",
       stateAdjustedGrossIncome: 120000,
       stateIraBasis: 7000,
@@ -87,6 +133,7 @@ describe("calculator persistence and share URLs", () => {
         localTaxApplies: "yes" as unknown as boolean,
         notes: 123 as unknown as string,
         otherStateTaxCreditApplies: null,
+        reviewedStateTaxEstimate: -1,
         residencyStatus: "bad-status" as "resident",
         stateAdjustedGrossIncome: Number.NaN,
         stateIraBasis: null,
@@ -97,6 +144,7 @@ describe("calculator persistence and share URLs", () => {
       localTaxApplies: null,
       notes: "",
       otherStateTaxCreditApplies: null,
+      reviewedStateTaxEstimate: null,
       residencyStatus: "not_provided",
       stateAdjustedGrossIncome: null,
       stateIraBasis: null,
@@ -129,7 +177,7 @@ describe("seo json-ld", () => {
     expect(jsonLd.name).toContain("Roth Conversion Calculator");
   });
 
-  it("builds FAQPage structured data from the visible homepage FAQ", () => {
+  it("builds FAQPage structured data from reusable FAQ items for pages that visibly mount them", () => {
     const jsonLd = faqJsonLd(faqItems);
 
     expect(jsonLd["@type"]).toBe("FAQPage");

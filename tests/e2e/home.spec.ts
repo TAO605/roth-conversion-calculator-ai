@@ -9,7 +9,8 @@ test("homepage calculator updates and core content is visible", async ({ page })
   await expect(page.getByRole("button", { name: /Share result/i })).toBeVisible();
   await expect(page.getByRole("button", { name: /Download report/i })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Review this estimate in plain English/i })).toBeVisible();
-  await expect(page.getByText("Roth Conversion FAQ")).toBeVisible();
+  await expect(page.getByRole("navigation", { name: /Primary navigation/i }).getByText("Explanation")).toHaveCount(0);
+  await expect(page.getByRole("navigation", { name: /Primary navigation/i }).getByText("Sources")).toHaveCount(0);
 
   const conversionAmount = page.getByLabel("Conversion amount");
   await conversionAmount.click();

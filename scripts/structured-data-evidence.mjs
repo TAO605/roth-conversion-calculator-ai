@@ -12,7 +12,7 @@ const homepagePath = "/";
 const staticMonitoredPages = [
   {
     path: "/",
-    requiredTypes: ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization", "FAQPage"],
+    requiredTypes: ["WebApplication", "WebSite", "WebPage", "HowTo", "Organization"],
   },
   {
     path: "/roth-conversion-irmaa-guide",

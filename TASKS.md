@@ -185,3 +185,4 @@
 - [done] Upgrade share link to Web Share API with clipboard fallback
 - [done] Add browser-only voice input assist for supported numeric fields
 - [done] Add browser-only result read aloud action
+- [done] Simplify homepage to keep the calculator tool as the primary experience
