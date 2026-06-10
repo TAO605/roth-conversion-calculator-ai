@@ -7,12 +7,13 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.218",
+      version: "1.0.219",
       type: "patch",
-      title: "Launch readiness GA4 evidence",
+      title: "AI cross-check readiness boundary",
     });
     expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("launch readiness");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("GA4");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("AI");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("professional tax review");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

@@ -75,6 +75,11 @@ export function buildLaunchReadinessGroups(): LaunchReadinessGroup[] {
           "Automated YMYL, AI guardrail, professional handoff, and report tests verify the educational boundary across calculator surfaces.",
           "complete",
         ),
+        item(
+          "AI model cross-check",
+          "AI-assisted cross-checks and deterministic AI verifier evidence review calculator explanations, YMYL language, and fallback boundaries; this supports but does not replace qualified tax professional review.",
+          "complete",
+        ),
         item("CPA review", "Have a qualified US tax professional review tax-language scope and 2026 data assumptions."),
       ],
     },

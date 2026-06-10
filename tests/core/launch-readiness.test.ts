@@ -30,6 +30,7 @@ describe("launch readiness checklist", () => {
         "Sitemap submission",
         "Robots and feeds",
         "Disclaimer review",
+        "AI model cross-check",
         "Unit and integration tests",
         "E2E browser tests",
         "Lighthouse audit",
@@ -41,6 +42,7 @@ describe("launch readiness checklist", () => {
     expect(summary.total).toBeGreaterThanOrEqual(12);
     expect(summary.completed).toBeGreaterThan(0);
     expect(summary.pending).toBe(1);
+    expect(items.find((item) => item.label === "AI model cross-check")?.detail).toContain("does not replace");
   });
 
   it("adds a launch readiness page to sitemap and homepage discovery", () => {

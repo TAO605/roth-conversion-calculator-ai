@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.219",
+    date: "2026-06-10",
+    type: "patch",
+    title: "AI cross-check readiness boundary",
+    summary:
+      "Added an AI model cross-check item to the launch readiness checklist and marked it complete, while keeping qualified CPA/EA review pending so AI verification is documented as support rather than a substitute for professional tax review.",
+    affectedArea:
+      "Launch readiness checklist, compliance review status copy, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Remove the AI model cross-check item only if launch readiness still distinguishes AI-assisted verification from qualified professional tax review.",
+  },
+  {
     version: "1.0.218",
     date: "2026-06-10",
     type: "patch",
