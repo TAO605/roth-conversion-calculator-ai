@@ -61,7 +61,7 @@ export function buildTaxImpactReviewItems(
       level: socialSecurityReviewAge ? "input_triggered_review" : "standard_review",
       reason: socialSecurityReviewAge
         ? "Age inputs are near common benefit-claiming years; taxable-benefit worksheets may need a separate review."
-        : "Social Security benefit taxation is not modeled by the calculator and can change with income assumptions.",
+        : "Social Security taxable-benefit preview is available only when benefit and tax-exempt interest inputs are provided; final Publication 915 review can still change with income assumptions.",
       guideHref: "/roth-conversion-social-security-tax-guide",
     },
     {

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.216",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Social Security review trigger wording",
+    summary:
+      "Aligned the Social Security tax-impact review trigger with the bounded taxable-benefit preview, replacing stale not-modeled wording with the current benefit-input, tax-exempt-interest, and Publication 915 boundary.",
+    affectedArea:
+      "Tax Impact Warnings review triggers, Social Security taxable-benefit preview boundary copy, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Revert only if Social Security review-trigger copy still distinguishes the bounded taxable-benefit preview from final Publication 915 worksheets and benefit-tax determinations.",
+  },
+  {
     version: "1.0.215",
     date: "2026-06-10",
     type: "patch",

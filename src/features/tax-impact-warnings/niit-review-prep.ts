@@ -12,7 +12,10 @@ export interface NiitReviewPrep {
   filingStatusThreshold: number;
   magiProxyExcessAfterConversion: number;
   niitRate: 0.038;
-  amountEstimateStatus: "missing_net_investment_income_inputs";
+  netInvestmentIncomeInput: number | null;
+  niitExposureBase: number | null;
+  boundedNiitEstimate: number | null;
+  amountEstimateStatus: "bounded_estimate_available" | "missing_net_investment_income_inputs";
   formulaNote: string;
   summary: string;
   boundaryNote: string;
@@ -48,12 +51,49 @@ export function buildNiitReviewPrep(input: RothConversionInput, result: RothConv
   const magiProxyAfterConversion = magiProxyBeforeConversion + taxableConversionIncrease;
   const filingStatusThreshold = NIIT_MAGI_THRESHOLDS[input.filingStatus];
   const magiProxyExcessAfterConversion = Math.max(0, magiProxyAfterConversion - filingStatusThreshold);
+  const netInvestmentIncomeInput =
+    typeof input.netInvestmentIncome === "number" && Number.isFinite(input.netInvestmentIncome)
+      ? Math.max(0, input.netInvestmentIncome)
+      : null;
+  const niitExposureBase =
+    netInvestmentIncomeInput === null ? null : Math.min(netInvestmentIncomeInput, magiProxyExcessAfterConversion);
+  const boundedNiitEstimate = niitExposureBase === null ? null : Number((niitExposureBase * 0.038).toFixed(2));
+  const amountEstimateStatus =
+    netInvestmentIncomeInput === null ? "missing_net_investment_income_inputs" : "bounded_estimate_available";
+  const boundaryNote =
+    netInvestmentIncomeInput === null
+      ? "The bounded NIIT preview requires user-entered net investment income. The calculator shows the MAGI proxy excess, but Form 8960 classification, deductions, trade or business exceptions, credits, and Form 8960 treatment still require separate review."
+      : "This is a bounded NIIT preview using the user-entered net investment income and the calculator MAGI proxy after conversion. It is not a full Form 8960 calculation and does not classify investment income, deductions, trade or business exceptions, credits, or every MAGI adjustment.";
+  const summary =
+    netInvestmentIncomeInput === null
+      ? `The taxable conversion adds ${formatCurrency(
+          taxableConversionIncrease,
+        )} to the calculator MAGI proxy, moving the proxy from ${formatCurrency(
+          magiProxyBeforeConversion,
+        )} before conversion to ${formatCurrency(
+          magiProxyAfterConversion,
+        )} after conversion. The proxy exceeds the ${formatCurrency(
+          filingStatusThreshold,
+        )} NIIT review threshold by ${formatCurrency(
+          magiProxyExcessAfterConversion,
+        )}. The bounded 3.8% NIIT preview stays pending until net investment income is provided.`
+      : `The taxable conversion adds ${formatCurrency(
+          taxableConversionIncrease,
+        )} to the calculator MAGI proxy, moving the proxy from ${formatCurrency(
+          magiProxyBeforeConversion,
+        )} before conversion to ${formatCurrency(
+          magiProxyAfterConversion,
+        )} after conversion. With user-entered net investment income of ${formatCurrency(
+          netInvestmentIncomeInput,
+        )}, the bounded NIIT exposure base is ${formatCurrency(niitExposureBase ?? 0)} and the 3.8% preview is ${formatCurrency(
+          boundedNiitEstimate ?? 0,
+        )}.`;
 
   return {
-    amountEstimateStatus: "missing_net_investment_income_inputs",
+    amountEstimateStatus,
     basis: "calculator_magi_proxy",
-    boundaryNote:
-      "This calculator cannot estimate NIIT owed from the MAGI proxy alone. NIIT applies to the lesser of net investment income or the amount MAGI exceeds the filing-status threshold, so investment-income classification and Form 8960 inputs are required before any NIIT dollar amount can be reviewed.",
+    boundedNiitEstimate,
+    boundaryNote,
     filingStatusThreshold,
     formulaNote:
       "NIIT is generally 3.8% of the lesser of net investment income or modified adjusted gross income above the applicable filing-status threshold.",
@@ -68,21 +108,13 @@ export function buildNiitReviewPrep(input: RothConversionInput, result: RothConv
       "Whether any income is excluded from net investment income or belongs to a trade or business exception.",
       "Capital gain, passive activity, rental, and K-1 records that may affect Form 8960 review.",
     ],
+    netInvestmentIncomeInput,
+    niitExposureBase,
     niitRate: 0.038,
     officialReferences: NIIT_OFFICIAL_REFERENCES,
-    summary: `The taxable conversion adds ${formatCurrency(
-      taxableConversionIncrease,
-    )} to the calculator MAGI proxy, moving the proxy from ${formatCurrency(
-      magiProxyBeforeConversion,
-    )} before conversion to ${formatCurrency(
-      magiProxyAfterConversion,
-    )} after conversion. The proxy exceeds the ${formatCurrency(
-      filingStatusThreshold,
-    )} NIIT review threshold by ${formatCurrency(
-      magiProxyExcessAfterConversion,
-    )}, but NIIT dollars are not estimated until net investment income inputs are available.`,
+    summary,
     taxableConversionIncrease,
     taxYear: input.taxYear,
-    title: "NIIT Amount Review Prep",
+    title: netInvestmentIncomeInput === null ? "NIIT Amount Review Prep" : "NIIT Bounded Estimate Preview",
   };
 }

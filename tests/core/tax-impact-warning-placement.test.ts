@@ -7,7 +7,11 @@ import type { RothConversionInput, RothConversionResult } from "@/core/calculato
 import { TaxImpactWarnings } from "@/features/tax-impact-warnings/TaxImpactWarnings";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildAmtReviewPrep } from "@/features/tax-impact-warnings/amt-review-prep";
-import { buildIrmaaReviewPrep, estimateIrmaaPartBFromIncomeProxy } from "@/features/tax-impact-warnings/irmaa-review-prep";
+import {
+  buildIrmaaReviewPrep,
+  estimateIrmaaPartBFromIncomeProxy,
+  estimateIrmaaPartDFromIncomeProxy,
+} from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
 import { buildRmdReviewPrep } from "@/features/tax-impact-warnings/rmd-review-prep";
 import { buildSocialSecurityTaxationReviewPrep } from "@/features/tax-impact-warnings/social-security-review-prep";
@@ -76,10 +80,14 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("Medicare IRMAA");
     expect(panel.textContent).toContain("IRMAA Review Prep");
     expect(panel.textContent).toContain("2026 Part B proxy preview");
+    expect(panel.textContent).toContain("2026 Part D IRMAA proxy preview");
     expect(panel.textContent).toContain("$649.20");
     expect(panel.textContent).toContain("$446.30");
+    expect(panel.textContent).toContain("$83.30");
     expect(panel.textContent).toContain("of IRMAA adjustment");
+    expect(panel.textContent).toContain("Part D IRMAA adjustment");
     expect(panel.textContent).toContain("not SSA's actual lookback-year MAGI determination");
+    expect(panel.textContent).toContain("Part D plan premiums vary by plan");
     expect(panel.textContent).toContain("Usual lookback tax year");
     expect(panel.textContent).toContain("2024");
     expect(panel.textContent).toContain("Inputs still needed before amount review");
@@ -87,7 +95,7 @@ describe("tax impact warning placement", () => {
     expect(panel.textContent).toContain("SSA-44 life-changing event form");
     expect(panel.textContent).toContain("ACA premium tax credits");
     expect(panel.textContent).toContain("ACA Premium Tax Credit Review Prep");
-    expect(panel.textContent).toContain("Amount not estimated");
+    expect(panel.textContent).toContain("Needs Marketplace inputs");
     expect(panel.textContent).toContain("Inputs needed before subsidy amount review");
     expect(panel.textContent).toContain("Marketplace coverage months");
     expect(panel.textContent).toContain("HealthCare.gov premium tax credit and Marketplace savings");
@@ -201,6 +209,7 @@ describe("tax impact warning placement", () => {
           localTaxApplies: true,
           notes: "Moved during the tax year",
           otherStateTaxCreditApplies: false,
+          reviewedStateTaxEstimate: 6200,
           residencyStatus: "part_year",
           stateAdjustedGrossIncome: 210000,
           stateIraBasis: 8000,
@@ -212,12 +221,16 @@ describe("tax impact warning placement", () => {
 
     expect(prep.userStateReadinessInputs.status).toBe("ready_for_professional_review");
     expect(prep.userStateReadinessInputs.statusLabel).toBe("Ready for professional review");
-    expect(prep.userStateReadinessInputs.providedCount).toBe(6);
+    expect(prep.userStateReadinessInputs.providedCount).toBe(7);
     expect(prep.userStateReadinessInputs.scorePercent).toBe(100);
+    expect(prep.reviewedStateTaxEstimate).toBe(6200);
+    expect(prep.reviewedVsManualStateTaxDifference).toBe(620);
+    expect(prep.amountEstimateStatus).toBe("reviewed_state_estimate_provided");
     expect(prep.userStateReadinessInputs.providedFields).toEqual([
       "Residency status",
       "State adjusted gross income",
       "State IRA basis or already-taxed amount",
+      "Reviewed state tax estimate",
       "Local tax may apply",
       "Other-state tax credit may apply",
       "State review notes",
@@ -230,6 +243,7 @@ describe("tax impact warning placement", () => {
         "Residency status: Part-year resident",
         "State adjusted gross income: $210,000",
         "State IRA basis or already-taxed amount: $8,000",
+        "Reviewed state tax estimate: $6,200",
         "Local tax may apply: Yes",
         "Other-state tax credit may apply: No",
         "State review notes: Moved during the tax year",
@@ -263,6 +277,7 @@ describe("tax impact warning placement", () => {
       "Residency status",
       "State adjusted gross income",
       "State IRA basis or already-taxed amount",
+      "Reviewed state tax estimate",
       "Local tax may apply",
       "Other-state tax credit may apply",
       "State review notes",
@@ -272,13 +287,14 @@ describe("tax impact warning placement", () => {
     expect(partial.userStateReadinessInputs.status).toBe("partially_provided");
     expect(partial.userStateReadinessInputs.statusLabel).toBe("Partially provided");
     expect(partial.userStateReadinessInputs.providedCount).toBe(2);
-    expect(partial.userStateReadinessInputs.scorePercent).toBe(33);
+    expect(partial.userStateReadinessInputs.scorePercent).toBe(29);
     expect(partial.userStateReadinessInputs.providedFields).toEqual([
       "Residency status",
       "State adjusted gross income",
     ]);
     expect(partial.userStateReadinessInputs.missingFields).toEqual([
       "State IRA basis or already-taxed amount",
+      "Reviewed state tax estimate",
       "Local tax may apply",
       "Other-state tax credit may apply",
       "State review notes",
@@ -313,12 +329,15 @@ describe("tax impact warning placement", () => {
     expect(prep.amtIncomeProxyBeforeConversion).toBe(195000);
     expect(prep.taxableConversionIncrease).toBe(60000);
     expect(prep.amtIncomeProxyAfterConversion).toBe(255000);
+    expect(prep.tentativeMinimumTaxInput).toBeNull();
+    expect(prep.regularTaxLiabilityInput).toBeNull();
+    expect(prep.amtExposurePreview).toBeNull();
     expect(prep.amountEstimateStatus).toBe("missing_form_6251_inputs");
     expect(prep.summary).toContain("$60,000");
     expect(prep.summary).toContain("$195,000");
     expect(prep.summary).toContain("$255,000");
     expect(prep.formulaNote).toContain("Form 6251");
-    expect(prep.boundaryNote).toContain("cannot estimate AMT owed");
+    expect(prep.boundaryNote).toContain("AMT exposure preview requires user-entered Form 6251");
     expect(prep.missingInputs).toEqual(
       expect.arrayContaining([
         "Form 6251 adjustment and preference items, including ISO, depreciation, private activity bond interest, and other AMT-specific items.",
@@ -326,6 +345,28 @@ describe("tax impact warning placement", () => {
       ]),
     );
     expect(JSON.stringify(prep)).not.toMatch(/amt owed:|tax due:|you should|strongly recommend/i);
+  });
+
+  it("builds an AMT exposure preview from user-entered Form 6251 comparison values", () => {
+    const prep = buildAmtReviewPrep(
+      {
+        ...baseInput,
+        amtTentativeMinimumTax: 31000,
+        amtRegularTaxLiability: 28000,
+      },
+      baseResult,
+    );
+
+    expect(prep.title).toBe("AMT Exposure Preview");
+    expect(prep.amountEstimateStatus).toBe("amt_exposure_preview_available");
+    expect(prep.tentativeMinimumTaxInput).toBe(31000);
+    expect(prep.regularTaxLiabilityInput).toBe(28000);
+    expect(prep.amtExposurePreview).toBe(3000);
+    expect(prep.summary).toContain("tentative minimum tax of $31,000");
+    expect(prep.summary).toContain("regular tax liability of $28,000");
+    expect(prep.summary).toContain("AMT exposure preview is $3,000");
+    expect(prep.boundaryNote).toContain("does not calculate alternative minimum taxable income");
+    expect(JSON.stringify(prep)).not.toMatch(/final amt|amt owed:|tax due:|you should|strongly recommend/i);
   });
 
   it("builds a bounded RMD preview from age and IRA balance only when the Uniform Lifetime Table applies", () => {
@@ -369,11 +410,14 @@ describe("tax impact warning placement", () => {
     expect(prep.filingStatusThreshold).toBe(200000);
     expect(prep.magiProxyExcessAfterConversion).toBe(55000);
     expect(prep.niitRate).toBe(0.038);
+    expect(prep.netInvestmentIncomeInput).toBeNull();
+    expect(prep.niitExposureBase).toBeNull();
+    expect(prep.boundedNiitEstimate).toBeNull();
     expect(prep.amountEstimateStatus).toBe("missing_net_investment_income_inputs");
     expect(prep.summary).toContain("$55,000");
     expect(prep.formulaNote).toContain("3.8%");
     expect(prep.formulaNote).toContain("lesser of net investment income");
-    expect(prep.boundaryNote).toContain("cannot estimate NIIT owed from the MAGI proxy alone");
+    expect(prep.boundaryNote).toContain("bounded NIIT preview requires user-entered net investment income");
     expect(prep.missingInputs).toEqual(
       expect.arrayContaining([
         "Net investment income categories for Form 8960, such as interest, dividends, annuities, royalties, rents, capital gains, and passive activity income.",
@@ -383,19 +427,45 @@ describe("tax impact warning placement", () => {
     expect(JSON.stringify(prep)).not.toMatch(/niit owed:|tax due:|you should|strongly recommend/i);
   });
 
+  it("builds a bounded NIIT preview when the user provides net investment income", () => {
+    const prep = buildNiitReviewPrep(
+      {
+        ...baseInput,
+        netInvestmentIncome: 40000,
+      },
+      baseResult,
+    );
+
+    expect(prep.title).toBe("NIIT Bounded Estimate Preview");
+    expect(prep.amountEstimateStatus).toBe("bounded_estimate_available");
+    expect(prep.netInvestmentIncomeInput).toBe(40000);
+    expect(prep.magiProxyExcessAfterConversion).toBe(55000);
+    expect(prep.niitExposureBase).toBe(40000);
+    expect(prep.boundedNiitEstimate).toBe(1520);
+    expect(prep.summary).toContain("user-entered net investment income of $40,000");
+    expect(prep.summary).toContain("bounded NIIT exposure base is $40,000");
+    expect(prep.summary).toContain("3.8% preview is $1,520");
+    expect(prep.boundaryNote).toContain("not a full Form 8960 calculation");
+    expect(JSON.stringify(prep)).not.toMatch(/final niit|final tax|you should|strongly recommend/i);
+  });
+
   it("builds Social Security benefit taxation review prep without fake taxable-benefit dollar estimates", () => {
     const prep = buildSocialSecurityTaxationReviewPrep(baseInput, baseResult);
 
     expect(prep.nonSocialSecurityIncomeProxyBeforeConversion).toBe(195000);
     expect(prep.taxableConversionIncrease).toBe(60000);
     expect(prep.nonSocialSecurityIncomeProxyAfterConversion).toBe(255000);
+    expect(prep.annualSocialSecurityBenefitsInput).toBeNull();
+    expect(prep.taxExemptInterestInput).toBeNull();
+    expect(prep.combinedIncomeProxyAfterConversion).toBeNull();
+    expect(prep.taxableBenefitPreview).toBeNull();
     expect(prep.amountEstimateStatus).toBe("missing_social_security_inputs");
     expect(prep.summary).toContain("$60,000");
     expect(prep.summary).toContain("$195,000");
     expect(prep.summary).toContain("$255,000");
     expect(prep.thresholdNote).toContain("$25,000");
     expect(prep.thresholdNote).toContain("$34,000");
-    expect(prep.boundaryNote).toContain("cannot estimate taxable Social Security benefit dollars");
+    expect(prep.boundaryNote).toContain("bounded taxable Social Security benefit preview requires annual benefit");
     expect(prep.missingInputs).toEqual(
       expect.arrayContaining([
         "Annual Social Security benefit amount from Form SSA-1099 box 5, or equivalent Tier 1 railroad retirement benefit records.",
@@ -405,17 +475,45 @@ describe("tax impact warning placement", () => {
     expect(JSON.stringify(prep)).not.toMatch(/taxable benefit amount:|benefit tax owed|you should|strongly recommend/i);
   });
 
+  it("builds a bounded Social Security taxable-benefit preview when Publication 915 inputs are provided", () => {
+    const prep = buildSocialSecurityTaxationReviewPrep(
+      {
+        ...baseInput,
+        annualSocialSecurityBenefits: 30000,
+        taxExemptInterest: 1000,
+      },
+      baseResult,
+    );
+
+    expect(prep.title).toBe("Social Security Taxable Benefit Preview");
+    expect(prep.amountEstimateStatus).toBe("bounded_estimate_available");
+    expect(prep.annualSocialSecurityBenefitsInput).toBe(30000);
+    expect(prep.taxExemptInterestInput).toBe(1000);
+    expect(prep.combinedIncomeProxyAfterConversion).toBe(271000);
+    expect(prep.taxableBenefitPreviewRateCap).toBe(0.85);
+    expect(prep.taxableBenefitPreview).toBe(25500);
+    expect(prep.summary).toContain("annual Social Security benefits of $30,000");
+    expect(prep.summary).toContain("bounded combined-income proxy is $271,000");
+    expect(prep.summary).toContain("taxable-benefit preview is $25,500");
+    expect(prep.boundaryNote).toContain("not a full Publication 915 worksheet");
+    expect(JSON.stringify(prep)).not.toMatch(/final taxable benefit|benefit tax owed|you should|strongly recommend/i);
+  });
+
   it("builds ACA premium tax credit review prep without fake subsidy dollar estimates", () => {
     const prep = buildAcaPremiumTaxCreditReviewPrep(baseInput, baseResult);
 
     expect(prep.incomeProxyBeforeConversion).toBe(195000);
     expect(prep.conversionIncomeIncrease).toBe(60000);
     expect(prep.incomeProxyAfterConversion).toBe(255000);
+    expect(prep.annualAdvancePremiumTaxCreditInput).toBeNull();
+    expect(prep.marketplaceCoverageMonthsInput).toBeNull();
+    expect(prep.monthlyAdvancePremiumTaxCreditPreview).toBeNull();
+    expect(prep.aptcAtStakePreview).toBeNull();
     expect(prep.amountEstimateStatus).toBe("missing_marketplace_inputs");
     expect(prep.summary).toContain("$60,000");
     expect(prep.summary).toContain("$195,000");
     expect(prep.summary).toContain("$255,000");
-    expect(prep.boundaryNote).toContain("cannot estimate ACA premium tax credit dollars from taxable income alone");
+    expect(prep.boundaryNote).toContain("ACA APTC at-stake preview requires Marketplace-specific inputs");
     expect(prep.missingInputs).toEqual(
       expect.arrayContaining([
         "Marketplace coverage months and whether advance premium tax credits were used.",
@@ -423,6 +521,29 @@ describe("tax impact warning placement", () => {
       ]),
     );
     expect(JSON.stringify(prep)).not.toMatch(/subsidy savings|premium tax credit amount|you should|strongly recommend/i);
+  });
+
+  it("builds an ACA APTC at-stake preview from user-entered Marketplace values", () => {
+    const prep = buildAcaPremiumTaxCreditReviewPrep(
+      {
+        ...baseInput,
+        annualAdvancePremiumTaxCredit: 7200,
+        marketplaceCoverageMonths: 12,
+      },
+      baseResult,
+    );
+
+    expect(prep.title).toBe("ACA Advance Premium Tax Credit Preview");
+    expect(prep.amountEstimateStatus).toBe("aptc_at_stake_preview_available");
+    expect(prep.annualAdvancePremiumTaxCreditInput).toBe(7200);
+    expect(prep.marketplaceCoverageMonthsInput).toBe(12);
+    expect(prep.monthlyAdvancePremiumTaxCreditPreview).toBe(600);
+    expect(prep.aptcAtStakePreview).toBe(7200);
+    expect(prep.summary).toContain("advance premium tax credit at stake is $7,200");
+    expect(prep.summary).toContain("12 Marketplace coverage months");
+    expect(prep.summary).toContain("$600 per covered month");
+    expect(prep.boundaryNote).toContain("does not calculate the final Form 8962 credit");
+    expect(JSON.stringify(prep)).not.toMatch(/final premium tax credit|final subsidy|you should|strongly recommend/i);
   });
 
   it("prioritizes review items from inputs without calculating external tax amounts", () => {
@@ -437,6 +558,16 @@ describe("tax impact warning placement", () => {
     expect(triggeredLabels).toContain("State-specific retirement income rules");
     expect(items.find((item) => item.id === "niit")?.reason).toContain("taxable-income proxy");
     expect(items.find((item) => item.id === "niit")?.reason).not.toContain("NIIT amount");
+    const standardReviewItems = buildTaxImpactReviewItems(
+      { ...baseInput, age: 40, retirementAge: 70 },
+      baseResult,
+    );
+    expect(standardReviewItems.find((item) => item.id === "social-security")?.reason).toContain(
+      "Social Security taxable-benefit preview is available only when benefit and tax-exempt interest inputs are provided",
+    );
+    expect(standardReviewItems.find((item) => item.id === "social-security")?.reason).not.toContain(
+      "Social Security benefit taxation is not modeled",
+    );
   });
 
   it("builds IRMAA review prep with a bounded Part B proxy preview", () => {
@@ -452,13 +583,17 @@ describe("tax impact warning placement", () => {
     expect(prep.partBEstimate.monthlyAdjustmentAmount).toBe(446.3);
     expect(prep.partBEstimate.boundaryNote).toContain("not SSA's actual lookback-year MAGI determination");
     expect(prep.partBEstimate.sourceHref).toContain("cms.gov");
+    expect(prep.partDEstimate.monthlyAdjustmentAmount).toBe(83.3);
+    expect(prep.partDEstimate.boundaryNote).toContain("shows only the CMS Part D IRMAA monthly adjustment");
+    expect(prep.partDEstimate.boundaryNote).toContain("Part D plan premiums vary by plan");
+    expect(prep.partDEstimate.sourceHref).toContain("cms.gov");
     expect(prep.missingInputs).toEqual(
       expect.arrayContaining([
         "Medicare enrollment status and whether Part B or Part D applies.",
         "Whether a life-changing event may support SSA Form SSA-44 review.",
       ]),
     );
-    expect(JSON.stringify(prep)).not.toMatch(/surcharge amount|premium increase|you should|strongly recommend/i);
+    expect(JSON.stringify(prep)).not.toMatch(/surcharge amount|premium increase|total part d premium|you should|strongly recommend/i);
   });
 
   it("maps 2026 Part B IRMAA brackets from official CMS amounts", () => {
@@ -467,6 +602,14 @@ describe("tax impact warning placement", () => {
     expect(estimateIrmaaPartBFromIncomeProxy("married_joint", 500000).totalMonthlyPremium).toBe(649.2);
     expect(estimateIrmaaPartBFromIncomeProxy("married_separate", 200000).totalMonthlyPremium).toBe(649.2);
     expect(estimateIrmaaPartBFromIncomeProxy("married_separate", 400000).totalMonthlyPremium).toBe(689.9);
+  });
+
+  it("maps 2026 Part D IRMAA adjustment brackets from official CMS amounts", () => {
+    expect(estimateIrmaaPartDFromIncomeProxy("single", 108000).monthlyAdjustmentAmount).toBe(0);
+    expect(estimateIrmaaPartDFromIncomeProxy("single", 150000).monthlyAdjustmentAmount).toBe(37.5);
+    expect(estimateIrmaaPartDFromIncomeProxy("married_joint", 500000).monthlyAdjustmentAmount).toBe(83.3);
+    expect(estimateIrmaaPartDFromIncomeProxy("married_separate", 200000).monthlyAdjustmentAmount).toBe(83.3);
+    expect(estimateIrmaaPartDFromIncomeProxy("married_separate", 400000).monthlyAdjustmentAmount).toBe(91);
   });
 
   it("keeps the warnings directly inside the results card before AI, projection, and advanced details", () => {

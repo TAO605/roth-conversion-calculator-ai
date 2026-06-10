@@ -175,3 +175,5 @@
 - [done] Add bounded 2026 Part D IRMAA monthly adjustment proxy preview
 - [done] Align advanced preview guide copy with ACA NIIT RMD bounded previews
 - [done] Align professional review packet copy with bounded advanced previews
+- [done] Align Social Security tax-impact trigger copy with bounded preview
+- [done] Align missing-input bounded preview copy across ACA NIIT Social Security and AMT

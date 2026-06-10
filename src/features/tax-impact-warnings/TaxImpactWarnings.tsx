@@ -63,6 +63,18 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
             {irmaaPrep.partBEstimate.boundaryNote}
           </p>
         </div>
+        <div className="mt-2 rounded border border-blue-100 bg-white p-3 dark:border-blue-400/30 dark:bg-neutral-950">
+          <p className="font-semibold text-neutral-950 dark:text-white">2026 Part D IRMAA proxy preview</p>
+          <p className="mt-1">
+            Using the same calculator income proxy, the CMS 2026 Part D table maps this scenario to{" "}
+            <strong>{formatCurrencyWithCents(irmaaPrep.partDEstimate.monthlyAdjustmentAmount)}</strong> per month of
+            Part D IRMAA adjustment.
+          </p>
+          <p className="mt-1">{irmaaPrep.partDEstimate.bracketLabel}.</p>
+          <p className="mt-1 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
+            {irmaaPrep.partDEstimate.boundaryNote}
+          </p>
+        </div>
         <div className="mt-2 grid gap-1">
           <span className="font-semibold text-neutral-950 dark:text-white">Inputs still needed before amount review:</span>
           <ul className="list-disc space-y-1 pl-4">
@@ -89,10 +101,20 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{acaPrep.title}</h4>
           <span className="rounded border border-emerald-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-emerald-800 dark:border-emerald-400/30 dark:bg-neutral-950 dark:text-emerald-200">
-            Amount not estimated
+            {acaPrep.amountEstimateStatus === "aptc_at_stake_preview_available"
+              ? "APTC at-stake preview"
+              : "Needs Marketplace inputs"}
           </span>
         </div>
         <p className="mt-2">{acaPrep.summary}</p>
+        {acaPrep.amountEstimateStatus === "aptc_at_stake_preview_available" ? (
+          <p className="mt-2">
+            User-entered annual APTC:{" "}
+            <strong>{formatCurrency(acaPrep.annualAdvancePremiumTaxCreditInput ?? 0)}</strong>.
+            Coverage months: <strong>{acaPrep.marketplaceCoverageMonthsInput ?? 0}</strong>. Monthly APTC preview:{" "}
+            <strong>{formatCurrency(acaPrep.monthlyAdvancePremiumTaxCreditPreview ?? 0)}</strong>.
+          </p>
+        ) : null}
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">{acaPrep.boundaryNote}</p>
         <div className="mt-2 grid gap-1">
           <span className="font-semibold text-neutral-950 dark:text-white">
@@ -122,10 +144,22 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{socialSecurityPrep.title}</h4>
           <span className="rounded border border-violet-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-violet-800 dark:border-violet-400/30 dark:bg-neutral-950 dark:text-violet-200">
-            Amount not estimated
+            {socialSecurityPrep.amountEstimateStatus === "bounded_estimate_available"
+              ? "Bounded preview"
+              : "Needs benefit inputs"}
           </span>
         </div>
         <p className="mt-2">{socialSecurityPrep.summary}</p>
+        {socialSecurityPrep.amountEstimateStatus === "bounded_estimate_available" ? (
+          <p className="mt-2">
+            Annual Social Security benefits:{" "}
+            <strong>{formatCurrency(socialSecurityPrep.annualSocialSecurityBenefitsInput ?? 0)}</strong>.
+            Combined-income proxy:{" "}
+            <strong>{formatCurrency(socialSecurityPrep.combinedIncomeProxyAfterConversion ?? 0)}</strong>.
+            Taxable-benefit preview:{" "}
+            <strong>{formatCurrency(socialSecurityPrep.taxableBenefitPreview ?? 0)}</strong>.
+          </p>
+        ) : null}
         <p className="mt-2">{socialSecurityPrep.thresholdNote}</p>
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
           {socialSecurityPrep.boundaryNote}
@@ -158,10 +192,17 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{niitPrep.title}</h4>
           <span className="rounded border border-sky-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-sky-800 dark:border-sky-400/30 dark:bg-neutral-950 dark:text-sky-200">
-            Amount not estimated
+            {niitPrep.amountEstimateStatus === "bounded_estimate_available" ? "Bounded preview" : "Needs NII input"}
           </span>
         </div>
         <p className="mt-2">{niitPrep.summary}</p>
+        {niitPrep.amountEstimateStatus === "bounded_estimate_available" ? (
+          <p className="mt-2">
+            User-entered net investment income: <strong>{formatCurrency(niitPrep.netInvestmentIncomeInput ?? 0)}</strong>.
+            NIIT exposure base: <strong>{formatCurrency(niitPrep.niitExposureBase ?? 0)}</strong>. Bounded 3.8%
+            preview: <strong>{formatCurrency(niitPrep.boundedNiitEstimate ?? 0)}</strong>.
+          </p>
+        ) : null}
         <p className="mt-2">{niitPrep.formulaNote}</p>
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">{niitPrep.boundaryNote}</p>
         <div className="mt-2 grid gap-1">
@@ -231,10 +272,17 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h4 className="text-sm font-semibold text-neutral-950 dark:text-white">{amtPrep.title}</h4>
           <span className="rounded border border-neutral-300 bg-white px-2 py-0.5 text-[11px] font-semibold text-neutral-800 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-200">
-            Amount not estimated
+            {amtPrep.amountEstimateStatus === "amt_exposure_preview_available" ? "Exposure preview" : "Needs Form 6251 inputs"}
           </span>
         </div>
         <p className="mt-2">{amtPrep.summary}</p>
+        {amtPrep.amountEstimateStatus === "amt_exposure_preview_available" ? (
+          <p className="mt-2">
+            Tentative minimum tax: <strong>{formatCurrency(amtPrep.tentativeMinimumTaxInput ?? 0)}</strong>. Regular
+            tax liability: <strong>{formatCurrency(amtPrep.regularTaxLiabilityInput ?? 0)}</strong>. AMT exposure
+            preview: <strong>{formatCurrency(amtPrep.amtExposurePreview ?? 0)}</strong>.
+          </p>
+        ) : null}
         <p className="mt-2">{amtPrep.formulaNote}</p>
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">{amtPrep.boundaryNote}</p>
         <div className="mt-2 grid gap-1">
@@ -280,6 +328,13 @@ export function TaxImpactWarnings({ input, result }: { input: RothConversionInpu
           <strong>{formatPercent(stateRulesPrep.manualStateRate)}</strong>. Modeled state tax from that rate:{" "}
           <strong>{formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate)}</strong>.
         </p>
+        {stateRulesPrep.reviewedStateTaxEstimate === null ? null : (
+          <p className="mt-2">
+            Reviewed state tax estimate:{" "}
+            <strong>{formatCurrency(stateRulesPrep.reviewedStateTaxEstimate)}</strong>. Difference from manual-rate
+            estimate: <strong>{formatCurrency(stateRulesPrep.reviewedVsManualStateTaxDifference ?? 0)}</strong>.
+          </p>
+        )}
         <p className="mt-2 text-[11px] leading-5 text-neutral-600 dark:text-neutral-300">
           State rule registry boundary: {stateRulesPrep.stateRuleBoundaryNote}
         </p>

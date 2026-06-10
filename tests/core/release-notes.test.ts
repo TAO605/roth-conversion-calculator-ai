@@ -7,14 +7,12 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.215",
+      version: "1.0.216",
       type: "patch",
-      title: "Professional review packet preview boundaries",
+      title: "Social Security review trigger wording",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("IRMAA");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("ACA");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("NIIT");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("RMD");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("Social Security");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("Publication 915");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 
