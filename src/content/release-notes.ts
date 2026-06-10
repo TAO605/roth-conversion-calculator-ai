@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.226",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Browser result read aloud",
+    summary:
+      "Added an optional browser-only Read aloud action for the calculator result summary. The action uses local speech synthesis when available and reads educational estimate boundaries without sending data to a server or turning the output into tax advice.",
+    affectedArea:
+      "Result read-aloud action, homepage result action toolbar, feature registry, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Disable voice-result-readout in the feature registry or remove ResultReadAloudButton from the result action toolbar while preserving visual results, report export, share, email draft, and CPA handoff.",
+  },
+  {
     version: "1.0.225",
     date: "2026-06-10",
     type: "patch",

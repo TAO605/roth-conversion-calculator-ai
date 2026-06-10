@@ -140,6 +140,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Disable email-report in the feature registry and remove EmailReportButton from the homepage result actions while keeping download, share, and CPA handoff available.",
   },
   {
+    id: "voice-result-readout",
+    label: "Browser result read aloud",
+    version: "1.0.226",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/voice-output and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Disable voice-result-readout in the feature registry or remove ResultReadAloudButton from the result action toolbar while keeping visual results, reports, share, and CPA handoff available.",
+  },
+  {
     id: "professional-handoff",
     label: "CPA packet copy action",
     version: "1.0.180",
