@@ -50,6 +50,7 @@
     "ops:ai-verifier-regression": "node scripts/ai-verifier-regression-evidence.mjs",
     "ops:ai-provider-usage-validate": "node scripts/validate-ai-provider-usage-evidence.mjs",
     "ops:ai-provider-usage-ready": "node scripts/ai-provider-usage-readiness.mjs",
+    "ops:cpa-review-evidence-validate": "node scripts/validate-cpa-review-evidence.mjs",
     "ops:privacy-evidence-boundary": "node scripts/privacy-evidence-boundary.mjs",
     "ops:privacy-evidence-cleanup-plan": "node scripts/privacy-evidence-cleanup-plan.mjs",
     "lint": "next lint"

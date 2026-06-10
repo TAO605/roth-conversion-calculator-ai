@@ -43,6 +43,9 @@ describe("launch readiness checklist", () => {
     expect(summary.completed).toBeGreaterThan(0);
     expect(summary.pending).toBe(1);
     expect(items.find((item) => item.label === "AI model cross-check")?.detail).toContain("does not replace");
+    expect(items.find((item) => item.label === "CPA review")?.detail).toContain(
+      "ops:cpa-review-evidence-validate",
+    );
   });
 
   it("adds a launch readiness page to sitemap and homepage discovery", () => {

@@ -1,0 +1,34 @@
+{
+  "evidenceType": "cpa-review-evidence",
+  "recordStatus": "template",
+  "reviewer": {
+    "name": "REPLACE_WITH_REVIEWER_NAME",
+    "credential": "CPA_OR_EA_OR_TAX_ATTORNEY",
+    "jurisdiction": "US_STATE_OR_FEDERAL_ENROLLED_AGENT",
+    "firmOrLicenseReference": "REDACTED_OR_PUBLIC_LICENSE_REFERENCE"
+  },
+  "review": {
+    "reviewedAt": "YYYY-MM-DD",
+    "taxYear": 2026,
+    "scope": [
+      "Federal Roth conversion tax calculation scope",
+      "Educational YMYL disclaimer boundary",
+      "Bounded advanced preview boundaries",
+      "Professional handoff packet wording",
+      "2026 tax data source assumptions"
+    ],
+    "decision": "template",
+    "requiredChanges": [],
+    "notes": "REPLACE_WITH_REDACTED_REVIEW_NOTES"
+  },
+  "evidence": {
+    "reviewLetterPath": "docs/evidence/REPLACE_WITH_REDACTED_REVIEW_LETTER.pdf",
+    "capturedBy": "site owner",
+    "capturedAt": "YYYY-MM-DDTHH:mm:ss.sssZ"
+  },
+  "privacyBoundary": [
+    "Do not include SSNs, ITINs, bank account numbers, brokerage account numbers, card numbers, API keys, cookies, bearer tokens, OAuth tokens, private client names, unredacted tax returns, or private taxpayer facts.",
+    "This evidence records professional review status only; it does not publish the reviewer's private contact details or confidential client material.",
+    "AI model cross-checks may support review preparation but must not be recorded as a qualified CPA, EA, or tax attorney review."
+  ]
+}

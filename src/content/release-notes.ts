@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.220",
+    date: "2026-06-10",
+    type: "patch",
+    title: "CPA review evidence intake",
+    summary:
+      "Added a redacted CPA review evidence template and validator so a future qualified CPA, EA, or tax attorney professional tax review can be recorded without secrets, taxpayer data, or AI model cross-checks being mistaken for professional review.",
+    affectedArea:
+      "CPA review evidence template, professional review validation command, launch readiness CPA pending copy, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Remove the evidence intake only if the launch readiness checklist keeps another deterministic way to verify qualified professional review without accepting AI-only validation or private taxpayer data.",
+  },
+  {
     version: "1.0.219",
     date: "2026-06-10",
     type: "patch",
