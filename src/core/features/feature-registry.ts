@@ -274,7 +274,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
     grayRate: 100,
     ownerArea: "src/features/tax-impact-warnings and src/features/professional-handoff",
     rollbackPath:
-      "Remove the IRMAA review-prep helper, remove the result-panel IRMAA prep section, and remove the IRMAA prep lines from the CPA packet while keeping the standard IRMAA guide available.",
+      "Remove the Part B and Part D IRMAA proxy previews only if the IRMAA worksheet still keeps the missing-input checklist, CMS/SSA references, and explicit boundary that SSA billing determinations and plan-specific premiums are outside the calculator.",
   },
   {
     id: "seo-structured-content",
@@ -370,7 +370,7 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "health-check-endpoint",
     label: "Operational health check endpoint",
-    version: "1.0.21",
+    version: "1.0.221",
     layer: "common",
     enabled: true,
     locked: false,

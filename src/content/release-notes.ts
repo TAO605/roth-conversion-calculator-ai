@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.221",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Health review status evidence",
+    summary:
+      "Added machine-readable health endpoint review status so production evidence shows AI model cross-checks are complete while qualified CPA, EA, or tax attorney review remains pending behind the redacted evidence validator.",
+    affectedArea:
+      "Health payload, production health evidence script, AI cross-check boundary evidence, qualified professional review boundary evidence, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Remove reviewStatus from /api/health only if another production evidence artifact still preserves AI cross-check completion, qualified professional review pending status, and the non-replacement boundary.",
+  },
+  {
     version: "1.0.220",
     date: "2026-06-10",
     type: "patch",

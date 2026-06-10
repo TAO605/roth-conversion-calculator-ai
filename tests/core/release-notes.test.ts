@@ -7,12 +7,12 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.220",
+      version: "1.0.221",
       type: "patch",
-      title: "CPA review evidence intake",
+      title: "Health review status evidence",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("CPA review evidence");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("professional tax review");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("AI model cross-checks");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("qualified CPA");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

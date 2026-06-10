@@ -60,6 +60,24 @@ function validatePayload(result) {
   assert(payload.content?.blogPosts >= 13, "Health payload blogPosts count is below expected production coverage");
   assert(payload.content?.glossaryTerms >= 12, "Health payload glossaryTerms count is below expected production coverage");
   assert(payload.features?.enabled > 10, "Health payload enabled feature count is unexpectedly low");
+  assert(
+    payload.reviewStatus?.aiModelCrossCheck === "complete",
+    "Health payload must retain complete AI model cross-check status",
+  );
+  assert(
+    typeof payload.reviewStatus?.aiModelCrossCheckBoundary === "string" &&
+      payload.reviewStatus.aiModelCrossCheckBoundary.includes("do not replace"),
+    "Health payload must retain AI cross-check non-replacement boundary",
+  );
+  assert(
+    payload.reviewStatus?.qualifiedProfessionalReview === "pending",
+    "Health payload must retain pending qualified professional review status",
+  );
+  assert(
+    typeof payload.reviewStatus?.qualifiedProfessionalReviewBoundary === "string" &&
+      payload.reviewStatus.qualifiedProfessionalReviewBoundary.includes("ops:cpa-review-evidence-validate"),
+    "Health payload must retain CPA review evidence validator boundary",
+  );
   assert(!containsSecretLikeKey(payload), "Health payload must not expose secret-like keys");
 
   return {
@@ -70,8 +88,13 @@ function validatePayload(result) {
     enabledFeatureCoverageRetained: payload.features.enabled > 10,
     glossaryCoverageRetained: payload.content.glossaryTerms >= 12,
     healthEndpointOk: true,
+    aiModelCrossCheckComplete: payload.reviewStatus.aiModelCrossCheck === "complete",
+    aiCrossCheckBoundaryRetained: payload.reviewStatus.aiModelCrossCheckBoundary.includes("do not replace"),
     noSecretLikeKeys: !containsSecretLikeKey(payload),
     professionalReviewPending: payload.taxData.professionalReviewStatus.toLowerCase().includes("pending"),
+    qualifiedProfessionalReviewPending: payload.reviewStatus.qualifiedProfessionalReview === "pending",
+    qualifiedProfessionalReviewValidatorRetained:
+      payload.reviewStatus.qualifiedProfessionalReviewBoundary.includes("ops:cpa-review-evidence-validate"),
     statusOk: payload.status === "ok",
     taxDataLastUpdatedRetained: typeof payload.taxData.lastUpdated === "string" && payload.taxData.lastUpdated.length > 0,
     taxYearRetained: payload.taxYear === 2026,
@@ -93,6 +116,7 @@ async function run() {
         evidenceType: "production-health-endpoint",
         features: result.payload.features,
         ok: true,
+        reviewStatus: result.payload.reviewStatus,
         status: result.status,
         taxData: result.payload.taxData,
         taxYear: result.payload.taxYear,

@@ -22,6 +22,12 @@ describe("health payload", () => {
     expect(payload.content.blogPosts).toBeGreaterThanOrEqual(12);
     expect(payload.content.glossaryTerms).toBeGreaterThanOrEqual(12);
     expect(payload.features.enabled).toBeGreaterThan(10);
+    expect(payload.reviewStatus.aiModelCrossCheck).toBe("complete");
+    expect(payload.reviewStatus.aiModelCrossCheckBoundary).toContain("do not replace");
+    expect(payload.reviewStatus.qualifiedProfessionalReview).toBe("pending");
+    expect(payload.reviewStatus.qualifiedProfessionalReviewBoundary).toContain(
+      "ops:cpa-review-evidence-validate",
+    );
     expect(serialized).not.toMatch(/OPENAI|API_KEY|SECRET|TOKEN/i);
   });
 
