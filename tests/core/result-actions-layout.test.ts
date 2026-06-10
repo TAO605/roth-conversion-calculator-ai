@@ -9,6 +9,8 @@ describe("result actions layout", () => {
     const summaryIndex = source.indexOf("<ResultSummary result={result} />");
     const shareIndex = source.indexOf("<ShareResultButton input={input} />");
     const reportIndex = source.indexOf('<PdfReportButton input={input} result={result} />');
+    const emailGateIndex = source.indexOf('isFeatureEnabled("email-report")');
+    const emailIndex = source.indexOf('<EmailReportButton input={input} result={result} />');
     const cpaGateIndex = source.indexOf('isFeatureEnabled("professional-handoff")');
     const cpaIndex = source.indexOf("<CopyProfessionalHandoffButton input={input} result={result} />");
     const resetIndex = source.indexOf("<RotateCcw aria-hidden");
@@ -16,15 +18,18 @@ describe("result actions layout", () => {
     expect(actionsIndex).toBeGreaterThan(-1);
     expect(summaryIndex).toBeGreaterThan(-1);
     expect(actionsIndex).toBeGreaterThan(summaryIndex);
-    expect(source).toContain("mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-4");
+    expect(source).toContain("mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-5");
     expect(source).toContain("[&>button]:w-full");
     expect(source).toContain('isFeatureEnabled("share-link")');
     expect(source).toContain('isFeatureEnabled("pdf-report")');
+    expect(source).toContain('isFeatureEnabled("email-report")');
     expect(source).toContain('isFeatureEnabled("professional-handoff")');
     expect(source).not.toContain("xl:flex");
     expect(shareIndex).toBeGreaterThan(actionsIndex);
     expect(reportIndex).toBeGreaterThan(shareIndex);
-    expect(cpaGateIndex).toBeGreaterThan(reportIndex);
+    expect(emailGateIndex).toBeGreaterThan(reportIndex);
+    expect(emailIndex).toBeGreaterThan(emailGateIndex);
+    expect(cpaGateIndex).toBeGreaterThan(emailIndex);
     expect(cpaIndex).toBeGreaterThan(cpaGateIndex);
     expect(resetIndex).toBeGreaterThan(cpaIndex);
   });
@@ -34,6 +39,7 @@ describe("result actions layout", () => {
 
     expect(source).toContain("function LazyActionButtonFallback");
     expect(source).toContain('<LazyActionButtonFallback label="Loading report..." />');
+    expect(source).toContain('<LazyActionButtonFallback label="Loading email draft..." />');
     expect(source).toContain('<LazyActionButtonFallback label="Loading CPA packet..." />');
     expect(source).not.toContain("{ loading: () => null },");
   });

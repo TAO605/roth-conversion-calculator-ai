@@ -7,12 +7,12 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.222",
+      version: "1.0.223",
       type: "patch",
-      title: "Local scenario comparison",
+      title: "Local email report draft",
     });
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("saved-scenarios");
-    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("local multi-scenario comparison");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("Email draft");
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("without collecting recipient");
     expect(releaseNotes.every((note) => note.rollbackPath.length > 0)).toBe(true);
   });
 

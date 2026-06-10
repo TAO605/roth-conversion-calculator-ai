@@ -181,3 +181,4 @@
 - [done] Add CPA EA tax attorney review evidence template and validator
 - [done] Add AI cross-check and qualified professional review status to health evidence
 - [done] Mount local saved scenarios and add multi-scenario comparison summary
+- [done] Add local email report draft action without server-side email sending

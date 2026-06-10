@@ -116,6 +116,18 @@ export const featureRegistry: FeatureRegistryItem[] = [
       "Disable pdf-report in the feature registry, remove PdfReportButton from the homepage result actions, or restore the prior report export implementation.",
   },
   {
+    id: "email-report",
+    label: "Local email report draft",
+    version: "1.0.223",
+    layer: "feature",
+    enabled: true,
+    locked: false,
+    grayRate: 100,
+    ownerArea: "src/features/email-report and src/app/HomeCalculatorClient.tsx",
+    rollbackPath:
+      "Disable email-report in the feature registry and remove EmailReportButton from the homepage result actions while keeping download, share, and CPA handoff available.",
+  },
+  {
     id: "professional-handoff",
     label: "CPA packet copy action",
     version: "1.0.180",

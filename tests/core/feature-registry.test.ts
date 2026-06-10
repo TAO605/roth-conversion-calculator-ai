@@ -39,6 +39,7 @@ describe("feature registry", () => {
     expect(getEnabledFeatureIds()).toContain("calculator-input-layout");
     expect(getEnabledFeatureIds()).toContain("share-link");
     expect(getEnabledFeatureIds()).toContain("pdf-report");
+    expect(getEnabledFeatureIds()).toContain("email-report");
     expect(getEnabledFeatureIds()).toContain("professional-handoff");
     expect(getEnabledFeatureIds()).toContain("projection-chart");
     expect(getEnabledFeatureIds()).toContain("calculation-breakdown");
@@ -138,6 +139,7 @@ describe("feature registry", () => {
     expect(homePage).toContain('isFeatureEnabled("theme-toggle")');
     expect(homePage).toContain('isFeatureEnabled("share-link")');
     expect(homePage).toContain('isFeatureEnabled("pdf-report")');
+    expect(homePage).toContain('isFeatureEnabled("email-report")');
     expect(homePage).toContain('isFeatureEnabled("professional-handoff")');
     expect(homePage).toContain('isFeatureEnabled("projection-chart")');
     expect(homePage).toContain('isFeatureEnabled("calculation-breakdown")');

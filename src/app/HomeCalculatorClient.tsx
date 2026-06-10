@@ -88,6 +88,11 @@ const CopyProfessionalHandoffButton = dynamic<{ input: RothConversionInput; resu
   { loading: () => <LazyActionButtonFallback label="Loading CPA packet..." /> },
 );
 
+const EmailReportButton = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
+  () => import("@/features/email-report/EmailReportButton").then((module) => module.EmailReportButton),
+  { loading: () => <LazyActionButtonFallback label="Loading email draft..." /> },
+);
+
 const AiExplainer = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
   () => import("@/features/ai-assistant/AiExplainer").then((module) => module.AiExplainer),
   { loading: () => <LazyPanelFallback className="min-h-[24rem]" label="Loading explanation assistant..." /> },
@@ -170,10 +175,11 @@ export function HomeCalculatorClient() {
             {hasInputErrors ? <ResultInputValidationNotice errors={inputErrors} /> : <ResultSummary result={result} />}
             <div
               aria-label="Result actions"
-              className="mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-4 [&>button]:w-full"
+              className="mt-4 grid w-full min-w-0 grid-cols-2 gap-2 md:grid-cols-5 [&>button]:w-full"
             >
               {!hasInputErrors && isFeatureEnabled("share-link") ? <ShareResultButton input={input} /> : null}
               {!hasInputErrors && isFeatureEnabled("pdf-report") ? <PdfReportButton input={input} result={result} /> : null}
+              {!hasInputErrors && isFeatureEnabled("email-report") ? <EmailReportButton input={input} result={result} /> : null}
               {!hasInputErrors && isFeatureEnabled("professional-handoff") ? (
                 <CopyProfessionalHandoffButton input={input} result={result} />
               ) : null}

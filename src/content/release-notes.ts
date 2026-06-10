@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.223",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Local email report draft",
+    summary:
+      "Added a local Email draft action that opens the user's own mail client with an educational Roth conversion summary, without collecting recipient addresses, sending through a server, or turning the report into personalized advice.",
+    affectedArea:
+      "Email report action, homepage result action toolbar, feature registry, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Disable email-report in the feature registry or remove EmailReportButton from the homepage while keeping download report, share link, and CPA handoff available.",
+  },
+  {
     version: "1.0.222",
     date: "2026-06-10",
     type: "patch",
