@@ -71,28 +71,28 @@ export function buildProfessionalReviewPacketSections(): ProfessionalReviewPacke
     },
     {
       id: "not-modeled",
-      title: "Items Not Fully Modeled",
-      goal: "Separate review warnings from complete tax calculations.",
+      title: "Bounded Preview And Review Limits",
+      goal: "Separate available bounded previews from complete tax calculations and final agency or tax-form determinations.",
       items: [
         item(
           "IRMAA",
-          "Additional review required",
-          "Medicare IRMAA premiums are flagged for review, but the calculator does not calculate premium changes.",
+          "Bounded proxy preview plus review required",
+          "The calculator can show bounded 2026 Part B and Part D IRMAA proxy previews from the calculator income proxy. SSA lookback-year MAGI, life-changing event appeals, billing determinations, and plan-specific Part D premiums remain outside the calculator.",
         ),
         item(
           "ACA premium tax credits",
-          "Additional review required",
-          "Marketplace subsidy effects are flagged for review, but the calculator does not calculate premium tax credit changes.",
+          "APTC at-stake preview plus review required",
+          "The calculator can show an APTC at-stake preview from user-entered advance premium tax credit and coverage months. It does not calculate final Marketplace eligibility, benchmark plan premiums, repayment caps, poverty-line percentages, or Form 8962 reconciliation.",
         ),
         item(
-          "NIIT, AMT, RMD, credits, and deductions",
-          "Additional review required",
-          "These items remain outside the deterministic model unless a dedicated rule engine and source review are added later.",
+          "Social Security, NIIT, AMT, and RMD",
+          "Bounded preview plus review required",
+          "The calculator can show bounded Social Security taxable-benefit, NIIT, AMT exposure, and Uniform Lifetime RMD previews when the required user inputs are present. Final Publication 915 worksheets, Form 8960, Form 6251, actual RMD obligations, credits, deductions, and agency determinations remain outside the calculator.",
         ),
         item(
           "State-specific special rules",
           "Additional review required",
-          "State pages explain assumptions, but the calculator does not model every state exclusion, credit, surcharge, or local rule.",
+          "State pages and selected-state worksheets explain assumptions, readiness fields, and optional reviewed state estimates, but the calculator does not model every state exclusion, credit, surcharge, local rule, residency rule, or multi-state filing outcome.",
         ),
       ],
     },

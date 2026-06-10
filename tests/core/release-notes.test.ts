@@ -7,10 +7,11 @@ describe("release notes", () => {
   it("tracks public-facing small-version changes newest first", () => {
     expect(releaseNotes.length).toBeGreaterThanOrEqual(4);
     expect(releaseNotes[0]).toMatchObject({
-      version: "1.0.214",
+      version: "1.0.215",
       type: "patch",
-      title: "Advanced preview content boundaries",
+      title: "Professional review packet preview boundaries",
     });
+    expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("IRMAA");
     expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("ACA");
     expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("NIIT");
     expect(`${releaseNotes[0].summary} ${releaseNotes[0].affectedArea}`).toContain("RMD");

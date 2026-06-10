@@ -30,11 +30,24 @@ describe("professional review packet", () => {
     expect(labels).toContain("Federal bracket estimate");
     expect(labels).toContain("IRMAA");
     expect(labels).toContain("ACA premium tax credits");
+    expect(labels).toContain("Social Security, NIIT, AMT, and RMD");
     expect(labels).toContain("Production SEO artifact");
     expect(labels).toContain("Stop condition");
     expect(summary.pendingReviewRetained).toBe(true);
     expect(summary.itemCount).toBeGreaterThanOrEqual(15);
     expect(summary.evidenceTypes).toContain("professional-review-packet-evidence-result.json");
+
+    const packetText = sections
+      .flatMap((section) => [section.title, section.goal, ...section.items.flatMap((entry) => [entry.evidence, entry.detail])])
+      .join("\n");
+
+    expect(packetText).toContain("Bounded Preview And Review Limits");
+    expect(packetText).toContain("bounded 2026 Part B and Part D IRMAA proxy previews");
+    expect(packetText).toContain("APTC at-stake preview");
+    expect(packetText).toContain("bounded Social Security taxable-benefit, NIIT, AMT exposure, and Uniform Lifetime RMD previews");
+    expect(packetText).toContain("does not model every state exclusion");
+    expect(packetText).not.toContain("does not calculate premium changes");
+    expect(packetText).not.toContain("does not calculate premium tax credit changes");
   });
 
   it("exposes the packet through sitemap, site index, llms.txt, and structured data monitoring", () => {

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.215",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Professional review packet preview boundaries",
+    summary:
+      "Aligned the Professional Review Packet with the current bounded-preview scope for IRMAA, ACA APTC, Social Security, NIIT, AMT, RMD, and selected-state worksheets so CPA handoff copy no longer says those modules are completely unestimated.",
+    affectedArea:
+      "Professional review packet, professional review packet page metadata, release notes, task tracking, progress records, and regression tests",
+    rollbackPath:
+      "Revert only if the review packet keeps an equally clear distinction between available bounded previews and final SSA, Marketplace, IRS form, RMD obligation, and state-law determinations.",
+  },
+  {
     version: "1.0.214",
     date: "2026-06-10",
     type: "patch",

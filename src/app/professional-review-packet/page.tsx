@@ -9,7 +9,7 @@ import { breadcrumbJsonLd, contentWebPageJsonLd } from "@/core/seo/json-ld";
 export const metadata = {
   title: "Professional Review Packet",
   description:
-    "Professional review packet for the Roth Conversion Calculator, covering review status, modeled scope, non-modeled tax interactions, source data, production evidence, and CPA handoff materials.",
+    "Professional review packet for the Roth Conversion Calculator, covering review status, modeled scope, bounded preview limits, source data, production evidence, and CPA handoff materials.",
   alternates: { canonical: "/professional-review-packet" },
 };
 

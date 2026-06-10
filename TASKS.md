@@ -174,3 +174,4 @@
 - [done] Add reviewed state tax estimate handoff field for selected-state worksheets
 - [done] Add bounded 2026 Part D IRMAA monthly adjustment proxy preview
 - [done] Align advanced preview guide copy with ACA NIIT RMD bounded previews
+- [done] Align professional review packet copy with bounded advanced previews
