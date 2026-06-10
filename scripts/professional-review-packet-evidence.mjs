@@ -66,13 +66,17 @@ async function run() {
     "Professional Review Packet",
     "Tax professional review pending",
     "Modeled Calculation Scope",
-    "Items Not Fully Modeled",
+    "Bounded Preview And Review Limits",
     "Production Evidence Package",
     "professional-review-packet-evidence-result.json",
     "IRMAA",
+    "bounded 2026 Part B and Part D IRMAA proxy previews",
     "ACA premium tax credits",
-    "NIIT, AMT, RMD",
+    "APTC at-stake preview",
+    "Social Security, NIIT, AMT, and RMD",
+    "Uniform Lifetime RMD previews",
     "State-specific special rules",
+    "does not model every state exclusion",
   ];
   const pageTermsRetained = containsAll(page.text, pageTerms);
   const sitemapRetained = sitemap.text.includes(`${baseUrl}${packetPath}`);

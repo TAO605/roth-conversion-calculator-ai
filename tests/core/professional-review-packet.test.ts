@@ -90,6 +90,9 @@ describe("professional review packet", () => {
     expect(workflow).toContain("professional-review-packet-evidence-result.json");
     expect(validator).toContain("validateProfessionalReviewPacketEvidence");
     expect(validator).toContain("professionalReviewPacketOk");
+    expect(
+      fs.readFileSync(path.join(process.cwd(), "scripts/professional-review-packet-evidence.mjs"), "utf8"),
+    ).toContain("Bounded Preview And Review Limits");
     expect(manifest).toContain("professional-review-packet-evidence-result.json");
     expect(manifest).toContain("2026-06-08.2");
     expect(manifestValidator).toContain("professional-review-packet-evidence-result.json");
