@@ -52,6 +52,6 @@ describe("example scenario SEO pages", () => {
     expect(hubFile).toContain("exampleScenarioPages.map");
     expect(detailFile).toContain("generateStaticParams");
     expect(detailFile).toContain("buildExampleScenarioCalculatorHref");
-    expect(homePage).toContain('href="/examples"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

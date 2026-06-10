@@ -45,7 +45,7 @@ describe("Roth conversion custodian process guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-custodian-process");
     expect(pageFile).toContain("Roth Conversion Custodian Process Guide");
     expect(pageFile).toContain("buildCustodianProcessSteps");
-    expect(homePage).toContain('href="/roth-conversion-custodian-process"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-custodian-process");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-custodian-process");
   });

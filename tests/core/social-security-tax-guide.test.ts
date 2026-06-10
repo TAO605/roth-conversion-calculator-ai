@@ -49,7 +49,7 @@ describe("Roth conversion Social Security tax guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-social-security-tax-guide");
     expect(pageFile).toContain("Roth Conversion Social Security Tax Guide");
     expect(pageFile).toContain("buildSocialSecurityTaxGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-social-security-tax-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-social-security-tax-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-social-security-tax-guide");
   });

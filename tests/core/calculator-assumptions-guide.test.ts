@@ -43,7 +43,7 @@ describe("calculator assumptions guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/calculator-assumptions-guide");
     expect(pageFile).toContain("Calculator Assumptions Guide");
     expect(pageFile).toContain("buildCalculatorAssumptionGroups");
-    expect(homePage).toContain('href="/calculator-assumptions-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/calculator-assumptions-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/calculator-assumptions-guide");
   });

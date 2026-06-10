@@ -43,7 +43,7 @@ describe("Roth conversion QCD guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-qcd-guide");
     expect(pageFile).toContain("Roth Conversion QCD Guide");
     expect(pageFile).toContain("buildQcdGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-qcd-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-qcd-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-qcd-guide");
   });

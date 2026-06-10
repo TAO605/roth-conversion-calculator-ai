@@ -49,7 +49,7 @@ describe("Roth conversion recharacterization guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-recharacterization-guide");
     expect(pageFile).toContain("Roth Conversion Recharacterization Guide");
     expect(pageFile).toContain("buildRecharacterizationGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-recharacterization-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-recharacterization-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-recharacterization-guide");
   });

@@ -49,7 +49,7 @@ describe("Roth conversion ACA premium tax credit guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-aca-premium-tax-credit-guide");
     expect(pageFile).toContain("Roth Conversion ACA Premium Tax Credit Guide");
     expect(pageFile).toContain("buildAcaPtcGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-aca-premium-tax-credit-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-aca-premium-tax-credit-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-aca-premium-tax-credit-guide");
   });

@@ -46,7 +46,7 @@ describe("Roth conversion RMD guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-rmd-guide");
     expect(pageFile).toContain("Roth Conversion RMD Guide");
     expect(pageFile).toContain("buildRmdGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-rmd-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-rmd-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-rmd-guide");
   });

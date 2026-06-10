@@ -57,6 +57,6 @@ describe("filing status SEO pages", () => {
 
     expect(hubFile).toContain('href={`/filing-status/${page.slug}`}');
 
-    expect(homePage).toContain('href="/filing-status"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

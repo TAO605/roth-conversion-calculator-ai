@@ -49,6 +49,6 @@ describe("keyword landing pages", () => {
     expect(hubFile).toContain("keywordLandingPages.map");
     expect(dynamicFile).toContain("generateStaticParams");
     expect(dynamicFile).toContain("buildKeywordLandingCalculatorHref");
-    expect(homePage).toContain('href="/calculators"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

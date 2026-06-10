@@ -100,15 +100,60 @@ function getSpeechRecognition(): SpeechRecognitionConstructor | null {
   return speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition ?? null;
 }
 
+async function getMicrophonePermissionState(): Promise<PermissionState | null> {
+  if (typeof navigator === "undefined" || !navigator.permissions?.query) {
+    return null;
+  }
+
+  try {
+    const status = await navigator.permissions.query({ name: "microphone" as PermissionName });
+    return status.state;
+  } catch {
+    return null;
+  }
+}
+
+async function requestMicrophoneAccess(): Promise<boolean> {
+  if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
+    return true;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream.getTracks().forEach((track) => track.stop());
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function VoiceInputAssist({ onChange }: { onChange: Dispatch<SetStateAction<RothConversionInput>> }) {
   const recognitionConstructor = useMemo(() => getSpeechRecognition(), []);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const [isListening, setIsListening] = useState(false);
+  const [isMicrophoneBlocked, setIsMicrophoneBlocked] = useState(false);
   const [status, setStatus] = useState(
     recognitionConstructor
       ? "Say a supported field and amount, then review the filled value."
       : "Voice input is unavailable in this browser.",
   );
+
+  useEffect(() => {
+    let isMounted = true;
+
+    getMicrophonePermissionState().then((permissionState) => {
+      if (!isMounted || permissionState !== "denied") {
+        return;
+      }
+
+      setIsMicrophoneBlocked(true);
+      setStatus("Microphone permission is blocked. Allow microphone access in the browser address bar, then try again.");
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -130,7 +175,16 @@ export function VoiceInputAssist({ onChange }: { onChange: Dispatch<SetStateActi
     setIsListening(false);
   };
 
-  const startListening = () => {
+  const startListening = async () => {
+    const hasMicrophoneAccess = await requestMicrophoneAccess();
+
+    if (!hasMicrophoneAccess) {
+      setIsListening(false);
+      setIsMicrophoneBlocked(true);
+      setStatus("Microphone permission is blocked. Allow microphone access in the browser address bar, then try again.");
+      return;
+    }
+
     const recognition = new recognitionConstructor();
     recognition.continuous = false;
     recognition.interimResults = false;
@@ -138,7 +192,13 @@ export function VoiceInputAssist({ onChange }: { onChange: Dispatch<SetStateActi
     recognition.onend = () => setIsListening(false);
     recognition.onerror = (event) => {
       setIsListening(false);
-      setStatus(event.error ? `Voice input stopped: ${event.error}.` : "Voice input stopped.");
+      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        setIsMicrophoneBlocked(true);
+        setStatus("Microphone permission is blocked. Allow microphone access in the browser address bar, then try again.");
+        return;
+      }
+
+      setStatus(event.error ? `Voice input stopped: ${event.error}. Try again or use manual inputs.` : "Voice input stopped.");
     };
     recognition.onresult = (event) => {
       const transcript = event.results[0]?.[0]?.transcript ?? "";
@@ -156,7 +216,12 @@ export function VoiceInputAssist({ onChange }: { onChange: Dispatch<SetStateActi
     recognitionRef.current = recognition;
     setStatus("Listening for one field, such as conversion amount 50000.");
     setIsListening(true);
-    recognition.start();
+    try {
+      recognition.start();
+    } catch {
+      setIsListening(false);
+      setStatus("Voice input could not start in this browser. Manual inputs remain fully supported.");
+    }
   };
 
   return (
@@ -169,7 +234,8 @@ export function VoiceInputAssist({ onChange }: { onChange: Dispatch<SetStateActi
           </p>
         </div>
         <button
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded border border-neutral-200 bg-white px-3 py-2 text-sm font-semibold text-neutral-800 transition-colors hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#0A2463] focus:ring-offset-2 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:focus:ring-offset-neutral-950"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded border border-neutral-200 bg-white px-3 py-2 text-sm font-semibold text-neutral-800 transition-colors hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#0A2463] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:focus:ring-offset-neutral-950"
+          disabled={isMicrophoneBlocked}
           onClick={isListening ? stopListening : startListening}
           type="button"
         >

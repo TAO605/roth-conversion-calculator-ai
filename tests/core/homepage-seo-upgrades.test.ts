@@ -33,13 +33,15 @@ describe("homepage SEO and UX upgrades", () => {
     expect(screen.queryByDisplayValue("7.000000000000001")).toBeNull();
   });
 
-  it("keeps the homepage navigation tool-only while preserving crawlable secondary links", () => {
+  it("keeps the homepage navigation and footer tool-only while preserving minimal crawlable links", () => {
+    const pageSource = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
     const source = [
-      fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8"),
+      pageSource,
       fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8"),
     ].join("\n");
 
     const navSource = source.slice(source.indexOf("<nav"), source.indexOf("</nav>"));
+    const footerSource = pageSource.slice(pageSource.indexOf("<footer"), pageSource.indexOf("</footer>"));
 
     expect(navSource).toContain("RothCalc");
     expect(navSource).toContain("ThemeToggle");
@@ -48,10 +50,21 @@ describe("homepage SEO and UX upgrades", () => {
     expect(navSource).not.toContain('href="#calculator"');
     expect(navSource).not.toContain("IRMAA");
     expect(navSource).not.toContain("Production launch");
-    expect(source).toContain("More planning guides");
-    expect(source).toContain("<details");
-    expect(source).toContain("/roth-conversion-irmaa-guide");
-    expect(source).toContain("/roth-conversion-social-security-tax-guide");
+
+    expect(footerSource).toContain("/methodology");
+    expect(footerSource).toContain("/calculator-assumptions-guide");
+    expect(footerSource).toContain("/site-index");
+    expect(footerSource).toContain("/privacy");
+    expect(footerSource).toContain("/terms");
+    expect(footerSource).toContain("/disclaimer");
+    expect(footerSource).toContain("/editorial-policy");
+    expect(footerSource).toContain("/release-notes");
+    expect(footerSource).not.toContain("More planning guides");
+    expect(footerSource).not.toContain("<details");
+    expect(footerSource).not.toContain("/roth-conversion-irmaa-guide");
+    expect(footerSource).not.toContain("/roth-conversion-social-security-tax-guide");
+    expect(footerSource).not.toContain("/launch-readiness");
+    expect(footerSource).not.toContain("/seo-monitoring");
   });
 
   it("keeps source and methodology content off the homepage tool surface", () => {
@@ -61,7 +74,8 @@ describe("homepage SEO and UX upgrades", () => {
     expect(source).not.toContain("Transparent calculation method");
     expect(source).not.toContain("Taxable conversion = conversion amount minus pro-rata after-tax basis");
     expect(source).toContain("/calculator-assumptions-guide");
-    expect(source).toContain("/tax-data-update");
+    expect(source).toContain("/methodology");
+    expect(source).toContain("/site-index");
   });
 
   it("keeps homepage semantic landmarks explicit for crawlers and assistive technology", () => {

@@ -52,6 +52,6 @@ describe("multi-year planning SEO pages", () => {
     expect(hubFile).toContain("multiYearPlanningPages.map");
     expect(detailFile).toContain("generateStaticParams");
     expect(detailFile).toContain("buildMultiYearPlanningCalculatorHref");
-    expect(homePage).toContain('href="/multi-year-planning"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

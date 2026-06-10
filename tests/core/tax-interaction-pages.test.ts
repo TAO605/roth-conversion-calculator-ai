@@ -46,6 +46,6 @@ describe("tax interaction SEO pages", () => {
     expect(hubFile).toContain("taxInteractionPages.map");
     expect(detailFile).toContain("generateStaticParams");
     expect(detailFile).toContain("officialSourceUrl");
-    expect(homePage).toContain('href="/tax-interactions"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

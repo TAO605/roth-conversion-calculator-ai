@@ -57,6 +57,6 @@ describe("basis planning SEO pages", () => {
     expect(hubFile).toContain("basisPlanningPages.map");
     expect(detailFile).toContain("generateStaticParams");
     expect(detailFile).toContain("buildBasisPlanningCalculatorHref");
-    expect(homePage).toContain('href="/basis"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

@@ -37,7 +37,7 @@ describe("Roth conversion mistakes guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-mistakes");
     expect(pageFile).toContain("Roth Conversion Mistakes Guide");
     expect(pageFile).toContain("buildCommonMistakeGroups");
-    expect(homePage).toContain('href="/roth-conversion-mistakes"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-mistakes");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-mistakes");
   });

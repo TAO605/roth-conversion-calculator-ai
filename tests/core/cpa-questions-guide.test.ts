@@ -37,7 +37,7 @@ describe("Roth conversion CPA questions guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-cpa-questions");
     expect(pageFile).toContain("Roth Conversion CPA Questions Guide");
     expect(pageFile).toContain("buildCpaQuestionGroups");
-    expect(homePage).toContain('href="/roth-conversion-cpa-questions"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-cpa-questions");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-cpa-questions");
   });

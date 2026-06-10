@@ -37,7 +37,7 @@ describe("feedback roadmap playbook", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/feedback-roadmap");
     expect(pageFile).toContain("Feedback Roadmap Playbook");
     expect(pageFile).toContain("buildFeedbackRoadmapGroups");
-    expect(homePage).toContain('href="/feedback-roadmap"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/feedback-roadmap");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/feedback-roadmap");
   });

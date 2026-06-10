@@ -479,7 +479,7 @@ describe("SEO monitoring playbook", () => {
     expect(pageFile).toContain("seo:gsc-query-opportunity-validate");
     expect(contentFile).toContain("seo:gsc-evidence");
     expect(contentFile).toContain("lastmodFresh");
-    expect(homePage).toContain('href="/seo-monitoring"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/seo-monitoring");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/seo-monitoring");
   });

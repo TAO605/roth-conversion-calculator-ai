@@ -51,7 +51,7 @@ describe("performance audit playbook", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/performance-audit");
     expect(pageFile).toContain("Performance Audit Playbook");
     expect(pageFile).toContain("buildPerformanceAuditGroups");
-    expect(homePage).toContain('href="/performance-audit"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/performance-audit");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/performance-audit");
   });

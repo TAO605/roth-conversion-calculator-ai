@@ -43,7 +43,7 @@ describe("Roth conversion 5-year rules guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-5-year-rules");
     expect(pageFile).toContain("Roth Conversion 5-Year Rules Guide");
     expect(pageFile).toContain("buildFiveYearRuleSections");
-    expect(homePage).toContain('href="/roth-conversion-5-year-rules"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-5-year-rules");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-5-year-rules");
   });

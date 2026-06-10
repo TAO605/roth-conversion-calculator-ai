@@ -42,7 +42,7 @@ describe("content operations playbook", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/content-operations");
     expect(pageFile).toContain("Content Operations Playbook");
     expect(pageFile).toContain("buildContentOperationsGroups");
-    expect(homePage).toContain('href="/content-operations"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/content-operations");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/content-operations");
   });

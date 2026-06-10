@@ -51,6 +51,6 @@ describe("age scenario SEO pages", () => {
     expect(hubFile).toContain("ageScenarioPages.map");
     expect(detailFile).toContain("generateStaticParams");
     expect(detailFile).toContain("buildAgeScenarioCalculatorHref");
-    expect(homePage).toContain('href="/age-scenarios"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

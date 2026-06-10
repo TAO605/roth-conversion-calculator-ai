@@ -60,6 +60,6 @@ describe("tax payment method SEO pages", () => {
     expect(hubFile).toContain("taxPaymentMethodPages.map");
     expect(detailFile).toContain("generateStaticParams");
     expect(detailFile).toContain("buildTaxPaymentMethodCalculatorHref");
-    expect(homePage).toContain('href="/tax-payment-methods"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

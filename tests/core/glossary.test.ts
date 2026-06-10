@@ -47,6 +47,6 @@ describe("glossary content hub", () => {
     expect(indexPage).toContain("definedTermSetJsonLd");
     expect(termPage).toContain("generateStaticParams");
     expect(termPage).toContain("Related terms");
-    expect(homePage).toContain('href="/glossary"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

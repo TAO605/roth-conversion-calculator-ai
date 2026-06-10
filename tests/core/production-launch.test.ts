@@ -39,7 +39,7 @@ describe("production launch guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/production-launch");
     expect(pageFile).toContain("Production Launch Guide");
     expect(pageFile).toContain("buildProductionLaunchGroups");
-    expect(homePage).toContain('href="/production-launch"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/production-launch");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/production-launch");
   });

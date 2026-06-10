@@ -46,7 +46,7 @@ describe("Roth conversion NIIT guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-niit-guide");
     expect(pageFile).toContain("Roth Conversion NIIT Guide");
     expect(pageFile).toContain("buildNiitGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-niit-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-niit-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-niit-guide");
   });

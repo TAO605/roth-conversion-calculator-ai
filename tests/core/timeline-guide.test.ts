@@ -37,7 +37,7 @@ describe("Roth conversion timeline guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-timeline");
     expect(pageFile).toContain("Roth Conversion Timeline Guide");
     expect(pageFile).toContain("buildTimelineGuidePhases");
-    expect(homePage).toContain('href="/roth-conversion-timeline"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-timeline");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-timeline");
   });

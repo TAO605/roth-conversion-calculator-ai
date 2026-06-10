@@ -15,7 +15,7 @@ describe("2026 federal tax brackets page", () => {
     const homePage = fs.readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
 
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/tax-brackets/2026");
-    expect(homePage).toContain('href="/tax-brackets/2026"');
+    expect(homePage).toContain('href="/site-index"');
   });
 
   it("renders an educational table page with calculator CTA and disclaimer", () => {

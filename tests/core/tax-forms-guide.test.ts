@@ -37,7 +37,7 @@ describe("tax forms guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-tax-forms");
     expect(pageFile).toContain("Roth Conversion Tax Forms Guide");
     expect(pageFile).toContain("buildTaxFormsGuideGroups");
-    expect(homePage).toContain('href="/roth-conversion-tax-forms"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-tax-forms");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-tax-forms");
   });

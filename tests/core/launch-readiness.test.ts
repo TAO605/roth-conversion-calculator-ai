@@ -58,6 +58,6 @@ describe("launch readiness checklist", () => {
     expect(pageFile).toContain("buildLaunchReadinessGroups");
     expect(pageFile).toContain("Production domain");
     expect(pageFile).toContain("Google Search Console");
-    expect(homePage).toContain('href="/launch-readiness"');
+    expect(homePage).toContain('href="/site-index"');
   });
 });

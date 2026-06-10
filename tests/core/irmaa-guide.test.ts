@@ -26,7 +26,7 @@ describe("Roth conversion IRMAA guide", () => {
     expect(labels).toContain("Roth conversion income can affect MAGI used for IRMAA review");
     expect(labels).toContain("IRMAA commonly uses tax return information from an earlier year");
     expect(labels).toContain("Part B and Part D can have separate IRMAA amounts");
-    expect(labels).toContain("Calculator does not estimate Medicare IRMAA");
+    expect(labels).toContain("Calculator provides only bounded IRMAA proxy previews");
     expect(summary.totalPoints).toBeGreaterThanOrEqual(12);
     expect(summary.reviewTopics).toEqual(
       expect.arrayContaining(["IRMAA basics", "MAGI review", "Lookback year", "Calculator limits"]),
@@ -43,7 +43,7 @@ describe("Roth conversion IRMAA guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-irmaa-guide");
     expect(pageFile).toContain("Roth Conversion IRMAA Guide");
     expect(pageFile).toContain("buildIrmaaGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-irmaa-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-irmaa-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-irmaa-guide");
   });

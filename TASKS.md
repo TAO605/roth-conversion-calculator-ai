@@ -186,3 +186,5 @@
 - [done] Add browser-only voice input assist for supported numeric fields
 - [done] Add browser-only result read aloud action
 - [done] Simplify homepage to keep the calculator tool as the primary experience
+- [done] Simplify homepage footer to minimal compliance and site-index links
+- [done] Add microphone permission handling to browser voice input assist

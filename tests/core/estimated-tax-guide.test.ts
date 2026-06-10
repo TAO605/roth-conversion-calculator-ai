@@ -46,7 +46,7 @@ describe("Roth conversion estimated tax guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-estimated-tax-guide");
     expect(pageFile).toContain("Roth Conversion Estimated Tax Guide");
     expect(pageFile).toContain("buildEstimatedTaxGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-estimated-tax-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-estimated-tax-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-estimated-tax-guide");
   });

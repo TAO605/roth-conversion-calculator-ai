@@ -42,7 +42,7 @@ describe("AI compliance audit playbook", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/ai-compliance-audit");
     expect(pageFile).toContain("AI Compliance Audit Playbook");
     expect(pageFile).toContain("buildAiComplianceAuditGroups");
-    expect(homePage).toContain('href="/ai-compliance-audit"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/ai-compliance-audit");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/ai-compliance-audit");
   });

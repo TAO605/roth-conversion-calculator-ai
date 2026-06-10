@@ -40,7 +40,7 @@ describe("Roth conversion planning checklist", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-planning-checklist");
     expect(pageFile).toContain("Roth Conversion Planning Checklist");
     expect(pageFile).toContain("buildPlanningChecklistGroups");
-    expect(homePage).toContain('href="/roth-conversion-planning-checklist"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-planning-checklist");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-planning-checklist");
   });

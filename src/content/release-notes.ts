@@ -10,6 +10,30 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.229",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Voice permission handling",
+    summary:
+      "Improved the browser voice input helper so it checks microphone permission, requests access before starting recognition, and shows an actionable blocked-permission message when the browser rejects microphone use.",
+    affectedArea:
+      "Voice input assist, microphone permission handling, homepage calculator input UX, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Disable voice-input-assist in the feature registry or restore the prior browser-only speech recognition flow while preserving all manual calculator inputs.",
+  },
+  {
+    version: "1.0.228",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Minimal homepage footer",
+    summary:
+      "Reduced the homepage footer from a broad site directory to a minimal set of methodology, assumptions, site-index, privacy, terms, disclaimer, editorial-policy, and release-note links so the homepage stays focused on the calculator tool.",
+    affectedArea:
+      "Homepage footer, tool-only homepage regression tests, release notes, task tracking, progress records, and homepage UX documentation",
+    rollbackPath:
+      "Restore broader homepage discovery links only if future Search Console or usability evidence shows users cannot discover supporting pages through the site index, sitemap, guide pages, or llms.txt.",
+  },
+  {
     version: "1.0.227",
     date: "2026-06-10",
     type: "patch",

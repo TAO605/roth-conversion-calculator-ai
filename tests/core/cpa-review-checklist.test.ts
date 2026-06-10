@@ -37,7 +37,7 @@ describe("CPA review checklist", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/cpa-review-checklist");
     expect(pageFile).toContain("CPA Review Checklist");
     expect(pageFile).toContain("buildCpaReviewChecklistGroups");
-    expect(homePage).toContain('href="/cpa-review-checklist"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/cpa-review-checklist");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/cpa-review-checklist");
   });

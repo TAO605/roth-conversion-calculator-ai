@@ -37,7 +37,7 @@ describe("accessibility audit playbook", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/accessibility-audit");
     expect(pageFile).toContain("Accessibility Audit Playbook");
     expect(pageFile).toContain("buildAccessibilityAuditGroups");
-    expect(homePage).toContain('href="/accessibility-audit"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/accessibility-audit");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/accessibility-audit");
   });

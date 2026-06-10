@@ -45,7 +45,7 @@ describe("privacy data flow playbook", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/privacy-data-flow");
     expect(pageFile).toContain("Privacy Data Flow Playbook");
     expect(pageFile).toContain("buildPrivacyDataFlowGroups");
-    expect(homePage).toContain('href="/privacy-data-flow"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/privacy-data-flow");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/privacy-data-flow");
   });

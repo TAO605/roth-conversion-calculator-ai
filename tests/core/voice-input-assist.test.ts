@@ -29,6 +29,8 @@ describe("voice input assist", () => {
   afterEach(() => {
     Reflect.deleteProperty(window, "SpeechRecognition");
     Reflect.deleteProperty(window, "webkitSpeechRecognition");
+    Reflect.deleteProperty(navigator, "mediaDevices");
+    Reflect.deleteProperty(navigator, "permissions");
   });
 
   it("parses supported voice phrases into bounded calculator field updates", () => {
@@ -56,7 +58,7 @@ describe("voice input assist", () => {
     expect(parseVoiceInputCommand("please advise me")).toBeNull();
   });
 
-  it("applies recognized speech through functional calculator state updates", () => {
+  it("applies recognized speech through functional calculator state updates", async () => {
     let instance: {
       continuous: boolean;
       interimResults: boolean;
@@ -91,7 +93,9 @@ describe("voice input assist", () => {
     const onChange = vi.fn();
     render(React.createElement(VoiceInputAssist, { onChange }));
 
-    fireEvent.click(screen.getByRole("button", { name: /Speak/i }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /Speak/i }));
+    });
     act(() => {
       instance?.onresult?.({ results: [{ 0: { transcript: "conversion amount 75000" } }] });
     });
@@ -101,11 +105,46 @@ describe("voice input assist", () => {
     expect(screen.getByText(/Applied voice input/i)).toBeTruthy();
   });
 
+  it("turns microphone permission failures into a clear blocked state", async () => {
+    class FakeSpeechRecognition {
+      continuous = false;
+      interimResults = false;
+      lang = "";
+      onend: (() => void) | null = null;
+      onerror: ((event: { error?: string }) => void) | null = null;
+      onresult: ((event: { results: ArrayLike<{ 0: { transcript: string } }> }) => void) | null = null;
+      start = vi.fn();
+      stop = vi.fn();
+    }
+
+    Object.defineProperty(window, "SpeechRecognition", {
+      configurable: true,
+      value: FakeSpeechRecognition,
+    });
+    Object.defineProperty(navigator, "mediaDevices", {
+      configurable: true,
+      value: {
+        getUserMedia: vi.fn().mockRejectedValue(new DOMException("denied", "NotAllowedError")),
+      },
+    });
+
+    render(React.createElement(VoiceInputAssist, { onChange: vi.fn() }));
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /Speak/i }));
+    });
+
+    expect(screen.getByText(/Microphone permission is blocked/i)).toBeTruthy();
+    expect((screen.getByRole("button", { name: /Speak/i }) as HTMLButtonElement).disabled).toBe(true);
+  });
+
   it("keeps voice support browser-only and out of structured-data claims", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/features/voice-input/VoiceInputAssist.tsx"), "utf8");
     const jsonLd = fs.readFileSync(path.join(process.cwd(), "src/core/seo/json-ld.ts"), "utf8");
 
     expect(source).toContain("SpeechRecognition");
+    expect(source).toContain("getUserMedia");
+    expect(source).toContain("Microphone permission is blocked");
     expect(source).toContain("No audio is sent to this site");
     expect(source).not.toContain("fetch(");
     expect(jsonLd).not.toMatch(/voiceInput|voiceOutput/i);

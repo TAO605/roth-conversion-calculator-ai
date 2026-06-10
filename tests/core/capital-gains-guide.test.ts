@@ -46,7 +46,7 @@ describe("Roth conversion capital gains guide", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-capital-gains-guide");
     expect(pageFile).toContain("Roth Conversion Capital Gains Guide");
     expect(pageFile).toContain("buildCapitalGainsGuideSections");
-    expect(homePage).toContain('href="/roth-conversion-capital-gains-guide"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/roth-conversion-capital-gains-guide");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/roth-conversion-capital-gains-guide");
   });

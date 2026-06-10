@@ -37,7 +37,7 @@ describe("tax data update playbook", () => {
     expect(urls).toContain("https://www.roth-conversion-calculator-ai.shop/tax-data-update");
     expect(pageFile).toContain("Tax Data Update Playbook");
     expect(pageFile).toContain("buildTaxDataUpdateGroups");
-    expect(homePage).toContain('href="/tax-data-update"');
+    expect(homePage).toContain('href="/site-index"');
     expect(siteIndexUrls).toContain("/tax-data-update");
     expect(llmsText).toContain("https://www.roth-conversion-calculator-ai.shop/tax-data-update");
   });
