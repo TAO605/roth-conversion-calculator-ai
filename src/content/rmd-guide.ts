@@ -129,10 +129,10 @@ export function buildRmdGuideSections(): RmdGuideSection[] {
       purpose: "Make explicit what the calculator does and does not determine when RMDs are relevant.",
       points: [
         point(
-          "Calculator does not determine RMD obligations",
+          "Calculator only previews Uniform Lifetime RMD when age and balance inputs fit",
           "Calculator limits",
-          "The calculator estimates conversion tax cost, simplified state tax, penalties, projections, and break-even math; it does not compute RMD obligations.",
-          "Use IRS resources, custodian records, tax software, and professional review for RMD calculations.",
+          "The calculator estimates conversion tax cost, simplified state tax, penalties, projections, break-even math, and a bounded Uniform Lifetime Table preview from entered age and traditional IRA balance when the retained table range applies.",
+          "Use IRS resources, custodian records, tax software, and professional review for final RMD obligations, account-type checks, inherited-account rules, and sequencing.",
         ),
         point(
           "RMDs can change the federal taxable income input",

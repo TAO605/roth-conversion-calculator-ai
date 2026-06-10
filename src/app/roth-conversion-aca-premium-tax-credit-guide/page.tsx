@@ -64,8 +64,9 @@ export default function RothConversionAcaPremiumTaxCreditGuidePage() {
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
           Educational guide for Marketplace users who need to understand why Roth conversion income may require a
-          separate premium tax credit review. The calculator does not estimate ACA premium tax credits, advance credit
-          reconciliation, or Form 8962 outcomes.
+          separate premium tax credit review. The calculator can show a bounded APTC at-stake preview from user-entered
+          APTC and coverage months, but it does not calculate final Marketplace eligibility, repayment caps, benchmark
+          plan premiums, or Form 8962 outcomes.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
           <span className="rounded-full bg-blue-500/10 px-3 py-1 font-semibold text-systemBlue">

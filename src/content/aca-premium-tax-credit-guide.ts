@@ -126,13 +126,13 @@ export function buildAcaPtcGuideSections(): AcaPtcGuideSection[] {
     {
       id: "calculator-boundary",
       title: "Calculator Boundary",
-      purpose: "Make clear that ACA PTC modeling is intentionally outside the MVP calculator.",
+      purpose: "Separate the bounded APTC at-stake preview from final Marketplace credit calculations.",
       points: [
         point(
-          "Calculator does not estimate ACA premium tax credits",
+          "Calculator only previews APTC at stake when Marketplace inputs are entered",
           "Calculator limits",
-          "The calculator estimates conversion tax cost, simplified state tax, penalties, projections, and break-even math; it does not calculate Marketplace credits.",
-          "Use the calculator as a Roth conversion worksheet, not as a Marketplace subsidy calculator.",
+          "The calculator estimates conversion tax cost, simplified state tax, penalties, projections, break-even math, and a bounded advance premium tax credit at-stake preview from user-entered APTC and coverage months.",
+          "Use the preview as a handoff cue, not as a final Marketplace eligibility, benchmark plan, repayment-cap, or Form 8962 result.",
         ),
         point(
           "Taxable income input should be reviewed when subsidies apply",

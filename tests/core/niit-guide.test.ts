@@ -26,7 +26,10 @@ describe("Roth conversion NIIT guide", () => {
     expect(labels).toContain("Roth conversion income can raise MAGI even when it is not net investment income");
     expect(labels).toContain("Net investment income categories need separate classification");
     expect(labels).toContain("Form 8960 review is outside the calculator");
-    expect(labels).toContain("Calculator does not estimate NIIT");
+    expect(labels).toContain("Calculator only previews NIIT from user-entered net investment income");
+    expect(sections.flatMap((section) => section.points.map((point) => point.professionalReviewNote)).join(" ")).toContain(
+      "final Form 8960 classification",
+    );
     expect(summary.totalPoints).toBeGreaterThanOrEqual(12);
     expect(summary.reviewTopics).toEqual(
       expect.arrayContaining(["NIIT basics", "MAGI review", "Investment income", "Calculator limits"]),

@@ -8,14 +8,20 @@ import {
 import sitemap from "@/app/sitemap";
 
 describe("tax interaction SEO pages", () => {
-  it("defines educational pages for important interactions not modeled by the calculator", () => {
+  it("defines educational pages for important interactions with clear modeling boundaries", () => {
     const slugs = new Set(taxInteractionPages.map((page) => page.slug));
+    const irmaaPage = getTaxInteractionPageBySlug("irmaa");
 
     expect(taxInteractionPages).toHaveLength(4);
     expect(slugs.size).toBe(4);
     expect(taxInteractionPages.map((page) => page.slug)).toEqual(["irmaa", "aca-premium-tax-credit", "niit", "rmds"]);
     expect(taxInteractionPages.every((page) => page.paragraphs.length >= 3)).toBe(true);
-    expect(taxInteractionPages.every((page) => page.modelingStatus.includes("not modeled"))).toBe(true);
+    expect(taxInteractionPages.every((page) => page.modelingStatus.match(/bounded|preview/i))).toBe(true);
+    expect(irmaaPage?.modelingStatus).toContain("bounded 2026 Part B and Part D IRMAA proxy previews");
+    expect(irmaaPage?.modelingStatus).toContain("final IRMAA billing");
+    expect(getTaxInteractionPageBySlug("aca-premium-tax-credit")?.modelingStatus).toContain("bounded APTC at-stake preview");
+    expect(getTaxInteractionPageBySlug("niit")?.modelingStatus).toContain("bounded 3.8% NIIT preview");
+    expect(getTaxInteractionPageBySlug("rmds")?.modelingStatus).toContain("bounded Uniform Lifetime Table RMD preview");
     expect(taxInteractionPages.every((page) => page.officialSourceUrl.startsWith("https://"))).toBe(true);
   });
 

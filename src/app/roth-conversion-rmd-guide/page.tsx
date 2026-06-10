@@ -59,8 +59,9 @@ export default function RothConversionRmdGuidePage() {
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
           Educational guide for users who need to discuss required minimum distributions before modeling or processing a
-          Roth conversion. It explains sequencing and records, but it does not calculate RMD obligations or provide tax
-          advice.
+          Roth conversion. The calculator can show a bounded Uniform Lifetime Table preview from age and IRA balance
+          inputs, but it does not determine final RMD obligations, account-type treatment, inherited-account rules, or
+          conversion sequencing.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
           <span className="rounded-full bg-blue-500/10 px-3 py-1 font-semibold text-systemBlue">

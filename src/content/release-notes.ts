@@ -10,6 +10,90 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.214",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Advanced preview content boundaries",
+    summary:
+      "Aligned ACA, NIIT, and RMD guide and tax-interaction copy with the newly implemented bounded previews, while preserving explicit boundaries that final Marketplace, Form 8960, RMD obligation, and state/program determinations remain outside the calculator.",
+    affectedArea:
+      "ACA premium tax credit guide, NIIT guide, RMD guide, tax interaction pages, FAQ, methodology page, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Revert the copy alignment only if the affected pages still truthfully describe which bounded previews exist and keep final tax-form, Marketplace, RMD, and professional-review boundaries visible.",
+  },
+  {
+    version: "1.0.213",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Part D IRMAA proxy preview",
+    summary:
+      "Added a bounded 2026 Medicare Part D IRMAA monthly adjustment preview alongside the existing Part B proxy, using the calculator income proxy and CMS IRMAA brackets while clearly excluding plan-specific Part D premiums and SSA lookback-year determinations.",
+    affectedArea:
+      "IRMAA review prep, Tax Impact Warnings, professional handoff packet, print-ready report, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the Part D IRMAA proxy only if the IRMAA worksheet still keeps the Part B proxy, missing-input checklist, and explicit boundary that Part D plan premiums and SSA billing determinations are outside the calculator.",
+  },
+  {
+    version: "1.0.212",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Reviewed state tax estimate handoff",
+    summary:
+      "Added an optional reviewed state tax estimate field so users can carry a CPA or tax-software state amount into the worksheet and compare it with the calculator's manual-rate state tax, without turning on a full state-law engine.",
+    affectedArea:
+      "Calculator input, selected-state readiness worksheet, tax impact warnings, professional handoff packet, print-ready report, storage merge, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the optional reviewed state estimate field only if selected-state worksheets keep another professional handoff path that clearly separates user-reviewed state amounts from manual-rate state tax estimates.",
+  },
+  {
+    version: "1.0.211",
+    date: "2026-06-10",
+    type: "patch",
+    title: "AMT exposure preview",
+    summary:
+      "Added optional Form 6251 tentative minimum tax and regular-tax comparison inputs plus an AMT exposure preview, while keeping AMTI, preference items, exemption, phaseout, credits, and full Form 6251 calculation outside the calculator.",
+    affectedArea:
+      "Calculator input, AMT review prep, tax impact warnings, professional handoff packet, print-ready report, storage merge, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the optional AMT comparison inputs and exposure preview only if the AMT worksheet keeps its prior review-prep boundary and continues to block unsupported final AMT or tax-due calculations.",
+  },
+  {
+    version: "1.0.210",
+    date: "2026-06-10",
+    type: "patch",
+    title: "ACA APTC at-stake preview",
+    summary:
+      "Added optional annual advance premium tax credit and Marketplace coverage-month inputs plus an APTC at-stake preview, while keeping final premium tax credit, repayment cap, benchmark premium, and Form 8962 reconciliation outside the calculator.",
+    affectedArea:
+      "Calculator input, ACA premium tax credit review prep, tax impact warnings, professional handoff packet, print-ready report, storage merge, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the optional Marketplace APTC preview inputs and at-stake preview only if the ACA worksheet keeps its prior review-prep boundary and continues to block unsupported final premium-tax-credit or subsidy calculations.",
+  },
+  {
+    version: "1.0.209",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Social Security taxable benefit preview",
+    summary:
+      "Added optional annual Social Security benefit and tax-exempt interest inputs plus a bounded Publication 915-style taxable-benefit preview, while keeping the result outside the main conversion tax total and labeled as a review aid rather than a final benefit-tax calculation.",
+    affectedArea:
+      "Calculator input, Social Security review prep, tax impact warnings, professional handoff packet, print-ready report, storage merge, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the optional Social Security preview inputs and bounded taxable-benefit preview only if the worksheet keeps its prior review-prep boundary and continues to block unsupported final taxable-benefit or benefit-tax-owed language.",
+  },
+  {
+    version: "1.0.208",
+    date: "2026-06-10",
+    type: "patch",
+    title: "NIIT bounded estimate preview",
+    summary:
+      "Added an optional net investment income input and a bounded 3.8% NIIT preview using the lesser of user-entered net investment income or the calculator MAGI proxy excess, while keeping the result labeled as a Form 8960 review aid rather than a final tax determination.",
+    affectedArea:
+      "Calculator input, NIIT review prep, tax impact warnings, professional handoff packet, print-ready report, storage merge, release notes, task tracking, and regression tests",
+    rollbackPath:
+      "Remove the optional net investment income input and bounded NIIT preview only if the NIIT worksheet keeps its prior review-prep boundary and continues to block unsupported final NIIT owed language.",
+  },
+  {
     version: "1.0.207",
     date: "2026-06-10",
     type: "patch",

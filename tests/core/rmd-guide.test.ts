@@ -26,7 +26,10 @@ describe("Roth conversion RMD guide", () => {
     expect(labels).toContain("Take required distributions before converting remaining eligible assets");
     expect(labels).toContain("Roth IRA owners generally do not take lifetime RMDs");
     expect(labels).toContain("Inherited Roth accounts can have beneficiary distribution rules");
-    expect(labels).toContain("Calculator does not determine RMD obligations");
+    expect(labels).toContain("Calculator only previews Uniform Lifetime RMD when age and balance inputs fit");
+    expect(sections.flatMap((section) => section.points.map((point) => point.professionalReviewNote)).join(" ")).toContain(
+      "final RMD obligations",
+    );
     expect(summary.totalPoints).toBeGreaterThanOrEqual(12);
     expect(summary.reviewTopics).toEqual(
       expect.arrayContaining(["RMD obligation", "Conversion sequence", "Roth IRA owner rules", "Calculator limits"]),

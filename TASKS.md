@@ -167,3 +167,10 @@
 - [done] Add AI verifier pass fail fallback stats panel
 - [done] Add GSC query CSV importer for browser-control fallback
 - [done] Add Chinese GSC CSV header support and zero-query export evidence
+- [done] Add bounded NIIT estimate preview from optional net investment income input
+- [done] Add bounded Social Security taxable-benefit preview from optional benefit and tax-exempt interest inputs
+- [done] Add ACA APTC at-stake preview from optional Marketplace inputs
+- [done] Add AMT exposure preview from optional Form 6251 comparison inputs
+- [done] Add reviewed state tax estimate handoff field for selected-state worksheets
+- [done] Add bounded 2026 Part D IRMAA monthly adjustment proxy preview
+- [done] Align advanced preview guide copy with ACA NIIT RMD bounded previews

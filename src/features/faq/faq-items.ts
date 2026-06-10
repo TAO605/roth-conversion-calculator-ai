@@ -17,6 +17,6 @@ export const faqItems = [
   {
     question: "Can this calculator replace a CPA?",
     answer:
-      "No. It is an educational calculator. It does not calculate every tax interaction, including IRMAA, ACA subsidies, NIIT, AMT, credits, or state-specific rules.",
+      "No. It is an educational calculator. Some interactions have bounded previews or worksheets, such as IRMAA, ACA APTC, NIIT, RMD, AMT, Social Security, and selected-state readiness, but final tax treatment, credits, forms, and state-specific rules still require separate review.",
   },
 ];

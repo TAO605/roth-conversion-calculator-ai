@@ -61,8 +61,8 @@ export default function RothConversionNiitGuidePage() {
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
           Educational guide for users with investment income who need to understand why Roth conversion income may
-          require a separate net investment income tax review. The calculator does not estimate NIIT or prepare Form
-          8960.
+          require a separate net investment income tax review. The calculator can show a bounded NIIT preview when net
+          investment income is entered, but it does not classify investment income or prepare final Form 8960 results.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
           <span className="rounded-full bg-blue-500/10 px-3 py-1 font-semibold text-systemBlue">

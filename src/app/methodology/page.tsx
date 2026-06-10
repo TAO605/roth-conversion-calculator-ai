@@ -70,7 +70,11 @@ export default function MethodologyPage() {
         <p>Federal tax is estimated with a progressive tax delta: tax(income + taxable conversion) minus tax(income).</p>
         <p>Taxable conversion uses a pro-rata basis estimate: conversion amount multiplied by one minus basis divided by IRA balance.</p>
         <p>The default assumption is that conversion taxes are paid from outside funds.</p>
-        <p>IRMAA, ACA subsidies, NIIT, AMT, RMDs, credits, and state-specific rules are outside the MVP calculation scope.</p>
+        <p>
+          IRMAA, ACA APTC, NIIT, Social Security, RMD, AMT, and selected-state inputs may appear as bounded previews or
+          professional-review worksheets, but final program eligibility, tax forms, credits, billing determinations, and
+          state-specific rules remain outside the core conversion tax calculation.
+        </p>
         <p>
           Primary references:{" "}
           <a className="text-systemBlue underline" href="https://www.irs.gov/publications/p590a">

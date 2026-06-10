@@ -35,9 +35,9 @@ export function buildNiitGuideSections(): NiitGuideSection[] {
           "Use IRS NIIT resources, Form 8960 instructions, tax software, or professional review for exact treatment.",
         ),
         point(
-          "NIIT is separate from ordinary income tax brackets",
+          "NIIT preview is separate from ordinary income tax brackets",
           "NIIT basics",
-          "The calculator estimates ordinary federal income tax from conversion income but does not classify investment income or apply NIIT rules.",
+          "The calculator estimates ordinary federal income tax from conversion income and can show a bounded 3.8% NIIT preview when net investment income is entered, but it does not classify investment income or complete Form 8960.",
           "Do not treat the marginal bracket estimate as a complete tax projection.",
         ),
         point(
@@ -129,10 +129,10 @@ export function buildNiitGuideSections(): NiitGuideSection[] {
       purpose: "Make the NIIT limitation explicit in user-facing language.",
       points: [
         point(
-          "Calculator does not estimate NIIT",
+          "Calculator only previews NIIT from user-entered net investment income",
           "Calculator limits",
-          "The calculator estimates conversion tax cost, state tax assumptions, penalties, projections, and break-even math; it does not compute net investment income tax.",
-          "List NIIT as a professional review item when investment income is material.",
+          "The calculator estimates conversion tax cost, state tax assumptions, penalties, projections, break-even math, and a bounded NIIT preview using user-entered net investment income and the calculator MAGI proxy excess.",
+          "List NIIT as a professional review item when investment income is material because final Form 8960 classification and deductions remain outside the calculator.",
         ),
         point(
           "NIIT should be reviewed with other income-linked items",

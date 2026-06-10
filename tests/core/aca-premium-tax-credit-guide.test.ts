@@ -26,7 +26,10 @@ describe("Roth conversion ACA premium tax credit guide", () => {
     expect(labels).toContain("Roth conversion income can change annual household income");
     expect(labels).toContain("Advance premium tax credits are reconciled on the tax return");
     expect(labels).toContain("Form 1095-A and Form 8962 records should be reviewed");
-    expect(labels).toContain("Calculator does not estimate ACA premium tax credits");
+    expect(labels).toContain("Calculator only previews APTC at stake when Marketplace inputs are entered");
+    expect(sections.flatMap((section) => section.points.map((point) => point.professionalReviewNote)).join(" ")).toContain(
+      "not as a final Marketplace eligibility",
+    );
     expect(summary.totalPoints).toBeGreaterThanOrEqual(12);
     expect(summary.reviewTopics).toEqual(
       expect.arrayContaining(["Marketplace income", "Conversion income", "APTC reconciliation", "Calculator limits"]),
