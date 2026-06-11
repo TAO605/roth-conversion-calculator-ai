@@ -26,14 +26,15 @@ export const featureRegistry: FeatureRegistryItem[] = [
   },
   {
     id: "ai-explainer",
-    label: "AI Roth Conversion Explainer",
-    version: "1.0.205",
+    label: "AI Roth Conversion Voice Assistant",
+    version: "1.0.230",
     layer: "feature",
     enabled: true,
     locked: false,
     grayRate: 100,
     ownerArea: "src/features/ai-assistant",
-    rollbackPath: "Remove AiExplainer from the homepage and keep the calculator available, or restore the previous support-panel copy and classes.",
+    rollbackPath:
+      "Remove AiVoiceAssistant from the homepage and keep the calculator available, or restore the previous text-only AiExplainer component.",
   },
   {
     id: "scenario-history",
@@ -72,14 +73,14 @@ export const featureRegistry: FeatureRegistryItem[] = [
   {
     id: "voice-input-assist",
     label: "Browser voice input assist",
-    version: "1.0.225",
+    version: "1.0.230",
     layer: "feature",
-    enabled: true,
+    enabled: false,
     locked: false,
     grayRate: 100,
     ownerArea: "src/features/voice-input and src/features/calculator-input",
     rollbackPath:
-      "Disable voice-input-assist in the feature registry or remove VoiceInputAssist from CalculatorInput while keeping all manual inputs available.",
+      "Keep disabled after the standalone AI voice assistant replaces the input-area voice filler. Re-enable only if a separate voice-to-field workflow is needed.",
   },
   {
     id: "theme-toggle",

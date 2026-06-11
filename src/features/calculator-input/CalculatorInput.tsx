@@ -12,9 +12,7 @@ import type {
   TaxPaymentMethod,
 } from "@/core/calculator/types";
 import { validateCalculatorInput } from "@/core/calculator/validation";
-import { isFeatureEnabled } from "@/core/features/feature-registry";
 import { PresetPanel } from "@/features/calculator-input/PresetPanel";
-import { VoiceInputAssist } from "@/features/voice-input/VoiceInputAssist";
 
 interface CalculatorInputProps {
   value: RothConversionInput;
@@ -119,7 +117,6 @@ export function CalculatorInput({ value, onChange }: CalculatorInputProps) {
           </p>
         </div>
         <div className="grid gap-4" data-testid="quick-estimate-fields">
-          {isFeatureEnabled("voice-input-assist") ? <VoiceInputAssist onChange={onChange} /> : null}
           <TextField
             label="Conversion amount"
             type="number"

@@ -37,7 +37,7 @@ describe("feature registry", () => {
   it("returns only enabled feature ids", () => {
     expect(getEnabledFeatureIds()).toContain("scenario-history");
     expect(getEnabledFeatureIds()).toContain("calculator-input-layout");
-    expect(getEnabledFeatureIds()).toContain("voice-input-assist");
+    expect(getEnabledFeatureIds()).not.toContain("voice-input-assist");
     expect(getEnabledFeatureIds()).toContain("share-link");
     expect(getEnabledFeatureIds()).toContain("pdf-report");
     expect(getEnabledFeatureIds()).toContain("email-report");
@@ -154,7 +154,8 @@ describe("feature registry", () => {
     expect(homePage).not.toContain('isFeatureEnabled("tax-data-freshness")');
     expect(
       fs.readFileSync(path.join(process.cwd(), "src/features/calculator-input/CalculatorInput.tsx"), "utf8"),
-    ).toContain('isFeatureEnabled("voice-input-assist")');
+    ).not.toContain('isFeatureEnabled("voice-input-assist")');
+    expect(getFeatureById("voice-input-assist")).toMatchObject({ enabled: false });
     expect(homePage).not.toContain('isFeatureEnabled("copy-summary")');
     expect(homePage).not.toContain('isFeatureEnabled("conversion-sensitivity")');
   });

@@ -98,9 +98,9 @@ const ResultReadAloudButton = dynamic<{ input: RothConversionInput; result: Roth
   { loading: () => <LazyActionButtonFallback label="Loading read aloud..." /> },
 );
 
-const AiExplainer = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
-  () => import("@/features/ai-assistant/AiExplainer").then((module) => module.AiExplainer),
-  { loading: () => <LazyPanelFallback className="min-h-[24rem]" label="Loading explanation assistant..." /> },
+const AiVoiceAssistant = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
+  () => import("@/features/ai-assistant/AiVoiceAssistant").then((module) => module.AiVoiceAssistant),
+  { loading: () => <LazyPanelFallback className="min-h-[24rem]" label="Loading AI voice assistant..." /> },
 );
 
 const CalculationBreakdown = dynamic<{ input: RothConversionInput; result: RothConversionResult }>(
@@ -217,7 +217,7 @@ export function HomeCalculatorClient() {
           </Card>
           {!hasInputErrors && isFeatureEnabled("ai-explainer") ? (
             <div id="ai-explainer">
-              <AiExplainer input={input} result={result} />
+              <AiVoiceAssistant input={input} result={result} />
             </div>
           ) : null}
           {!hasInputErrors && isFeatureEnabled("projection-chart") ? (

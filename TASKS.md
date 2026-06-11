@@ -188,3 +188,4 @@
 - [done] Simplify homepage to keep the calculator tool as the primary experience
 - [done] Simplify homepage footer to minimal compliance and site-index links
 - [done] Add microphone permission handling to browser voice input assist
+- [done] Replace input-area voice helper with standalone AI voice assistant

@@ -48,16 +48,18 @@ test("calculator workflow renders advanced analysis modules", async ({ page }) =
   await expect(page.getByText("$26,100 total upfront cost / $90,000 converted")).toBeVisible();
 });
 
-test("AI explainer module stays usable and visibly compliant", async ({ page }) => {
+test("AI voice assistant module stays usable and visibly compliant", async ({ page }) => {
   await page.goto("/");
-  const questionBox = page.getByLabel("Ask the explanation assistant a Roth conversion education question");
-  const explainButton = page.getByRole("button", { name: "Explain" });
+  const questionBox = page.getByLabel("Ask the AI voice assistant a Roth conversion education question");
+  const askButton = page.getByRole("button", { name: "Ask" });
 
-  await expect(page.getByRole("heading", { name: "Review this estimate in plain English" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Ask about this estimate" })).toBeVisible();
   await expect(questionBox).toBeVisible();
   await expect(questionBox).toHaveValue("What does my break-even year mean?");
-  await expect(explainButton).toBeVisible();
-  await expect(explainButton).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Speak" })).toBeVisible();
+  await expect(askButton).toBeVisible();
+  await expect(askButton).toBeEnabled();
+  await expect(page.locator("#ai-explainer").getByRole("button", { name: "Read", exact: true })).toBeDisabled();
   await expect(
     page.locator("#ai-explainer").getByText(/does not constitute tax, financial, legal, or investment advice/i),
   ).toBeVisible();

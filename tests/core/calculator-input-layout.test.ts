@@ -70,7 +70,7 @@ describe("calculator input layout", () => {
     const sourceFields = screen.getByTestId("quick-estimate-fields");
     const projectionAssumptions = screen.getByTestId("projection-assumptions") as HTMLDetailsElement;
 
-    expect(sourceFields.children).toHaveLength(7);
+    expect(sourceFields.children).toHaveLength(6);
     expect(projectionAssumptions.querySelectorAll("input")).toHaveLength(2);
     expect(projectionAssumptions.open).toBe(false);
   });
@@ -89,17 +89,17 @@ describe("calculator input layout", () => {
     expect(source).toContain("[&::-webkit-details-marker]:hidden");
   });
 
-  it("mounts browser voice input assist in the quick estimate area without replacing manual inputs", () => {
+  it("keeps voice assistance out of the quick estimate fields after moving it to a standalone AI panel", () => {
     render(React.createElement(CalculatorInput, { value, onChange: vi.fn() }));
 
     const quickFields = screen.getByTestId("quick-estimate-fields");
     const source = fs.readFileSync(path.join(process.cwd(), "src/features/calculator-input/CalculatorInput.tsx"), "utf8");
 
-    expect(quickFields.textContent).toContain("Voice input assist");
+    expect(quickFields.textContent).not.toContain("Voice input assist");
     expect(quickFields.textContent).toContain("Conversion amount");
     expect(quickFields.textContent).toContain("Current taxable income");
-    expect(source).toContain('isFeatureEnabled("voice-input-assist")');
-    expect(source).toContain("VoiceInputAssist");
+    expect(source).not.toContain('isFeatureEnabled("voice-input-assist")');
+    expect(source).not.toContain("VoiceInputAssist");
   });
 
   it("keeps selected-state readiness fields collapsed inside advanced assumptions", () => {

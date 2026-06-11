@@ -9,6 +9,7 @@ function readSource(relativePath: string): string {
 describe("supporting calculator panel professional UI", () => {
   const supportPanelSources = [
     "src/features/ai-assistant/AiExplainer.tsx",
+    "src/features/ai-assistant/AiVoiceAssistant.tsx",
     "src/features/tax-impact-warnings/TaxImpactWarnings.tsx",
     "src/features/tax-payment-comparison/TaxPaymentComparison.tsx",
     "src/features/charts/ProjectionChart.tsx",
@@ -29,16 +30,17 @@ describe("supporting calculator panel professional UI", () => {
     expect(source).not.toContain("focus:ring-4");
   });
 
-  it("keeps the explanation assistant below the calculator without AI-first labeling", () => {
-    const source = readSource("src/features/ai-assistant/AiExplainer.tsx");
+  it("keeps the assistant below the calculator with standalone voice controls and compliance copy", () => {
+    const source = readSource("src/features/ai-assistant/AiVoiceAssistant.tsx");
     const clientSource = readSource("src/app/HomeCalculatorClient.tsx");
 
-    expect(source).toContain("Educational explanation");
-    expect(source).toContain("Review this estimate in plain English");
-    expect(source).toContain("Ask the explanation assistant");
+    expect(source).toContain("AI voice assistant");
+    expect(source).toContain("Ask about this estimate");
+    expect(source).toContain("Ask the AI voice assistant");
+    expect(source).toContain("protected server assistant");
+    expect(source).toContain("Microphone permission is blocked");
     expect(source).not.toContain("Educational AI helper");
-    expect(source).not.toContain("Ask AI to explain this estimate");
-    expect(clientSource).toContain("Loading explanation assistant...");
+    expect(clientSource).toContain("Loading AI voice assistant...");
     expect(clientSource).not.toContain("Loading AI helper...");
   });
 

@@ -10,6 +10,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    version: "1.0.230",
+    date: "2026-06-10",
+    type: "patch",
+    title: "Standalone AI voice assistant",
+    summary:
+      "Replaced the input-area voice filler with a standalone AI voice assistant below the calculator results. The new assistant supports browser voice capture, text questions, protected server-side educational explanations, answer read-aloud, and microphone-permission fallback without exposing API keys in the browser.",
+    affectedArea:
+      "AI assistant UI, homepage calculator client, calculator input layout, feature registry, release notes, task tracking, documentation, and regression tests",
+    rollbackPath:
+      "Disable ai-explainer or restore the prior text-only AiExplainer component while keeping the calculator, manual inputs, report actions, and compliance disclosures available.",
+  },
+  {
     version: "1.0.229",
     date: "2026-06-10",
     type: "patch",

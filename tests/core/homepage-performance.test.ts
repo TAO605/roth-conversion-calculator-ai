@@ -14,14 +14,14 @@ describe("homepage performance boundaries", () => {
     expect(calculatorClient).toContain("LazyPanelFallback");
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/charts\/ProjectionChart"\)/);
     expect(calculatorClient).toContain('isFeatureEnabled("projection-chart")');
-    expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/ai-assistant\/AiExplainer"\)/);
+    expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/ai-assistant\/AiVoiceAssistant"\)/);
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/calculation-breakdown\/CalculationBreakdown"\)/);
     expect(calculatorClient).toContain('isFeatureEnabled("calculation-breakdown")');
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/pdf-report\/PdfReportButton"\)/);
     expect(calculatorClient).toMatch(/dynamic<[\s\S]+import\("@\/features\/analytics\/CalculatorAnalyticsBeacon"\)/);
 
     expect(calculatorClient).not.toContain('import { ProjectionChart } from "@/features/charts/ProjectionChart"');
-    expect(calculatorClient).not.toContain('import { AiExplainer } from "@/features/ai-assistant/AiExplainer"');
+    expect(calculatorClient).not.toContain('import { AiVoiceAssistant } from "@/features/ai-assistant/AiVoiceAssistant"');
     expect(calculatorClient).not.toContain('import { CalculationBreakdown } from "@/features/calculation-breakdown/CalculationBreakdown"');
     expect(calculatorClient).not.toContain('import { PdfReportButton } from "@/features/pdf-report/PdfReportButton"');
     expect(calculatorClient).not.toContain('import { CalculatorAnalyticsBeacon } from "@/features/analytics/CalculatorAnalyticsBeacon"');
@@ -31,7 +31,7 @@ describe("homepage performance boundaries", () => {
     const calculatorClient = fs.readFileSync(path.join(process.cwd(), "src/app/HomeCalculatorClient.tsx"), "utf8");
 
     expect(calculatorClient).toContain('className="min-h-[17rem]" label="Loading projection..."');
-    expect(calculatorClient).toContain('className="min-h-[24rem]" label="Loading explanation assistant..."');
+    expect(calculatorClient).toContain('className="min-h-[24rem]" label="Loading AI voice assistant..."');
     expect(calculatorClient).toContain('className="min-h-[18rem]" label="Loading calculation details..."');
   });
 
