@@ -22,7 +22,9 @@ export interface StateRulesReviewPrep {
   stateRuleBoundaryNote: string;
   selectedStateAmountReadiness: StateRuleAmountReadiness | null;
   userStateReadinessInputs: StateReadinessInputSummary;
-  amountEstimateStatus: "manual_rate_only";
+  reviewedStateTaxEstimate: number | null;
+  reviewedVsManualStateTaxDifference: number | null;
+  amountEstimateStatus: "manual_rate_only" | "reviewed_state_estimate_provided";
   summary: string;
   boundaryNote: string;
   missingInputs: string[];
@@ -132,6 +134,12 @@ function buildUserStateReadinessInputSummary(input: RothConversionInput): StateR
       value: formatOptionalCurrencyValue(values?.stateIraBasis),
     },
     {
+      label: "Reviewed state tax estimate",
+      provided:
+        typeof values?.reviewedStateTaxEstimate === "number" && Number.isFinite(values.reviewedStateTaxEstimate),
+      value: formatOptionalCurrencyValue(values?.reviewedStateTaxEstimate),
+    },
+    {
       label: "Local tax may apply",
       provided: typeof values?.localTaxApplies === "boolean",
       value: formatOptionalBoolean(values?.localTaxApplies),
@@ -191,6 +199,15 @@ export function buildStateRulesReviewPrep(
   const manualStateRate = Math.max(0, input.stateMarginalTaxRate);
   const taxableConversionIncrease = Math.max(0, result.taxableConversion);
   const modeledStateTaxFromManualRate = Math.max(0, result.stateTax);
+  const reviewedStateTaxEstimate =
+    typeof input.stateReadinessInputs?.reviewedStateTaxEstimate === "number" &&
+    Number.isFinite(input.stateReadinessInputs.reviewedStateTaxEstimate)
+      ? Math.max(0, input.stateReadinessInputs.reviewedStateTaxEstimate)
+      : null;
+  const reviewedVsManualStateTaxDifference =
+    reviewedStateTaxEstimate === null
+      ? null
+      : Number((reviewedStateTaxEstimate - modeledStateTaxFromManualRate).toFixed(2));
   const supportedStateExamples = statePages.map((page) => ({
     code: page.stateCode,
     exampleRate: page.stateTaxRateExample,
@@ -206,7 +223,8 @@ export function buildStateRulesReviewPrep(
   const userStateReadinessInputs = buildUserStateReadinessInputSummary(input);
 
   return {
-    amountEstimateStatus: "manual_rate_only",
+    amountEstimateStatus:
+      reviewedStateTaxEstimate === null ? "manual_rate_only" : "reviewed_state_estimate_provided",
     basis: "manual_state_marginal_rate",
     boundaryNote:
       "This calculator applies only the manually entered state marginal rate to the taxable conversion. It does not determine residency, source income, state adjusted gross income, retirement-income exclusions, credits, local taxes, state AMT or minimum taxes, reciprocity, part-year residency, or multi-state filing rules.",
@@ -221,6 +239,8 @@ export function buildStateRulesReviewPrep(
     ],
     modeledStateTaxFromManualRate,
     officialReferences: STATE_RULES_OFFICIAL_REFERENCES,
+    reviewedStateTaxEstimate,
+    reviewedVsManualStateTaxDifference,
     selectedState,
     selectedStateAmountReadiness: stateRuleEntry.amountReadiness ?? null,
     stateRuleBoundaryNote: stateRuleEntry.boundaryNote,
@@ -235,6 +255,12 @@ export function buildStateRulesReviewPrep(
     )} of taxable conversion income, producing a simplified state tax estimate of ${formatCurrency(
       modeledStateTaxFromManualRate,
     )}. ${
+      reviewedStateTaxEstimate === null
+        ? ""
+        : `A user-provided reviewed state tax estimate of ${formatCurrency(
+            reviewedStateTaxEstimate,
+          )} differs from the manual-rate estimate by ${formatCurrency(reviewedVsManualStateTaxDifference ?? 0)}. `
+    }${
       selectedState === null
         ? "No supported state example is selected."
         : `${selectedState.name} is selected as an educational state example with rule status: ${stateRuleEntry.statusLabel}.`

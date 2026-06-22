@@ -63,6 +63,7 @@ describe("state tax shortcuts", () => {
           localTaxApplies: true,
           notes: "CA review",
           otherStateTaxCreditApplies: false,
+          reviewedStateTaxEstimate: 6000,
           residencyStatus: "resident",
           stateAdjustedGrossIncome: 120000,
           stateIraBasis: 7000,
@@ -88,6 +89,7 @@ describe("state tax shortcuts", () => {
     expect(screen.getByTestId("state-readiness-inputs").textContent).toContain("California State Amount Readiness");
     expect(screen.getByLabelText(/residency status for selected state/i)).toBeTruthy();
     expect(screen.getByLabelText(/state adjusted gross income/i)).toBeTruthy();
+    expect(screen.getByLabelText(/reviewed state tax estimate/i)).toBeTruthy();
 
     rerender(
       React.createElement(CalculatorInput, {

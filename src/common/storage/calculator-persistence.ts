@@ -31,6 +31,14 @@ function nullableFiniteNumber(value: unknown, fallback: number | null | undefine
   return fallback ?? null;
 }
 
+function nullableNonNegativeFiniteNumber(value: unknown, fallback: number | null | undefined): number | null {
+  if (typeof value === "number" && Number.isFinite(value) && value >= 0) {
+    return value;
+  }
+
+  return fallback ?? null;
+}
+
 function nullableBoolean(value: unknown, fallback: boolean | null | undefined): boolean | null {
   if (typeof value === "boolean") {
     return value;
@@ -71,6 +79,10 @@ function stateReadinessInputs(
       fallback?.stateAdjustedGrossIncome,
     ),
     stateIraBasis: nullableFiniteNumber(partial.stateIraBasis, fallback?.stateIraBasis),
+    reviewedStateTaxEstimate: nullableNonNegativeFiniteNumber(
+      partial.reviewedStateTaxEstimate,
+      fallback?.reviewedStateTaxEstimate,
+    ),
   };
 }
 
@@ -85,6 +97,35 @@ export function mergeCalculatorInput(
     filingStatus:
       partial.filingStatus && filingStatuses.has(partial.filingStatus) ? partial.filingStatus : defaults.filingStatus,
     currentTaxableIncome: finiteNumber(partial.currentTaxableIncome, defaults.currentTaxableIncome),
+    netInvestmentIncome: nullableNonNegativeFiniteNumber(
+      partial.netInvestmentIncome,
+      defaults.netInvestmentIncome,
+    ),
+    annualSocialSecurityBenefits: nullableNonNegativeFiniteNumber(
+      partial.annualSocialSecurityBenefits,
+      defaults.annualSocialSecurityBenefits,
+    ),
+    taxExemptInterest: nullableNonNegativeFiniteNumber(partial.taxExemptInterest, defaults.taxExemptInterest),
+    annualAdvancePremiumTaxCredit: nullableNonNegativeFiniteNumber(
+      partial.annualAdvancePremiumTaxCredit,
+      defaults.annualAdvancePremiumTaxCredit,
+    ),
+    marketplaceCoverageMonths: nullableNonNegativeFiniteNumber(
+      typeof partial.marketplaceCoverageMonths === "number" &&
+        partial.marketplaceCoverageMonths >= 0 &&
+        partial.marketplaceCoverageMonths <= 12
+        ? partial.marketplaceCoverageMonths
+        : undefined,
+      defaults.marketplaceCoverageMonths,
+    ),
+    amtTentativeMinimumTax: nullableNonNegativeFiniteNumber(
+      partial.amtTentativeMinimumTax,
+      defaults.amtTentativeMinimumTax,
+    ),
+    amtRegularTaxLiability: nullableNonNegativeFiniteNumber(
+      partial.amtRegularTaxLiability,
+      defaults.amtRegularTaxLiability,
+    ),
     selectedState: selectedState(partial.selectedState, defaults.selectedState),
     stateReadinessInputs: stateReadinessInputs(partial.stateReadinessInputs, defaults.stateReadinessInputs),
     stateMarginalTaxRate: finiteNumber(partial.stateMarginalTaxRate, defaults.stateMarginalTaxRate),

@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "action": "gsc_discovered_not_indexed_validate_fix_click",
+  "clicked": false,
+  "checkedAt": "2026-06-06T06:35:29.566Z",
+  "propertyUrl": "https://www.roth-conversion-calculator-ai.shop/",
+  "issue": "Discovered - currently not indexed",
+  "beforeHadValidateButton": false,
+  "afterTitle": "网页索引编制",
+  "afterUrl": "https://search.google.com/search-console/index/drilldown?resource_id=https%3A%2F%2Fwww.roth-conversion-calculator-ai.shop%2F&item_key=CAMYFiAC",
+  "afterTextExcerpt": "\n\t\n\nhome\n概述\nlightbulb_2\n数据洞见\ntrending_up\n效果\nsearch\n网址检查\n编制索引\nkeyboard_arrow_up\nfile_copy\n网页\naccount_tree\n站点地图\nvisibility_off\n移除\n体验\nkeyboard_arrow_up\nspeed\n核心网页指标\nlock\nHTTPS\n增强功能\nkeyboard_arrow_up\nlayers\n路径\nlayers\n常见问题解答\n安全问题和人工处置措施\nkeyboard_arrow_down\nlink_2\n链接数量\ntrophy\n成就\nsettings\n设置\nfeedback\n提交反馈\ninfo\nSearch Console 简介\n隐私权条款\n网页索引编制\n\n已发现 - 尚未编入索引\n\n导出\n\n分享\n所有已知网页\n上次更新日期：2026/5/28\ninfo\n已发现 - 尚未编入索引\n此类网页未编入索引或不会显示在 Google 搜索结果中\n了解详情\n首次检测到此任务时的日期：2026/5/29\n解决了？\n验证修正情况\n受影响的网页数\n108\n2026/3/7\n2026/3/19\n2026/3/31\n2026/4/12\n2026/4/24\n2026/5/6\n2026/5/18\n150\n100\n50\n0\n示例\n\n\n网址\n\t\n上次抓取日期\n\nhttps://www.roth-conversion-calculator-ai.shop/2026-roth-conversion-calculator\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/about\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/accessibility-audit\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/age-scenarios\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/age-scenarios/age-59-and-a-half-to-retirement\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/age-scenarios/already-retired\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/age-scenarios/near-retirement\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/age-scenarios/under-59-and-a-half\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/ai-compliance-audit\n\t不适用\n\nhttps://www.roth-conversion-calculator-ai.shop/basis\n\t不适用\n每页行数：\n5\n10\n25\n50\n100\n250\n500\n第 1-10 行，共 108 行\n",
+  "afterHasValidationStarted": false,
+  "screenshotPath": "docs/evidence/gsc-discovered-validation-submitted-2026-06-06.png"
+}

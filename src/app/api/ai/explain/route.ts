@@ -97,7 +97,7 @@ export async function POST(request: Request) {
     result?.totalUpfrontCost ?? 0,
   ).toLocaleString()}. The break-even estimate is ${breakEven}. This explanation assumes taxes are paid using ${
     input?.taxPaymentMethod === "outside_funds" ? "outside funds" : "the selected tax payment method"
-  } and does not calculate IRMAA, ACA subsidies, NIIT, AMT, RMD interactions, or state-specific exceptions.`;
+  } and does not calculate final IRMAA billing, ACA subsidies, final NIIT, AMT, RMD interactions, or state-specific exceptions.`;
 
   const apiKey = process.env.OPENAI_API_KEY;
   const paidModelEnabled = process.env.AI_EXPLAINER_PAID_MODEL_ENABLED === "true";

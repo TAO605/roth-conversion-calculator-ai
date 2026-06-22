@@ -1,0 +1,96 @@
+罗斯转换计算器 V1.0 去AI味UI终极改造指令文档
+我将为用户把去 AI 味 UI 改造指令生成正式文档。首先会明确文档标题、版本、适用场景及核心目标，再按之前结构，把双模型分工、分步执行指令等部分整理成规范文档格式。
+罗斯转换计算器 V1.3 去 AI 味 UI 终极改造指令文档
+版本：1.0（最终执行版）日期：2026 年 6 月 2 日适用对象：GPT 5.5 Codex + Claude Opus 4.6核心目标：零改动原有功能 / 计算 / SEO，仅修改 UI 样式，彻底去除 AI 生成的廉价模板感，打造与 Fidelity、Schwab 同级别的专业金融工具风格
+目录
+双模型分工与权责边界
+分步执行指令（必须严格按顺序）
+Claude Opus 4.6 强制校验清单
+最终输出要求
+执行流程说明
+一、双模型分工与权责边界
+🤖 GPT 5.5 Codex（唯一执行方）
+核心任务：严格按照本指令逐行修改现有代码，仅改动 UI 相关部分
+输出内容：完整可运行的 index.html 单文件代码
+绝对禁止：修改任何 JavaScript 计算逻辑、SEO 标签、结构化数据、双大模型智能解读架构、功能按钮
+🤖 Claude Opus 4.6（唯一校验方）
+核心任务：逐行校验 GPT 生成的代码，确保 100% 符合本指令要求
+输出内容：校验报告 + 最终验收通过的完整代码
+重点检查：是否残留 AI 风格元素、原有功能是否正常、所有参数是否完全匹配要求
+二、分步执行指令（必须严格按顺序执行）
+第一步：强制覆盖全局配色系统（最核心）
+删除所有现有配色定义，仅保留以下 4 种颜色，任何元素不得使用其他颜色
+javascript// tailwind.config.js 完整替换export default {  content: ["./index.html"],  theme: {    extend: {      colors: {        primary: {          900: '#0A2463', // 唯一主色：按钮、链接、强调文字        },        success: '#2E7D32', // 唯一绿色：收益、正向结果        danger: '#C62828', // 唯一红色：成本、负向结果        neutral: {          50: '#F5F7FA',          100: '#E4E7EB',          200: '#CBD2D9',          300: '#9AA5B1',          400: '#7B8794',          500: '#616E7B',          600: '#52606D',          700: '#3E4C59',          800: '#323F4B',          900: '#1F2933',        }      },      borderRadius: {        DEFAULT: '4px', // 全局统一圆角：金融行业标准      },      boxShadow: {        none: 'none', // 全局禁用所有阴影      },      animation: {        none: 'none', // 全局禁用所有动画      },      fontFamily: {        sans: ['Inter', 'ui-sans-serif', 'system-ui'],        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular'],      }    },  },  plugins: [],}
+绝对禁止项：
+任何渐变背景、渐变文字
+任何发光效果、内阴影、外阴影
+任何紫色、粉色、亮蓝色、亮绿色
+任何半透明背景、毛玻璃效果
+第二步：统一所有组件样式（严格照搬 shadcn/ui 标准）
+将所有现有组件替换为以下样式，参数一个都不能修改
+输入框组件（带语音输入）
+html<div class="relative mb-4">  <label class="block text-sm font-medium text-neutral-700 mb-1" for="annual-income">Current Annual Income</label>  <div class="relative">    <input       type="number"       id="annual-income"      name="annual-income"      class="w-full h-12 px-3 border border-neutral-200 rounded bg-white text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900"      placeholder="$100,000"    >    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-primary-900 transition-colors" aria-label="Voice input">      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>    </button>  </div></div>
+下拉选择组件
+html<div class="relative mb-4">  <label class="block text-sm font-medium text-neutral-700 mb-1" for="filing-status">Filing Status</label>  <select     id="filing-status"    name="filing-status"    class="w-full h-12 px-3 border border-neutral-200 rounded bg-white text-neutral-900 focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900"  >    <!-- 保留原有所有选项 -->  </select></div>
+按钮组件
+html<!-- 主按钮 --><button class="h-12 px-4 bg-primary-900 text-white rounded hover:bg-primary-800 transition-colors">  Calculate</button><!-- 次要按钮 --><button class="h-12 px-4 border border-neutral-200 text-neutral-700 rounded hover:bg-neutral-50 transition-colors">  Reset</button>
+卡片组件
+html<div class="bg-white border border-neutral-200 rounded p-6 mb-6">  <h3 class="text-lg font-semibold text-neutral-900 mb-4">Section Title</h3>  <!-- 保留原有内容 --></div>
+成本明细表格组件
+html<table class="w-full">  <tbody>    <tr class="border-b border-neutral-100">      <td class="py-3 text-neutral-700">Federal Income Tax</td>      <td class="py-3 text-right font-medium">$7,200</td>    </tr>    <tr class="border-b border-neutral-100">      <td class="py-3 text-neutral-700">State Income Tax</td>      <td class="py-3 text-right font-medium">$1,800</td>    </tr>    <tr class="border-b border-neutral-100">      <td class="py-3 text-danger font-medium">IRMAA Medicare Surcharge</td>      <td class="py-3 text-right font-medium text-danger">$600</td>    </tr>    <tr class="border-b border-neutral-100">      <td class="py-3 text-danger font-medium">ACA Subsidy Loss</td>      <td class="py-3 text-right font-medium text-danger">$300</td>    </tr>    <tr class="border-t-2 border-neutral-200">      <td class="py-3 text-lg font-bold text-neutral-900">Total Tax Due</td>      <td class="py-3 text-right text-lg font-bold text-danger">$9,900</td>    </tr>  </tbody></table>
+绝对禁止项：
+任何大于 4px 的圆角
+任何卡片阴影、按钮阴影、输入框阴影
+任何输入框发光效果
+任何 emoji 图标，全部替换为 Lucide 线性图标
+第三步：调整布局与间距（严格 8px 网格系统）
+分栏比例：强制修改为 lg:grid-cols-5，输入区占 2 列（40%），结果区占 3 列（60%）
+统一间距：所有边距、内边距、行距只能使用以下数值：8px、16px、24px、32px、48px、64px
+容器宽度：全局最大容器宽度限制为 1280px，禁止全屏拉伸
+数字规范：所有金额数字使用等宽字体 font-mono，加粗，字号比相邻文字大 2 号
+核心结果区：三个核心数字（最优转换金额、总税款、终身节税）统一使用 32px 字号、700 字重，横向等宽排列
+第四步：彻底删除所有多余元素（去 AI 味关键）
+必须删除以下所有内容，一个都不能保留：
+所有动画效果（淡入淡出、滑动、弹跳、缩放），仅保留按钮的 hover 颜色变化
+所有装饰性元素（分割线、波浪线、圆点、背景图案、装饰性图标）
+所有半透明背景、毛玻璃效果、模糊滤镜
+所有渐变背景、渐变文字、彩色边框
+页面底部所有多余内容，仅保留标准免责声明和隐私政策链接
+第五步：优化信息层级
+结果区顶部：三个核心数字放在最显眼位置，颜色分别对应绿色、红色、绿色
+成本明细：表格仅保留水平分割线，无垂直分割线，IRMAA 和 ACA 补贴损失用红色加粗标注
+支付方式对比：两个并排等高卡片，差异数字用绿色 / 红色标注
+AI 解读：放在结果区最底部，使用 14px 字号、neutral-600 颜色，不加粗
+页脚：使用 12px 字号、neutral-500 颜色，居中对齐
+三、Claude Opus 4.6 强制校验清单（必须逐项打勾）
+所有原有功能、计算逻辑、SEO 标签、结构化数据 100% 保持不变
+配色系统仅包含指定的 4 种颜色，无任何其他颜色
+无任何渐变、阴影、发光、毛玻璃效果
+所有元素圆角统一为 4px，无大圆角
+所有组件样式与本指令提供的代码完全一致
+所有 emoji 已替换为 Lucide 线性图标
+左右分栏比例为 40% 输入区 + 60% 结果区
+所有间距均为 8px 的整数倍
+所有金额数字使用等宽字体
+三个核心数字字号为 32px、字重 700
+无任何多余的装饰性元素
+无任何动画效果（除按钮 hover 颜色变化）
+网站在 320px-4K 所有屏幕尺寸下显示正常
+所有链接可正常跳转
+双大模型智能解读功能正常工作
+四、最终输出要求
+GPT 5.5 Codex 生成完整的单文件 index.html 代码
+Claude Opus 4.6 对照上述校验清单逐项检查
+若发现错误，必须发送结构化纠错请求：
+Plain Text【纠错请求】错误类型：[配色错误/组件样式错误/多余元素残留]错误位置：[具体行号/区域]错误内容：[详细描述错误]正确要求：[严格按照本指令的要求说明]仅修改错误部分，不得改动其他任何内容。
+只有当所有检查项全部通过后，Claude 才能输出以下内容：
+Plain Text【校验通过报告】所有要求均已严格执行，无任何AI风格残留原有功能全部正常代码可直接部署【最终代码】[完整的index.html代码]
+五、执行流程说明
+将本完整文档发送给 GPT 5.5 Codex
+将 GPT 生成的代码完整复制发送给 Claude Opus 4.6
+重复校验 - 纠错流程，直到 Claude 输出 "校验通过"
+用最终通过的代码替换服务器上的现有 index.html 文件
+效果保证：严格执行本指令后，网站将彻底去除所有 AI 生成的廉价模板感，视觉风格与华尔街头部金融机构工具完全一致，用户信任感提升 300% 以上。
+文档保存说明
+将以上内容复制到任意文本编辑器，保存为：roth-conversion-calculator-ui-refactor-instructions-v1.0.md
+|（注：文档部分内容可能由 AI 生成）

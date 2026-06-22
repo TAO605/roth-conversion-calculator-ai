@@ -103,6 +103,7 @@ export default async function KeywordLandingPage({ params }: KeywordLandingPageP
       : null;
   const niitPrep = page.taxInteractionPreview === "niit" ? buildNiitReviewPrep(sampleInput, sampleResult) : null;
   const sampleIncomeProxy = sampleInput.currentTaxableIncome + sampleResult.taxableConversion;
+  const relatedCalculatorPages = keywordLandingPages.filter((candidate) => candidate.slug !== page.slug).slice(0, 3);
 
   return (
     <main className="mx-auto grid max-w-4xl gap-7 px-4 py-10">
@@ -434,6 +435,26 @@ export default async function KeywordLandingPage({ params }: KeywordLandingPageP
         >
           {page.primaryCta}
         </Link>
+      </section>
+
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
+        <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Related Roth conversion calculators</h2>
+        <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
+          Compare this worksheet with adjacent calculator pages before deciding which assumptions need professional
+          review.
+        </p>
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
+          {relatedCalculatorPages.map((relatedPage) => (
+            <Link
+              className="rounded-md border border-neutral-200 p-4 transition hover:border-systemBlue dark:border-white/10"
+              href={`/${relatedPage.slug}`}
+              key={relatedPage.slug}
+            >
+              <h3 className="font-semibold text-neutral-950 dark:text-white">{relatedPage.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">{relatedPage.intent}</p>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{page.disclaimer}</p>

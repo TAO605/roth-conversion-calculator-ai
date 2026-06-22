@@ -75,6 +75,11 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     )} of IRMAA adjustment in the CMS full Part B table.`,
     `Part B proxy bracket: ${irmaaPrep.partBEstimate.bracketLabel}`,
     `Part B proxy boundary: ${irmaaPrep.partBEstimate.boundaryNote}`,
+    `2026 Part D IRMAA proxy preview: ${formatCurrencyWithCents(
+      irmaaPrep.partDEstimate.monthlyAdjustmentAmount,
+    )} per month of Part D IRMAA adjustment using calculator income proxy.`,
+    `Part D proxy bracket: ${irmaaPrep.partDEstimate.bracketLabel}`,
+    `Part D proxy boundary: ${irmaaPrep.partDEstimate.boundaryNote}`,
     `IRMAA threshold note: ${irmaaPrep.thresholdLabel}`,
     `IRMAA prep summary: ${irmaaPrep.summary}`,
     "Inputs still needed before any premium amount review:",
@@ -84,6 +89,22 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `Calculator income proxy before conversion: ${formatCurrency(acaPrep.incomeProxyBeforeConversion)}`,
     `Taxable conversion income increase: ${formatCurrency(acaPrep.conversionIncomeIncrease)}`,
     `Calculator income proxy after conversion: ${formatCurrency(acaPrep.incomeProxyAfterConversion)}`,
+    `Annual advance premium tax credit entered: ${
+      acaPrep.annualAdvancePremiumTaxCreditInput === null
+        ? "Not provided"
+        : formatCurrency(acaPrep.annualAdvancePremiumTaxCreditInput)
+    }`,
+    `Marketplace coverage months entered: ${
+      acaPrep.marketplaceCoverageMonthsInput === null ? "Not provided" : String(acaPrep.marketplaceCoverageMonthsInput)
+    }`,
+    `Monthly APTC at-stake preview: ${
+      acaPrep.monthlyAdvancePremiumTaxCreditPreview === null
+        ? "Not estimated"
+        : formatCurrency(acaPrep.monthlyAdvancePremiumTaxCreditPreview)
+    }`,
+    `Annual APTC at-stake preview: ${
+      acaPrep.aptcAtStakePreview === null ? "Not estimated" : formatCurrency(acaPrep.aptcAtStakePreview)
+    }`,
     `ACA amount estimate status: ${acaPrep.amountEstimateStatus}`,
     `ACA boundary: ${acaPrep.boundaryNote}`,
     "Inputs still needed before any subsidy amount review:",
@@ -97,6 +118,26 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `Non-Social-Security income proxy after conversion: ${formatCurrency(
       socialSecurityPrep.nonSocialSecurityIncomeProxyAfterConversion,
     )}`,
+    `Annual Social Security benefits entered: ${
+      socialSecurityPrep.annualSocialSecurityBenefitsInput === null
+        ? "Not provided"
+        : formatCurrency(socialSecurityPrep.annualSocialSecurityBenefitsInput)
+    }`,
+    `Tax-exempt interest entered for Publication 915 review: ${
+      socialSecurityPrep.taxExemptInterestInput === null
+        ? "Not provided"
+        : formatCurrency(socialSecurityPrep.taxExemptInterestInput)
+    }`,
+    `Combined-income proxy after conversion: ${
+      socialSecurityPrep.combinedIncomeProxyAfterConversion === null
+        ? "Not estimated"
+        : formatCurrency(socialSecurityPrep.combinedIncomeProxyAfterConversion)
+    }`,
+    `Bounded taxable Social Security benefit preview: ${
+      socialSecurityPrep.taxableBenefitPreview === null
+        ? "Not estimated"
+        : formatCurrency(socialSecurityPrep.taxableBenefitPreview)
+    }`,
     `Social Security taxable-benefit amount estimate status: ${socialSecurityPrep.amountEstimateStatus}`,
     `Social Security threshold note: ${socialSecurityPrep.thresholdNote}`,
     `Social Security boundary: ${socialSecurityPrep.boundaryNote}`,
@@ -109,6 +150,15 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `MAGI proxy after conversion: ${formatCurrency(niitPrep.magiProxyAfterConversion)}`,
     `Filing-status NIIT threshold: ${formatCurrency(niitPrep.filingStatusThreshold)}`,
     `MAGI proxy excess after conversion: ${formatCurrency(niitPrep.magiProxyExcessAfterConversion)}`,
+    `User-entered net investment income: ${
+      niitPrep.netInvestmentIncomeInput === null ? "Not provided" : formatCurrency(niitPrep.netInvestmentIncomeInput)
+    }`,
+    `NIIT exposure base used by bounded preview: ${
+      niitPrep.niitExposureBase === null ? "Not estimated" : formatCurrency(niitPrep.niitExposureBase)
+    }`,
+    `Bounded NIIT 3.8% preview: ${
+      niitPrep.boundedNiitEstimate === null ? "Not estimated" : formatCurrency(niitPrep.boundedNiitEstimate)
+    }`,
     `NIIT amount estimate status: ${niitPrep.amountEstimateStatus}`,
     `NIIT formula note: ${niitPrep.formulaNote}`,
     `NIIT boundary: ${niitPrep.boundaryNote}`,
@@ -135,6 +185,15 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `AMT income proxy before conversion: ${formatCurrency(amtPrep.amtIncomeProxyBeforeConversion)}`,
     `Taxable conversion income increase: ${formatCurrency(amtPrep.taxableConversionIncrease)}`,
     `AMT income proxy after conversion: ${formatCurrency(amtPrep.amtIncomeProxyAfterConversion)}`,
+    `Tentative minimum tax entered: ${
+      amtPrep.tentativeMinimumTaxInput === null ? "Not provided" : formatCurrency(amtPrep.tentativeMinimumTaxInput)
+    }`,
+    `Regular tax liability entered for AMT comparison: ${
+      amtPrep.regularTaxLiabilityInput === null ? "Not provided" : formatCurrency(amtPrep.regularTaxLiabilityInput)
+    }`,
+    `AMT exposure preview: ${
+      amtPrep.amtExposurePreview === null ? "Not estimated" : formatCurrency(amtPrep.amtExposurePreview)
+    }`,
     `AMT amount estimate status: ${amtPrep.amountEstimateStatus}`,
     `AMT formula note: ${amtPrep.formulaNote}`,
     `AMT boundary: ${amtPrep.boundaryNote}`,
@@ -152,6 +211,16 @@ export function buildProfessionalHandoffText(input: RothConversionInput, result:
     `Manual state marginal rate entered: ${formatPercent(stateRulesPrep.manualStateRate)}`,
     `Taxable conversion income increase: ${formatCurrency(stateRulesPrep.taxableConversionIncrease)}`,
     `Modeled state tax from manual rate: ${formatCurrency(stateRulesPrep.modeledStateTaxFromManualRate)}`,
+    `Reviewed state tax estimate: ${
+      stateRulesPrep.reviewedStateTaxEstimate === null
+        ? "Not provided"
+        : formatCurrency(stateRulesPrep.reviewedStateTaxEstimate)
+    }`,
+    `Reviewed estimate difference from manual-rate state tax: ${
+      stateRulesPrep.reviewedVsManualStateTaxDifference === null
+        ? "Not estimated"
+        : formatCurrency(stateRulesPrep.reviewedVsManualStateTaxDifference)
+    }`,
     `State amount estimate status: ${stateRulesPrep.amountEstimateStatus}`,
     `Supported state example pages: ${stateRulesPrep.supportedStateExamples
       .map(

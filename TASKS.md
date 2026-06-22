@@ -189,3 +189,13 @@
 - [done] Simplify homepage footer to minimal compliance and site-index links
 - [done] Add microphone permission handling to browser voice input assist
 - [done] Replace input-area voice helper with standalone AI voice assistant
+- [done] Evaluate AI plus PSEO machine-learning SEO source document and add safe engineering addendum
+- [done] Add GA4 CSV data-quality audit before AI+pSEO scoring
+- [done] Add GA4 hostname audit for data-pollution source confirmation
+- [done] Extend GA4 hostname audit to parse Page location exports and confirm bobo-poolrobot.com pollution
+- [done] Add premium tool-page pSEO execution plan for one-intent long-tail calculator pages
+- [done] Upgrade existing keyword landing pages with sample result previews and premium tool-page sections
+- [done] Add premium tool-page validator for keyword landing pages
+- [done] Add unified-URL, behavior-data, and whitelist-aggregation boundaries to premium tool-page pSEO plan
+- [done] Assess and add tool pSEO single-page template standard with batch-generation quality gates
+- [done] Add pSEO batch quality gate for unique metadata, internal links, sample results, sitemap coverage, and YMYL trust boundaries

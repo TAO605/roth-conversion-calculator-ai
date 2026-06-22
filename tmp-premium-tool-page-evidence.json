@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-06-22T04:30:49.875Z",
+  "counts": {
+    "disclaimerCount": 8,
+    "paragraphCount": 8,
+    "resultFocusCount": 8,
+    "sampleScenarioCount": 8,
+    "slugCount": 8
+  },
+  "decisionBoundary": "This evidence checks local keyword landing-page source and template readiness. It does not publish new pages.",
+  "evidenceType": "premium-tool-page-evidence",
+  "findings": [],
+  "ok": true,
+  "sourceFiles": [
+    "src/content/keyword-landing-pages.ts",
+    "src/app/(keyword-pages)/[keyword]/page.tsx"
+  ]
+}

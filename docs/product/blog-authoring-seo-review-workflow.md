@@ -30,6 +30,8 @@ The outline should summarize common coverage patterns from the top results, then
 - Source-backed assumptions.
 - Internal links to relevant calculator, guide, methodology, tax-data, and professional-review pages.
 
+The top-results outline is a research input, not a copy target. Use it to understand intent coverage and section order, then write original prose in the site's own voice.
+
 ## On-Page SEO Checklist
 
 Each blog page should pass these checks before publication:
@@ -45,6 +47,7 @@ Each blog page should pass these checks before publication:
 - Normal body text uses paragraph text, not heading tags.
 - Important terms or high-value phrases may be bolded when useful for scanning.
 - Every uploaded image has a descriptive `alt` attribute.
+- The article reads smoothly, with correct grammar, no obvious typos, and no awkward machine-translated phrasing.
 - The draft avoids personalized recommendations, best/optimal claims, guarantees, fake ratings, risk-free claims, and 100% accuracy claims.
 - At least one internal link points to the calculator or a relevant supporting guide.
 - At least one official source link supports tax, Medicare, ACA, Social Security, or government rule context.
@@ -61,6 +64,8 @@ Because this is a YMYL tax site, density should be treated as an editorial revie
 - Related terms and entities.
 - Search intent coverage.
 - No keyword stuffing.
+
+If the article starts sounding forced, reduce exact-match repetition even if density falls below the nominal target. Readability and trust come first.
 
 ## Semantic HTML Requirements
 
@@ -125,6 +130,8 @@ Before deployment, manually confirm:
 - Keyword use feels natural and not stuffed.
 - Claims are source-aligned.
 - The page clearly separates educational information from tax advice.
+- The article is free of grammar errors, obvious typos, and broken sentence flow.
+- The article outline matches the real article structure, not just the keyword list.
 
 ## Draft Review Command
 

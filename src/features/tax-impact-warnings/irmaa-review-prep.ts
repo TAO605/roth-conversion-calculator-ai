@@ -10,6 +10,7 @@ export interface IrmaaReviewPrep {
   usualLookbackTaxYear: number;
   incomeProxy: number;
   partBEstimate: IrmaaPartBEstimate;
+  partDEstimate: IrmaaPartDEstimate;
   priority: IrmaaReviewPriority;
   thresholdLabel: string;
   summary: string;
@@ -30,6 +31,17 @@ export interface IrmaaPartBEstimate {
   boundaryNote: string;
 }
 
+export interface IrmaaPartDEstimate {
+  premiumYear: 2026;
+  basis: "calculator_income_proxy";
+  coverage: "part_d_irmaa_adjustment_only";
+  sourceLabel: string;
+  sourceHref: string;
+  monthlyAdjustmentAmount: number;
+  bracketLabel: string;
+  boundaryNote: string;
+}
+
 interface IrmaaPartBBracket {
   individualMin: number;
   individualMax: number | null;
@@ -37,6 +49,20 @@ interface IrmaaPartBBracket {
   jointMax: number | null;
   adjustment: number;
   totalPremium: number;
+}
+
+interface IrmaaPartDBracket {
+  individualMin: number;
+  individualMax: number | null;
+  jointMin: number;
+  jointMax: number | null;
+  adjustment: number;
+}
+
+interface IrmaaPartDMarriedSeparateBracket {
+  min: number;
+  max: number | null;
+  adjustment: number;
 }
 
 interface IrmaaPartBMarriedSeparateBracket {
@@ -66,6 +92,21 @@ const IRMAA_2026_PART_B_MARRIED_SEPARATE_BRACKETS: IrmaaPartBMarriedSeparateBrac
   { min: 0, max: 109000, adjustment: 0, totalPremium: 202.9 },
   { min: 109000, max: 391000, adjustment: 446.3, totalPremium: 649.2 },
   { min: 391000, max: null, adjustment: 487, totalPremium: 689.9 },
+];
+
+const IRMAA_2026_PART_D_BRACKETS: IrmaaPartDBracket[] = [
+  { individualMin: 0, individualMax: 109000, jointMin: 0, jointMax: 218000, adjustment: 0 },
+  { individualMin: 109000, individualMax: 137000, jointMin: 218000, jointMax: 274000, adjustment: 14.5 },
+  { individualMin: 137000, individualMax: 171000, jointMin: 274000, jointMax: 342000, adjustment: 37.5 },
+  { individualMin: 171000, individualMax: 205000, jointMin: 342000, jointMax: 410000, adjustment: 60.4 },
+  { individualMin: 205000, individualMax: 500000, jointMin: 410000, jointMax: 750000, adjustment: 83.3 },
+  { individualMin: 500000, individualMax: null, jointMin: 750000, jointMax: null, adjustment: 91 },
+];
+
+const IRMAA_2026_PART_D_MARRIED_SEPARATE_BRACKETS: IrmaaPartDMarriedSeparateBracket[] = [
+  { min: 0, max: 109000, adjustment: 0 },
+  { min: 109000, max: 391000, adjustment: 83.3 },
+  { min: 391000, max: null, adjustment: 91 },
 ];
 
 const FIRST_IRMAA_REVIEW_THRESHOLDS: Record<FilingStatus, number> = {
@@ -153,11 +194,57 @@ export function estimateIrmaaPartBFromIncomeProxy(
   };
 }
 
+export function estimateIrmaaPartDFromIncomeProxy(
+  filingStatus: FilingStatus,
+  incomeProxy: number,
+): IrmaaPartDEstimate {
+  const normalizedIncomeProxy = Math.max(0, incomeProxy);
+  const isMarriedSeparate = filingStatus === "married_separate";
+  const bracket = isMarriedSeparate
+    ? IRMAA_2026_PART_D_MARRIED_SEPARATE_BRACKETS.find((item) =>
+        fallsInRange(normalizedIncomeProxy, item.min, item.max),
+      )
+    : IRMAA_2026_PART_D_BRACKETS.find((item) => {
+        const min = filingStatus === "married_joint" ? item.jointMin : item.individualMin;
+        const max = filingStatus === "married_joint" ? item.jointMax : item.individualMax;
+
+        return fallsInRange(normalizedIncomeProxy, min, max);
+      });
+
+  const matchedBracket = bracket ?? IRMAA_2026_PART_D_BRACKETS[IRMAA_2026_PART_D_BRACKETS.length - 1];
+  const bracketLabel = isMarriedSeparate
+    ? `${filingStatusLabel(filingStatus)} MAGI: ${formatRange(
+        (matchedBracket as IrmaaPartDMarriedSeparateBracket).min,
+        (matchedBracket as IrmaaPartDMarriedSeparateBracket).max,
+      )}`
+    : `${filingStatusLabel(filingStatus)} MAGI: ${formatRange(
+        filingStatus === "married_joint"
+          ? (matchedBracket as IrmaaPartDBracket).jointMin
+          : (matchedBracket as IrmaaPartDBracket).individualMin,
+        filingStatus === "married_joint"
+          ? (matchedBracket as IrmaaPartDBracket).jointMax
+          : (matchedBracket as IrmaaPartDBracket).individualMax,
+      )}`;
+
+  return {
+    basis: "calculator_income_proxy",
+    boundaryNote:
+      "This preview shows only the CMS Part D IRMAA monthly adjustment from the calculator income proxy. Part D plan premiums vary by plan, and SSA/Medicare use lookback-year MAGI and coverage status before any actual billing amount applies.",
+    bracketLabel,
+    coverage: "part_d_irmaa_adjustment_only",
+    monthlyAdjustmentAmount: matchedBracket.adjustment,
+    premiumYear: 2026,
+    sourceHref: CMS_2026_PART_B_SOURCE.href,
+    sourceLabel: CMS_2026_PART_B_SOURCE.label,
+  };
+}
+
 export function buildIrmaaReviewPrep(input: RothConversionInput, result: RothConversionResult): IrmaaReviewPrep {
   const premiumYear = input.taxYear;
   const usualLookbackTaxYear = premiumYear - 2;
   const incomeProxy = input.currentTaxableIncome + result.taxableConversion;
   const partBEstimate = estimateIrmaaPartBFromIncomeProxy(input.filingStatus, incomeProxy);
+  const partDEstimate = estimateIrmaaPartDFromIncomeProxy(input.filingStatus, incomeProxy);
   const threshold = FIRST_IRMAA_REVIEW_THRESHOLDS[input.filingStatus];
   const nearMedicareTiming = input.age >= 63 || input.retirementAge <= 65;
   const thresholdReached = threshold !== undefined && incomeProxy > threshold;
@@ -208,6 +295,7 @@ export function buildIrmaaReviewPrep(input: RothConversionInput, result: RothCon
       },
     ],
     partBEstimate,
+    partDEstimate,
     premiumYear,
     priority,
     summary,

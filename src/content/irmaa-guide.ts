@@ -129,10 +129,10 @@ export function buildIrmaaGuideSections(): IrmaaGuideSection[] {
       purpose: "Make clear that IRMAA is an external review item rather than a hidden calculator output.",
       points: [
         point(
-          "Calculator does not estimate Medicare IRMAA",
+          "Calculator provides only bounded IRMAA proxy previews",
           "Calculator limits",
-          "The calculator estimates conversion tax cost, simplified state tax, penalty assumptions, projections, and break-even math; it does not calculate Medicare premium adjustments.",
-          "Use the calculator as a worksheet, not as a Medicare premium calculator.",
+          "The calculator estimates conversion tax cost, simplified state tax, penalty assumptions, projections, break-even math, and bounded 2026 Part B and Part D IRMAA proxy previews; it does not calculate SSA billing determinations or plan-specific premiums.",
+          "Use the calculator as a worksheet, not as a Medicare premium billing calculator.",
         ),
         point(
           "IRMAA should be listed as a professional review question",

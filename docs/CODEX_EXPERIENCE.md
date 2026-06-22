@@ -2082,3 +2082,19 @@ Direct node generation produced a valid manifest, and `node scripts/validate-seo
 **Future trigger words:**
 
 Unexpected token greater-than in JSON; npm banner in evidence file; Tee-Object JSON artifact; manifest parse failure; pure JSON evidence output
+
+## GA4 Page Location Hostname Fallback
+
+Date: 2026-06-16
+
+Symptom:
+A GA4 overview export for the Roth Calculator property contained unrelated pool-robot / Heshengxin page titles, while GSC traffic was still tiny. A direct Hostname dimension was not available in the visible GA4 Explore picker.
+
+Lesson:
+When Hostname is unavailable, use GA4 Explore `Page location` / `网页位置` as a safe fallback, export CSV, and extract hostnames from full URLs before trusting engagement metrics. Separate production hosts, local development hosts such as `127.0.0.1`, and true foreign hosts.
+
+Guard:
+`scripts/ga4-hostname-audit.mjs` now parses both Hostname exports and Page location exports. `tests/core/ga4-hostname-audit.test.ts` verifies foreign host detection, local development classification, and city/device export rejection.
+
+Decision rule:
+If any true foreign hostname appears, block GA4 engagement data from AI+pSEO scoring until the Measurement ID is removed from that site or the project moves to a clean GA4 property.

@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="{{page_language}}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Each indexable page must have unique metadata. -->
+    <title>{{page_title}}</title>
+    <meta name="description" content="{{meta_description}}" />
+    <link rel="canonical" href="{{canonical_url}}" />
+
+    {{#if robots_meta}}
+    <meta name="robots" content="{{robots_meta}}" />
+    {{/if}}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{page_title}}" />
+    <meta property="og:description" content="{{meta_description}}" />
+    <meta property="og:url" content="{{canonical_url}}" />
+    {{#if og_image_url}}
+    <meta property="og:image" content="{{og_image_url}}" />
+    {{/if}}
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "{{site_home_url}}"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "{{hub_page_name}}",
+            "item": "{{hub_page_url}}"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "{{primary_keyword}}",
+            "item": "{{canonical_url}}"
+          }
+        ]
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "@id": "{{canonical_url}}#webapplication",
+        "name": "{{primary_keyword}}",
+        "alternateName": "{{tool_short_name}}",
+        "description": "{{meta_description}}",
+        "url": "{{canonical_url}}",
+        "applicationCategory": "{{application_category}}",
+        "operatingSystem": "All",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "{{site_brand_name}}",
+          "url": "{{site_home_url}}"
+        },
+        "datePublished": "{{date_published}}",
+        "dateModified": "{{date_modified}}",
+        "featureList": [
+          "{{feature_1}}",
+          "{{feature_2}}",
+          "{{feature_3}}"
+        ]
+        {{#if reviewed_by_name}},
+        "reviewedBy": {
+          "@type": "Person",
+          "name": "{{reviewed_by_name}}",
+          "jobTitle": "{{reviewed_by_credential}}"
+        }
+        {{/if}}
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "{{canonical_url}}#webpage",
+        "url": "{{canonical_url}}",
+        "name": "{{page_title}}",
+        "description": "{{meta_description}}",
+        "inLanguage": "{{page_language}}",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "{{site_brand_name}}",
+          "url": "{{site_home_url}}"
+        },
+        "datePublished": "{{date_published}}",
+        "dateModified": "{{date_modified}}",
+        "about": "{{primary_keyword}}",
+        "mainEntity": {
+          "@id": "{{canonical_url}}#webapplication"
+        }
+      }
+    </script>
+
+    {{#if faq_enabled}}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "{{faq_question_1}}",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "{{faq_answer_1}}"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "{{faq_question_2}}",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "{{faq_answer_2}}"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "{{faq_question_3}}",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "{{faq_answer_3}}"
+            }
+          }
+        ]
+      }
+    </script>
+    {{/if}}
+
+    <!-- Prototype only. Production pages should use the project's compiled Tailwind bundle. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-neutral-50 text-neutral-950 antialiased">
+    <header class="border-b border-neutral-200 bg-white">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
+        <a href="{{site_home_url}}" class="text-lg font-bold text-neutral-950">{{site_brand_name}}</a>
+        <nav aria-label="Primary navigation" class="hidden gap-6 text-sm text-neutral-700 md:flex">
+          <a class="hover:text-sky-700" href="{{hub_page_url_1}}">{{hub_page_name_1}}</a>
+          <a class="hover:text-sky-700" href="{{hub_page_url_2}}">{{hub_page_name_2}}</a>
+          <a class="hover:text-sky-700" href="{{about_page_url}}">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-4 py-8">
+      <nav aria-label="Breadcrumb" class="mb-6 text-sm text-neutral-500">
+        <a class="hover:text-sky-700" href="{{site_home_url}}">Home</a>
+        <span class="mx-2">/</span>
+        <a class="hover:text-sky-700" href="{{hub_page_url}}">{{hub_page_name}}</a>
+        <span class="mx-2">/</span>
+        <span class="text-neutral-700">{{primary_keyword}}</span>
+      </nav>
+
+      <section aria-labelledby="tool-heading" class="mb-12">
+        <p class="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-sky-700">{{primary_keyword}}</p>
+        <h1 id="tool-heading" class="mb-4 text-3xl font-bold tracking-normal text-neutral-950 md:text-4xl">
+          {{h1_title}}
+        </h1>
+        <p class="mb-8 max-w-3xl text-lg leading-8 text-neutral-700">{{tool_intro}}</p>
+
+        <div class="mb-8 rounded-lg border border-neutral-200 bg-white p-6">
+          {{tool_component_html}}
+        </div>
+      </section>
+
+      <section aria-labelledby="sample-result-heading" class="mb-12 rounded-lg border border-neutral-200 bg-white p-6">
+        <p class="mb-2 text-sm font-semibold uppercase tracking-[0.12em] text-sky-700">Sample result</p>
+        <h2 id="sample-result-heading" class="mb-4 text-2xl font-semibold text-neutral-950">
+          {{sample_result_title}}
+        </h2>
+        <p class="mb-5 leading-7 text-neutral-700">{{sample_result_summary}}</p>
+        <div class="grid gap-4 md:grid-cols-3">
+          <div class="rounded-md border border-neutral-200 p-4">
+            <div class="text-sm text-neutral-500">{{sample_metric_1_label}}</div>
+            <div class="mt-1 text-2xl font-bold">{{sample_metric_1_value}}</div>
+          </div>
+          <div class="rounded-md border border-neutral-200 p-4">
+            <div class="text-sm text-neutral-500">{{sample_metric_2_label}}</div>
+            <div class="mt-1 text-2xl font-bold">{{sample_metric_2_value}}</div>
+          </div>
+          <div class="rounded-md border border-neutral-200 p-4">
+            <div class="text-sm text-neutral-500">{{sample_metric_3_label}}</div>
+            <div class="mt-1 text-2xl font-bold">{{sample_metric_3_value}}</div>
+          </div>
+        </div>
+        <p class="mt-5 text-sm leading-6 text-neutral-600">{{sample_result_boundary}}</p>
+      </section>
+
+      <section class="mb-12 grid gap-10">
+        <article aria-labelledby="how-to-heading">
+          <h2 id="how-to-heading" class="mb-4 text-2xl font-semibold text-neutral-950">
+            How to Use This {{tool_category}} Calculator
+          </h2>
+          <ol class="list-inside list-decimal space-y-3 text-neutral-700">
+            <li>{{how_to_step_1}}</li>
+            <li>{{how_to_step_2}}</li>
+            <li>{{how_to_step_3}}: {{result_interpretation}}</li>
+          </ol>
+        </article>
+
+        <article aria-labelledby="use-cases-heading">
+          <h2 id="use-cases-heading" class="mb-4 text-2xl font-semibold text-neutral-950">Common Use Cases</h2>
+          <ul class="list-inside list-disc space-y-3 text-neutral-700">
+            <li><strong>{{use_case_1_title}}</strong>: {{use_case_1_detail}}</li>
+            <li><strong>{{use_case_2_title}}</strong>: {{use_case_2_detail}}</li>
+            <li><strong>{{use_case_3_title}}</strong>: {{use_case_3_detail}}</li>
+          </ul>
+        </article>
+
+        <article aria-labelledby="rules-heading">
+          <h2 id="rules-heading" class="mb-4 text-2xl font-semibold text-neutral-950">
+            Key Parameters and Calculation Rules
+          </h2>
+          <div class="space-y-4 text-neutral-700">
+            <section>
+              <h3 class="font-semibold text-neutral-950">{{parameter_1_name}}</h3>
+              <p>{{parameter_1_rule}}</p>
+            </section>
+            <section>
+              <h3 class="font-semibold text-neutral-950">{{parameter_2_name}}</h3>
+              <p>{{parameter_2_rule}}</p>
+            </section>
+            <section>
+              <h3 class="font-semibold text-neutral-950">{{parameter_3_name}}</h3>
+              <p>{{parameter_3_rule}}</p>
+            </section>
+            <section>
+              <h3 class="font-semibold text-neutral-950">Calculation Basis</h3>
+              <p>{{calculation_basis}}</p>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <section aria-labelledby="trust-heading" class="mb-12 rounded-lg border border-neutral-200 bg-neutral-100 p-6 text-sm text-neutral-700">
+        <h2 id="trust-heading" class="sr-only">Data sources and review status</h2>
+        <div class="mb-3 flex flex-wrap gap-x-8 gap-y-2">
+          <span>Last updated: {{date_modified}}</span>
+          <span>
+            Data source:
+            <a href="{{data_source_url}}" target="_blank" rel="nofollow noopener noreferrer">{{data_source_name}}</a>
+          </span>
+          {{#if reviewed_by_name}}
+          <span>Reviewed by: {{reviewed_by_name}}, {{reviewed_by_credential}}</span>
+          {{/if}}
+        </div>
+        <p class="text-neutral-600">{{disclaimer_text}}</p>
+      </section>
+
+      {{#if faq_enabled}}
+      <section aria-labelledby="faq-heading" class="mb-12">
+        <h2 id="faq-heading" class="mb-6 text-2xl font-semibold text-neutral-950">Frequently Asked Questions</h2>
+        <div class="space-y-5">
+          <section>
+            <h3 class="mb-2 text-lg font-semibold">{{faq_question_1}}</h3>
+            <p class="text-neutral-700">{{faq_answer_1}}</p>
+          </section>
+          <section>
+            <h3 class="mb-2 text-lg font-semibold">{{faq_question_2}}</h3>
+            <p class="text-neutral-700">{{faq_answer_2}}</p>
+          </section>
+          <section>
+            <h3 class="mb-2 text-lg font-semibold">{{faq_question_3}}</h3>
+            <p class="text-neutral-700">{{faq_answer_3}}</p>
+          </section>
+        </div>
+      </section>
+      {{/if}}
+
+      <section aria-labelledby="related-heading" class="mb-12">
+        <h2 id="related-heading" class="mb-6 text-2xl font-semibold text-neutral-950">Related Calculators</h2>
+        <div class="mb-6">
+          <a class="font-semibold text-sky-700 hover:underline" href="{{hub_page_url}}">
+            Browse all {{hub_page_name}} tools
+          </a>
+        </div>
+        <div class="grid gap-4 md:grid-cols-3">
+          <a class="rounded-lg border border-neutral-200 bg-white p-4 transition hover:border-sky-700" href="{{related_tool_1_url}}">
+            <h3 class="mb-1 font-semibold">{{related_tool_1_name}}</h3>
+            <p class="text-sm text-neutral-600">{{related_tool_1_description}}</p>
+          </a>
+          <a class="rounded-lg border border-neutral-200 bg-white p-4 transition hover:border-sky-700" href="{{related_tool_2_url}}">
+            <h3 class="mb-1 font-semibold">{{related_tool_2_name}}</h3>
+            <p class="text-sm text-neutral-600">{{related_tool_2_description}}</p>
+          </a>
+          <a class="rounded-lg border border-neutral-200 bg-white p-4 transition hover:border-sky-700" href="{{related_tool_3_url}}">
+            <h3 class="mb-1 font-semibold">{{related_tool_3_name}}</h3>
+            <p class="text-sm text-neutral-600">{{related_tool_3_description}}</p>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-8 border-t border-neutral-200 bg-white">
+      <div class="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-4 py-8 text-sm text-neutral-500 md:flex-row">
+        <div>&copy; {{current_year}} {{site_brand_name}}. All rights reserved.</div>
+        <nav aria-label="Footer navigation" class="flex flex-wrap gap-6">
+          <a class="hover:text-sky-700" href="{{privacy_policy_url}}">Privacy Policy</a>
+          <a class="hover:text-sky-700" href="{{terms_url}}">Terms of Service</a>
+          <a class="hover:text-sky-700" href="{{contact_url}}">Contact</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

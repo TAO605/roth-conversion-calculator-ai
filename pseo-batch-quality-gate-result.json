@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-06-22T04:41:16.975Z",
+  "decisionBoundary": "This gate checks local pSEO page source and template readiness. It does not generate pages, publish content, or deploy production.",
+  "evidenceType": "pseo-batch-quality-gate",
+  "files": [
+    "src/content/keyword-landing-pages.ts",
+    "src/app/(keyword-pages)/[keyword]/page.tsx",
+    "src/app/sitemap.ts"
+  ],
+  "gates": {
+    "uniqueTitles": true,
+    "uniqueDescriptions": true,
+    "uniqueCanonicals": true,
+    "differentiatedToolInputs": true,
+    "visibleResultPreview": true,
+    "atLeastThreeInternalLinks": true,
+    "sitemapCoverage": true,
+    "noFakeTrustSignals": true,
+    "ymylBoundary": true,
+    "externalLinksSafe": true,
+    "faqSchemaVisibleConsistency": true
+  },
+  "counts": {
+    "descriptionCount": 8,
+    "disclaimerCount": 8,
+    "externalLinkCount": 0,
+    "intentCount": 8,
+    "keywordCount": 8,
+    "paragraphBlockCount": 8,
+    "resultFocusCount": 8,
+    "sampleAssumptionCount": 32,
+    "sampleScenarioCount": 8,
+    "slugCount": 8,
+    "titleCount": 8
+  },
+  "findings": [],
+  "ok": true
+}

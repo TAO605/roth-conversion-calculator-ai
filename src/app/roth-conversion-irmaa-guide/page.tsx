@@ -59,8 +59,8 @@ export default function RothConversionIrmaaGuidePage() {
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
           Educational guide for Medicare users and near-retirees who need to understand why Roth conversion income may
-          require a separate IRMAA review. The calculator does not estimate Medicare Part B or Part D premium
-          adjustments.
+          require a separate IRMAA review. The calculator now shows bounded 2026 Part B and Part D IRMAA proxy
+          previews, but it does not calculate SSA billing determinations or plan-specific premiums.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
           <span className="rounded-full bg-blue-500/10 px-3 py-1 font-semibold text-systemBlue">

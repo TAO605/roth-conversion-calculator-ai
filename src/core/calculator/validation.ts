@@ -31,5 +31,36 @@ export function validateCalculatorInput(input: RothConversionInput): CalculatorE
     errors.withheldForTaxes = "Withheld tax amount cannot exceed the conversion amount.";
   }
 
+  if (typeof input.netInvestmentIncome === "number" && input.netInvestmentIncome < 0) {
+    errors.netInvestmentIncome = "Net investment income must be non-negative.";
+  }
+
+  if (typeof input.annualSocialSecurityBenefits === "number" && input.annualSocialSecurityBenefits < 0) {
+    errors.annualSocialSecurityBenefits = "Annual Social Security benefits must be non-negative.";
+  }
+
+  if (typeof input.taxExemptInterest === "number" && input.taxExemptInterest < 0) {
+    errors.taxExemptInterest = "Tax-exempt interest must be non-negative.";
+  }
+
+  if (typeof input.annualAdvancePremiumTaxCredit === "number" && input.annualAdvancePremiumTaxCredit < 0) {
+    errors.annualAdvancePremiumTaxCredit = "Annual advance premium tax credit must be non-negative.";
+  }
+
+  if (
+    typeof input.marketplaceCoverageMonths === "number" &&
+    (input.marketplaceCoverageMonths < 0 || input.marketplaceCoverageMonths > 12)
+  ) {
+    errors.marketplaceCoverageMonths = "Marketplace coverage months must be between 0 and 12.";
+  }
+
+  if (typeof input.amtTentativeMinimumTax === "number" && input.amtTentativeMinimumTax < 0) {
+    errors.amtTentativeMinimumTax = "Tentative minimum tax must be non-negative.";
+  }
+
+  if (typeof input.amtRegularTaxLiability === "number" && input.amtRegularTaxLiability < 0) {
+    errors.amtRegularTaxLiability = "Regular tax liability must be non-negative.";
+  }
+
   return errors;
 }

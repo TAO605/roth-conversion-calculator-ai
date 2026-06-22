@@ -10,6 +10,7 @@ export interface StateReadinessInputs {
   residencyStatus: StateResidencyStatus;
   stateAdjustedGrossIncome: number | null;
   stateIraBasis: number | null;
+  reviewedStateTaxEstimate?: number | null;
   localTaxApplies: boolean | null;
   otherStateTaxCreditApplies: boolean | null;
   notes: string;
@@ -34,6 +35,13 @@ export interface RothConversionInput {
   basis: number;
   filingStatus: FilingStatus;
   currentTaxableIncome: number;
+  netInvestmentIncome?: number | null;
+  annualSocialSecurityBenefits?: number | null;
+  taxExemptInterest?: number | null;
+  annualAdvancePremiumTaxCredit?: number | null;
+  marketplaceCoverageMonths?: number | null;
+  amtTentativeMinimumTax?: number | null;
+  amtRegularTaxLiability?: number | null;
   selectedState?: string | null;
   stateReadinessInputs?: StateReadinessInputs;
   stateMarginalTaxRate: number;

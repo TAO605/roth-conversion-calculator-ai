@@ -31,9 +31,20 @@ export const TAX_DATA_FRESHNESS: {
       label: "IRS Publication 590-B",
       url: "https://www.irs.gov/publications/p590b",
     },
+    {
+      label: "CMS 2026 Medicare Parts B premiums and deductibles",
+      url: "https://www.cms.gov/newsroom/fact-sheets/2026-medicare-parts-b-premiums-deductibles",
+    },
   ],
   professionalReviewStatus: "Tax professional review pending; use this as an educational estimate only.",
   updateWindow: "Updated within 15 business days after new annual IRS tax tables are released.",
   scope: "Federal calculations are educational estimates based on the inputs provided by the user.",
-  excludedInteractions: ["IRMAA", "ACA subsidies", "NIIT", "AMT", "tax credits", "state-specific deductions"],
+  excludedInteractions: [
+    "final IRMAA billing determinations",
+    "ACA subsidies",
+    "NIIT final Form 8960 calculations",
+    "AMT",
+    "tax credits",
+    "state-specific deductions",
+  ],
 };
