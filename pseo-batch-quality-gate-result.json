@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-06-22T04:41:16.975Z",
+  "checkedAt": "2026-06-22T04:56:01.224Z",
   "decisionBoundary": "This gate checks local pSEO page source and template readiness. It does not generate pages, publish content, or deploy production.",
   "evidenceType": "pseo-batch-quality-gate",
   "files": [
