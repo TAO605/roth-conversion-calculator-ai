@@ -5,6 +5,7 @@ import { validateGscQueryOpportunityRecord } from "./validate-gsc-query-opportun
 
 const DEFAULT_RECORD_DIR = "docs";
 const DEFAULT_PATTERN = /^search-console-query-opportunity.*\.json$/;
+const DEFAULT_NESTED_RECORD_DIR = path.join("docs", "gsc-query-opportunities");
 const EVIDENCE_TYPE = "gsc-query-opportunity-backlog-summary";
 
 function parseArgs(argv) {
@@ -42,11 +43,32 @@ function discoverRecordFiles(recordDir) {
     return [];
   }
 
-  return fs
-    .readdirSync(recordDir)
-    .filter((name) => DEFAULT_PATTERN.test(name))
-    .map((name) => path.join(recordDir, name))
-    .sort();
+  const discovered = [];
+
+  for (const entry of fs.readdirSync(recordDir, { withFileTypes: true })) {
+    const entryPath = path.join(recordDir, entry.name);
+
+    if (entry.isDirectory()) {
+      discovered.push(...discoverRecordFiles(entryPath));
+      continue;
+    }
+
+    if (entry.isFile() && DEFAULT_PATTERN.test(entry.name)) {
+      discovered.push(entryPath);
+    }
+  }
+
+  return discovered.sort();
+}
+
+function discoverDefaultRecordFiles() {
+  const files = new Set(discoverRecordFiles(DEFAULT_RECORD_DIR));
+
+  for (const filePath of discoverRecordFiles(DEFAULT_NESTED_RECORD_DIR)) {
+    files.add(filePath);
+  }
+
+  return [...files].sort();
 }
 
 function increment(map, key) {
@@ -141,7 +163,7 @@ function buildBacklogSummary(filePaths) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
-  const files = args.files.length > 0 ? args.files : discoverRecordFiles(args.dir || DEFAULT_RECORD_DIR);
+  const files = args.files.length > 0 ? args.files : args.dir ? discoverRecordFiles(args.dir) : discoverDefaultRecordFiles();
   const result = buildBacklogSummary(files);
   const output = `${JSON.stringify(result, null, 2)}\n`;
 

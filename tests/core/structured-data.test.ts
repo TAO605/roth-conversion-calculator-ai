@@ -33,7 +33,6 @@ describe("structured data", () => {
       title: "How the 5-Year Rule Works for Roth Conversions",
       description: "Learn why Roth conversion timing matters.",
       author: "Roth Conversion Calculator Editorial Team",
-      reviewer: "Editorial review pending",
       datePublished: "2026-05-01",
       dateModified: "2026-05-02",
     });
@@ -56,6 +55,30 @@ describe("structured data", () => {
     expect(jsonLd.mainEntityOfPage).toBe(
       "https://www.roth-conversion-calculator-ai.shop/blog/roth-conversion-5-year-rule",
     );
+    expect(jsonLd).not.toHaveProperty("reviewedBy");
+  });
+
+  it("adds Article reviewedBy only when a real professional reviewer is supplied", () => {
+    const jsonLd = articleJsonLd({
+      slug: "roth-conversion-5-year-rule",
+      title: "How the 5-Year Rule Works for Roth Conversions",
+      description: "Learn why Roth conversion timing matters.",
+      author: "Roth Conversion Calculator Editorial Team",
+      reviewer: {
+        name: "Qualified Tax Reviewer",
+        credential: "CPA",
+      },
+      datePublished: "2026-05-01",
+      dateModified: "2026-05-02",
+    });
+
+    expect(jsonLd).toMatchObject({
+      reviewedBy: {
+        "@type": "Person",
+        name: "Qualified Tax Reviewer",
+        jobTitle: "CPA",
+      },
+    });
   });
 
   it("builds BreadcrumbList JSON-LD with absolute item URLs", () => {
@@ -179,9 +202,14 @@ describe("structured data", () => {
 
     expect(blogPage).toContain("articleJsonLd");
     expect(blogPage).toContain("breadcrumbJsonLd");
+    expect(blogPage).toContain("openGraph");
+    expect(blogPage).toContain("twitter");
+    expect(blogPage).toContain("professionalReviewer");
     expect(blogPage).toContain("Related guides");
     expect(blogPage).toContain("Open the calculator");
     expect(blogIndex).toContain("Topics");
+    expect(blogIndex).toContain("openGraph");
+    expect(blogIndex).toContain("twitter");
     expect(statePage).toContain("breadcrumbJsonLd");
     expect(blogPosts.length).toBeGreaterThanOrEqual(13);
     expect(structuredDataEvidenceScript).toContain("src/content/blog.ts");

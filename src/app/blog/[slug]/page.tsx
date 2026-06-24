@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blogPosts, getRelatedBlogPosts } from "@/content/blog";
+import {
+  blogPosts,
+  getBlogCanonicalPath,
+  getBlogOgImage,
+  getBlogOgImageAlt,
+  getBlogSeoDescription,
+  getBlogSeoTitle,
+  getRelatedBlogPosts,
+} from "@/content/blog";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
 import { articleJsonLd, breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { siteConfig } from "@/core/seo/site-config";
 
 interface BlogPageProps {
   params: Promise<{ slug: string }>;
@@ -21,10 +30,41 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
     return {};
   }
 
+  const canonicalPath = getBlogCanonicalPath(post);
+  const seoTitle = getBlogSeoTitle(post);
+  const seoDescription = getBlogSeoDescription(post);
+  const ogImage = getBlogOgImage(post);
+  const ogImageAlt = getBlogOgImageAlt(post);
+
   return {
-    title: post.title,
-    description: post.description,
-    alternates: { canonical: `/blog/${post.slug}` },
+    title: seoTitle,
+    description: seoDescription,
+    alternates: { canonical: canonicalPath },
+    openGraph: {
+      title: seoTitle,
+      description: seoDescription,
+      url: `${siteConfig.siteUrl}${canonicalPath}`,
+      siteName: siteConfig.siteName,
+      type: "article",
+      publishedTime: post.publishedAt,
+      modifiedTime: post.lastUpdated,
+      authors: [post.author],
+      tags: post.tags,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: ogImageAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seoTitle,
+      description: seoDescription,
+      images: [ogImage],
+    },
   };
 }
 
@@ -37,6 +77,14 @@ export default async function BlogPage({ params }: BlogPageProps) {
   }
 
   const relatedPosts = getRelatedBlogPosts(post.slug, 3);
+  const professionalReviewer =
+    post.reviewStatus === "professional-reviewed" && post.professionalReviewer ? post.professionalReviewer : undefined;
+  const reviewLabel =
+    post.reviewStatus === "professional-reviewed" && professionalReviewer
+      ? `Reviewed by ${professionalReviewer.name}, ${professionalReviewer.credential}`
+      : post.reviewStatus === "editorial"
+        ? "Editorial review completed"
+        : "Editorial review pending";
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
@@ -48,7 +96,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
               title: post.title,
               description: post.description,
               author: post.author,
-              reviewer: post.reviewer,
+              reviewer: professionalReviewer,
               datePublished: post.publishedAt,
               dateModified: post.lastUpdated,
             }),
@@ -72,7 +120,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
       <h1 className="mt-3 text-4xl font-bold text-neutral-950 dark:text-white">{post.title}</h1>
       <p className="mt-4 text-neutral-600 dark:text-neutral-300">{post.description}</p>
       <div className="mt-6 rounded-md border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-700 dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-200">
-        Author: {post.author}. Reviewer: {post.reviewer}.
+        Author: {post.author}. Review status: {reviewLabel}.
       </div>
       <article className="mt-8 grid gap-5 text-base leading-8 text-neutral-700 dark:text-neutral-200">
         {post.body.map((paragraph) => (

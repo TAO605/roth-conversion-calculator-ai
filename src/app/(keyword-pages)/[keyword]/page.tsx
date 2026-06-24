@@ -9,7 +9,7 @@ import {
 import { calculateRothConversion } from "@/core/calculator/roth-conversion";
 import type { RothConversionInput } from "@/core/calculator/types";
 import { REQUIRED_DISCLAIMER } from "@/core/compliance/disclaimer";
-import { breadcrumbJsonLd } from "@/core/seo/json-ld";
+import { breadcrumbJsonLd, faqJsonLd } from "@/core/seo/json-ld";
 import { buildAcaPremiumTaxCreditReviewPrep } from "@/features/tax-impact-warnings/aca-review-prep";
 import { buildIrmaaReviewPrep } from "@/features/tax-impact-warnings/irmaa-review-prep";
 import { buildNiitReviewPrep } from "@/features/tax-impact-warnings/niit-review-prep";
@@ -103,7 +103,7 @@ export default async function KeywordLandingPage({ params }: KeywordLandingPageP
       : null;
   const niitPrep = page.taxInteractionPreview === "niit" ? buildNiitReviewPrep(sampleInput, sampleResult) : null;
   const sampleIncomeProxy = sampleInput.currentTaxableIncome + sampleResult.taxableConversion;
-  const relatedCalculatorPages = keywordLandingPages.filter((candidate) => candidate.slug !== page.slug).slice(0, 3);
+  const relatedCalculatorPages = keywordLandingPages.filter((candidate) => candidate.slug !== page.slug).slice(0, 4);
 
   return (
     <main className="mx-auto grid max-w-4xl gap-7 px-4 py-10">
@@ -116,6 +116,12 @@ export default async function KeywordLandingPage({ params }: KeywordLandingPageP
               { name: page.keyword, path: `/${page.slug}` },
             ]),
           ),
+        }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqJsonLd(page.faqs)),
         }}
         type="application/ld+json"
       />
@@ -438,12 +444,24 @@ export default async function KeywordLandingPage({ params }: KeywordLandingPageP
       </section>
 
       <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
+        <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Frequently Asked Questions</h2>
+        <div className="mt-5 grid gap-5">
+          {page.faqs.map((faq) => (
+            <section key={faq.question}>
+              <h3 className="text-base font-semibold text-neutral-950 dark:text-white">{faq.question}</h3>
+              <p className="mt-2 leading-7 text-neutral-600 dark:text-neutral-300">{faq.answer}</p>
+            </section>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-neutral-200 bg-white p-5 dark:border-white/10 dark:bg-neutral-950">
         <h2 className="text-2xl font-bold text-neutral-950 dark:text-white">Related Roth conversion calculators</h2>
         <p className="mt-3 leading-7 text-neutral-600 dark:text-neutral-300">
           Compare this worksheet with adjacent calculator pages before deciding which assumptions need professional
           review.
         </p>
-        <div className="mt-5 grid gap-3 md:grid-cols-3">
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
           {relatedCalculatorPages.map((relatedPage) => (
             <Link
               className="rounded-md border border-neutral-200 p-4 transition hover:border-systemBlue dark:border-white/10"

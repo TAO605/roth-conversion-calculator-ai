@@ -1,10 +1,32 @@
 import Link from "next/link";
 import { blogPosts, getBlogTopicGroups } from "@/content/blog";
+import { siteConfig } from "@/core/seo/site-config";
 
 export const metadata = {
   title: "Roth Conversion Guides",
   description: "Educational Roth conversion guides covering taxes, 5-year rules, penalties, and backdoor Roth basics.",
   alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Roth Conversion Guides",
+    description: "Educational Roth conversion guides covering taxes, 5-year rules, penalties, and backdoor Roth basics.",
+    url: `${siteConfig.siteUrl}/blog`,
+    siteName: siteConfig.siteName,
+    type: "website",
+    images: [
+      {
+        url: "/social-preview.svg",
+        width: 1200,
+        height: 630,
+        alt: "Roth Conversion Calculator educational guide library",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Roth Conversion Guides",
+    description: "Educational Roth conversion guides covering taxes, 5-year rules, penalties, and backdoor Roth basics.",
+    images: ["/social-preview.svg"],
+  },
 };
 
 export default function BlogIndexPage() {
@@ -46,7 +68,13 @@ export default function BlogIndexPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.1em] text-systemBlue">{post.lastUpdated}</p>
             <h2 className="mt-3 text-xl font-bold text-neutral-950 dark:text-white">{post.title}</h2>
             <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-300">{post.description}</p>
-            <p className="mt-4 text-xs text-neutral-500 dark:text-neutral-400">{post.reviewer}</p>
+            <p className="mt-4 text-xs text-neutral-500 dark:text-neutral-400">
+              {post.reviewStatus === "professional-reviewed" && post.professionalReviewer
+                ? `Reviewed by ${post.professionalReviewer.name}, ${post.professionalReviewer.credential}`
+                : post.reviewStatus === "editorial"
+                  ? "Editorial review completed"
+                  : "Editorial review pending"}
+            </p>
           </Link>
         ))}
       </div>

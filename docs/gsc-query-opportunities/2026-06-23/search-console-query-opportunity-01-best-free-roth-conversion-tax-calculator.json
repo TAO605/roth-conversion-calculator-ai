@@ -1,0 +1,41 @@
+{
+  "recordStatus": "recorded",
+  "source": {
+    "property": "https://www.roth-conversion-calculator-ai.shop/",
+    "dateRange": {
+      "start": "2026-05-25",
+      "end": "2026-06-21"
+    },
+    "exportedAt": "2026-06-23",
+    "sourceType": "gsc_performance_export"
+  },
+  "query": "best free roth conversion tax calculator",
+  "metrics": {
+    "clicks": 0,
+    "impressions": 1,
+    "ctr": 0,
+    "averagePosition": 95
+  },
+  "matchedCluster": "Core calculator intent",
+  "intentSummary": "User wants an immediate Roth conversion estimate with clear assumptions before reading a guide.",
+  "targetSurface": "Homepage calculator, /calculators, keyword landing pages",
+  "recommendedAction": "Review calculator-first copy, title/meta CTR, and internal links to methodology after the result flow.",
+  "riskLevel": "review",
+  "reviewGate": "Run SEO smoke and YMYL language guard before changing primary calculator copy.",
+  "evidence": {
+    "screenshotOrExportPath": "C:/Users/86189/Downloads/https___www.roth-conversion-calculator-ai.shop_-Performance-on-Search-2026-06-23/query-export.csv",
+    "productionSeoEvidenceRunId": "27930548888",
+    "productionSeoEvidenceCommitSha": "082b22f51ca491c118962c1df0459d99ae236013"
+  },
+  "decision": {
+    "status": "needs_review",
+    "owner": "SEO/content",
+    "nextReviewDate": "2026-07-07",
+    "notes": "Recorded from the user-provided 2026-06-23 GSC Performance query export. Sample is one impression and zero clicks, so this is observation evidence only; do not change page copy or create new pages until the query cluster repeats with a larger sample."
+  },
+  "guardrails": [
+    "Do not turn a query into personal tax advice.",
+    "Do not use best amount, should convert, guaranteed, or 100% accurate phrasing.",
+    "Use professional review before new formulas, tax-year data, state-specific rules, or unsupported tax interactions."
+  ]
+}

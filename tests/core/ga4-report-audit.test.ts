@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { buildGa4ReportAudit, parseGa4OverviewExport } from "../../scripts/ga4-report-audit.mjs";
 
 const sampleExport = `# Report overview
+# Property: roth-conversion-calculator-ai.shop
 # Date range
 Active users,New users,Average engagement time per active user,Event count
 876,873,1.8869863013698631,3897
@@ -33,6 +34,24 @@ chatgpt.com / (not set),2
 City,Active users
 Flint Hill,182
 Chicago,111
+`;
+
+const wrongPropertyExport = `# Report overview
+# Account: aipregnancycaloriecalculator.online
+# Property: aipregnancycaloriecalculator.online
+# Date range
+Active users,New users,Average engagement time per active user,Event count
+86,87,5.883720930232558,379
+
+# Date range
+Page title and screen class,Views,Active users,Event count,Bounce rate
+Pregnancy Calorie Calculator | Evidence-Based Trimester Tool,85,74,260,0.8860759493670886
+About the Pregnancy Calorie Calculator | Evidence-Based Nutrition Tool,12,10,36,0.7272727272727273
+
+# Date range
+First user source / medium,Active users
+(direct) / (none),82
+aisearchindex.space / referral,4
 `;
 
 describe("GA4 report audit", () => {
@@ -80,5 +99,16 @@ describe("GA4 report audit", () => {
       ]),
     );
     expect(audit.decisionBoundary).toContain("does not change GA4 settings");
+  });
+
+  it("rejects GA4 overview exports from the wrong property before Roth pSEO decisions", () => {
+    const parsed = parseGa4OverviewExport(wrongPropertyExport);
+    const audit = buildGa4ReportAudit(parsed, "pregnancy-ga4-export.csv");
+
+    expect(audit.ok).toBe(false);
+    expect(audit.dataQualityStatus).toBe("wrong-property");
+    expect(audit.warnings).toContain("wrong_ga4_property_export");
+    expect(audit.sourcePropertyHints.join(" ")).toContain("aipregnancycaloriecalculator.online");
+    expect(audit.recommendedActions[0]).toContain("Roth Calculator property");
   });
 });

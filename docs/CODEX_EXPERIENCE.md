@@ -2098,3 +2098,19 @@ Guard:
 
 Decision rule:
 If any true foreign hostname appears, block GA4 engagement data from AI+pSEO scoring until the Measurement ID is removed from that site or the project moves to a clean GA4 property.
+
+## pSEO Title Length For Long-Tail YMYL Tool Pages
+
+Date: 2026-06-23
+
+Symptom:
+The batch-generation template recommends 50-60 character title tags, but several Roth conversion long-tail tool pages need explicit tax-impact wording to avoid ambiguity.
+
+Lesson:
+For YMYL calculator pages, title length guidance should be treated as a preferred range, not a hard rule. A slightly longer title is acceptable when it preserves the exact search intent and avoids misleading users about scope.
+
+Guard:
+`scripts/pseo-batch-quality-gate.mjs` reports long-tail title formula length as a warning instead of a hard failure, while keeping uniqueness, canonical coverage, FAQ/body consistency, internal links, and YMYL trust boundaries as hard gates.
+
+Decision rule:
+Do not remove important tax, Medicare, ACA, Social Security, or NIIT scope words just to force a title into 50-60 characters. Prefer clear, specific, non-clickbait titles that remain under 70 characters where practical.

@@ -32,6 +32,10 @@ function findDuplicates(values) {
   return [...duplicates];
 }
 
+function countUniqueNonEmpty(values) {
+  return new Set(values.filter((value) => String(value || "").trim().length > 0)).size;
+}
+
 function pushIf(condition, findings, code, detail) {
   if (condition) findings.push({ code, detail });
 }
@@ -41,6 +45,7 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
   const templateText = readText(projectRoot, TEMPLATE_PATH);
   const sitemapText = readText(projectRoot, SITEMAP_PATH);
   const findings = [];
+  const warnings = [];
 
   const slugs = extractStringValues(contentText, "slug");
   const keywords = extractStringValues(contentText, "keyword");
@@ -49,11 +54,19 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
   const intents = extractStringValues(contentText, "intent");
   const resultFocus = extractStringValues(contentText, "resultFocus");
   const disclaimers = extractStringValues(contentText, "disclaimer");
+  const faqQuestions = extractStringValues(contentText, "question");
+  const faqAnswers = extractStringValues(contentText, "answer");
 
   const slugCount = slugs.length;
   const paragraphBlockCount = countMatches(contentText, /paragraphs:\s*\[/g);
   const sampleScenarioCount = countMatches(contentText, /^\s{4}sampleScenario:\s*{/gm);
   const sampleAssumptionCount = countMatches(contentText, /^\s{8}"[^"]+",$/gm);
+  const faqBlockCount = countMatches(contentText, /faqs:\s*\[/g);
+  const minimumVariableCountPerPage = 15;
+  const estimatedVariableSlotCount =
+    8 +
+    Math.floor(sampleAssumptionCount / Math.max(slugCount, 1)) +
+    Math.floor(faqQuestions.length / Math.max(slugCount, 1)) * 2;
 
   pushIf(slugCount === 0, findings, "no_pages_found", "No keyword landing pages were found.");
   pushIf(findDuplicates(slugs).length > 0, findings, "duplicate_slugs", findDuplicates(slugs).join(", "));
@@ -72,6 +85,18 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
   pushIf(resultFocus.length !== slugCount, findings, "result_focus_count_mismatch", `${resultFocus.length}/${slugCount}`);
   pushIf(disclaimers.length !== slugCount, findings, "disclaimer_count_mismatch", `${disclaimers.length}/${slugCount}`);
   pushIf(
+    titles.some((title) => `${title} | Roth Conversion Calculator`.length < 50 || `${title} | Roth Conversion Calculator`.length > 70),
+    warnings,
+    "title_formula_length_outside_preferred_range",
+    "Title formula should target 50-60 characters when natural; long-tail YMYL titles may exceed that to preserve clarity, but should stay under 70 where practical.",
+  );
+  pushIf(
+    descriptions.some((description) => description.length < 120 || description.length > 160),
+    findings,
+    "description_length_outside_safe_range",
+    "Meta descriptions should stay within a practical 120-160 character range, with 150-160 preferred when natural.",
+  );
+  pushIf(
     paragraphBlockCount !== slugCount,
     findings,
     "paragraph_block_count_mismatch",
@@ -89,6 +114,37 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
     "sample_assumption_count_too_low",
     `${sampleAssumptionCount} assumptions for ${slugCount} pages`,
   );
+  pushIf(
+    estimatedVariableSlotCount < minimumVariableCountPerPage,
+    findings,
+    "variable_slot_count_too_low",
+    `Estimated variable slots per page: ${estimatedVariableSlotCount}; minimum is ${minimumVariableCountPerPage}.`,
+  );
+  pushIf(faqBlockCount !== slugCount, findings, "faq_block_count_mismatch", `${faqBlockCount}/${slugCount}`);
+  pushIf(
+    faqQuestions.length < slugCount * 3 || faqQuestions.length > slugCount * 5,
+    findings,
+    "faq_question_count_outside_3_5_per_page",
+    `${faqQuestions.length} FAQ questions for ${slugCount} pages`,
+  );
+  pushIf(
+    faqAnswers.length !== faqQuestions.length,
+    findings,
+    "faq_answer_count_mismatch",
+    `${faqAnswers.length}/${faqQuestions.length}`,
+  );
+  pushIf(
+    countUniqueNonEmpty(faqQuestions) !== faqQuestions.length,
+    findings,
+    "duplicate_faq_questions",
+    "FAQ questions must be unique across keyword landing pages.",
+  );
+  pushIf(
+    faqAnswers.some((answer) => answer.split(/\s+/).filter(Boolean).length < 20),
+    findings,
+    "faq_answer_too_short",
+    "FAQ answers should be substantive enough to answer the long-tail question.",
+  );
 
   pushIf(
     !templateText.includes("alternates: { canonical: `/${page.slug}` }"),
@@ -105,10 +161,10 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
   pushIf(
     !templateText.includes("Related Roth conversion calculators") ||
       !templateText.includes("relatedCalculatorPages.map") ||
-      !templateText.includes("slice(0, 3)"),
+      !templateText.includes("slice(0, 4)"),
     findings,
-    "missing_three_related_internal_links",
-    "Each page should render at least three related internal calculator links.",
+    "missing_four_related_internal_links",
+    "Each page should render four to six related internal calculator links.",
   );
   pushIf(
     !templateText.includes("Sample result preview") || !templateText.includes("calculateRothConversion"),
@@ -127,6 +183,12 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
     findings,
     "faq_schema_without_visible_faq",
     "FAQ structured data must not appear without visible FAQ content.",
+  );
+  pushIf(
+    !templateText.includes("faqJsonLd(page.faqs)") || !templateText.includes("page.faqs.map"),
+    findings,
+    "missing_visible_faq_and_schema_binding",
+    "Keyword pages should render visible FAQ content and matching FAQ structured data from the same source.",
   );
   pushIf(
     /reviewRating|aggregateRating|ratingValue|reviewedBy/.test(contentText + templateText),
@@ -159,18 +221,23 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
     uniqueDescriptions: findDuplicates(descriptions).length === 0 && descriptions.length === slugCount,
     uniqueCanonicals: findDuplicates(slugs).length === 0 && slugCount > 0,
     differentiatedToolInputs: sampleScenarioCount === slugCount && sampleAssumptionCount >= slugCount * 3,
+    minimumVariableSlots: estimatedVariableSlotCount >= minimumVariableCountPerPage,
+    faqPerPage: faqBlockCount === slugCount && faqQuestions.length >= slugCount * 3 && faqQuestions.length <= slugCount * 5,
     visibleResultPreview: templateText.includes("Sample result preview") && templateText.includes("calculateRothConversion"),
-    atLeastThreeInternalLinks:
+    fourToSixInternalRecommendations:
       templateText.includes("Related Roth conversion calculators") &&
       templateText.includes("relatedCalculatorPages.map") &&
-      templateText.includes("slice(0, 3)"),
+      templateText.includes("slice(0, 4)"),
     sitemapCoverage: sitemapText.includes("keywordLandingPages.map"),
     noFakeTrustSignals: !/reviewRating|aggregateRating|ratingValue|reviewedBy/.test(contentText + templateText),
     ymylBoundary: !/best conversion amount|optimal conversion amount|guaranteed|100% accurate/i.test(
       contentText + templateText,
     ),
     externalLinksSafe: externalLinksMissingRel.length === 0,
-    faqSchemaVisibleConsistency: !(templateText.includes("FAQPage") && !templateText.match(/Frequently Asked Questions|faq/i)),
+    faqSchemaVisibleConsistency:
+      templateText.includes("faqJsonLd(page.faqs)") &&
+      templateText.includes("page.faqs.map") &&
+      !(templateText.includes("FAQPage") && !templateText.match(/Frequently Asked Questions|faq/i)),
   };
 
   return {
@@ -184,6 +251,9 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
       descriptionCount: descriptions.length,
       disclaimerCount: disclaimers.length,
       externalLinkCount: externalHrefMatches.length,
+      faqAnswerCount: faqAnswers.length,
+      faqBlockCount,
+      faqQuestionCount: faqQuestions.length,
       intentCount: intents.length,
       keywordCount: keywords.length,
       paragraphBlockCount,
@@ -192,8 +262,10 @@ function buildPseoBatchQualityGate(projectRoot = process.cwd()) {
       sampleScenarioCount,
       slugCount,
       titleCount: titles.length,
+      estimatedVariableSlotCount,
     },
     findings,
+    warnings,
     ok: findings.length === 0 && Object.values(gates).every(Boolean),
   };
 }

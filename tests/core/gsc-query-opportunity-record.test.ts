@@ -120,6 +120,75 @@ describe("GSC query opportunity record validator", () => {
     });
   });
 
+  it("discovers nested dated query opportunity records from the CLI default backlog scan", async () => {
+    const { spawnSync } = await import("node:child_process");
+    const tmpDir = path.join(process.cwd(), "test-results", "gsc-query-backlog-default");
+    const nestedDir = path.join(tmpDir, "gsc-query-opportunities", "2026-06-23");
+    const recordPath = path.join(nestedDir, "search-console-query-opportunity-01-example.json");
+
+    fs.rmSync(tmpDir, { force: true, recursive: true });
+    fs.mkdirSync(nestedDir, { recursive: true });
+    fs.writeFileSync(
+      recordPath,
+      JSON.stringify(
+        {
+          recordStatus: "recorded",
+          source: {
+            property: "https://www.roth-conversion-calculator-ai.shop/",
+            dateRange: { start: "2026-05-25", end: "2026-06-21" },
+            exportedAt: "2026-06-23",
+            sourceType: "gsc_performance_export",
+          },
+          query: "best free roth conversion tax calculator",
+          metrics: { clicks: 0, impressions: 1, ctr: 0, averagePosition: 95 },
+          matchedCluster: "Core calculator intent",
+          intentSummary: "User wants an immediate Roth conversion estimate with clear assumptions.",
+          targetSurface: "Homepage calculator",
+          recommendedAction: "Keep the observation in review until the query repeats with more impressions.",
+          riskLevel: "review",
+          reviewGate: "Run SEO smoke and YMYL language guard before changing primary calculator copy.",
+          evidence: {
+            screenshotOrExportPath: "docs/evidence/gsc-query-export.csv",
+            productionSeoEvidenceRunId: "27930548888",
+            productionSeoEvidenceCommitSha: "082b22f51ca491c118962c1df0459d99ae236013",
+          },
+          decision: {
+            status: "needs_review",
+            owner: "SEO/content",
+            nextReviewDate: "2026-07-07",
+            notes: "One-impression observation only.",
+          },
+          guardrails: [
+            "Do not turn a query into personal tax advice.",
+            "Use professional review before unsupported tax interaction changes.",
+          ],
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    const result = spawnSync(process.execPath, [path.join(process.cwd(), "scripts/gsc-query-opportunity-backlog-summary.mjs"), "--dir", path.join(tmpDir, "gsc-query-opportunities")], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+    });
+
+    expect(result.status).toBe(0);
+    const summary = JSON.parse(result.stdout);
+    expect(summary).toMatchObject({
+      ok: true,
+      actionableCount: 1,
+      recordCount: 1,
+      templateOnly: false,
+    });
+    expect(summary.actionableRecords[0]).toMatchObject({
+      query: "best free roth conversion tax calculator",
+      recordStatus: "recorded",
+      readyForRecordedEvidence: true,
+    });
+  });
+
   it("imports a GSC Performance CSV export into safe query opportunity records", () => {
     const tmpDir = path.join(process.cwd(), "test-results", "gsc-query-import");
     const csvPath = path.join(tmpDir, "performance.csv");

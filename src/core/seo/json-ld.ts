@@ -180,13 +180,16 @@ export interface ArticleJsonLdInput {
   title: string;
   description: string;
   author: string;
-  reviewer: string;
+  reviewer?: {
+    name: string;
+    credential?: string;
+  };
   datePublished: string;
   dateModified: string;
 }
 
 export function articleJsonLd(input: ArticleJsonLdInput) {
-  return {
+  const article = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: input.title,
@@ -198,14 +201,23 @@ export function articleJsonLd(input: ArticleJsonLdInput) {
       "@type": "Organization",
       name: input.author,
     },
-    reviewedBy: {
-      "@type": "Organization",
-      name: input.reviewer,
-    },
     publisher: {
       "@type": "Organization",
       name: siteConfig.siteName,
       url: siteConfig.siteUrl,
+    },
+  };
+
+  if (!input.reviewer) {
+    return article;
+  }
+
+  return {
+    ...article,
+    reviewedBy: {
+      "@type": "Person",
+      name: input.reviewer.name,
+      ...(input.reviewer.credential ? { jobTitle: input.reviewer.credential } : {}),
     },
   };
 }

@@ -199,3 +199,13 @@
 - [done] Add unified-URL, behavior-data, and whitelist-aggregation boundaries to premium tool-page pSEO plan
 - [done] Assess and add tool pSEO single-page template standard with batch-generation quality gates
 - [done] Add pSEO batch quality gate for unique metadata, internal links, sample results, sitemap coverage, and YMYL trust boundaries
+- [done] Import 2026-06-23 GSC query export and record one-impression observation without triggering new pSEO pages
+- [done] Record 2026-06-23 GA4 pollution follow-up and keep engagement metrics blocked from AI+pSEO scoring until fresh hostname evidence is clean
+- [done] Make GSC query opportunity backlog scan nested dated records to prevent missed Search Console evidence
+- [done] Add visible FAQ content and FAQ structured data to keyword pSEO calculator pages
+- [done] Expand keyword pSEO related calculator recommendations from three to four internal links
+- [done] Upgrade pSEO batch quality gate for minimum variable slots, FAQ coverage, schema/body consistency, and 4-6 related recommendations
+- [done] Evaluate 20k+ open-source blog options and choose the existing Next-native /blog system as the lowest-risk fit
+- [done] Add blog Open Graph and Twitter metadata for the hub and article pages
+- [done] Prevent pending editorial review status from being emitted as Article reviewedBy schema
+- [done] Document the Next-native /blog deployment, SEO, validation, and rollback workflow

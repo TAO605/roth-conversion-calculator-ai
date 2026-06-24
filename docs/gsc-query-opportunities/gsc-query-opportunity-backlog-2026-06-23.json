@@ -1,0 +1,68 @@
+{
+  "actionableCount": 1,
+  "actionableRecords": [
+    {
+      "blockingValidatorFailureCount": 0,
+      "decisionStatus": "needs_review",
+      "filePath": "docs\\gsc-query-opportunities\\2026-06-23\\search-console-query-opportunity-01-best-free-roth-conversion-tax-calculator.json",
+      "matchedCluster": "Core calculator intent",
+      "missingReviewerFieldCount": 0,
+      "nextAction": "Ready for content-operations review; keep YMYL and professional review gates attached.",
+      "priorityScore": 48,
+      "query": "best free roth conversion tax calculator",
+      "readyForRecordedEvidence": true,
+      "recordStatus": "recorded",
+      "riskLevel": "review",
+      "targetSurface": "Homepage calculator, /calculators, keyword landing pages"
+    }
+  ],
+  "byCluster": {
+    "Core calculator intent": 1,
+    "unmapped": 1
+  },
+  "byDecisionStatus": {
+    "needs_review": 2
+  },
+  "byRecordStatus": {
+    "recorded": 1,
+    "template": 1
+  },
+  "byRiskLevel": {
+    "review": 2
+  },
+  "evidenceType": "gsc-query-opportunity-backlog-summary",
+  "ok": true,
+  "recordCount": 2,
+  "records": [
+    {
+      "blockingValidatorFailureCount": 0,
+      "decisionStatus": "needs_review",
+      "filePath": "docs\\gsc-query-opportunities\\2026-06-23\\search-console-query-opportunity-01-best-free-roth-conversion-tax-calculator.json",
+      "matchedCluster": "Core calculator intent",
+      "missingReviewerFieldCount": 0,
+      "nextAction": "Ready for content-operations review; keep YMYL and professional review gates attached.",
+      "priorityScore": 48,
+      "query": "best free roth conversion tax calculator",
+      "readyForRecordedEvidence": true,
+      "recordStatus": "recorded",
+      "riskLevel": "review",
+      "targetSurface": "Homepage calculator, /calculators, keyword landing pages"
+    },
+    {
+      "blockingValidatorFailureCount": 0,
+      "decisionStatus": "needs_review",
+      "filePath": "docs\\search-console-query-opportunity-template.json",
+      "matchedCluster": "",
+      "missingReviewerFieldCount": 11,
+      "nextAction": "Complete reviewer-supplied GSC fields before content work.",
+      "priorityScore": 2,
+      "query": "",
+      "readyForRecordedEvidence": false,
+      "recordStatus": "template",
+      "riskLevel": "review",
+      "targetSurface": ""
+    }
+  ],
+  "reviewBoundary": "This backlog summary inventories local query opportunity records only; it does not fetch private Google Search Console data or authorize content publication.",
+  "templateOnly": false
+}

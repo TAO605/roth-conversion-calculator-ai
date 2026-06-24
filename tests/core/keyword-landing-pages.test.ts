@@ -27,6 +27,8 @@ describe("keyword landing pages", () => {
       ]),
     );
     expect(keywordLandingPages.every((page) => page.paragraphs.length >= 3)).toBe(true);
+    expect(keywordLandingPages.every((page) => page.faqs.length >= 3 && page.faqs.length <= 5)).toBe(true);
+    expect(keywordLandingPages.every((page) => page.faqs.every((faq) => faq.question.includes("?")))).toBe(true);
     expect(keywordLandingPages.every((page) => page.disclaimer.includes("educational"))).toBe(true);
     expect(getKeywordLandingPageBySlug("roth-conversion-irmaa-calculator")?.taxInteractionPreview).toBe("irmaa");
     expect(getKeywordLandingPageBySlug("roth-conversion-aca-subsidy-calculator")?.taxInteractionPreview).toBe("aca");
@@ -59,6 +61,9 @@ describe("keyword landing pages", () => {
     expect(hubFile).toContain("keywordLandingPages.map");
     expect(dynamicFile).toContain("generateStaticParams");
     expect(dynamicFile).toContain("buildKeywordLandingCalculatorHref");
+    expect(dynamicFile).toContain("faqJsonLd(page.faqs)");
+    expect(dynamicFile).toContain("page.faqs.map");
+    expect(dynamicFile).toContain("slice(0, 4)");
     expect(dynamicFile).toContain("IRMAA worksheet preview");
     expect(dynamicFile).toContain("Social Security worksheet preview");
     expect(dynamicFile).toContain("NIIT worksheet preview");

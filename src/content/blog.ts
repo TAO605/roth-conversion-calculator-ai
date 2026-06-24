@@ -2,12 +2,42 @@ export interface BlogPost {
   slug: string;
   title: string;
   description: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  primaryKeyword?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
   publishedAt: string;
   lastUpdated: string;
   author: string;
   reviewer: string;
+  reviewStatus?: "pending" | "editorial" | "professional-reviewed";
+  professionalReviewer?: {
+    name: string;
+    credential: string;
+  };
   tags: string[];
   body: string[];
+}
+
+export function getBlogSeoTitle(post: BlogPost): string {
+  return post.seoTitle ?? post.title;
+}
+
+export function getBlogSeoDescription(post: BlogPost): string {
+  return post.seoDescription ?? post.description;
+}
+
+export function getBlogCanonicalPath(post: BlogPost): string {
+  return `/blog/${post.slug}`;
+}
+
+export function getBlogOgImage(post: BlogPost): string {
+  return post.ogImage ?? "/social-preview.svg";
+}
+
+export function getBlogOgImageAlt(post: BlogPost): string {
+  return post.ogImageAlt ?? `${post.title} guide from Roth Conversion Calculator`;
 }
 
 export const blogPosts: BlogPost[] = [

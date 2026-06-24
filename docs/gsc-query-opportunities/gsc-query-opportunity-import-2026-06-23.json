@@ -1,0 +1,84 @@
+﻿{
+    "actionableCount":  1,
+    "backlog":  {
+                    "actionableCount":  1,
+                    "actionableRecords":  [
+                                              {
+                                                  "blockingValidatorFailureCount":  0,
+                                                  "decisionStatus":  "needs_review",
+                                                  "filePath":  "docs\\gsc-query-opportunities\\2026-06-23\\search-console-query-opportunity-01-best-free-roth-conversion-tax-calculator.json",
+                                                  "matchedCluster":  "Core calculator intent",
+                                                  "missingReviewerFieldCount":  0,
+                                                  "nextAction":  "Ready for content-operations review; keep YMYL and professional review gates attached.",
+                                                  "priorityScore":  48,
+                                                  "query":  "best free roth conversion tax calculator",
+                                                  "readyForRecordedEvidence":  true,
+                                                  "recordStatus":  "recorded",
+                                                  "riskLevel":  "review",
+                                                  "targetSurface":  "Homepage calculator, /calculators, keyword landing pages"
+                                              }
+                                          ],
+                    "byCluster":  {
+                                      "Core calculator intent":  1
+                                  },
+                    "byDecisionStatus":  {
+                                             "needs_review":  1
+                                         },
+                    "byRecordStatus":  {
+                                           "recorded":  1
+                                       },
+                    "byRiskLevel":  {
+                                        "review":  1
+                                    },
+                    "evidenceType":  "gsc-query-opportunity-backlog-summary",
+                    "ok":  true,
+                    "recordCount":  1,
+                    "records":  [
+                                    {
+                                        "blockingValidatorFailureCount":  0,
+                                        "decisionStatus":  "needs_review",
+                                        "filePath":  "docs\\gsc-query-opportunities\\2026-06-23\\search-console-query-opportunity-01-best-free-roth-conversion-tax-calculator.json",
+                                        "matchedCluster":  "Core calculator intent",
+                                        "missingReviewerFieldCount":  0,
+                                        "nextAction":  "Ready for content-operations review; keep YMYL and professional review gates attached.",
+                                        "priorityScore":  48,
+                                        "query":  "best free roth conversion tax calculator",
+                                        "readyForRecordedEvidence":  true,
+                                        "recordStatus":  "recorded",
+                                        "riskLevel":  "review",
+                                        "targetSurface":  "Homepage calculator, /calculators, keyword landing pages"
+                                    }
+                                ],
+                    "reviewBoundary":  "This backlog summary inventories local query opportunity records only; it does not fetch private Google Search Console data or authorize content publication.",
+                    "templateOnly":  false
+                },
+    "csvPath":  "C:/Users/86189/Downloads/https___www.roth-conversion-calculator-ai.shop_-Performance-on-Search-2026-06-23/查询数.csv",
+    "evidenceType":  "gsc-query-opportunity-import",
+    "importedCount":  1,
+    "ok":  true,
+    "outputDir":  "docs\\gsc-query-opportunities\\2026-06-23",
+    "privacyBoundary":  "This importer reads a user-provided GSC Performance CSV export only. It does not control Search Console, fetch private account data, store cookies, or authorize content publication.",
+    "records":  [
+                    {
+                        "filePath":  "docs\\gsc-query-opportunities\\2026-06-23\\search-console-query-opportunity-01-best-free-roth-conversion-tax-calculator.json",
+                        "generationEvidence":  {
+                                                   "blockingValidatorFailures":  [
+
+                                                                                 ],
+                                                   "evidenceType":  "gsc-query-opportunity-draft-generation",
+                                                   "matchedCluster":  "Core calculator intent",
+                                                   "ok":  true,
+                                                   "query":  "best free roth conversion tax calculator",
+                                                   "reviewBoundary":  "This generator only drafts AI-fillable planning fields from a reviewer-supplied query; it does not fetch private Search Console data or create personal tax advice.",
+                                                   "riskLevel":  "review"
+                                               },
+                        "query":  "best free roth conversion tax calculator",
+                        "riskLevel":  "review",
+                        "matchedCluster":  "Core calculator intent",
+                        "impressions":  1,
+                        "clicks":  0
+                    }
+                ],
+    "rowCount":  1,
+    "latestBacklogSummaryPath":  "docs/gsc-query-opportunities/gsc-query-opportunity-backlog-2026-06-23.json"
+}

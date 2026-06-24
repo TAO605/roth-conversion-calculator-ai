@@ -32,6 +32,10 @@ export interface KeywordLandingPage {
   paragraphs: string[];
   sampleScenario: KeywordLandingSampleScenario;
   resultFocus: string;
+  faqs: Array<{
+    question: string;
+    answer: string;
+  }>;
 }
 
 export const keywordLandingPages: KeywordLandingPage[] = [
@@ -54,6 +58,23 @@ export const keywordLandingPages: KeywordLandingPage[] = [
     ],
     resultFocus:
       "The sample output highlights MAGI proxy before and after conversion, NIIT threshold excess, user-entered net investment income, and bounded 3.8% NIIT preview.",
+    faqs: [
+      {
+        question: "Does this Roth Conversion NIIT Calculator complete Form 8960?",
+        answer:
+          "No. This Roth Conversion NIIT Calculator provides a bounded educational preview from user-entered net investment income and a MAGI proxy. It does not classify investment income, apply every deduction, or complete Form 8960.",
+      },
+      {
+        question: "When can a Roth conversion affect NIIT review?",
+        answer:
+          "A Roth conversion can affect NIIT review when conversion income raises MAGI above the applicable threshold and the taxpayer also has net investment income. The page is designed to flag that review item for professional discussion.",
+      },
+      {
+        question: "What inputs should I prepare for a NIIT review?",
+        answer:
+          "Prepare conversion amount, current taxable income, filing status, net investment income, capital gains, K-1 details, and any Form 8960 context. The calculator output is a worksheet, not final tax advice.",
+      },
+    ],
     sampleScenario: {
       label: "Investment-income NIIT review sample",
       assumptions: [
@@ -92,6 +113,23 @@ export const keywordLandingPages: KeywordLandingPage[] = [
     ],
     resultFocus:
       "The sample output highlights non-Social-Security income before and after conversion, combined-income proxy, bounded taxable-benefit preview, and missing Publication 915 review items.",
+    faqs: [
+      {
+        question: "Does this Roth Conversion Social Security Tax Calculator calculate final benefit tax?",
+        answer:
+          "No. This Roth Conversion Social Security Tax Calculator shows a bounded taxable-benefit preview for education. It does not replace IRS Publication 915 worksheets, tax software, or professional tax preparation.",
+      },
+      {
+        question: "Why can Roth conversion income affect Social Security tax?",
+        answer:
+          "Roth conversion income can increase the income proxy used in taxable Social Security benefit review. That may change how much of the benefit is included in taxable income, depending on filing status and other income.",
+      },
+      {
+        question: "What records help review Social Security taxation?",
+        answer:
+          "Useful records include Form SSA-1099, other taxable income, tax-exempt interest, filing status, and the planned conversion amount. Use the calculator as a handoff worksheet for a qualified professional.",
+      },
+    ],
     sampleScenario: {
       label: "Retiree taxable-benefit review sample",
       assumptions: [
@@ -131,6 +169,23 @@ export const keywordLandingPages: KeywordLandingPage[] = [
     ],
     resultFocus:
       "The sample output highlights the conversion-driven income proxy change, user-entered annual APTC at stake, monthly APTC preview, and missing Marketplace records for review.",
+    faqs: [
+      {
+        question: "Does this Roth Conversion ACA Subsidy Calculator calculate final Form 8962 repayment?",
+        answer:
+          "No. This Roth Conversion ACA Subsidy Calculator shows an educational APTC at-stake preview. It does not calculate final Form 8962 reconciliation, repayment caps, benchmark premiums, or eligibility.",
+      },
+      {
+        question: "Why can Roth conversion income affect ACA subsidies?",
+        answer:
+          "A Roth conversion can raise the income proxy used in Marketplace premium tax credit review. If you received advance premium tax credits, the conversion may create a Form 8962 review item.",
+      },
+      {
+        question: "What Marketplace inputs should I collect?",
+        answer:
+          "Collect Form 1095-A, annual advance premium tax credit, Marketplace coverage months, household size, state, and planned conversion amount. The worksheet helps organize these inputs for review.",
+      },
+    ],
     sampleScenario: {
       label: "Marketplace APTC at-stake sample",
       assumptions: [
@@ -170,6 +225,23 @@ export const keywordLandingPages: KeywordLandingPage[] = [
     ],
     resultFocus:
       "The sample output highlights the calculator income proxy, 2026 Part B proxy premium, Part D IRMAA monthly adjustment, and the missing Medicare records needed for review.",
+    faqs: [
+      {
+        question: "Does this Roth Conversion IRMAA Calculator determine actual Medicare premiums?",
+        answer:
+          "No. This Roth Conversion IRMAA Calculator provides a bounded 2026 proxy preview. Actual IRMAA determinations depend on SSA rules, lookback-year MAGI, filing status, and Medicare billing records.",
+      },
+      {
+        question: "Why can Roth conversion income affect IRMAA?",
+        answer:
+          "Roth conversion income can raise MAGI for the relevant tax year. Medicare IRMAA uses MAGI thresholds, so a conversion may create a review item for Part B or Part D premium adjustments.",
+      },
+      {
+        question: "What should I bring to an IRMAA review?",
+        answer:
+          "Bring the planned conversion amount, filed tax return, Medicare notices, filing status, and any life-changing-event documentation. The calculator preview is only a professional review worksheet.",
+      },
+    ],
     sampleScenario: {
       label: "Near-Medicare IRMAA review sample",
       assumptions: [
@@ -204,6 +276,23 @@ export const keywordLandingPages: KeywordLandingPage[] = [
       "All inputs can be adjusted on the calculator page, and calculations run locally in the browser without storing personal financial information on a server.",
     ],
     resultFocus: "A sample output helps show how taxable conversion, upfront cost, and long-term projection fields appear before users enter their own assumptions.",
+    faqs: [
+      {
+        question: "What does this Roth IRA Conversion Calculator estimate?",
+        answer:
+          "This Roth IRA Conversion Calculator estimates taxable conversion amount, federal tax impact, state tax assumptions, possible penalty modeling, break-even years, and projected after-tax comparison for education.",
+      },
+      {
+        question: "Is the Roth IRA conversion estimate a tax filing result?",
+        answer:
+          "No. The estimate is not a tax return result and does not include every deduction, credit, phaseout, state rule, or tax-form detail. Review the output with a qualified professional before acting.",
+      },
+      {
+        question: "Can I use the calculator without creating an account?",
+        answer:
+          "Yes. The calculator is available as a public tool and runs with browser inputs. The sample page demonstrates the result layout before you enter your own assumptions.",
+      },
+    ],
     sampleScenario: {
       label: "Lower-income early-career sample",
       assumptions: [
@@ -238,6 +327,23 @@ export const keywordLandingPages: KeywordLandingPage[] = [
       "The result is not a tax return calculation and does not model every deduction, credit, phaseout, Medicare threshold, or state-specific rule.",
     ],
     resultFocus: "The sample output focuses on taxable conversion amount, federal tax estimate, state tax input, and total upfront cost.",
+    faqs: [
+      {
+        question: "What does this Roth Conversion Tax Calculator focus on?",
+        answer:
+          "This Roth Conversion Tax Calculator focuses on the current-year upfront tax-cost estimate, including taxable conversion amount, federal bracket impact, user-entered state tax, and modeled penalty assumptions.",
+      },
+      {
+        question: "Does this calculator include every tax credit and deduction?",
+        answer:
+          "No. The calculator does not model every deduction, credit, phaseout, AMT item, Medicare threshold, or state-specific rule. It is an educational estimate for professional review.",
+      },
+      {
+        question: "Why does filing status matter for Roth conversion taxes?",
+        answer:
+          "Filing status affects federal tax bracket thresholds. The same conversion amount can produce a different estimated federal tax impact depending on taxable income and filing status assumptions.",
+      },
+    ],
     sampleScenario: {
       label: "Current-year tax-cost sample",
       assumptions: [
@@ -272,6 +378,23 @@ export const keywordLandingPages: KeywordLandingPage[] = [
       "Market returns and future tax rates can differ materially from assumptions, so the break-even result should be treated as a sensitivity estimate.",
     ],
     resultFocus: "The sample output highlights break-even timing, projected Roth value, and projected traditional after-tax value.",
+    faqs: [
+      {
+        question: "What does the Roth Conversion Break-Even Calculator show?",
+        answer:
+          "The Roth Conversion Break-Even Calculator shows when a modeled Roth conversion may exceed the traditional IRA after-tax comparison under the selected assumptions. It is a projection, not a guarantee.",
+      },
+      {
+        question: "Why can break-even timing change?",
+        answer:
+          "Break-even timing can change when expected return, retirement age, tax payment method, retirement marginal tax rate, or conversion amount changes. Future market returns and tax rates may differ.",
+      },
+      {
+        question: "Should I rely on one break-even result?",
+        answer:
+          "No. Treat one break-even result as a sensitivity case. Compare several assumptions and use the worksheet to discuss risk, taxes, and timing with a qualified professional.",
+      },
+    ],
     sampleScenario: {
       label: "Break-even sensitivity sample",
       assumptions: [
@@ -306,6 +429,23 @@ export const keywordLandingPages: KeywordLandingPage[] = [
       "Annual tax data updates should be reviewed after IRS inflation adjustments are released, and users should verify rules with a qualified professional.",
     ],
     resultFocus: "The sample output shows the 2026 tax-year fields while keeping annual tax data and future-year updates explicit.",
+    faqs: [
+      {
+        question: "What makes this a 2026 Roth Conversion Calculator?",
+        answer:
+          "This 2026 Roth Conversion Calculator labels the tax year and uses current-year federal bracket assumptions in the educational estimate, while separating user-entered state and future-return assumptions.",
+      },
+      {
+        question: "Will the 2026 calculator change in future years?",
+        answer:
+          "Yes. Tax-year assumptions should be reviewed when IRS inflation adjustments and official guidance change. Future years should use updated data rather than reusing stale 2026 assumptions.",
+      },
+      {
+        question: "Does this page replace official IRS guidance?",
+        answer:
+          "No. This page is a calculator worksheet and educational guide. Users should verify current tax-year rules with official sources and a qualified professional before making decisions.",
+      },
+    ],
     sampleScenario: {
       label: "2026 tax-year sample",
       assumptions: [

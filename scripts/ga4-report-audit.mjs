@@ -3,6 +3,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const EVIDENCE_TYPE = "ga4-report-audit";
+const EXPECTED_PROPERTY_PATTERNS = [
+  /roth-conversion-calculator-ai\.shop/i,
+  /roth conversion calculator/i,
+];
 const DEFAULT_ALLOWED_TITLE_PATTERNS = [
   /roth/i,
   /calculator assumptions/i,
@@ -92,13 +96,20 @@ function parseGa4OverviewExport(text) {
     eventCount: 0,
     newUsers: 0,
   };
+  const propertyHints = [];
   const pageRows = [];
   const acquisitionSections = [];
   const cityRows = [];
 
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index];
-    if (line.startsWith("#")) continue;
+    if (line.startsWith("#")) {
+      const normalizedComment = line.replace(/^#+\s*/, "").trim();
+      if (/account|property|media resource|measurement|璐﹀彿|媒体资源|濯掍綋璧勬簮/i.test(normalizedComment)) {
+        propertyHints.push(normalizedComment);
+      }
+      continue;
+    }
 
     const cells = splitCsvLine(line);
     const nextCells = splitCsvLine(lines[index + 1] || "");
@@ -165,7 +176,7 @@ function parseGa4OverviewExport(text) {
     }
   }
 
-  return { acquisitionSections, cityRows, overview, pageRows };
+  return { acquisitionSections, cityRows, overview, pageRows, propertyHints };
 }
 
 function classifyTitle(title) {
@@ -179,6 +190,11 @@ function classifyTitle(title) {
 
 function buildAudit(parsed, sourcePath) {
   const pageRows = parsed.pageRows.map((row) => ({ ...row, classification: classifyTitle(row.title) }));
+  const propertyHints = Array.isArray(parsed.propertyHints) ? parsed.propertyHints : [];
+  const propertyHintText = propertyHints.join(" ");
+  const hasPropertyHints = propertyHints.length > 0;
+  const expectedPropertyDetected = EXPECTED_PROPERTY_PATTERNS.some((pattern) => pattern.test(propertyHintText));
+  const wrongPropertyDetected = hasPropertyHints && !expectedPropertyDetected;
   const foreignRows = pageRows.filter((row) => row.classification === "foreign-site-suspected");
   const unknownRows = pageRows.filter((row) => row.classification === "unknown-or-needs-hostname");
   const primaryAcquisitionRows = parsed.acquisitionSections[0]?.rows || [];
@@ -192,6 +208,13 @@ function buildAudit(parsed, sourcePath) {
   const totalViews = pageRows.reduce((sum, row) => sum + row.views, 0);
   const warnings = [];
   const recommendedActions = [];
+
+  if (wrongPropertyDetected) {
+    warnings.push("wrong_ga4_property_export");
+    recommendedActions.push(
+      "Export the GA4 report from the Roth Calculator property before using this file for Roth SEO or pSEO decisions.",
+    );
+  }
 
   if (foreignRows.length > 0) {
     warnings.push("foreign_page_titles_detected");
@@ -228,7 +251,9 @@ function buildAudit(parsed, sourcePath) {
     recommendedActions.push("Separate owner/testing/direct traffic from organic acquisition before using GA4 for pSEO scoring.");
   }
 
-  const dataQualityStatus = warnings.includes("foreign_page_titles_detected")
+  const dataQualityStatus = warnings.includes("wrong_ga4_property_export")
+    ? "wrong-property"
+    : warnings.includes("foreign_page_titles_detected")
     ? "polluted"
     : warnings.length > 0
       ? "needs-review"
@@ -253,7 +278,7 @@ function buildAudit(parsed, sourcePath) {
     evidenceType: EVIDENCE_TYPE,
     hostnameReviewRequired: foreignRows.length > 0 || unknownRows.length > 0,
     measuredSite: "https://www.roth-conversion-calculator-ai.shop",
-    ok: dataQualityStatus !== "polluted",
+    ok: !["polluted", "wrong-property"].includes(dataQualityStatus),
     overview: parsed.overview,
     pageSummary: {
       foreignPageRowCount: foreignRows.length,
@@ -265,6 +290,7 @@ function buildAudit(parsed, sourcePath) {
       unknownPageRowCount: unknownRows.length,
     },
     recommendedActions,
+    sourcePropertyHints: propertyHints,
     sourcePath: path.resolve(sourcePath),
     warnings,
   };
